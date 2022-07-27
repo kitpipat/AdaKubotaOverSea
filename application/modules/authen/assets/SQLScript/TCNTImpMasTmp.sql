@@ -1,0 +1,38 @@
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TCNTImpMasTmp]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[TCNTImpMasTmp](
+	[FTTmpTableKey] [varchar](50) NULL,
+	[FTSessionID] [varchar](255) NULL,
+	[FNTmpSeq] [int] NULL,
+	[FTBchCode] [varchar](5) NULL,
+	[FTBchName] [varchar](100) NULL,
+	[FTAgnCode] [varchar](10) NULL,
+	[FTPplCode] [varchar](5) NULL,
+	[FTTmpStatus] [varchar](1) NULL,
+	[FTTmpRemark] [varchar](max) NULL,
+	[FDCreateOn] [datetime] NULL,
+	[FTUsrCode] [varchar](20) NULL,
+	[FTUsrName] [varchar](100) NULL,
+	[FTRolCode] [varchar](5) NULL,
+	[FTMerCode] [varchar](10) NULL,
+	[FTShpCode] [varchar](5) NULL,
+	[FTDptCode] [varchar](5) NULL,
+	[FTUsrTel] [varchar](50) NULL,
+	[FTUsrEmail] [varchar](50) NULL,
+	[FTPosCode] [varchar](5) NULL,
+	[FTPosName] [varchar](100) NULL,
+	[FTPosType] [varchar](30) NULL,
+	[FTPosRegNo] [varchar](20) NULL,
+	[FTTcgCode] [varchar](5) NULL,
+	[FTTcgName] [varchar](100) NULL,
+	[FTPbnCode] [varchar](5) NULL,
+	[FTPbnName] [varchar](100) NULL,
+	[FTPunCode] [varchar](5) NULL,
+	[FTPunName] [varchar](100) NULL,
+	[FTPdtCode] [varchar](20) NULL,
+	[FTPdtName] [varchar](100) NULL,
+	[FTPdtNameABB] [varchar](50) NULL,
+	[FCPdtUnitFact] [numeric](18, 4) NULL,
+	[FTBarCode] [varchar](25) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
