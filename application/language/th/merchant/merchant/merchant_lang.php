@@ -1,0 +1,72 @@
+<?php
+//TH
+$lang['tMerchantTitle']      = "กลุ่มธุรกิจ";
+$lang['tMerchantTitleAdd']   = "เพิ่มกลุ่มธุรกิจ";
+$lang['tMerchantTitleEdit']  = "แก้ไขกลุ่มธุรกิจ";
+//Table List
+$lang['tMCNTBChoose']   = "เลือก";
+$lang['tMCNTBImg']      = "รูป";
+$lang['tMCNTBCode']     = "รหัสกลุ่มธุรกิจ";
+$lang['tMCNTBName']     = "ชื่อกลุ่มธุรกิจ";
+$lang['tMCNTBStatus']   = "สถานะกลุ่มธุรกิจ";
+$lang['tMCNTBDelete']   = "ลบ";
+$lang['tMCNTBEdit']     = "แก้ไข";
+$lang['tMCNTBEmail']    = "อีเมลล์";
+$lang['tMCNTBMo']       = "โทร.";
+$lang['tMCNTBFax']      = "แฟกซ์";
+$lang['tMCNTBMgp']      = "กลุ่มสินค้า";
+//From Reason
+$lang['tRSNCode']       = "Code";
+$lang['tRSNName']       = "Reason";
+$lang['tRSNGroup']      = "Reason Group";
+$lang['tRSNRemark']     = "Remark";
+$lang['tMCNEmail']      = "อีเมลล์";
+$lang['tMCNTel']        = "เบอร์โทรศัพท์";
+$lang['tMCNFax']        = "โทรสาร";
+$lang['tMCNMo']         = "เบอร์มือถือ";
+$lang['tMCNNote']       = "หมายเหตุ";
+$lang['tMCNAddress']    = "ที่อยู่";
+$lang['tPriceGroup'] = "กลุ่มราคา";
+// Validate
+$lang['tMCNValidName']      = "กรุณากรอกชื่อกลุ่มธุรกิจ";
+$lang['tMCNValidCodeDup']   = "รหัสนี้มีในระบบแล้วกรุณาตรวจสอบอีกครั้ง";
+$lang['tMCNValidCode']      = "กรุณากรอกรหัสกลุ่มธุรกิจ";
+$lang['tMCNValidEmail']     = "รูปแบบอีเมลล์ไม่ถูกต้อง";
+$lang['tMCNValidName']      = "กรุณากรอกชื่อกลุ่มธุรกิจ";
+$lang['tMCNValidCodeDup']   = "รหัสนี้มีในระบบแล้วกรุณาตรวจสอบอีกครั้ง";
+$lang['tMCNValidCode']      = "กรุณาเลือกกลุ่มธุรกิจ";
+$lang['tMCNValidEmail']     = "รูปแบบอีเมลล์ไม่ถูกต้อง";
+// Validate Address  And Label From Address
+$lang['tMCNAddressTitle']               = "ที่อยู่";
+$lang['tMCNAddressTitleAdd']            = " / เพิ่ม";
+$lang['tMCNAddressTitleEdit']           = " / แก้ไข";
+$lang['tMCNAddressTblHeadNo']           = "ลำดับ";
+$lang['tMCNAddressTblHeadAddrName']     = "ชื่อที่อยู่";
+$lang['tMCNAddressTblHeadAddrTaxNo']    = "หมายเลขประจำตัวผู้เสียภาษี";
+$lang['tMCNAddressTblHeadAddrWebsite']  = "เว็บไซต์";
+$lang['tMCNAddressTblHeadAddrRmk']      = "หมายเหตุ";
+$lang['tMCNAddressTblHeadAddrDelete']   = "ลบ";
+$lang['tMCNAddressTblHeadAddrEdit']     = "แก้ไข";
+$lang['tAddGrpType']        = 'ประเภทที่อยู่';
+$lang['tAddressName']       = 'ชื่อที่อยู่';
+$lang['tContactName']       = 'ชื่อผู้ติดต่อ';
+$lang['tAddCountry']        = 'ประเทศ';
+$lang['tAddV2Desc1']        = 'ที่อยู่ 1';
+$lang['tAddV2Desc2']        = 'ที่อยู่ 2';
+$lang['tAddTaxNo']          = 'เลขประจำตัวผู้เสียภาษี';
+$lang['tAddContactTel']     = 'เบอร์โทรศัพท์';
+$lang['tAddWebsite']        = 'เว็บไซต์';
+$lang['tAddContactFax']     = 'เบอร์แฟ็กซ์';
+$lang['tAreCode']           = 'เขต/ภูมิภาค';
+$lang['tZneCode']           = 'โซน';
+$lang['tAddV1PvnCode']      = 'จังหวัด';
+$lang['tAddV1DstCode']      = 'อำเภอ/เขต';
+$lang['tAddV1SubDist']      = 'ตำบล/แขวง';
+$lang['tAddV1Road']         = 'ถนน';
+$lang['tAddV1Village']      = 'หมู่บ้าน/อาคาร';
+$lang['tAddV1No']           = 'บ้านเลขที่';
+$lang['tAddV1Soi']          = 'ซอย';
+$lang['tAddV1PostCode']     = 'รหัสไปรษณีย์';
+$lang['tAddV1RefCode']      = 'รหัสอ้างอิง';
+$lang['tAddContactmail']    = 'อีเมลล์';
+$lang['tAddRmk']            = 'หมายเหตุ';
