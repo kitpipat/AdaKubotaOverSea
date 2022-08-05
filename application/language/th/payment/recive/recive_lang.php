@@ -17,6 +17,7 @@ $lang['tRCVTBImage']    = 'รูป';
 //Form Recive
 $lang['tRCVCode']       = "รหัสประเภทการชำระเงิน";
 $lang['tRCVName']       = "ชื่อ";
+$lang['tRCVMultiCur']     = "ใช้งานหลายสกุลเงิน";
 $lang['tRCVFormat']     = "อ้างอิงรูปแบบ";
 $lang['tRCVRemark']     = "หมายเหตุ";
 $lang['tRCVStatus']     = "สถานะ";

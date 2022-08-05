@@ -26,12 +26,15 @@ class Recive_model extends CI_Model
                     RCV.FTAppStaAlwCancel,
                     RCV.FTAppStaPayLast,
                     TRF.FTFmtStaAlwCfg,
-                    TRFL.FTFmtName
+                    TRFL.FTFmtName,
+                    RCV.FTRcvRefRate,
+                    RCFL.FTRteName
                  FROM [TFNMRcv] RCV WITH(NOLOCK)
                  LEFT JOIN [TFNMRcv_L] RCVL WITH(NOLOCK) ON RCV.FTRcvCode = RCVL.FTRcvCode AND RCVL.FNLngID = $nLngID
                  LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RCV.FTRcvCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRcv' AND IMGO.FNImgSeq = 1
                  LEFT JOIN [TSysRcvFmt] TRF WITH(NOLOCK) ON TRF.FTFmtCode = RCV.FTFmtCode
                  LEFT JOIN [TSysRcvFmt_L] TRFL WITH(NOLOCK) ON TRFL.FTFmtCode = TRF.FTFmtCode AND TRFL.FNLngID = $nLngID
+                 LEFT JOIN [TFNMRate_L] RCFL WITH(NOLOCK) ON RCFL.FTRteCode = RCV.FTRcvRefRate AND TRFL.FNLngID = $nLngID
                  WHERE 1=1 ";
 
         if ($tRcvCode != "") {
@@ -202,7 +205,6 @@ class Recive_model extends CI_Model
     //Return Type : Array
     public function FSaMRCVAddUpdateMaster($paData)
     {
-
         try {
             $this->db->select('FTFmtStaAlwCfg');
             $this->db->from('TSysRcvFmt');
@@ -217,6 +219,7 @@ class Recive_model extends CI_Model
             $this->db->set('FTRcvStaUse', $paData['FTRcvStaUse']);
             $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
             $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
+            $this->db->set('FTRcvRefRate', $paData['FTRcvRefRate']);
 
             $this->db->set('FTAppStaAlwRet', $paData['FTAppStaAlwRet']);
             $this->db->set('FTAppStaAlwCancel', $paData['FTAppStaAlwCancel']);
@@ -253,6 +256,7 @@ class Recive_model extends CI_Model
                     'FTAppStaAlwRet'    => $paData['FTAppStaAlwRet'],
                     'FTAppStaAlwCancel' => $paData['FTAppStaAlwCancel'],
                     'FTAppStaPayLast'   => $paData['FTAppStaPayLast'],
+                    'FTRcvRefRate' => $paData['FTRcvRefRate'],
                 ));
 
 

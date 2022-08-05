@@ -260,9 +260,20 @@ class Recive_controller extends MX_Controller
             $tRcvStaUse  = 2;
         }
 
+        $tRcvFmtCode = $this->input->post('oetRcvFormatCode');
+
+        $tRcvRefRate   = $this->input->post('oetRcvCurrencyCode');
+
+        if (isset($tRcvRefRate) && !empty($tRcvRefRate)  && $tRcvFmtCode == "001") {
+            $tRcvRefRate  = $this->input->post('oetRcvCurrencyCode');
+        }else{
+            $tRcvRefRate = '';
+        }
+
+
         $aDataMaster    = [
             'FTRcvCode'     => $tRcvCode,
-            'FTFmtCode'     => $this->input->post('oetRcvFormatCode'),
+            'FTFmtCode'     => $tRcvFmtCode,
             'FTRcvStaUse'   => $tRcvStaUse,
             'FTRcvName'     => $this->input->post('oetRcvName'),
             'FTRcvRmk'      => $this->input->post('otaRcvRemark'),
@@ -275,6 +286,7 @@ class Recive_controller extends MX_Controller
             'FTAppStaAlwRet'    => (!empty($this->input->post('ocbRcvSpcStaAlwRet'))) ? 1 : 2,
             'FTAppStaAlwCancel' => (!empty($this->input->post('ocbRcvSpcStaAlwCancel'))) ? 1 : 2,
             'FTAppStaPayLast'   => (!empty($this->input->post('ocbRcvSpcStaPayLast'))) ? 1 : 2,
+            'FTRcvRefRate' => $tRcvRefRate
         ];
         // print_r($aDataMaster); die();
         $oCountDup = $this->Recive_model->FSoMRCVCheckDuplicate($aDataMaster['FTRcvCode']);
@@ -343,9 +355,20 @@ class Recive_controller extends MX_Controller
         } else {
             $tRcvStaUse = $this->input->post('ocbRcvStatus');
         }
+
+        $tRcvFmtCode = $this->input->post('oetRcvFormatCode');
+
+        $tRcvRefRate   = $this->input->post('oetRcvCurrencyCode');
+
+        if (isset($tRcvRefRate) && !empty($tRcvRefRate) && $tRcvFmtCode == "001") {
+            $tRcvRefRate  = $this->input->post('oetRcvCurrencyCode');
+        }else{
+            $tRcvRefRate = '';
+        }
+
         $aDataMaster    = [
             'FTRcvCode'     => $this->input->post('oetRcvCode'),
-            'FTFmtCode'     => $this->input->post('oetRcvFormatCode'),
+            'FTFmtCode'     => $tRcvFmtCode,
             'FTRcvStaUse'   => $tRcvStaUse,
             'FTRcvName'     => $this->input->post('oetRcvName'),
             'FTRcvRmk'      => $this->input->post('otaRcvRemark'),
@@ -361,7 +384,7 @@ class Recive_controller extends MX_Controller
 
             'FTFmtCodeOld'         => $this->input->post('ohdtFmtCodeOld'),
 
-
+            'FTRcvRefRate' => $tRcvRefRate
         ];
         $this->Recive_model->FSaMRCVAddUpdateMaster($aDataMaster);
         $this->Recive_model->FSaMRCVAddUpdateLang($aDataMaster);

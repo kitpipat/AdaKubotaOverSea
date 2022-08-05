@@ -233,6 +233,17 @@
 
     }
 
+    $('#ocbRcvMultiCur').click(function() {
+        if ( $('#ocbRcvMultiCur').prop('checked')) {
+            $("#obtRcvCurrencyBrowse").attr("disabled", false);
+            $("#oetRcvCurrencyName").prop('required',true);
+        } else {
+            $("#obtRcvCurrencyBrowse").attr("disabled", true);
+            $("#oetRcvCurrencyName").prop('required',false);
+            $('#oetRcvCurrencyCode').val('');
+            $('#oetRcvCurrencyName').val('');
+        }
+    });
 
     $('#oimRcvFormatBrowse').click(function() {
         JSxCheckPinMenuClose();
@@ -287,5 +298,54 @@
             $('#odvRcvFmtName').addClass("has-error")
             $("#oetRcvFormatName-error").removeAttr("style")
         }
+
+        JSxRcvCheckCurrency();
     }
+
+    $('#obtRcvCurrencyBrowse').click(function() {
+        JSxCheckPinMenuClose();
+        JCNxBrowseData('oBrowsetRate');
+    });
+
+    var oBrowsetRate = {
+        Title: ['payment/recive/recive', 'tRCVCurrency'],
+        Table: {
+            Master: 'TFNMRate',
+            PK: 'FTRteCode'
+        },
+        Join: {
+            Table: ['TFNMRate_L'],
+            On: ['TFNMRate_L.FTRteCode = TFNMRate.FTRteCode  AND TFNMRate_L.FNLngID =' + nLangEdits]
+        },
+        GrideView: {
+            ColumnPathLang: 'payment/recivespc/recivespc',
+            ColumnKeyLang: ['tBrowseAppCode', 'tBrowseAppName'],
+            ColumnsSize: ['15%', '75%'],
+            DataColumns: ['TFNMRate.FTRteCode', 'TFNMRate_L.FTRteName'],
+            DataColumnsFormat: ['', ''],
+            WidthModal: 50,
+            Perpage: 10,
+            OrderBy: ['TFNMRate.FTRteCode ASC'],
+        },
+        CallBack: {
+            ReturnType: 'S',
+            Value: ["oetRcvCurrencyCode", "TFNMRate.FTRteCode"],
+            Text: ["oetRcvCurrencyName", "TFNMRate_L.FTRteName"]
+        },
+    };
+
+    $(document).ready(function(){
+        JSxRcvCheckCurrency();
+    });
+    
+    function JSxRcvCheckCurrency(){
+        $("#odvRcvCurrencyName").hide();
+        var tFmtCode = $('#oetRcvFormatCode').val();
+        if (tFmtCode == '001') {
+            $("#odvRcvCurrencyName").show();
+        }else{
+            $("#odvRcvCurrencyName").hide();
+        }
+    }
+
 </script>

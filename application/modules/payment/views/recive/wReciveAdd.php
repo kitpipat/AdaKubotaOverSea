@@ -11,7 +11,8 @@ if ($aResult['rtCode'] == "1") {
 
     $tFmtCode   = $aResult['raItems']['rtFmtCode'];
     $tFmtName   = $aResult['raItems']['FTFmtName'];
-
+    $tFmtCurrencyCode  = $aResult['raItems']['FTRcvRefRate'];
+    $tFmtCurrencyName   = $aResult['raItems']['FTRteName'];
 
     $tRcvSpcStaAlwRet       = $aResult['raItems']['FTAppStaAlwRet'];
     $tRcvSpcStaAlwCancel    = $aResult['raItems']['FTAppStaAlwCancel'];
@@ -46,6 +47,8 @@ if ($aResult['rtCode'] == "1") {
     $tFmtCode   = '';
     $tFmtName   = '';
     $tRcvSpcStaAlwCfg     = '';
+    $tFmtCurrencyCode = '';
+    $tFmtCurrencyName = '';
 
     $tSelected      = $aResult['rtSelected'];
     $tRoute         = "reciveEventAdd";
@@ -183,7 +186,29 @@ if ($aResult['rtCode'] == "1") {
                                         </div>
 
                                     </div>
+                                    <!-- สกุลเงิน -->
+                                    <div id="odvRcvCurrencyName" class="form-group" style="display: block;">
 
+                                        <!-- CheckBox ใช้งานหลายสกุลเงิน  -->
+                                        <div class="form-group">
+                                            <label class="fancy-checkbox">
+                                                <input type="checkbox" id="ocbRcvMultiCur" name="ocbRcvMultiCur" <?= ($tFmtCurrencyCode && $tFmtCurrencyName) ? 'checked': false ?>>
+                                                <span> <?php echo language('payment/recive/recive', 'tRCVMultiCur'); ?></span>
+                                            </label>
+                                        </div>
+                                        
+                                        <label class="xCNLabelFrm"><?= language('payment/recive/recive','tRCVCurrency'); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" autocomplete="off" class="form-control xCNHide" id="oetRcvCurrencyCode" name="oetRcvCurrencyCode" value="<?= $tFmtCurrencyCode; ?>">
+                                            <div class="validate-input">
+                                                <input type="text" class="form-control xWPointerEventNone" id="oetRcvCurrencyName" name="oetRcvCurrencyName" placeholder="" value="<?= $tFmtCurrencyName; ?>" readonly="">
+                                            </div>
+                                            <span class="input-group-btn">
+                                                <button id="obtRcvCurrencyBrowse" type="button" class="btn xCNBtnBrowseAddOn" <?= ($tFmtCurrencyCode && $tFmtCurrencyName) ? false : 'disabled' ?>><img class="xCNIconFind"></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="form-group">
                                         <label class="xCNLabelFrm"><?= language('payment/recive/recive', 'tRCVStatus') ?></label>
                                         <select class="selectpicker form-control" id="ocbRcvStatus" name="ocbRcvStatus" maxlength="1">
