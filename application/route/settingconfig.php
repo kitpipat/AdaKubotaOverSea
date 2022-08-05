@@ -89,3 +89,10 @@ $route ['settingconperiodEventEdit']            = 'settingconfig/settingconperio
 //Export Data Settingconfig
 $route ['configExportData']                     = 'settingconfig/settingconfig/Settingconfig_controller/FSxSETSettingConfigExport';
 $route ['configInsertData']                     = 'settingconfig/settingconfig/Settingconfig_controller/FSxSETConfigInsertData';
+
+///////////////////////  อัตราแลกเปลี่ยนสกุลเงินรายวัน //////////////////////////////////
+$route ['SettingDailyCurrency/(:any)/(:any)']      = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/index/$1/$2';
+$route ['SettingDailyCurrencyGetList']             = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSvSETGetDairyCurrencyPageList';
+
+$route ['SettingDailyCurrencyLoadViewSearch']      = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSvSETGetDairyCurrencyPageListSearch';
+$route ['SettingDailyCurrencyLoadTable']           = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSvSETDairyCurrencyGetTable';
