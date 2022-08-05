@@ -11,3 +11,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	https://codeigniter.com/user_guide/general/hooks.html
 |
 */
+
+/* config/hooks.php */
+$hook['post_system'][] = array(
+    'class' => 'LogQueryHook',
+    'function' => 'log_queries',
+    'filename' => 'LogQueryHook.php',
+    'filepath' => 'hooks'
+);
