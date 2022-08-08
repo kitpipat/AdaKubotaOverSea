@@ -157,78 +157,63 @@ function JSxSETModalCancel() {
 //Event Value in Checkbox
 var aPackData = [];
 
-function JSxEventClickCheckbox(elem) {
-    var tSyscode = $(elem).attr('data-syscode');
-    var tSysapp = $(elem).attr('data-sysapp');
-    var tSyskey = $(elem).attr('data-syskey');
-    var tSysseq = $(elem).attr('data-sysseq');
-    var tChcekbox = $(elem).is(':checked') ? 1 : 0;
+function JSxEventClickCheckboxCurrentcy(elem) {
+    var tCheckseq       = $(elem).data("seq");
+    var nRctRate        = $(elem).data("rterate");
+    var nRctLastRate    = $(elem).data("rtelastrate");
 
-    var nLenArray = aPackData.length;
-    if (nLenArray >= 1) {
-        for ($i = 0; $i < aPackData.length; $i++) {
-            if (tSyscode == aPackData[$i]['tSyscode'] &&
-                tSysapp == aPackData[$i]['tSysapp'] &&
-                tSyskey == aPackData[$i]['tSyskey'] &&
-                tSysseq == aPackData[$i]['tSysseq']) {
-                aPackData.splice($i, 1);
-            }
-        }
+    if ($(elem).is(':checked')) {
+        $('#oetUseCurrency'+tCheckseq).val(nRctLastRate);
+        $('#oetUseCurrency'+tCheckseq).attr('readonly',true);
+    }else{
+        $('#oetUseCurrency'+tCheckseq).val(nRctRate);
+        $('#oetUseCurrency'+tCheckseq).attr('readonly',false);
     }
-
-    //เก็บค่าไว้ใน array
-    var aSubValue = {
-        'tSyscode': tSyscode,
-        'tSysapp': tSysapp,
-        'tSyskey': tSyskey,
-        'tSysseq': tSysseq,
-        'nValue': tChcekbox,
-        'tKind': 'Make',
-        'tType': 'checkbox'
-    };
-    aPackData.push(aSubValue);
 }
 
 //Event Save - บันทึก
-function JSxSETSave() {
+function JSxCurrentcySave() {
     var nStaSession = JCNxFuncChkSessionExpired();
     if (typeof nStaSession !== "undefined" && nStaSession == 1) {
         try {
-
-            for (i = 0; i < aPackDataInput.length; i++) {
-                if (aPackDataInput[i].tType == '7') {
-                    if (aPackDataInput[i].nValue != aPackDataInput[i].tOldpws) {
-                        aPackDataInput[i].nValue = JCNtAES128EncryptData(aPackDataInput[i].nValue, tKey, tIV);
-
-                    }
+            var aPackDataInput = [];
+            var aGetItem = [];
+            var nflag = '0';
+            $(".oetCurrentCurentcy").each(function() { 
+                var tCheckseq       = $(this).data("seq");
+                var nAgnCode        = $(this).data("agncode");
+                var nRteCode        = $(this).data("rtecode");
+                var nChangeValue    = $(this).val();
+                if(nChangeValue == ''){
+                    nflag = '1';
+                    return false;
                 }
-            }
-            var aMergeArray = aPackData.concat(aPackDataInput);
-            var tTypePage = $('#ohdSETTypePage').val();
-            if (tTypePage == "Agency") {
-                tAgnCode = $('#oetAgnCode').val();
-            } else {
-                tAgnCode = '';
-            }
-
-            localStorage.removeItem('LocalItemData');
-            $.ajax({
-                type: "POST",
-                url: "SettingConfigSave",
-                data: {
-                    aMergeArray: aMergeArray,
-                    ptTypePage: tTypePage,
-                    ptAgnCode: tAgnCode
-                },
-                cache: false,
-                timeout: 0,
-                success: function(tResult) {
-                    JSvSettingDairyCurrencyLoadTable();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    JCNxResponseError(jqXHR, textStatus, errorThrown);
-                }
+                aGetItem.push({
+                    FCRteRate: nChangeValue,
+                    FTRteCode: nRteCode,
+                    FTAgnCode: nAgnCode,
+                });
             });
+
+            if(nflag == '0'){
+                $.ajax({
+                    type: "POST",
+                    url: "SettingDailyCurrencySave",
+                    data: {
+                        aGetItem: aGetItem,
+                    },
+                    cache: false,
+                    timeout: 0,
+                    success: function(tResult) {
+                        JSvSettingDairyCurrencyLoadTable();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        JCNxResponseError(jqXHR, textStatus, errorThrown);
+                    }
+                });
+            }else{
+                FSvCMNSetMsgErrorDialog('กรุณากรอกข้อมูลให้ครบถ้วน');
+            }
         } catch (err) {
             console.log('JSvSettingConfigDailyCurrencyCallPageList Error: ', err);
         }

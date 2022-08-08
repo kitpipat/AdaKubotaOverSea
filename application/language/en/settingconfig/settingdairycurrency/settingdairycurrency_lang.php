@@ -68,7 +68,10 @@ $lang['tFmtTypeDef']                            = "Default Format";
 $lang['tFmtUserStart']                          = "Code Start";
 
 
-$lang['tSettingDailyCurrencyName']                          = "รหัสสกุลเงิน";
-$lang['tSettingDailyCurrencyCode']                          = "ชื่อสกุลเงิน";
-$lang['tSettingDailyCurrencyRate']                          = "อัตราแลกเปลี่ยน";
-$lang['tSettingDailyCurrencyRateLast']                          = "อัตราแลกเปลี่ยนล่าสุด";
+$lang['tSettingDailyCurrencyName']                          = "Currency Code";
+$lang['tSettingDailyCurrencyCode']                          = "Currency Name";
+$lang['tSettingDailyCurrencyRate']                          = "exchange rate";
+$lang['tSettingDailyCurrencyRateLast']                      = "Last exchange rate";
+$lang['tSettingDailyCurrencyuSERateLast']                   = "Use Last exchange rate";
+$lang['tSettingDailyCurrencyuSERateNew']                    = "New exchange rate";
+$lang['tSettingDailyCurrencyuAgency']                       = "Agency";

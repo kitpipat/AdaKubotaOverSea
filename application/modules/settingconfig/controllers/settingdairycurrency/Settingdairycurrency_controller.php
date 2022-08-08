@@ -51,10 +51,10 @@ class Settingdairycurrency_controller extends MX_Controller {
             'tSearchAll'    => $tSearch,
             'tAppType'      => $tAppType,
             'tTypePage'     => $this->input->post("ptTypePage"),
-            'FTAgnCode'     => $this->input->post("ptAgnCode")
+            'FTAgnCode'     => $this->session->userdata('FTAgnCode')
         );
 
-        $aListRate       = $this->Settingdairycurrency_model->FSaMSETConfigDataTableByType($aData,'checkbox');
+        $aListRate       = $this->Settingdairycurrency_model->FSaMSETConfigDataTableByCurrentcy($aData,'checkbox');
 
         $aGenTable  = array(
             'tTypePage'             => $this->input->post("ptTypePage"),
@@ -67,38 +67,10 @@ class Settingdairycurrency_controller extends MX_Controller {
     }
 
     //Event Save (แท็บตั้งค่าระบบ)
-    public function FSxSETSettingEventSave(){
-        $aMergeArray = $this->input->post('aMergeArray');
-        $tTypePage   = $this->input->post('ptTypePage');
-        $tAgnCode    = $this->input->post('ptAgnCode');
-        if(count($aMergeArray) >= 1){
-            for($i=0; $i<count($aMergeArray); $i++){
-
-                //Type
-                if($aMergeArray[$i]['tType'] == 'checkbox'){
-                    $tType = '4';
-                }else{
-                    $tType = $aMergeArray[$i]['tType'];
-                }
-
-                //Packdata
-                $aUpdate = array(
-                    'FTSysCode'             =>  $aMergeArray[$i]['tSyscode'],
-                    'FTSysApp'              =>  $aMergeArray[$i]['tSysapp'],
-                    'FTSysKey'              =>  $aMergeArray[$i]['tSyskey'],
-                    'FTSysSeq'              =>  $aMergeArray[$i]['tSysseq'],
-                    'FTSysStaDataType'      =>  $tType,
-                    'nValue'                =>  $aMergeArray[$i]['nValue'],
-                    'tKind'                 =>  $aMergeArray[$i]['tKind'],
-                    'FDLastUpdOn'           => date('Y-m-d H:i:s'),
-                    'FTLastUpdBy'           => $this->session->userdata('tSesUsername'),
-                    'tTypePage'             => $tTypePage,
-                    'FTAgnCode'             => $tAgnCode
-                );
-
-                //Update
-                $aResList   = $this->Settingdairycurrency_model->FSaMSETUpdate($aUpdate);
-            }
+    public function FSxSETDailyCurrencyEventSave(){
+        $aAllitems = $this->input->post('aGetItem');
+        foreach($aAllitems as $nKey => $aVal){
+            $this->Settingdairycurrency_model->FSaMCurentcyUpdate($aVal);
         }
     }
 

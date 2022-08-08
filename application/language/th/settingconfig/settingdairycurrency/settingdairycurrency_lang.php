@@ -69,12 +69,10 @@ $lang['tFmtTypeDef']                            = "รูปแบบปกต�
 $lang['tFmtUserStart']                          = "รหัสเริ่มต้น";
 
 
-$lang['tSettingDailyCurrencyName']                          = "รหัสสกุลเงิน";
-$lang['tSettingDailyCurrencyCode']                          = "ชื่อสกุลเงิน";
-$lang['tSettingDailyCurrencyRate']                          = "อัตราแลกเปลี่ยน";
-$lang['tSettingDailyCurrencyRateLast']                          = "อัตราแลกเปลี่ยนล่าสุด";
-
-
-
-
-
+$lang['tSettingDailyCurrencyName']                          = "ชื่อสกุลเงิน";
+$lang['tSettingDailyCurrencyCode']                          = "รหัสสกุลเงิน";
+$lang['tSettingDailyCurrencyRate']                          = "อัตราแลกเปลี่ยนเดิม";
+$lang['tSettingDailyCurrencyRateLast']                      = "อัตราแลกเปลี่ยนล่าสุด";
+$lang['tSettingDailyCurrencyuSERateLast']                   = "ใช้อัตราแลกเปลี่ยนล่าสุด";
+$lang['tSettingDailyCurrencyuSERateNew']                    = "อัตราใหม่";
+$lang['tSettingDailyCurrencyuAgency']                       = "ตัวแทนขาย";

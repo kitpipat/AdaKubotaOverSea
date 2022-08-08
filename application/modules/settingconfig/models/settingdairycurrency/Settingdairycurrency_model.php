@@ -40,21 +40,30 @@ class Settingdairycurrency_model extends CI_Model
 
     //Load Datatable Type Checkbox
     // Last Update : 13/08/2020 Napat(Jame)
-    public function FSaMSETConfigDataTableByType($paData, $ptType)
+    public function FSaMSETConfigDataTableByCurrentcy($paData, $ptType)
     {
         $nLngID = $paData['FNLngID'];
         $tAgnCode   = $paData['FTAgnCode'];
 
         $tSQL   = "SELECT
+                    RATE.FTAgnCode,
+                    AGNL.FTAgnName,
                     RATE.FTRteCode,
                     RATEL.FTRteName,
-                    RATE.FCRteRate
+                    RATE.FCRteRate,
+                    RATE.FCRteLastRate
                 FROM
                     TFNMRate RATE
                     LEFT JOIN TFNMRate_L RATEL ON RATE.FTAgnCode = RATEL.FTAgnCode 
                     AND RATE.FTRteCode = RATEL.FTRteCode 
                     AND RATEL.FNLngID = '$nLngID'
+                    LEFT JOIN TCNMAgency_L AGNL ON RATE.FTAgnCode = AGNL.FTAgnCode 
+                    AND AGNL.FNLngID = '$nLngID'
+                    WHERE RATE.FTRteStaUse = '1'
                 ";
+            if($tAgnCode != ''){
+                $tSQL .= " AND RATE.FTAgnCode = '$tAgnCode' ";
+            }
 
         $tSQL   .= " ORDER BY RATE.FTRteCode DESC ";
         // echo $tSQL;
@@ -77,172 +86,13 @@ class Settingdairycurrency_model extends CI_Model
         return $aResult;
     }
 
-    // //Update
-    // public function FSaMSETUpdate($paData){
-    //     try{
-
-    //         //แก้ไขประเภทกำหนดเอง หรืออ้างอิง
-    //         if($paData['tKind'] == 'Make'){ //แก้ไขประเภทกำหนดเอง
-    //             $this->db->set('FTSysStaUsrValue' , $paData['nValue']); 
-    //         }else if($paData['tKind'] == 'Ref'){ //แก้ไขประเภทอ้างอิง
-    //             $this->db->set('FTSysStaUsrRef' , $paData['nValue']);
-    //         }
-
-    //         $this->db->set('FDLastUpdOn' , $paData['FDLastUpdOn']);
-    //         $this->db->set('FTLastUpdBy' , $paData['FTLastUpdBy']);
-
-    //         $this->db->where('FTSysCode', $paData['FTSysCode']);
-    //         $this->db->where('FTSysApp', $paData['FTSysApp']);
-    //         $this->db->where('FTSysKey', $paData['FTSysKey']);
-    //         $this->db->where('FTSysSeq', $paData['FTSysSeq']);
-    //         $this->db->where('FTSysStaDataType', $paData['FTSysStaDataType']);
-    //         $this->db->update('TSysConfig');
-    //         if($this->db->affected_rows() > 0 ){
-    //             $aStatus = array(
-    //                 'rtCode' => '1',
-    //                 'rtDesc' => 'Update Success.',
-    //             );
-    //         }else{
-    //             $aStatus = array(
-    //                 'rtCode' => '800',
-    //                 'rtDesc' => 'Fail Success.',
-    //             );
-    //         }
-    //         return $aStatus;
-    //     }catch(Exception $Error){
-    //         return $Error;
-    //     }
-    // }
-
-    public function FSaMSETUpdate($paData)
+    public function FSaMCurentcyUpdate($paData)
     {
         try {
-
-            if ($paData['tKind'] == 'Make') { //แก้ไขประเภทกำหนดเอง
-                $tMakeOrRef_Agn = 'FTCfgStaUsrValue';
-                $tMakeOrRef     = 'FTSysStaUsrValue';
-            } else if ($paData['tKind'] == 'Ref') { //แก้ไขประเภทอ้างอิง
-                $tMakeOrRef_Agn = 'FTCfgStaUsrRef';
-                $tMakeOrRef     = 'FTSysStaUsrRef';
-            }
-
-            if ($paData['tTypePage'] == "Agency") {
-
-                // ตรวจสอบ config ที่ระบุตรงกับ center หรือไม่ ?
-                $tSQL = "   SELECT TOP 1 FTSysCode
-                            FROM TSysConfig WITH(NOLOCK) 
-                            WHERE 1=1
-                                AND FTSysCode           = '$paData[FTSysCode]'
-                                AND FTSysApp            = '$paData[FTSysApp]'
-                                AND FTSysKey            = '$paData[FTSysKey]'
-                                AND FTSysSeq            = '$paData[FTSysSeq]'
-                                AND FTSysStaDataType    = '$paData[FTSysStaDataType]'
-                                AND $tMakeOrRef         = '$paData[nValue]'
-                        ";
-                $oQuery = $this->db->query($tSQL);
-                if ($oQuery->num_rows() > 0) {
-                    // ถ้า Value เท่ากับ Center ให้ไปลบใน TCNTConfigSpc
-                    $this->db->where('FTSysCode', $paData['FTSysCode']);
-                    $this->db->where('FTSysApp', $paData['FTSysApp']);
-                    $this->db->where('FTSysKey', $paData['FTSysKey']);
-                    $this->db->where('FTAgnCode', $paData['FTAgnCode']);
-                    $this->db->where('FTSysSeq', $paData['FTSysSeq']);
-                    $this->db->where('FTSysStaDataType', $paData['FTSysStaDataType']);
-                    $this->db->delete('TCNTConfigSpc');
-                    if ($this->db->affected_rows() > 0) {
-                        $aStatus = array(
-                            'rtCode' => '1',
-                            'rtDesc' => 'Delete TCNTConfigSpc Success.',
-                        );
-                    } else {
-                        $aStatus = array(
-                            'rtCode' => '800',
-                            'rtDesc' => 'Fail Delete TCNTConfigSpc.',
-                        );
-                    }
-                } else {
-                    // ถ้า Value ไม่ตรงกับ Center ในเพิ่ม/อัพเดท ใน TCNTConfigSpc
-                    $this->db->set($tMakeOrRef_Agn, $paData['nValue']);
-                    $this->db->where('FTSysCode', $paData['FTSysCode']);
-                    $this->db->where('FTSysApp', $paData['FTSysApp']);
-                    $this->db->where('FTSysKey', $paData['FTSysKey']);
-                    $this->db->where('FTAgnCode', $paData['FTAgnCode']);
-                    $this->db->where('FTSysSeq', $paData['FTSysSeq']);
-                    $this->db->where('FTSysStaDataType', $paData['FTSysStaDataType']);
-                    $this->db->update('TCNTConfigSpc');
-                    if ($this->db->affected_rows() > 0) {
-                        // อัพเดทสำเร็จ
-                        $aStatus = array(
-                            'rtCode' => '1',
-                            'rtDesc' => 'Update TCNTConfigSpc Success.',
-                        );
-                    } else {
-                        // ไม่พบข้อมูลอัพเดท ให้เพิ่มรายการใหม่
-                        $aInsTSysConfig_L = array(
-                            'FTSysCode'         => $paData['FTSysCode'],
-                            'FTSysApp'          => $paData['FTSysApp'],
-                            'FTSysKey'          => $paData['FTSysKey'],
-                            'FTSysSeq'          => $paData['FTSysSeq'],
-                            'FTAgnCode'         => $paData['FTAgnCode'],
-                            'FTCfgStaUsrValue'  => ($paData['tKind'] == 'Make' ? $paData['nValue'] : ''),
-                            'FTCfgStaUsrRef'    => ($paData['tKind'] == 'Ref' ? $paData['nValue'] : ''),
-                            'FTSysStaDataType'  => $paData['FTSysStaDataType']
-                        );
-                        $this->db->insert('TCNTConfigSpc', $aInsTSysConfig_L);
-                        if ($this->db->affected_rows() > 0) {
-                            $aStatus = array(
-                                'rtCode' => '1',
-                                'rtDesc' => 'Insert Success.',
-                            );
-                        } else {
-                            $aStatus = array(
-                                'rtCode' => '800',
-                                'rtDesc' => 'Fail Insert Success.',
-                            );
-                        }
-                    }
-                }
-
-                // ไม่ว่าจะ update/insert/delete รายการใน TCNTConfigSpc ให้อัพเดท FDLastUpdOn ในตารางหลัก TSysConfig เสมอ
-                $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
-                $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
-
-                $this->db->where('FTSysCode', $paData['FTSysCode']);
-                $this->db->where('FTSysApp', $paData['FTSysApp']);
-                $this->db->where('FTSysKey', $paData['FTSysKey']);
-                $this->db->where('FTSysSeq', $paData['FTSysSeq']);
-                $this->db->where('FTSysStaDataType', $paData['FTSysStaDataType']);
-                $this->db->update('TSysConfig');
-
-            } else {
-
-                $this->db->set($tMakeOrRef, $paData['nValue']);
-                $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
-                $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
-
-                $this->db->where('FTSysCode', $paData['FTSysCode']);
-                $this->db->where('FTSysApp', $paData['FTSysApp']);
-                $this->db->where('FTSysKey', $paData['FTSysKey']);
-                $this->db->where('FTSysSeq', $paData['FTSysSeq']);
-                $this->db->where('FTSysStaDataType', $paData['FTSysStaDataType']);
-                $this->db->update('TSysConfig');
-
-                if ($this->db->affected_rows() > 0) {
-                    $aStatus = array(
-                        'rtCode' => '1',
-                        'rtDesc' => 'Update Success.',
-                    );
-                } else {
-                    $aStatus = array(
-                        'rtCode' => '800',
-                        'rtDesc' => 'Fail Update Success.',
-                    );
-                }
-            }
-
-            // echo $this->db->last_query();
-
-            return $aStatus;
+                $this->db->set('FCRteRate', $paData['FCRteRate']);
+                $this->db->where('FTAgnCode', $paData['FTAgnCode']);
+                $this->db->where('FTRteCode', $paData['FTRteCode']);
+                $this->db->update('TFNMRate');
         } catch (Exception $Error) {
             return $Error;
         }

@@ -97,9 +97,12 @@
             <table class="table table-striped" style="width:100%" id="otbTableForCheckbox">
                 <thead>
                     <tr class="xCNCenter">
+                        <th class="xCNTextBold" style="text-align:left; width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyuAgency') ?></th>
                         <th class="xCNTextBold" style="text-align:left; width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyCode') ?></th>
                         <th class="xCNTextBold" style="text-align:left;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyName') ?></th>
                         <th class="xCNTextBold" style="text-align:left;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRate') ?></th>
+                        <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?></th>
+                        <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyuSERateLast') ?></th>
                         <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?></th>
                     </tr>
                 </thead>
@@ -109,13 +112,22 @@
                             // print_r($aValue['FTRteCode']); 
                             ?>
                             <tr class="text-center xCNTextDetail2">
+                                <td style="text-align:left;"><?php echo ($aValue['FTAgnName'] == '') ? '-' : $aValue['FTAgnName']; ?></td>
                                 <td style="text-align:left;"><?php echo $aValue['FTRteCode'] ?></td>
                                 <td style="text-align:left;"><?php echo ($aValue['FTRteName'] == '') ? '-' : $aValue['FTRteName']; ?></td>
-                                <td style="text-align:left;"><?php echo $aValue['FCRteRate'] ?></td>
+                                <td style="text-align:right;"><?php echo $aValue['FCRteRate'] ?></td>
+                                <td style="text-align:right;"><?php echo $aValue['FCRteLastRate'] ?></td>
 
 
                                 <td>
-                                    <input type="text" value = '<?php echo $aValue['FCRteRate'] ?>'>
+                                    <label class="fancy-checkbox">
+                                        <input type="checkbox" data-seq ='<?=$key?>' data-rterate ='<?=$aValue['FCRteRate']?>' data-rtelastrate ='<?=$aValue['FCRteLastRate']?>' onclick="JSxEventClickCheckboxCurrentcy(this);"><span></span>
+                                    </label>
+                                </td>
+
+                                
+                                <td>
+                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy" data-seq ='<?=$key?>' data-agncode ='<?=$aValue['FTAgnCode']?>' data-rtecode ='<?=$aValue['FTRteCode']?>' id='oetUseCurrency<?= $key ?>' value = '<?php echo $aValue['FCRteRate'] ?>'>
                                 </td>
                             </tr>
                         <?php } ?>

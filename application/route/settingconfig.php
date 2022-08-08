@@ -96,3 +96,5 @@ $route ['SettingDailyCurrencyGetList']             = 'settingconfig/settingdairy
 
 $route ['SettingDailyCurrencyLoadViewSearch']      = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSvSETGetDairyCurrencyPageListSearch';
 $route ['SettingDailyCurrencyLoadTable']           = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSvSETDairyCurrencyGetTable';
+$route ['SettingDailyCurrencySave']                = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSxSETDailyCurrencyEventSave';
+
