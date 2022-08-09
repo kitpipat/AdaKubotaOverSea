@@ -51,14 +51,16 @@ class Settingdairycurrency_model extends CI_Model
                     RATE.FTRteCode,
                     RATEL.FTRteName,
                     RATE.FCRteRate,
-                    RATE.FCRteLastRate
+                    RATE.FCRteLastRate,
+                    Job.FDJobDateCfm
                 FROM
-                    TFNMRate RATE
-                    LEFT JOIN TFNMRate_L RATEL ON RATE.FTAgnCode = RATEL.FTAgnCode 
+                    TFNMRate RATE WITH(NOLOCK)
+                    LEFT JOIN TFNMRate_L RATEL WITH(NOLOCK) ON RATE.FTAgnCode = RATEL.FTAgnCode 
                     AND RATE.FTRteCode = RATEL.FTRteCode 
                     AND RATEL.FNLngID = '$nLngID'
-                    LEFT JOIN TCNMAgency_L AGNL ON RATE.FTAgnCode = AGNL.FTAgnCode 
+                    LEFT JOIN TCNMAgency_L AGNL WITH(NOLOCK) ON RATE.FTAgnCode = AGNL.FTAgnCode 
                     AND AGNL.FNLngID = '$nLngID'
+                    LEFT JOIN TCNSJobTask Job WITH(NOLOCK) ON RATE.FTAgnCode = job.FTAgnCode
                     WHERE RATE.FTRteStaUse = '1'
                 ";
             if($tAgnCode != ''){
@@ -89,10 +91,52 @@ class Settingdairycurrency_model extends CI_Model
     public function FSaMCurentcyUpdate($paData)
     {
         try {
+            $tAgnCode = $paData['FTAgnCode'];
                 $this->db->set('FCRteRate', $paData['FCRteRate']);
                 $this->db->where('FTAgnCode', $paData['FTAgnCode']);
                 $this->db->where('FTRteCode', $paData['FTRteCode']);
                 $this->db->update('TFNMRate');
+        } catch (Exception $Error) {
+            return $Error;
+        }
+    }
+
+    public function FSaMCurentcyTashUpdate($paData)
+    {
+        try {
+        $tAgnCode   = $paData['FTAgnCode'];
+        $tCreateOn = date("Y-m-d H:i:s");
+
+        $tSQLGetAllAgn   = "SELECT FTAgnCode FROM TFNMRate WITH(NOLOCK) WHERE 1=1 ";
+        if($tAgnCode != ''){
+            $tSQLGetAllAgn   .= " AND FTAgnCode = '$tAgnCode' ";
+        }
+        $tSQLGetAllAgn  .= "GROUP BY FTAGNCode ";
+        $oQueryAllAgn = $this->db->query($tSQLGetAllAgn);
+        $oListAllAgn      = $oQueryAllAgn->result_array();
+        
+        foreach($oListAllAgn AS $nKey => $aVal){
+            $tValAgn = $aVal['FTAgnCode'];
+            $tSQL   = "SELECT FTAgnCode FROM TCNSJobTask WITH(NOLOCK)
+            WHERE FTAgnCode = '$tValAgn' ";
+            $oQuery = $this->db->query($tSQL);
+            $oListAgn      = $oQuery->result_array();
+            if (count($oListAgn) > 0) {
+                $this->db->set('FDJobDateCfm', $tCreateOn);
+                $this->db->where('FTAgnCode', $tValAgn);
+                $this->db->update('TCNSJobTask');
+            } else {
+                $tSQL = "INSERT INTO TCNSJobTask(FTAgnCode, FTJobRefTbl, FDJobDateCfm, FDJobStaUse)
+                VALUES( 
+                    '$tValAgn',
+                    'TFNMRate',
+                    '$tCreateOn',
+                    '1'
+                    ) ";   
+                $oQuery = $this->db->query($tSQL);
+            }
+        }
+        
         } catch (Exception $Error) {
             return $Error;
         }

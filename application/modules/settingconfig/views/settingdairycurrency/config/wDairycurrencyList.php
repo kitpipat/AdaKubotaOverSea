@@ -21,7 +21,7 @@
     </div>
 
     <div class="col-xs-4 col-md-8 col-lg-8 text-right" style="margin-top:25px;">
-            <div id="odvBtnAddEdit" style="display: block;">
+            <div id="odvBtnAddEdit" style="display: block;padding-bottom:10px;">
                     <button onclick="JSxCurrentcySave()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="margin-left: 5px;" style="display: block;"><?=language('common/main/main', 'tModalConfirm'); ?></button>
                 </div>
             </div>

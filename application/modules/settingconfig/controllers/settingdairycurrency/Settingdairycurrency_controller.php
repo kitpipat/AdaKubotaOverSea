@@ -51,7 +51,7 @@ class Settingdairycurrency_controller extends MX_Controller {
             'tSearchAll'    => $tSearch,
             'tAppType'      => $tAppType,
             'tTypePage'     => $this->input->post("ptTypePage"),
-            'FTAgnCode'     => $this->session->userdata('FTAgnCode')
+            'FTAgnCode'     => $this->session->userdata('tSesUsrAgnCode')
         );
 
         $aListRate       = $this->Settingdairycurrency_model->FSaMSETConfigDataTableByCurrentcy($aData,'checkbox');
@@ -60,7 +60,9 @@ class Settingdairycurrency_controller extends MX_Controller {
             'tTypePage'             => $this->input->post("ptTypePage"),
             'aAlwEvent'             => $aAlwEvent,
             'aListRate'             => $aListRate,
-            'nDecimalShow'          => $nDecimalShow
+            'nDecimalShow'          => $nDecimalShow,
+            'dJobDate'              => $aListRate['raItems'][0]['FDJobDateCfm'],
+            'FTAgnCode'             => $this->session->userdata('tSesUsrAgnCode')
         );
 
         $this->load->view('settingconfig/settingdairycurrency/config/wDairycurrencyDatatable',$aGenTable);
@@ -72,6 +74,7 @@ class Settingdairycurrency_controller extends MX_Controller {
         foreach($aAllitems as $nKey => $aVal){
             $this->Settingdairycurrency_model->FSaMCurentcyUpdate($aVal);
         }
+        $this->Settingdairycurrency_model->FSaMCurentcyTashUpdate($aVal);
     }
 
     //Event Use Default value ใช้แม่แบบ (แท็บตั้งค่าระบบ)

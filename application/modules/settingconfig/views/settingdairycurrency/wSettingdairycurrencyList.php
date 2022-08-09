@@ -1,6 +1,7 @@
 <style>
     #odvInforSettingconfig , #odvInforAutonumber{
         padding-bottom  : 0px;
+        padding-top: 0px;
     }
 
     #odvSettingConfig{
