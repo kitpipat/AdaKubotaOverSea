@@ -57,7 +57,7 @@ function JSxSlipMessageNavDefult() {
  * Return : Modal Status Error
  * Return Type : view
  */
-/* function JCNxSlipMessageResponseError(jqXHR, textStatus, errorThrown) {
+/* function JCNxResponseError(jqXHR, textStatus, errorThrown) {
     try{
         JCNxCloseLoading();
         var tHtmlError = $(jqXHR.responseText);
@@ -81,7 +81,7 @@ function JSxSlipMessageNavDefult() {
         $('#myModal').modal({ show: true });
         $('#odvModalBody').html(tMsgError);
     }catch(err){
-        console.log('JCNxSlipMessageResponseError Error: ', err);
+        console.log('JCNxResponseError Error: ', err);
     }
 } */
 
@@ -108,7 +108,7 @@ function JSvCallPageSlipMessage(pnPage) {
                 JSvSlipMessageDataTable(pnPage);
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                JCNxSlipMessageResponseError(jqXHR, textStatus, errorThrown);
+                JCNxResponseError(jqXHR, textStatus, errorThrown);
             }
         });
     }catch(err){
@@ -151,7 +151,7 @@ function JSvSlipMessageDataTable(pnPage) {
                 JCNxCloseLoading();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                JCNxSlipMessageResponseError(jqXHR, textStatus, errorThrown);
+                JCNxResponseError(jqXHR, textStatus, errorThrown);
             }
         });
     }catch(err){
@@ -193,7 +193,7 @@ function JSvCallPageSlipMessageAdd() {
                 JCNxCloseLoading();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                JCNxSlipMessageResponseError(jqXHR, textStatus, errorThrown);
+                JCNxResponseError(jqXHR, textStatus, errorThrown);
             }
         });
     }catch(err){
@@ -234,7 +234,7 @@ function JSvCallPageSlipMessageEdit(ptSmgCode) {
                 JCNxCloseLoading();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                JCNxSlipMessageResponseError(jqXHR, textStatus, errorThrown);
+                JCNxResponseError(jqXHR, textStatus, errorThrown);
             }
         });
     }catch(err){
@@ -373,7 +373,7 @@ function JSnAddEditSlipMessage(ptRoute){
 //                 $('#oetSmgName').focus();
 //             },
 //             error: function(jqXHR, textStatus, errorThrown) {
-//                 JCNxSlipMessageResponseError(jqXHR, textStatus, errorThrown);
+//                 JCNxResponseError(jqXHR, textStatus, errorThrown);
 //             }
 //         });
 //     }catch(err){
@@ -418,7 +418,7 @@ function JSnAddEditSlipMessage(ptRoute){
 //                     $('.btn-default').attr('disabled', false);
 //                 },
 //                 error: function(jqXHR, textStatus, errorThrown) {
-//                     JCNxSlipMessageResponseError(jqXHR, textStatus, errorThrown);
+//                     JCNxResponseError(jqXHR, textStatus, errorThrown);
 //                 }
 //             });
 //         }
@@ -728,7 +728,7 @@ function JSxSlipMessageDeleteRowEnd(poElement = null, poEvent = null){
  * Return : -
  * Return Type : -
  */
-function JSxSlipMessageAddHeadReceiptRow(){
+ function JSxSlipMessageAddHeadReceiptRow(){
     try{
         if(JCNnSlipMessageCountRow('head') >= 10){return;}
         

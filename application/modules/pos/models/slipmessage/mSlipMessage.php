@@ -367,4 +367,15 @@ class mSlipMessage extends CI_Model {
         return $aResult;
     }
 
+    public function FSaMSMGGetStaUse(){
+        $tSQL = "SELECT DISTINCT * FROM TSysLanguage"
+        $tSQL .= " WHERE FTLngStaUse = 1 "
+        $oDTQuery = $this->db->query($tSQL);
+        if($oDTQuery->num_rows() > 0){
+            return $oDTQuery->result();
+        }else{
+            //No Data
+            return false;
+        }  
+    }
 }

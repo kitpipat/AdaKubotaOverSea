@@ -108,6 +108,7 @@ class Slipmessage_controller extends MX_Controller {
 
         $nLangResort    = $this->session->userdata("tLangID");
         $nLangEdit      = $this->session->userdata("tLangEdit");
+        $aGetLang       = $this->Slipmessage_model->FSaMSMGGetStaUse();
         // $aLangHave = FCNaHGetAllLangByTable('TCNMSlipMsgHD_L');
         // $nLangHave = count($aLangHave);
         // if($nLangHave > 1){
@@ -130,7 +131,8 @@ class Slipmessage_controller extends MX_Controller {
         $tAPIReq        = "";
         $tMethodReq     = "GET";
         $aDataAdd = array(
-            'aResult'   => array('rtCode'=>'99')
+            'aResult'   => array('rtCode'=>'99'),
+            'aLang'     => $aGetLang
         );
 
         $this->load->view('pos/slipmessage/wSlipMessageAdd',$aDataAdd);
@@ -149,6 +151,7 @@ class Slipmessage_controller extends MX_Controller {
         $tSmgCode       = $this->input->post('tSmgCode');
         $nLangResort    = $this->session->userdata("tLangID");
         $nLangEdit      = $this->session->userdata("tLangEdit");
+        $aGetLang       = $this->Slipmessage_model->FSaMSMGGetStaUse();
         // $aLangHave      = FCNaHGetAllLangByTable('TCNMSlipMsgHD_L');
         // $nLangHave      = count($aLangHave);
 
@@ -168,13 +171,13 @@ class Slipmessage_controller extends MX_Controller {
 
         $aData  = array(
             'FTSmgCode' => $tSmgCode,
-            'FNLngID'   => $nLangEdit
+            'FNLngID'   => $nLangEdit,
         );
 
         $tAPIReq        = "";
         $tMethodReq     = "GET";
         $aSmgData       = $this->Slipmessage_model->FSaMSMGSearchByID($tAPIReq, $tMethodReq, $aData);
-        $aDataEdit      = array('aResult' => $aSmgData);
+        $aDataEdit      = array('aResult' => $aSmgData,'aLang'=> $aGetLang,);
         $this->load->view('pos/slipmessage/wSlipMessageAdd', $aDataEdit);
     }
 
@@ -207,7 +210,11 @@ class Slipmessage_controller extends MX_Controller {
             }else{
                 $tSmgCode = $this->input->post('oetSmgCode');
             }
-
+            // $aFonts = array(
+            //    'Fonts' => $this->input->post("ocmSmgFonts"),
+            //    'FontsStyle' => $this->input->post("ocmSmgFontsStyle"),
+            //    'FontsSize' => $this->input->post("ocmSmgFontsSize"),
+            // );
             $aDataMaster = array(
                 'FTSmgCode'             => $tSmgCode,
                 'FTSmgTitle'            => $this->input->post('oetSmgTitle'),
@@ -217,11 +224,12 @@ class Slipmessage_controller extends MX_Controller {
                 'FDLastUpdOn'           => date('Y-m-d H:i:s'),
                 'FTCreateBy'            => $this->session->userdata('tSesUsername'),
                 'FDCreateOn'            => date('Y-m-d H:i:s'),
-                'FNLngID'               => $this->session->userdata("tLangEdit"),
-            );
+                'FNLngID'               => $this->input->post("ocmSmgLngID"),
+                'FTFonts'               => $this->input->post("ocmSmgFonts").','.$this->input->post("ocmSmgFontsStyle").','.$this->input->post("ocmSmgFontsSize"),
+            );  
 
-            // print_r($aDataMaster);
-            // exit();
+            //  print_r($aDataMaster);
+            //  exit();
 
 
             $oCountDup  = $this->Slipmessage_model->FSoMSMGCheckDuplicate($aDataMaster['FTSmgCode']);

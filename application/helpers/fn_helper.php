@@ -154,14 +154,18 @@ function FSxCGENGetRandAlphanumeric($length) {
 /**
  * Fs set language
  */
-function language($file, $string, $sprintf = '') {
+function language($file, $string, $sprintf = '',$ptLang = '') {
     $obj = & get_instance();
-    if (@$_SESSION ['lang'] == '' || @$_SESSION ['lang'] == 'th') {
-        @$_SESSION ['lang'] = 'th';
-        @$_SESSION ['tLangID'] = 1;
-        $lang = 'th';
-    } else {
-        $lang = $_SESSION ['lang'];
+    if(!empty($ptLang) && isset($ptLang)){
+        $lang = $ptLang;
+    }else{
+        if (@$_SESSION ['lang'] == '' || @$_SESSION ['lang'] == 'th') {
+            @$_SESSION ['lang'] = 'th';
+            @$_SESSION ['tLangID'] = 1;
+            $lang = 'th';
+        } else {
+            $lang = $_SESSION ['lang'];
+        }
     }
     $obj->lang->load($file, $lang);
     $rs = sprintf($obj->lang->line($string), $sprintf);
@@ -171,6 +175,7 @@ function language($file, $string, $sprintf = '') {
     } else {
         return $string;
     }
+    
 }
 
 // เช็คเรื่องภาษา ตาราง L
@@ -507,4 +512,34 @@ function FCNnFactorial($pnNum){
     else{   
         return $pnNum * FCNnFactorial($pnNum - 1);   
     }   
+}
+
+function FSaGetLanguage() {
+    $ci = & get_instance();
+    $ci->load->database();
+
+    $tSQL = " SELECT DISTINCT * FROM TSysLanguage WITH(NOLOCK) WHERE FTLngStaUse = '1' ORDER BY FTLngStaLocal ASC ";
+    $oQuery = $ci->db->query($tSQL);
+    if ($oQuery->num_rows() > 0) {
+        $aGetLang = $oQuery->result_array();
+        foreach($aGetLang as $nKey => $aVal){
+            $nLang = '';
+            switch ($aVal['FTLngShortName']) {
+                case 'THA':
+                    $nLang = 'th';
+                    break;
+                case 'ENG':
+                    $nLang = 'en';
+                    break;
+                case 'LAO':
+                    $nLang = 'la';
+                    break; 
+            }
+
+            $aGetLang[$nKey]['nLang'] = $nLang;
+        }
+        return $aGetLang;
+    } else {
+        return array();
+    }
 }

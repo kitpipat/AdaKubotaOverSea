@@ -104,7 +104,7 @@ function JSnAddEditSlipMessage(ptRoute) {
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        JCNxSlipMessageResponseError(jqXHR, textStatus, errorThrown);
+                        JCNxResponseError(jqXHR, textStatus, errorThrown);
                     }
                 });
             },

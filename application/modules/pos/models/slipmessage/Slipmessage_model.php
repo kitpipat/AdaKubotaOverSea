@@ -19,7 +19,9 @@ class Slipmessage_model extends CI_Model {
         // Slip query
         $tHDSQL =   "SELECT
                         SMGHD.FTSmgCode AS rtSmgCode,
-                        SMGHD.FTSmgTitle AS rtSmgTitle
+                        SMGHD.FNLngID AS rtSmgLngID,
+                        SMGHD.FTSmgTitle AS rtSmgTitle,
+                        SMGHD.FTFonts as rtSmgFonts
                     FROM [TCNMSlipMsgHD_L] SMGHD
                     WHERE 1=1 
                     AND SMGHD.FNLngID = $nLngID
@@ -216,7 +218,8 @@ class Slipmessage_model extends CI_Model {
                     'FTCreateBy'    => $paData['FTCreateBy'],
                     'FDLastUpdOn'   => $paData['FDLastUpdOn'],
                     'FTLastUpdBy'   => $paData['FTLastUpdBy'],
-                    'FNLngID' => $paData['FNLngID']
+                    'FNLngID'       => $paData['FNLngID'],
+                    'FTFonts'       => $paData['FTFonts'],
                 ));
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(
@@ -365,6 +368,18 @@ class Slipmessage_model extends CI_Model {
             $aResult = false;
         }
         return $aResult;
+    }
+
+    public function FSaMSMGGetStaUse(){
+        $tSQL = "SELECT DISTINCT * FROM TSysLanguage";
+        $tSQL .= " WHERE FTLngStaUse = '1' ";
+        $oDTQuery = $this->db->query($tSQL);
+        if($oDTQuery->num_rows() > 0){
+            return $oDTQuery->result_array();
+        }else{
+            //No Data
+            return array();
+        }  
     }
 
 }

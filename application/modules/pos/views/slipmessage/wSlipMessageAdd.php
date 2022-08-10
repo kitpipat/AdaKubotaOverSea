@@ -1,19 +1,29 @@
 <?php
 if($aResult['rtCode'] == "1"){
     $tSmgCode = $aResult['raHDItems']['rtSmgCode'];
+    $oSmgFonts = $aResult['raHDItems']['rtSmgFonts'];
     $tSmgTitle = $aResult['raHDItems']['rtSmgTitle'];
+    $tSmgLngID = $aResult['raHDItems']['rtSmgLngID'];
     $aSmgHeadItems = $aResult['raDTHeadItems'];
     $aSmgEndItems = $aResult['raDTEndItems'];
     $tRoute = "slipMessageEventEdit";
+    $tSmgFonts = explode(",",$oSmgFonts)[0];
+    $tSmgFontsStyle = explode(",",$oSmgFonts)[1];
+    $tSmgFontsSize = explode(",",$oSmgFonts)[2];
 }else{
     $tSmgCode = "";
     $tSmgTitle = "";
+    $oSmgFonts = "";
+    $tSmgLngID = "";
     $aSmgHeadItems = [];
     $aSmgEndItems = [];
     $tSmgName = "";
     $tRoute = "slipMessageEventAdd";
+    $tSmgFonts = "";
+    $tSmgFontsStyle = "";
+    $tSmgFontsSize = "";
 }
-
+$tLang = "";
 $tHeadReceiptPlaceholder = "Head of Receipt";
 $tEndReceiptPlaceholder = "End of Receipt";
 ?>
@@ -85,6 +95,79 @@ $tEndReceiptPlaceholder = "End of Receipt";
                                 >
                             </div>
                         </div>
+
+                        <div class="form-group">
+                        <span style="color:red">*</span>
+                            <label class="xCNLabelFrm"><?php echo language('pos/slipmessage/slipmessage','tSMGLang');?></label>
+                            <select class="selectpicker form-control" id="ocmSmgLngID" name="ocmSmgLngID" value="<?=@$tSmgLngID?>">
+                                <?php 
+                                    foreach($aLang as $aData){ 
+                                        if($aData==$tSmgLngID){
+                                            $tSel = 'selected';
+                                        }else{
+                                            $tSel = '';
+                                        }                    
+                                ?>
+                              	<option value="<?=$aData['FNLngID']?>"<?php echo $tSel;?>>
+                                    <?php echo $aData['FTLngNameEng'];?>
+                                </option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                    
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFont'); ?></label>
+                                        <select style="" class="selectpicker form-control" id="ocmSmgFonts" name="ocmSmgFonts" value="<?=@$tSmgFonts?>">
+                                            <?php  
+                                                
+                                                foreach (scandir('../AdaFonts') as $tFile) {  
+                                                    if (( $tFile != '.' ) && ( $tFile != '..' )) {  
+                                                    $tFileName = ucfirst(explode(".",$tFile)[0]);   
+                                                    if($tFileName==$tSmgFonts){
+                                                        $tSel = 'selected';
+                                                    }else{
+                                                        $tSel = '';
+                                                    }                     
+                                            ?>
+                                                <option value="<?=$tFileName?>"<?php echo $tSel;?>>
+                                                    <?php echo $tFileName;?>
+                                                </option>
+                                            <? }  
+                                                }?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFontType'); ?></label>
+                                        <select class="selectpicker form-control" id="ocmSmgFontsStyle" name="ocmSmgFontsStyle" value="<?=@$tSmgFontsStyle?>">
+                                            <option value="">
+                                                <?php echo '';?>
+                                            </option> 
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFontSize'); ?></label>
+                                        <select class="selectpicker form-control" id="ocmSmgFontsSize" name="ocmSmgFontsSize" value="<?=@$tSmgFontsSize?>">
+                                            <?php 
+                                                for($i=1;$i<73;$i++){
+                                                    if($i==$tSmgFontsSize){
+                                                        $tSel = 'selected';
+                                                    }else{
+                                                        $tSel = '';
+                                                    }      
+                                            ?>
+                                            <option value="<?=$i?>"<?=$tSel?>>
+                                                <?php echo $i;?>
+                                            </option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
 
                         <div class="form-group">
                             <div class="validate-input">
