@@ -32,8 +32,10 @@ $lang['tRTETBEdit']     = "แก้ไข";
 //Form 
 $lang['tRTECode']       = "รหัส";
 $lang['tRTEName']       = "ชื่อ";
-$lang['tRTESearch']    = 'ค้นหา';
+$lang['tRTESearch']     = 'ค้นหา';
 $lang['tRTEAgency']     = "ตัวแทนขาย";
+$lang['tRTEHq']         = "ส่วนกลาง";
+
 
 $lang['tRteStaUse']       =  "สถานะใช้งาน";
 $lang['tRteStaLocal']     =  "สถานะท้องถิ่น";

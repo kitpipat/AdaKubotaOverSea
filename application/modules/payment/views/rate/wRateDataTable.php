@@ -62,7 +62,7 @@
 							<td><?php echo $aValue['FTRteCode'];?></td>
                             <td><?php echo $aValue['FTRteName'];?></td>
                             <td class="text-right"><?php echo number_format($aValue['FCRteRate'],$nOptDecimalShow)?></td>
-                            <td><?= ($aValue['FTAgnCode']) ?  $aValue['FTAgnName']  :  'ส่วนกลาง' ;?></td>
+                            <td><?= ($aValue['FTAgnCode']) ?  $aValue['FTAgnName']  :  language('payment/rate/rate','tRTEHq') ;?></td>
                             <!-- <td>tManage</td> -->
 							<?php if(($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) && (!$tAgnCode)) : ?>
                             	<!-- <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/assets/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>')"></td> -->

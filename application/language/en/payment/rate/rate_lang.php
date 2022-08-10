@@ -34,9 +34,12 @@ $lang['tRTECode']       = "Code";
 $lang['tRTEName']       = "Name";
 $lang ['tRTESearch']    = 'Search';
 $lang['tRTEAgency']     = "Agency";
+$lang['tRTEHq']         = "Center";
+
 
 $lang['tRteStaUse']       =  "Status Use";
 $lang['tRteStaLocal']     =  "Status Local";
+$lang['tRteUnit']         =  "Rounding off";
 
 //Validate
 $lang['tRTEValidCode']      = "Please Enter Code.";
