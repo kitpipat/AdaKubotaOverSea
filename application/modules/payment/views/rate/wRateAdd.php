@@ -1,4 +1,8 @@
 <?php
+//Agency
+$tSessAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
+$tSessAgnName 	= $this->session->userdata("tSesUsrAgnName");
+
 if($aResult['rtCode'] == "1"){
 	$tRteCode       	= $aResult['raItems']['rtRteCode'];
 	$cRteRate       	= number_format($aResult['raItems']['rcRteRate'],$nOptDecimalShow);
@@ -14,9 +18,17 @@ if($aResult['rtCode'] == "1"){
 	$tRteDecText       	= $aResult['raItems']['rtRteDecText'];
 	$cRteStaUse        	= $aResult['raItems']['rtRteStaUse'];         
 	$cRteStaLocal       = $aResult['raItems']['rtRteStaLocal'];
+	$tRteIsoCode		= $aResult['raItems']['FTCurCode'];
+	$tRteIsoName		= $aResult['raItems']['FTCurName'];
+	//Agency
+	$tRteAgnCode 	= $aResult['raItems']['FTAgnCode'];
+	$tRteAgnName 	= $aResult['raItems']['FTAgnName'];
+
 	//Event Control
 	if(isset($aAlwEventRate)){
-		if($aAlwEventRate['tAutStaFull'] == 1 || $aAlwEventRate['tAutStaEdit'] == 1){
+		if($aAlwEventRate['tAutStaFull'] == 1 || $aAlwEventRate['tAutStaEdit'] == 1 && !$tSessAgnCode){
+			$nAutStaEdit = 1;
+		}elseif($tRteAgnCode == $tSessAgnCode){
 			$nAutStaEdit = 1;
 		}else{
 			$nAutStaEdit = 0;
@@ -39,10 +51,14 @@ if($aResult['rtCode'] == "1"){
 	$tRteShtName       	= "";
 	$tRteNameText       = "";
 	$tRteDecText       	= "";
+	$tRteIsoCode      	= "";
+	$tRteIsoName       	= "";
 	$cRteStaUse         = 1;
-	$cRteStaLocal       = 1;
+	$cRteStaLocal       = 0;
 	$tRoute         	= "rateEventAdd";
 	$nAutStaEdit = 0;	//Event Control
+	$tRteAgnCode 	= $tSessAgnCode;
+	$tRteAgnName 	= $tSessAgnName;
 }
 ?>
 <style>
@@ -96,7 +112,7 @@ if($aResult['rtCode'] == "1"){
 						<div class="xCNUplodeImage">
 							<input type="hidden" id="oetImgInputRateOld" name="oetImgInputRateOld" value="<?php echo @$tImgName;?>">
 							<input type="hidden" id="oetImgInputRate" name="oetImgInputRate" value="<?php echo @$tImgName;?>">
-							<button type="button" class="btn xCNBTNDefult" onclick="JSvImageCallTempNEW('','','Rate')">  <i class="fa fa-picture-o xCNImgButton"></i> <?php echo language('common/main/main','tSelectPic')?></button>
+							<button type="button" class="btn xCNBTNDefult " onclick="JSvImageCallTempNEW('','','Rate')">  <i class="fa fa-picture-o xCNImgButton"></i> <?php echo language('common/main/main','tSelectPic')?></button>
 						</div>
 					</div>
 				</div>
@@ -136,6 +152,17 @@ if($aResult['rtCode'] == "1"){
 						</div>
 					</div>
 				</div>
+				<!-- ตัวแทนขาย -->
+				<div class="form-group">
+					<label class="xCNLabelFrm"><?= language('payment/rate/rate','tRTEAgency')?></label>	
+					<div class="input-group">
+						<input type="text" class="form-control xCNHide" id="oetRteAgnCode" name="oetRteAgnCode" maxlength="5" value="<?= $tRteAgnCode?>">
+						<input type="text" class="form-control xWPointerEventNone" id="oetRteAgnName" name="oetRteAgnName" maxlength="100" placeholder="<?= language('payment/rate/rate','tRTEAgency')?>" value="<?= $tRteAgnName?>" readonly="">
+						<span class="input-group-btn">
+							<button id="obtRtcBrowseAgn" type="button" class="btn xCNBtnBrowseAddOn " ><img class="xCNIconFind"></button>
+						</span>
+					</div>
+				</div>
 
 				<div class="form-group">
 					<label class="xCNLabelFrm"><span class="text-danger">*</span> <?php echo  language('payment/rate/rate','tRTETBRteName')?></label> 
@@ -146,23 +173,35 @@ if($aResult['rtCode'] == "1"){
 
 				<div class="form-group">
 					<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETBSign')?></label> 
-					<input class="form-control" type="text" id="oetRteSign" name="oetRteSign"
+					<input class="form-control " type="text" id="oetRteSign" name="oetRteSign"
 					placeholder="<?php echo language('payment/rate/rate','tRTETBSign')?>"
 					maxlength="10" value="<?php echo @$cRteSign?>">
 				</div>
 
 				<div class="form-group">
 					<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETBRate')?></label> 
-					<input class="form-control  xCNInputNumericWithDecimal text-right" 
+					<input class="form-control xCNInputNumericWithDecimal text-right " 
 					type="text" id="oetRteRate" name="oetRteRate" 
 					placeholder="0.00"
 					maxlength="18"
 					value="<?php echo @$cRteRate?>">
 				</div>
 
+				<!-- ISO Code -->
+				<div class="form-group  ">
+					<label class="xCNLabelFrm"><?= language('payment/rate/rate','tRteIsoName');?></label>	
+					<div class="input-group">
+						<input type="text" class="form-control xCNHide" id="oetRteIsoCode" name="oetRteIsoCode" maxlength="5" value="<?= $tRteIsoCode?>">
+						<input type="text" class="form-control xWPointerEventNone" id="oetRteIsoName" name="oetRteIsoName" maxlength="100" placeholder="<?= language('payment/rate/rate','tRteIsoName');?>" value="<?= $tRteIsoName?>" readonly="">
+						<span class="input-group-btn">
+							<button id="obtRtcBrowseIso" type="button" class="btn xCNBtnBrowseAddOn "><img class="xCNIconFind"></button>
+						</span>
+					</div>
+				</div>
+							
 				<div class="form-group">
 					<label class="xCNLabelFrm"><?php echo language('payment/rate/rate','tRTETBType')?></label>
-					<select class="selectpicker form-control" id="ocmRteType" name="ocmRteType" maxlength="1">
+					<select class="selectpicker form-control " id="ocmRteType" name="ocmRteType" maxlength="1">
 						<!-- <option value=""><?php echo  language('common/main/main', 'tCMNBlank-NA') ?></option> -->
 						<option value="1"><?php echo  language('payment/rate/rate', 'tRTETBTypeSeq1') ?></option>
 						<option value="2"><?php echo  language('payment/rate/rate', 'tRTETBTypeSeq2') ?></option>
@@ -174,7 +213,7 @@ if($aResult['rtCode'] == "1"){
 
 				<div class="form-group">
 					<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETBFraction')?></label> 
-					<input class="form-control  xCNInputNumericWithDecimal text-right" type="text" 
+					<input class="form-control xCNInputNumericWithDecimal text-right " type="text" 
 					id="oetRteFraction" name="oetRteFraction" 
 					placeholder="0.00"
 					maxlength="18" value="<?php echo @$cRteFraction?>">
@@ -183,7 +222,7 @@ if($aResult['rtCode'] == "1"){
 
 				<div class="form-group xRateFacBox"  > 
 				<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteUnit')?></label> 
-				<button class="xBTNPrimeryPlus" type="button" style="padding-botton:20px" onclick="JSvAddRateUnitFac()">+</button>
+				<button class="xBTNPrimeryPlus " type="button" style="padding-botton:20px" onclick="JSvAddRateUnitFac()">+</button>
 
 							<div class="row" id="odvRteUnitContent">
 							<?php
@@ -243,18 +282,12 @@ if($aResult['rtCode'] == "1"){
 
 <script type="text/javascript">
 $(document).ready(function(){
-
 	$('.selectpicker').selectpicker();
 
     $('.xWTooltipsBT').tooltip({'placement': 'bottom'});
 	$('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
 	
 });
-
-
-
-
-
 
 function JSvAddRateUnitFac(){
 	var nSeqUnit = ($('.odvRateUnitFac').length)+1;

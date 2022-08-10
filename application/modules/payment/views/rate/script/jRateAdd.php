@@ -1,5 +1,6 @@
 <script type="text/javascript">
  $(document).ready(function(){
+
     $('.selectpicker').selectpicker();
     if(JSbRateIsCreatePage()){
         //Rate Code
@@ -184,5 +185,79 @@
         }
         JSxShowButtonChoose();
     })
+
+    var tSessAgn = '<?= $this->session->userdata("tSesUsrAgnCode") ?>';
+    if($('#oetRteAgnCode').val() || $('#oetRteAgnName').val()){
+        if(!tSessAgn){
+            $("#obtRtcBrowseAgn").attr("disabled", false);
+        }else{
+            $("#obtRtcBrowseAgn").attr("disabled", true);
+        }
+    }else{
+        $("#obtRtcBrowseAgn").attr("disabled", false);
+
+    }
 });
+
+ // ตัวแทนขาย
+ $('#obtRtcBrowseAgn').click(function() {
+    JSxCheckPinMenuClose();
+    JCNxBrowseData('oBrowsetAgn');
+});
+    
+var oBrowsetAgn = {
+    Title: ['payment/rate/rate','tRTETBRate'],
+    Table: {
+        Master: 'TCNMAgency',
+        PK: 'FTAgnCode'
+    },
+    Join: {
+        Table: ['TCNMAgency_L'],
+        On: ['TCNMAgency_L.FTAgnCode = TCNMAgency.FTAgnCode']
+    },
+    GrideView: {
+        ColumnPathLang: 'payment/rate/rate',
+        ColumnKeyLang: ['tBrowseAgnCode', 'tBrowseAgnName'],
+        ColumnsSize: ['15%', '75%'],
+        DataColumns: ['TCNMAgency.FTAgnCode', 'TCNMAgency_L.FTAgnName'],
+        DataColumnsFormat: ['', ''],
+        WidthModal: 50,
+        Perpage: 10,
+        OrderBy: ['TCNMAgency.FTAgnCode ASC'],
+    },
+    CallBack: {
+        ReturnType: 'S',
+        Value: ["oetRteAgnCode", "TCNMAgency.FTAgnCode"],
+        Text: ["oetRteAgnName", "TCNMAgency_L.FTAgnName"]
+    },
+};
+
+// ISO Currency
+$('#obtRtcBrowseIso').click(function(){
+    JSxCheckPinMenuClose();
+    JCNxBrowseData('oBrowsetIso');
+});
+
+var oBrowsetIso = {
+    Title: ['payment/rate/rate','tRteIsoName'],
+    Table: {
+        Master: 'TCNSCurrency_L',
+        PK: 'FTCurCode'
+    },
+    GrideView: {
+        ColumnPathLang: 'payment/rate/rate',
+        ColumnKeyLang: ['tBrowseIsoCode', 'tBrowseIsoName'],
+        ColumnsSize: ['15%', '75%'],
+        DataColumns: ['TCNSCurrency_L.FTCurCode', 'TCNSCurrency_L.FTCurName'],
+        DataColumnsFormat: ['', ''],
+        WidthModal: 50,
+        Perpage: 10,
+        OrderBy: ['TCNSCurrency_L.FTCurCode ASC'],
+    },
+    CallBack: {
+        ReturnType: 'S',
+        Value: ["oetRteIsoCode", "TCNSCurrency_L.FTCurCode"],
+        Text: ["oetRteIsoName", "TCNSCurrency_L.FTCurName"]
+    },
+};
 </script>

@@ -33,6 +33,7 @@ $lang['tRTETBEdit']     = "Edit";
 $lang['tRTECode']       = "Code";
 $lang['tRTEName']       = "Name";
 $lang ['tRTESearch']    = 'Search';
+$lang['tRTEAgency']     = "Agency";
 
 $lang['tRteStaUse']       =  "Status Use";
 $lang['tRteStaLocal']     =  "Status Local";
@@ -40,3 +41,12 @@ $lang['tRteStaLocal']     =  "Status Local";
 //Validate
 $lang['tRTEValidCode']      = "Please Enter Code.";
 $lang['tRTEValidName']      = "Please Enter Name.";
+
+// tBrowse
+$lang['tBrowseAgnCode']     = "Code";
+$lang['tBrowseAgnName']     = "Representative Name";
+
+// ISO code
+$lang['tRteIsoName']    = "ISO Code";
+$lang['tBrowseIsoCode']     = "Code";
+$lang['tBrowseIsoName']     = "Currency Name";

@@ -76,6 +76,7 @@ class Rate_controller extends MX_Controller
             $oetRteRate     = $this->input->post('oetRteRate');
             $oetRteFraction = $this->input->post('oetRteFraction');
             $aRtuFac        = $this->input->post('oetRtuFac');
+          
             if (isset($oetRteRate) && !empty($oetRteRate)) {
                 $cRateRate    = $oetRteRate;
             } else {
@@ -101,8 +102,16 @@ class Rate_controller extends MX_Controller
                 $cRteStaLocal = 2;
             }
 
+            $tRteAgnCode = $this->input->post('oetRteAgnCode');
+            if(isset($tRteAgnCode) && !empty($tRteAgnCode)){
+                $tRteAgnCode = $this->input->post('oetRteAgnCode');
+            }else{
+                $tRteAgnCode = '';
+            }
+
             $aDataMaster = array(
                 'tIsAutoGenCode' => $this->input->post('ocbRateAutoGenCode'),
+                'FTAgnCode'     => $tRteAgnCode,
                 'FTRteCode'     => $this->input->post('oetRteCode'),
                 'FCRteRate'     => $cRateRate,
                 'FCRteFraction' => $cRteFraction,
@@ -116,6 +125,7 @@ class Rate_controller extends MX_Controller
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
+                'FTCurCode'     => $this->input->post('oetRteIsoCode'),
             );
 
 
@@ -231,6 +241,7 @@ class Rate_controller extends MX_Controller
             $aDataMaster    = [
                 'FTRteCode'     => $this->input->post('oetRteCode'),
                 'FTImgObj'      => $this->input->post('oetImgInputrate'),
+                'FTAgnCode'     => $this->input->post('oetRteAgnCode'),
                 'FCRteRate'     => $cRateRate,
                 'FCRteFraction' => $cRteFraction,
                 'FTRteType'     => $this->input->post('ocmRteType'),
@@ -243,6 +254,7 @@ class Rate_controller extends MX_Controller
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
+                'FTCurCode'     => $this->input->post('oetRteIsoCode'),
             ];
 
             $aDataUnitFac = [

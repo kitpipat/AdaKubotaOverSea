@@ -4,6 +4,9 @@
     }else{
         $nCurrentPage = '1';
     }
+    //Agency
+    $tAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
+    $tAgnName 	= $this->session->userdata("tSesUsrAgnName");
 ?>
 
 <div class="row">
@@ -19,6 +22,7 @@
 						<th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBRteCode')?></th>
 						<th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBRteName')?></th>
                         <th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBRate')?></th>
+                        <th class="xCNTextBold"><?= language('payment/rate/rate','tRTEAgency')?></th>
 						<!-- <th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBManage')?></th> -->
 						<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) : ?>
 							<th class="xCNTextBold" style="width:10%;"><?= language('common/main/main','tCMNActionDelete')?></th>
@@ -46,11 +50,11 @@
                                 }
                             ?>
                         <tr class="xCNTextDetail2 otrRate" id="otrRate<?=$key?>" data-code="<?=$aValue['FTRteCode']?>" data-name="<?=$aValue['FTRteName']?>">
-							<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) : ?>
+							<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1)  : ?>
 								<td class="text-center">
 									<label class="fancy-checkbox">
-										<input id="ocbListItem<?=$key?>" type="checkbox" class="ocbListItem" name="ocbListItem[]">
-										<span>&nbsp;</span>
+										<input id="ocbListItem<?=$key?>" type="checkbox" class="ocbListItem" name="ocbListItem[]" <?= (!$tAgnCode) ? false : (($aValue['FTAgnCode']) ? false : 'disabled') ;?>>
+										<span <?= (!$tAgnCode) ? false : (($aValue['FTAgnCode']) ? false : 'class="xCNDocDisabled"') ;?> >&nbsp;</span>
 									</label>
 								</td>
 							<?php endif; ?>
@@ -58,15 +62,28 @@
 							<td><?php echo $aValue['FTRteCode'];?></td>
                             <td><?php echo $aValue['FTRteName'];?></td>
                             <td class="text-right"><?php echo number_format($aValue['FCRteRate'],$nOptDecimalShow)?></td>
+                            <td><?= ($aValue['FTAgnCode']) ?  $aValue['FTAgnName']  :  'ส่วนกลาง' ;?></td>
                             <!-- <td>tManage</td> -->
-							<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) : ?>
+							<?php if(($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) && (!$tAgnCode)) : ?>
                             	<!-- <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/assets/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>')"></td> -->
                                 <td class="text-center"><img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>')"></td>
-							<?php endif; ?>
-							<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaRead'] == 1) : ?>
+                            <?php else: ?>
+                                <?php if($aValue['FTAgnCode'] == $tAgnCode){ ?>
+                                    <td class="text-center"><img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>')"></td>
+                                <?php }else{?>
+                                    <td class="text-center"><img class="xCNIconTable xCNIconDel xCNDocDisabled" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" title="มีการยกเลิก หรือ อนุมัติแล้ว ไม่สามารถลบรายการนี้ได้"></td>
+                                <?php }?>    
+                            <?php endif; ?>
+							<?php if(($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) && (!$tAgnCode)) : ?>
                             	<!-- <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/assets/icons/edit.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>')"></td> -->
                                 <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>')"></td>
-							<?php endif; ?>
+                            <?php else: ?>
+                                <?php if($aValue['FTAgnCode'] == $tAgnCode){ ?>
+                                    <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>')"></td>
+                                <?php }else{?>
+                                    <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/view2.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>')"></td>
+                                <?php }?>    
+                            <?php endif; ?>
                         </tr>
                     <?php } ?>
                 <?php else:?>

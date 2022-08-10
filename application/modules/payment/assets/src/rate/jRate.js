@@ -295,14 +295,18 @@ function JSvCallPageRateEdit(ptRteCode) {
                 $('#obtBarSubmitRte').hide();
                 $('.xCNUplodeImage').hide();
                 $('.xCNIconBrowse').hide();
-                $("select").prop('disabled', true);
                 $('input').attr('disabled', true);
+                $('select').prop('disabled', true);
+                $('select').selectpicker('refresh');
+                $('.xCNBtnBrowseAddOn').attr('disabled',true);
+                $('.xBTNPrimeryPlus').attr('disabled',true);
             } else {
                 $('#obtBarSubmitRte').show();
                 $('.xCNUplodeImage').show();
                 $('.xCNIconBrowse').show();
-                $("select").prop('disabled', false);
                 $('input').attr('disabled', false);
+                $("select").prop('disabled', false);
+                $('select').selectpicker('refresh');
             }
             //Control Event Button
 

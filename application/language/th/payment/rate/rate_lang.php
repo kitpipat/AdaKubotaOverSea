@@ -32,7 +32,8 @@ $lang['tRTETBEdit']     = "แก้ไข";
 //Form 
 $lang['tRTECode']       = "รหัส";
 $lang['tRTEName']       = "ชื่อ";
-$lang ['tRTESearch']    = 'ค้นหา';
+$lang['tRTESearch']    = 'ค้นหา';
+$lang['tRTEAgency']     = "ตัวแทนขาย";
 
 $lang['tRteStaUse']       =  "สถานะใช้งาน";
 $lang['tRteStaLocal']     =  "สถานะท้องถิ่น";
@@ -42,3 +43,12 @@ $lang['tRteUnit']         =  "หน่วยย่อย ปัดเศษ";
 $lang['tRTEValidCode']      = "กรุณากรอกรหัสสกุลเงิน";
 $lang['tRTEValidName']      = "กรุณากรอกชื่อสกุลเงิน";
 $lang['tRTEValidCheckCode']  = "รหัสสกุลเงินนี้มีในระบบแล้วกรุณาครวจสอบอีกครั้ง";
+
+// tBrowse
+$lang['tBrowseAgnCode']     = "รหัส";
+$lang['tBrowseAgnName']     = "ชื่อตัวแทน";
+
+// ISO Code
+$lang['tRteIsoName']    = "สกุลเงินสากล";
+$lang['tBrowseIsoCode']     = "รหัสสกุลเงิน";
+$lang['tBrowseIsoName']     = "ชื่อสกุลเงิน";

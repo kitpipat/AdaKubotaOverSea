@@ -31,10 +31,16 @@ class Rate_model extends CI_Model
                         RTEL.FTRteDecText   AS rtRteDecText,
                         RTE.FTRteStaUse     AS rtRteStaUse,
                         RTE.FTRteStaLocal   AS rtRteStaLocal,
-                        IMGO.FTImgObj       AS rtImgObj
+                        IMGO.FTImgObj       AS rtImgObj,
+                        AGNL.FTAgnCode,
+                        AGNL.FTAgnName,
+                        CURL.FTCurCode,
+                        CURL.FTCurName
                     FROM [TFNMRate] RTE WITH(NOLOCK)
                     LEFT JOIN [TFNMRate_L] RTEL WITH(NOLOCK) ON RTE.FTRteCode = RTEL.FTRteCode AND RTEL.FNLngID = $nLngID
                     LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RTE.FTRteCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FNImgSeq = 1
+                    LEFT JOIN [TCNMAgency_L] AGNL WITH(NOLOCK) ON AGNL.FTAgnCode = RTE.FTAgnCode
+                    LEFT JOIN [TCNSCurrency_L] CURL WITH(NOLOCK) ON CURL.FTCurCode = RTE.FTCurCode
                     WHERE 1=1 
         ";
 
@@ -91,12 +97,20 @@ class Rate_model extends CI_Model
                                     RTEL.FTRteNameText,
                                     RTEL.FTRteDecText,
                                     IMGO.FTImgObj,
-                                    RTE.FDCreateOn
+                                    RTE.FDCreateOn,
+                                    AGNL.FTAgnCode,
+                                    AGNL.FTAgnName
                             FROM [TFNMRate] RTE
                             LEFT JOIN [TFNMRate_L] RTEL ON RTE.FTRteCode = RTEL.FTRteCode   AND RTEL.FNLngID    = $nLngID
                             LEFT JOIN [TCNMImgObj] IMGO ON RTE.FTRteCode = IMGO.FTImgRefID  AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FNImgSeq  = 1
+                            LEFT JOIN [TCNMAgency_L] AGNL WITH(NOLOCK) ON AGNL.FTAgnCode = RTE.FTAgnCode
                             WHERE 1=1
                     ";
+
+        $tSessAgn = $this->session->userdata('tSesUsrAgnCode');
+        if ($tSessAgn != '') {
+            $tSQL   .= " AND RTE.FTAgnCode = '' OR RTE.FTAgnCode = '$tSessAgn'";
+        }
 
         if ($tSearchList != '') {
             $tSQL   .= " AND (RTE.FTRteCode COLLATE  THAI_BIN LIKE '%$tSearchList%'";
@@ -169,6 +183,7 @@ class Rate_model extends CI_Model
         }
 
         // Update Master
+        $this->db->set('FTAgnCode', $paData['FTAgnCode']);
         $this->db->set('FCRteRate', $paData['FCRteRate']);
         $this->db->set('FCRteFraction', $paData['FCRteFraction']);
         $this->db->set('FTRteType', $paData['FTRteType']);
@@ -177,6 +192,8 @@ class Rate_model extends CI_Model
         $this->db->set('FTRteStaLocal', $paData['FTRteStaLocal']);
         $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
         $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
+        $this->db->set('FTCurCode', $paData['FTCurCode']);
+
 
         $this->db->where('FTRteCode', $paData['FTRteCode']);
         $this->db->update('TFNMRate');
@@ -189,12 +206,14 @@ class Rate_model extends CI_Model
         } else {
             // Add Master
             $this->db->insert('TFNMRate', array(
+                'FTAgnCode' => $paData['FTAgnCode'],
                 'FTRteCode' => $paData['FTRteCode'],
                 'FCRteRate' => $paData['FCRteRate'],
                 'FCRteFraction' => $paData['FCRteFraction'],
                 'FTRteType' => $paData['FTRteType'],
                 'FTRteSign' => $paData['FTRteSign'],
                 'FTRteStaUse' => $paData['FTRteStaUse'],
+                'FTCurCode' => $paData['FTCurCode'],
                 'FTRteStaLocal' => $paData['FTRteStaLocal'],
                 // เวลาอัปเดทล่าสุด
                 'FDLastUpdOn' => $paData['FDLastUpdOn'],
@@ -227,6 +246,7 @@ class Rate_model extends CI_Model
     public function FSaMRTEAddUpdateLang($paData)
     {
         // Update Lang
+        $this->db->set('FTAgnCode', $paData['FTAgnCode']);
         $this->db->set('FTRteName', $paData['FTRteName']);
         $this->db->where('FNLngID', $paData['FNLngID']);
         $this->db->where('FTRteCode', $paData['FTRteCode']);
@@ -239,6 +259,7 @@ class Rate_model extends CI_Model
             );
         } else {
             $this->db->insert('TFNMRate_L', array(
+                'FTAgnCode' => $paData['FTAgnCode'],
                 'FTRteCode' => $paData['FTRteCode'],
                 'FNLngID' => $paData['FNLngID'],
                 'FTRteName' => $paData['FTRteName'],
