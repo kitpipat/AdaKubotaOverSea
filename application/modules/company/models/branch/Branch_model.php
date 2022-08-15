@@ -112,6 +112,8 @@ class Branch_model extends CI_Model {
                                 BCH.FTBchType AS rtBchType,
                                 BCH.FTWahCode AS rtWahCode,
                                 WAHL.FTWahName AS rtWahName,
+                                BCH.FTCtyCode AS rtConCode,
+                                CONL.FTCtyName AS rtConName,
                                 BCH.FTBchPriority AS rtBchPriority,
                                 BCH.FTBchRegNo AS rtBchRegNo,
                                 BCH.FTBchRefID AS rtBchRefID,
@@ -130,6 +132,7 @@ class Branch_model extends CI_Model {
                             LEFT JOIN [TCNMWaHouse_L]    WAHL    WITH(NOLOCK) ON BCH.FTWahCode = WAHL.FTWahCode AND BCH.FTBchCode = WAHL.FTBchCode  AND WAHL.FNLngID = $nLngID
                             LEFT JOIN [TCNMPdtPriList_L] PRL     WITH(NOLOCK) ON BCH.FTPplCode = PRL.FTPplCode  AND PRL.FNLngID = $nLngID
                             LEFT JOIN TCNMAgency_L       AGNL     WITH(NOLOCK) ON BCH.FTAgnCode = AGNL.FTAgnCode  AND AGNL.FNLngID = $nLngID
+                            LEFT JOIN TCNMCountry_L      CONL    WITH(NOLOCK)  ON BCH.FTCtyCode =  CONL.FTCtyCode AND CONL.FNLngID = '0'        
                             -- LEFT JOIN TCNMMerchant_L    MERL     WITH(NOLOCK) ON BCH.FTMerCode = MERL.FTMerCode  AND MERL.FNLngID = $nLngID
                             LEFT JOIN [TCNMImgObj]       IMGO    WITH(NOLOCK) ON BCH.FTBchCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TCNMBranch' 
             ";
@@ -324,6 +327,7 @@ class Branch_model extends CI_Model {
                 'FTCreateBy'        => $paDataMaster['FTCreateBy'],
                 'FDLastUpdOn'       => $paDataMaster['FDLastUpdOn'],
                 'FTLastUpdBy'       => $paDataMaster['FTLastUpdBy'],
+                'FTCtyCode'         => $paDataMaster['FTCtyCode'],
             ));
 
             if ($this->db->affected_rows() > 0) {
@@ -672,6 +676,7 @@ class Branch_model extends CI_Model {
         $this->db->set('FTPplCode', $paData['FTPplCode']);
         $this->db->set('FTAgnCode', $paData['FTAgnCode']);
         // $this->db->set('FTMerCode', $paData['FTMerCode']);
+        $this->db->set('FTCtyCode', $paData['FTCtyCode']);
         $this->db->set('FTWahCode', $paData['FTWahCode']);
         $this->db->set('FTBchPriority', $paData['FTBchPriority']);
         $this->db->set('FTBchRegNo', $paData['FTBchRegNo']);

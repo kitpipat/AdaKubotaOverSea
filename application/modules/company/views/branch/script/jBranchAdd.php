@@ -131,6 +131,34 @@
         BrowseLev : nStaBchBrowseType
     };
 
+    var oBchBrowseCountry = {
+        Title : ['company/branch/branch', 'tBchCountryTitle'],
+        Table:{Master:'TCNMCountry', PK:'FTCtyCode'},
+        Join :{
+            Table: ['TCNMCountry_L'],
+            On: [' TCNMCountry.FTCtyCode = TCNMCountry_L.FTCtyCode AND TCNMCountry_L.FNLngID = 0']
+        },
+        Where :{
+            Condition : [tWhereAgn]
+        },
+        GrideView:{
+            ColumnPathLang	: 'company/branch/branch',
+            ColumnKeyLang	: ['tBchCountryCode', 'tBchCountryName'],
+            ColumnsSize     : ['15%', '85%'],
+            WidthModal      : 50,
+            DataColumns		: ['TCNMCountry.FTCtyCode', 'TCNMCountry_L.FTCtyName'],
+            DataColumnsFormat : ['', ''],
+            Perpage			: 10,
+            OrderBy			: ['TCNMCountry.FTCtyCode DESC'],
+        },
+        CallBack:{
+            ReturnType      : 'S',
+            Value           : ["oetBchCountryCode", "TCNMCountry.FTCtyCode"],
+            Text            : ["oetBchCountryName", "TCNMCountry_L.FTCtyName"]
+        },
+        RouteAddNew : 'Country',
+        BrowseLev : nStaBchBrowseType
+    };
     // Create By Napat(Jame) 11/06/2020
     function JSxBCHChkBchTypeShowAGNBrowse(){
         var tChkBchType = $('#ocmBchType').val();
@@ -202,7 +230,10 @@
             JSxCheckPinMenuClose();
             JCNxBrowseData('oBchBrowseMer');
         });
-
+        $('#oimBchBrowseCountry').click(function(){
+            JSxCheckPinMenuClose();
+            JCNxBrowseData('oBchBrowseCountry');
+        });
         $('#obtBchBrowseAgency').click(function(){
             JSxCheckPinMenuClose();
             JCNxBrowseData('oBchBrowseAgency');

@@ -17,6 +17,8 @@
 		$tBchWahCode		 = $aResult['roItem']['rtWahCode'];
 		$tBchWahName		= $aResult['roItem']['rtWahName'];
 		$tBtnWahCode        = "";
+		$tBchCountryName	= $aResult['roItem']['rtConName'];
+		$tBchCountryCode	= $aResult['roItem']['rtConCode'];
 		$tBchRmk			= $aResult['roItem']['rtBchRmk'];
 		$tBchPriority       = $aResult['roItem']['rtBchPriority'];
 		$tBchRefID       	= $aResult['roItem']['rtBchRefID'];
@@ -46,6 +48,8 @@
 		$tBchName       = "";
 		$tBchWahCode	= "00001";
 		$tBchWahName	= "คลังขาย";
+		$tBchCountryName	= "ประเทศ";
+		$tBchCountryCode	= "";
 		$tBtnWahCode    = "disabled";
 		$tBchRmk        = "";
 		$tBchPriority	= "";
@@ -162,9 +166,26 @@
 															</div>
 														</div>
 													</div>
+													
+													
+													
+													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="<?=($tBchCountryCode=="")?'margin-top:40px':''?>">								
+															<div class="form-group">
+																<label class="xCNLabelFrm"><?php echo 'ประเทศ';?></label>
+																	<div class="input-group">
+																		<input type="text" class="form-control xCNHide" id="oetBchCountryCode" name="oetBchCountryCode" value="<?php echo @$tBchCountryCode; ?>">
+																		<input type="text" class="form-control xWPointerEventNone" id="oetBchCountryName" name="oetBchCountryName" value="<?php echo @$tBchCountryName; ?>" readonly>
+																		<span class="input-group-btn">
+																			<button id="oimBchBrowseCountry" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
+																		</span>
+																	</div>
+															</div>
+													</div>
+													
 												</div>
 
 												<div class="row">
+												
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
 															<label class="xCNLabelFrm">
@@ -183,8 +204,9 @@
 															>
 														</div>
 													</div>
-
-													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								
+													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">										
+										
 													</div>
 
 													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

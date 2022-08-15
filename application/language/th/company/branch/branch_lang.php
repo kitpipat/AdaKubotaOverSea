@@ -95,7 +95,9 @@ $lang['tBCHAddRmk']                     = 'หมายเหตุ';
 
 $lang['tBCHSystemLang']                 = 'ภาษาของสาขา';
 $lang['tBchMerChant']                   = 'กลุ่มธุรกิจ';
-
+$lang['tBchCountryTitle']               = 'ประเทศ';
+$lang['tBchCountryCode']                = 'รหัสประเทศ';
+$lang['tBchCountryName']                = 'ชื่อประเทศ';
 $lang['tBchAgnTitle']		            = "ตัวแทนขาย";
 $lang['tBchAgnCode']		            = "รหัสตัวแทนขาย";
 $lang['tBchAgnName']		            = "ชื่อตัวแทนขาย";

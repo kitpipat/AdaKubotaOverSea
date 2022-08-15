@@ -194,6 +194,7 @@ class Branch_controller extends MX_Controller {
 			'FNLngID'           => $this->session->userdata("tLangEdit"),
 			'FTBchName'         => $this->input->post('oetBchName'),
 			'FTBchRmk'          => $this->input->post('oetBchRmk'),
+			'FTCtyCode'         => $this->input->post('oetBchCountryCode'),
 		);
 
 		// Setup Branch Code
@@ -288,6 +289,7 @@ class Branch_controller extends MX_Controller {
 				'FNLngID'       	=> $this->session->userdata("tLangEdit"),
 				'FTBchName'     	=> $this->input->post('oetBchName'),
 				'FTBchRmk'     		=> $this->input->post('oetBchRmk'),
+				'FTCtyCode'         => $this->input->post('oetBchCountryCode'),
 		);
 
 		$tZneChainName 			   = $this->input->post('oetBchZneCode');
