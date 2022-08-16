@@ -183,7 +183,9 @@ class Company_controller extends MX_Controller {
 				'FTCmpDirector'		=> $this->input->post('oetCmpDirector'),
 				'FTLastUpdBy'		=> $this->session->userdata('tSesUsername'),
 				'FTCreateBy'		=> $this->session->userdata('tSesUsername'),
-				'FNLngID'			=> $this->session->userdata("tLangEdit")
+				'FNLngID'			=> $this->session->userdata("tLangEdit"),
+
+				'FTCtyCode'			=> $this->input->post('oetCmpCyCode')
 			];
 
 			$this->Company_model->FSaMCMPAddUpdateMaster($aDataMaster);
@@ -252,7 +254,9 @@ class Company_controller extends MX_Controller {
 				'FTCmpDirector'		=> $this->input->post('oetCmpDirector'),
 				'FTLastUpdBy'		=> $this->session->userdata('tSesUsername'),
 				'FTCreateBy'		=> $this->session->userdata('tSesUsername'),
-				'FNLngID'			=> $this->session->userdata("tLangEdit")
+				'FNLngID'			=> $this->session->userdata("tLangEdit"),
+
+				'FTCtyCode'			=> $this->input->post('oetCmpCyCode')
 			];
 			$this->Company_model->FSaMCMPAddUpdateMaster($aDataMaster);
 			$this->Company_model->FSaMCMPAddUpdateLang($aDataMaster);

@@ -15,6 +15,7 @@
 		$tCmpWhsInOrEx  = ($aCompData['raItems']['rtCmpWhsInOrEx']=='1')? language('company/company/company', 'tCMPInclusive') : language('company/company/company', 'tCMPExclusive');
 		$tCmpRteCode    = $aCompData['raItems']['rtCmpRteCode'];
 		$tCmpRteName    = $aCompData['raItems']['rtCmpRteName'];
+		$tCmpCyName		= $aCompData['raItems']['rtCmpCyName'];
 	}else{
 		$tImgRate       = "";
 		$tCmpCode       = "";
@@ -30,6 +31,7 @@
 		$tCmpRetInOrEx  = "";
 		$tCmpWhsInOrEx  = "";
 		$tCmpRteCode    = "";
+		$tCmpCyName		= "";
 	}
 ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>application/modules/company/assets/css/localcss/ada.utilitycompany.css">
@@ -174,6 +176,20 @@
 											<?php
 												if(isset($tCmpFax) && !empty($tCmpFax)){
 													echo @$tCmpFax;
+												}else{
+													echo language('company/company/company','tCmpNotFoundData');
+												}
+											?>
+										</p>
+									</div>
+								</div>
+								<div class="row p-l-40 p-t-10">
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+										<label class="xCNLabelFrm"><?php echo language('company/company/company','tCMPRefCountry');?></label>
+										<p class="xCNTextDetail">
+											<?php
+												if(isset($tCmpCyName) && !empty($tCmpCyName)){
+													echo @$tCmpCyName;
 												}else{
 													echo language('company/company/company','tCmpNotFoundData');
 												}

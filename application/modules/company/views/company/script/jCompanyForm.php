@@ -199,6 +199,42 @@
 
     });
 
+    // Browse ประเทศ
+    $('#obtCmpBrowseCountry').click(function() {
+        JSxCheckPinMenuClose();
+        JCNxBrowseData('oBrowseCountry');
+    });
+
+    var oBrowseCountry = {
+        Title: ['company/company/company', 'tCMPRefCountry'],
+        Table: {
+            Master: 'TCNMCountry',
+            PK: 'FTCtyCode',
+        },
+        Join: {
+            Table: ['TCNMCountry_L'],
+            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND TCNMCountry.FNLngID = ' + nLangEdits, ]
+        },
+        Where: {
+            Condition: ['AND TCNMCountry.FTCtyStaUse = 1']
+        },
+        GrideView: {
+            ColumnPathLang: 'company/company/company',
+            ColumnKeyLang: ['tCMPCyCode', 'tCMPCyName'],
+            ColumnsSize: ['15%', '75%'],
+            WidthModal: 50,
+            DataColumns: ['TCNMCountry.FTCtyCode', 'TCNMCountry_L.FTCtyName'],
+            DataColumnsFormat: ['', ''],
+            Perpage: 10,
+            OrderBy: ['TCNMCountry.FTCtyCode DESC'],
+
+        },
+        CallBack: {
+            ReturnType: 'S',
+            Value: ["oetCmpCyCode", "TCNMCountry.FTCtyCode"],
+            Text: ["oetCmpCyName", "TCNMCountry_L.FTCtyName"],
+        },
+    };
 
 
 </script>

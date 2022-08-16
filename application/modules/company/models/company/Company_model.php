@@ -31,7 +31,9 @@ class Company_model extends CI_Model{
                         CMP.FTCmpRetInOrEx  AS rtCmpRetInOrEx,
                         CMP.FTCmpWhsInOrEx  AS rtCmpWhsInOrEx,
                         RTEL.FTRteCode      AS rtCmpRteCode,
-                        RTEL.FTRteName      AS rtCmpRteName
+                        RTEL.FTRteName      AS rtCmpRteName,
+                        CYL.FTCtyCode       AS rtCmpCyCode,
+                        CYL.FTCtyName       AS rtCmpCyName
                     FROM [TCNMComp] CMP
                     LEFT JOIN [TCNMComp_L]     CMPL ON CMP.FTCmpCode = CMPL.FTCmpCode  AND CMPL.FNLngID = $nLngID
                     LEFT JOIN [TCNMBranch_L]   BCHL ON CMP.FTBchCode = BCHL.FTBchCode  AND BCHL.FNLngID = $nLngID
@@ -39,6 +41,7 @@ class Company_model extends CI_Model{
                     LEFT JOIN [TFNMRate_L]     RTEL ON CMP.FTRteCode = RTEL.FTRteCode  AND RTEL.FNLngID = $nLngID
                     LEFT JOIN [TCNMImgObj]     CIMG ON CMP.FTCmpCode = CIMG.FTImgRefID AND CIMG.FTImgTable = 'TCNMComp'
                     LEFT JOIN [TCNMImgObj]     RIMG ON CMP.FTRteCode = CIMG.FTImgRefID AND CIMG.FTImgTable = 'TFNMRate'
+                    LEFT JOIN [TCNMCountry_L]  CYL  ON CMP.FTCtyCode = CYL.FTCtyCode
             ";
             $oQuery = $this->db->query($tSQL);
             if($oQuery->num_rows() > 0) {
@@ -203,13 +206,14 @@ class Company_model extends CI_Model{
                             FTRteCode       = '".$paDataMaster['FTRteCode']."',
                             FTVatCode       = '".$paDataMaster['FTVatCode']."',
                             FDLastUpdOn     = GETDATE(),
-                            FTLastUpdBy     = '".$paDataMaster['FTLastUpdBy']."'
+                            FTLastUpdBy     = '".$paDataMaster['FTLastUpdBy']."',
+                            FTCtyCode     = '".$paDataMaster['FTCtyCode']."'
                         WHERE 1=1 
                         AND  FTCmpCode = '".$paDataMaster['FTCmpCode']."'
         ";
         $oQueryUpd  = $this->db->query($tSQLUpd);
         if($this->db->affected_rows() == 0){
-            $tSQLAdd    = " INSERT INTO TCNMComp (FTCmpCode,FTCmpTel,FTCmpFax,FTBchcode,FTCmpWhsInOrEx,FTCmpRetInOrEx,FTCmpEmail,FTRteCode,FTVatCode,FDCreateOn,FTCreateBy)
+            $tSQLAdd    = " INSERT INTO TCNMComp (FTCmpCode,FTCmpTel,FTCmpFax,FTBchcode,FTCmpWhsInOrEx,FTCmpRetInOrEx,FTCmpEmail,FTRteCode,FTVatCode,FDCreateOn,FTCreateBy,FTCtyCode)
                             VALUES (
                                 '".$paDataMaster['FTCmpCode']."',
                                 '".$paDataMaster['FTCmpTel']."',
@@ -221,7 +225,8 @@ class Company_model extends CI_Model{
                                 '".$paDataMaster['FTRteCode']."',
                                 '".$paDataMaster['FTVatCode']."',
                                 GETDATE(),
-                                '".$paDataMaster['FTCreateBy']."'
+                                '".$paDataMaster['FTCreateBy']."',
+                                '".$paDataMaster['FTCtyCode']."'
                             )
             ";
             $oQueryAdd  = $this->db->query($tSQLAdd);

@@ -17,6 +17,10 @@ if($aCompData['rtCode']=='1'){
     $tRteName    	= $aCompData['raItems']['rtCmpRteName'];
     $tVatCode       = $aVatList[0]['rtVatCode'];
     $tVatRate       = $aVatList[0]['rtVatRate'];
+
+    $tCmpCyCode     = $aCompData['raItems']['rtCmpCyCode'];
+    $tCmpCyName     = $aCompData['raItems']['rtCmpCyName'];
+
 }else{
     $tRoute         = "companyEventAdd";
     $tCmpCode       = "";
@@ -35,6 +39,9 @@ if($aCompData['rtCode']=='1'){
     $tRteName    	= "";
     $tVatCode       = "";
     $tVatRate       = "";
+    
+    $tCmpCyCode     = "";
+    $tCmpCyName     = "";
 }
 ?>
 <form id="ofmAddEditCompany" class="validate-form" action="javascript:void(0)" method="post" enctype="multipart/form-data">
@@ -157,6 +164,19 @@ if($aCompData['rtCode']=='1'){
                                     <div class="form-group">
                                         <label class="xCNLabelFrm"><?php echo language('company/company/company','tCMPEmail');?></label>
                                         <input type="email" class="form-control" id="oetCmpEmail" name="oetCmpEmail" maxlength="50" value="<?php echo @$tCmpEmail ?>">
+                                    </div>
+                                </div>
+                                <!-- อ้างอิงประเทศ -->
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="xCNLabelFrm"><?php echo language('company/company/company', 'tCMPRefCountry') ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control xCNHide" id="oetCmpCyCode" name="oetCmpCyCode" value="<?php echo $tCmpCyCode; ?>">
+                                            <input type="text" class="form-control xWPointerEventNone" id="oetCmpCyName" name="oetCmpCyName" value="<?php echo $tCmpCyName; ?>" readonly placeholder="<?= language('company/company/company', 'tCMPRefCountry'); ?>">
+                                            <span class="input-group-btn">
+                                                <button id="obtCmpBrowseCountry" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
