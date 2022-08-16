@@ -454,6 +454,7 @@ function JSoAddEditProduct(ptRoute) {
                     'tPdtPtyCode': $('#oetPdtPtyCode').val(),
                     'tPdtPbnCode': $('#oetPdtPbnCode').val(),
                     'tPdtPmoCode': $('#oetPdtPmoCode').val(),
+                    'tPdtCyCode': $('#oetPdtCyCode').val(),
                     'tPdtTcgCode': $('#oetPdtTcgCode').val(),
                     'tPdtSaleStart': $('#oetPdtSaleStart').val(),
                     'tPdtSaleStop': $('#oetPdtSaleStop').val(),

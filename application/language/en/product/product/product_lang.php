@@ -229,3 +229,8 @@ $lang['tPdtSreachType3']          = "Bar Code";
 $lang['tPdtSreachType4']          = "UNIT";
 $lang['tPdtSreachType5']          = "Group";
 $lang['tPdtSreachType6']          = "Type";
+
+$lang['tPdtRefCountry']     = "Refer Country";
+$lang['tPdtCyCode']         = "Country Code";
+$lang['tPdtCyName']         = "Country Name";
+

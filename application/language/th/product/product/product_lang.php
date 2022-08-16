@@ -468,3 +468,7 @@ $lang['tPdtSreachType3']          = "บาร์โค๊ด";
 $lang['tPdtSreachType4']          = "หน่วย";
 $lang['tPdtSreachType5']          = "กลุ่มสินค้า";
 $lang['tPdtSreachType6']          = "ประเภทสินค้า";
+
+$lang['tPdtRefCountry']     = "อ้างอิงประเทศ";
+$lang['tPdtCyCode']         = "รหัสประเทศ";
+$lang['tPdtCyName']         = "ชื่อประเทศ";

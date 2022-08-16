@@ -95,6 +95,9 @@ if (isset($aPdtInfoData) && $aPdtInfoData['rtCode'] == '1') {
     //nattakit nale 22-05-2020
     $tAgnCode      = $aPdtInfoData['raItems']['FTAgnCode'];
     $tAgnName      = $aPdtInfoData['raItems']['FTAgnName'];
+
+    $tPdtCyCode    = $aPdtInfoData['raItems']['FTCtyCode'];
+    $tPdtCyName    = $aPdtInfoData['raItems']['FTCtyName'];
 } else {
     // TabInfo 1 
     $tPdtCode       = "";
@@ -171,6 +174,9 @@ if (isset($aPdtInfoData) && $aPdtInfoData['rtCode'] == '1') {
     //nattakit nale 22-05-2020
     $tAgnCode      = $this->session->userdata('tSesUsrAgnCode');
     $tAgnName      = $this->session->userdata('tSesUsrAgnName');
+
+    $tPdtCyCode    = "";
+    $tPdtCyName    = "";
 }
 
 if ($tPdtForSystem != '4') {
@@ -1050,6 +1056,19 @@ $ocheck = base_url() . 'application/modules/common/assets/images/icons/check.png
                                                                 </div>
                                                             </div>
                                                             <!--End รุ่น -->
+
+                                                            <!-- อ้างอิงประเทศ -->
+                                                            <div class="form-group">
+                                                                <label class="xCNLabelFrm"><?php echo language('product/product/product', 'tPdtRefCountry'); ?></label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control xCNHide" id="oetPdtCyCode" name="oetPdtCyCode" value="<?php echo $tPdtCyCode; ?>">
+                                                                    <input type="text" class="form-control xWPointerEventNone" id="oetPdtCyName" name="oetPdtCyName" value="<?php echo $tPdtCyName; ?>" readonly>
+                                                                    <span class="input-group-btn">
+                                                                        <button id="obtPdtBrowseCountry" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <!--End อ้างอิงประเทศ -->
 
 
                                                         </div>

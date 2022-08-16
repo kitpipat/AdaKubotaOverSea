@@ -566,6 +566,7 @@ class Product_controller extends MX_Controller
                 'FTPtyCode'             => $aPdtDataInfo2['tPdtPtyCode'],
                 'FTPbnCode'             => $aPdtDataInfo2['tPdtPbnCode'],
                 'FTPmoCode'             => $aPdtDataInfo2['tPdtPmoCode'],
+                'FTCtyCode'             => $aPdtDataInfo2['tPdtCyCode'],
                 'FTVatCode'             => $aPdtDataInfo1['tPdtVatCode'],
                 'FDPdtSaleStart'        => ($aPdtDataInfo2['tPdtSaleStart'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStart'],
                 'FDPdtSaleStop'         => ($aPdtDataInfo2['tPdtSaleStop'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStop']
@@ -759,6 +760,7 @@ class Product_controller extends MX_Controller
                 'FTPtyCode' => $aPdtDataInfo2['tPdtPtyCode'],
                 'FTPbnCode' => $aPdtDataInfo2['tPdtPbnCode'],
                 'FTPmoCode' => $aPdtDataInfo2['tPdtPmoCode'],
+                'FTCtyCode' => $aPdtDataInfo2['tPdtCyCode'],
                 'FTVatCode' => $aPdtDataInfo1['tPdtVatCode'],
                 'FDPdtSaleStart' => ($aPdtDataInfo2['tPdtSaleStart'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStart'],
                 'FDPdtSaleStop' => ($aPdtDataInfo2['tPdtSaleStop'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStop']

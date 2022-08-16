@@ -1208,7 +1208,9 @@ class Product_model extends CI_Model
 
                             CONVERT(CHAR(10),PDT.FDPdtSaleStart,126)    AS FDPdtSaleStart,
                             CONVERT(CHAR(10),PDT.FDPdtSaleStop,126)     AS FDPdtSaleStop,
-                            PDTL.FTPdtRmk 
+                            PDTL.FTPdtRmk,
+                            CYL.FTCtyCode,
+                            CYL.FTCtyName
                         FROM TCNMPdt PDT
                         LEFT JOIN TCNMPdt_L         PDTL    ON PDT.FTPdtCode    = PDTL.FTPdtCode    AND PDTL.FNLngID = $nLngID
                         LEFT JOIN TCNMPdtTouchGrp_L TCGL    ON PDT.FTTcgCode    = TCGL.FTTcgCode    AND TCGL.FNLngID = $nLngID
@@ -1223,6 +1225,8 @@ class Product_model extends CI_Model
                         LEFT JOIN TCNMMerchant_L    MERL    ON SPC.FTMerCode    = MERL.FTMerCode    AND MERL.FNLngID = $nLngID
                         LEFT JOIN TCNMShop_L        SHPL    ON SPC.FTShpCode    = SHPL.FTShpCode  AND  SPC.FTBchCode = SHPL.FTBchCode  AND SHPL.FNLngID = $nLngID
                         LEFT JOIN TCNMMerPdtGrp_L   MPGL    ON SPC.FTMgpCode    = MPGL.FTMgpCode    AND MPGL.FNLngID = $nLngID
+                        LEFT JOIN TCNMCountry_L     CYL     ON PDT.FTCtyCode    = CYL.FTCtyCode
+
                         WHERE 1=1 AND PDT.FTPdtCode = '$tPdtCode' ";
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
