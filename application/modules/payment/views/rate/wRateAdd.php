@@ -18,8 +18,8 @@ if($aResult['rtCode'] == "1"){
 	$tRteDecText       	= $aResult['raItems']['rtRteDecText'];
 	$cRteStaUse        	= $aResult['raItems']['rtRteStaUse'];         
 	$cRteStaLocal       = $aResult['raItems']['rtRteStaLocal'];
-	$tRteIsoCode		= $aResult['raItems']['FTCurCode'];
-	$tRteIsoName		= $aResult['raItems']['FTCurName'];
+	$tRteIsoCode		= $aResult['raItems']['FTRteIsoCode'];
+	$tRteIsoName		= $aResult['raItems']['FTRteIsoName'];
 	//Agency
 	$tRteAgnCode 	= $aResult['raItems']['FTAgnCode'];
 	$tRteAgnName 	= $aResult['raItems']['FTAgnName'];

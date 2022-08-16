@@ -34,13 +34,13 @@ class Rate_model extends CI_Model
                         IMGO.FTImgObj       AS rtImgObj,
                         AGNL.FTAgnCode,
                         AGNL.FTAgnName,
-                        CURL.FTCurCode,
-                        CURL.FTCurName
+                        RATEL.FTRteIsoCode,
+                        RATEL.FTRteIsoName
                     FROM [TFNMRate] RTE WITH(NOLOCK)
                     LEFT JOIN [TFNMRate_L] RTEL WITH(NOLOCK) ON RTE.FTRteCode = RTEL.FTRteCode AND RTEL.FNLngID = $nLngID
                     LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RTE.FTRteCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FNImgSeq = 1
                     LEFT JOIN [TCNMAgency_L] AGNL WITH(NOLOCK) ON AGNL.FTAgnCode = RTE.FTAgnCode
-                    LEFT JOIN [TCNSCurrency_L] CURL WITH(NOLOCK) ON CURL.FTCurCode = RTE.FTCurCode
+                    LEFT JOIN [TCNSRate_L] RATEL WITH(NOLOCK) ON RATEL.FTRteIsoCode = RTE.FTCurCode
                     WHERE 1=1 
         ";
 

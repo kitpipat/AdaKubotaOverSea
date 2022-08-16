@@ -241,23 +241,23 @@ $('#obtRtcBrowseIso').click(function(){
 var oBrowsetIso = {
     Title: ['payment/rate/rate','tRteIsoName'],
     Table: {
-        Master: 'TCNSCurrency_L',
-        PK: 'FTCurCode'
+        Master: 'TCNSRate_L',
+        PK: 'FTRteIsoCode'
     },
     GrideView: {
         ColumnPathLang: 'payment/rate/rate',
         ColumnKeyLang: ['tBrowseIsoCode', 'tBrowseIsoName'],
         ColumnsSize: ['15%', '75%'],
-        DataColumns: ['TCNSCurrency_L.FTCurCode', 'TCNSCurrency_L.FTCurName'],
+        DataColumns: ['TCNSRate_L.FTRteIsoCode', 'TCNSRate_L.FTRteIsoName'],
         DataColumnsFormat: ['', ''],
         WidthModal: 50,
         Perpage: 10,
-        OrderBy: ['TCNSCurrency_L.FTCurCode ASC'],
+        OrderBy: ['TCNSRate_L.FTRteIsoCode ASC'],
     },
     CallBack: {
         ReturnType: 'S',
-        Value: ["oetRteIsoCode", "TCNSCurrency_L.FTCurCode"],
-        Text: ["oetRteIsoName", "TCNSCurrency_L.FTCurName"]
+        Value: ["oetRteIsoCode", "TCNSRate_L.FTRteIsoCode"],
+        Text: ["oetRteIsoName", "TCNSRate_L.FTRteIsoName"]
     },
 };
 </script>
