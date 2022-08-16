@@ -155,7 +155,9 @@ class Agency_controller extends MX_Controller {
                 'FNLngID'           => $this->session->userdata("tLangEdit"),
                 'FTCreateBy'        => $this->session->userdata('tSesUsername'),
 
-                'FTChnCode'        => $this->input->post('oetAgnChanelCode')
+                'FTChnCode'         => $this->input->post('oetAgnChanelCode'),
+                
+                'FTCtyCode'         => $this->input->post('oetAgnCyCode')
             ];
     
             
@@ -260,7 +262,9 @@ class Agency_controller extends MX_Controller {
                 'FNLngID'           => $this->session->userdata("tLangEdit"),
                 'FTCreateBy'        => $this->session->userdata('tSesUsername'),
 
-                'FTChnCode'        => $this->input->post('oetAgnChanelCode')
+                'FTChnCode'        => $this->input->post('oetAgnChanelCode'),
+
+                'FTCtyCode'         => $this->input->post('oetAgnCyCode')
             ];
 
             $this->db->trans_begin();

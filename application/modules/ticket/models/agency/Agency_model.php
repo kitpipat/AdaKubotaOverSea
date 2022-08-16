@@ -38,12 +38,16 @@ class Agency_model extends CI_Model
                                 LEFT JOIN TCNMAgency_L AGNL ON AGNL.FTAgnCode = AGN.FTAgnCode AND AGNL.FNLngID =  $nLngID
                                     LEFT JOIN TCNMImgPerson IMP ON IMP.FTImgRefID = AGN.FTAgnCode AND IMP.FTImgTable = 'TCNMAgency'
                                 WHERE 1 = 1
-                            ) AS counts     
+                            ) AS counts,
+                            CYL.FTCtyCode,
+                            CYL.FTCtyName
                         FROM TCNMAgency AGN
                         LEFT JOIN TCNMAgency_L AGNL ON AGNL.FTAgnCode = AGN.FTAgnCode AND AGNL.FNLngID =  $nLngID
                         LEFT JOIN TCNMPdtPriList_L PRL ON AGN.FTPplCode = PRL.FTPplCode AND PRL.FNLngID =  $nLngID
                         LEFT JOIN TCNMChannel_L CHNL ON AGN.FTChnCode = CHNL.FTChnCode AND CHNL.FNLngID =  $nLngID
                         LEFT JOIN TCNMImgPerson IMP ON IMP.FTImgRefID = AGN.FTAgnCode AND IMP.FTImgTable = 'TCNMAgency' AND IMP.FNImgSeq = 1
+                        LEFT JOIN TCNMCountry_L CYL ON CYL.FTCtyCode = AGN.FTCtyCode
+
                         WHERE 1=1 ";
 
         if ($tAgnCode != "") {
@@ -212,6 +216,9 @@ class Agency_model extends CI_Model
             $this->db->set('FDCreateOn', $paData['FDCreateOn']);
             $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
             $this->db->set('FTCreateBy', $paData['FTCreateBy']);
+
+            $this->db->set('FTCtyCode', $paData['FTCtyCode']);
+
             $this->db->where('FTAgnCode', $paData['FTAgnCode']);
             $this->db->update('TCNMAgency');
             if ($this->db->affected_rows() > 0) {
@@ -240,6 +247,8 @@ class Agency_model extends CI_Model
                     'FDCreateOn'    => $paData['FDCreateOn'],
                     'FTLastUpdBy'   => $paData['FTLastUpdBy'],
                     'FTCreateBy'    => $paData['FTCreateBy'],
+
+                    'FTCtyCode'     => $paData['FTCtyCode'],
 
                 ));
                 if ($this->db->affected_rows() > 0) {

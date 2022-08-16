@@ -95,8 +95,14 @@ $lang ['tPleaseEnterPassword'] = 'Please enter password';
 $lang ['tPleaseSelectPaymentMethod'] = 'Please select payment method';
 $lang ['tPleaseEnterAgencyTypeName'] = 'Please enter agency type name';
 $lang ['tPleaseEnterAgencyGroupName'] = 'Please enter agency group name';
-$lang['tAGNValidName']   = "Please Enter Agency name!";
-$lang['tAGNValidEmail']  = "Please Enter your email!";
-$lang['tAGNValidPwd']    = "Please Enter your password!";
-$lang ['tSearchAgency'] = 'Search Data';
-$lang['tAGNReferAgency'] = "Refer Agency";
+
+//Validate Form
+$lang['tAGNValidName']      = "Please Enter Agency name!";
+$lang['tAGNValidEmail']     = "Please Enter your email!";
+$lang['tAGNValidPwd']       = "Please Enter your password!";
+$lang ['tSearchAgency']     = 'Search Data';
+$lang['tAGNReferAgency']    = "Refer Agency";
+
+$lang['tAGNRefCountry']     = "Refer Country";
+$lang['tAGNCyCode']         = "Country Code";
+$lang['tAGNCyName']         = "Country Name";

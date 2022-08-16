@@ -115,4 +115,9 @@ $lang['tAGNValidCheckCode']  = "รหัสตัวแทนขายนี้
 $lang ['tSearchAgency'] = 'ค้นหา';
 $lang['tAGNReferAgency'] = "รหัสอ้างอิงตัวแทนขาย";
 
+$lang['tAGNRefCountry'] = "อ้างอิงประเทศ";
+
+$lang['tAGNCyCode'] = "รหัสประเทศ";
+$lang['tAGNCyName'] = "ชื่อประเทศ";
+
 

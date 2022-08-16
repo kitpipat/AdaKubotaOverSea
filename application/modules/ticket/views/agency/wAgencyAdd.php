@@ -15,6 +15,10 @@ if ($aResult['rtCode'] == "1") {
 
     $tChnCode        = $aResult['raItems']['FTChnCode'];
     $tChnName        = $aResult['raItems']['FTChnName'];
+
+    $tAgnCyCode    = $aResult['raItems']['FTCtyCode'];
+    $tAgnCyName    = $aResult['raItems']['FTCtyName'];
+
     //route
     $tRoute             = "agencyEventEdit";
     //Event Control
@@ -29,6 +33,7 @@ if ($aResult['rtCode'] == "1") {
     }
     $tMenuTab           = "";
     $tMenuTabToggle     = "tab";
+
 } else {
     $tAgnCode           = "";
     $tAgnName           = "";
@@ -51,6 +56,9 @@ if ($aResult['rtCode'] == "1") {
 
     $tMenuTab           = "disabled xCNCloseTabNav";
     $tMenuTabToggle     = "false";
+
+    $tAgnCyCode    = "";
+    $tAgnCyName    = "";
 }
 ?>
 <input type="hidden" id="ohdAngAutStaEdit" value="<?php echo $nAutStaEdit ?>">
@@ -173,6 +181,18 @@ if ($aResult['rtCode'] == "1") {
                                                     <button id="oimAgnBrowseChanel" type="button" class="btn xCNBtnBrowseAddOn">
                                                         <img src="<?php echo  base_url() . '/application/modules/common/assets/images/icons/find-24.png' ?>">
                                                     </button>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- อ้างอิงประเทศ -->
+                                        <div class="form-group">
+                                            <label class="xCNLabelFrm"><?php echo language('ticket/agency/agency', 'tAGNRefCountry') ?></label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control xCNHide" id="oetAgnCyCode" name="oetAgnCyCode" value="<?php echo $tAgnCyCode; ?>">
+                                                <input type="text" class="form-control xWPointerEventNone" id="oetAgnCyName" name="oetAgnCyName" value="<?php echo $tAgnCyName; ?>" readonly placeholder="<?= language('ticket/agency/agency', 'tAGNRefCountry'); ?>">
+                                                <span class="input-group-btn">
+                                                    <button id="obtAgnBrowseCountry" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
                                                 </span>
                                             </div>
                                         </div>
