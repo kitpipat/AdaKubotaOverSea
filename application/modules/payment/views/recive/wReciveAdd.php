@@ -192,7 +192,7 @@ if ($aResult['rtCode'] == "1") {
                                         <!-- CheckBox ใช้งานหลายสกุลเงิน  -->
                                         <div class="form-group">
                                             <label class="fancy-checkbox">
-                                                <input type="checkbox" id="ocbRcvMultiCur" name="ocbRcvMultiCur" <?= ($tFmtCurrencyCode && $tFmtCurrencyName) ? 'checked': false ?>>
+                                                <input type="checkbox" id="ocbRcvMultiCur" name="ocbRcvMultiCur" <?= ($tFmtCurrencyCode && $tFmtCurrencyName) ? false : 'checked' ?>>
                                                 <span> <?php echo language('payment/recive/recive', 'tRCVMultiCur'); ?></span>
                                             </label>
                                         </div>
