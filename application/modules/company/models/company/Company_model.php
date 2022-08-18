@@ -480,8 +480,143 @@ class Company_model extends CI_Model{
      * Return Type : Array
      */
     public function FSaMCMPGetCompanyInfo($paParams = []){
-        
         $nLangID = $paParams['nLngID'];
+        $tAgnCode = $paParams['tAgnCode'];
+    
+        if(isset($paParams['tBchCode']) && !empty($paParams['tBchCode'])){
+            $tBchCodeSql = "'".$paParams['tBchCode']."'";
+        }else{
+            $tBchCodeSql = "COMP.FTBchCode";
+        }
+        
+        $tSQL = "
+            SELECT TOP 1
+                COMP.FTBchcode,
+                COMP.FTCmpCode,
+                COMP.FTCmpEmail,
+                COMP.FTCmpFax,
+                COMP.FTCmpTel,
+                COMPL.FTCmpName,
+                BCHL.FTBchName,
+                ADDL.*,
+                PROVL.FTPvnName,
+                DISTL.FTDstName,
+                SUBDISTL.FTSudName
+
+            FROM TCNMComp COMP WITH (NOLOCK)
+            LEFT JOIN TCNMComp_L COMPL WITH (NOLOCK) ON COMPL.FTCmpCode = COMP.FTCmpCode AND COMPL.FNLngID = $nLangID 
+            LEFT JOIN TCNMBranch_L BCHL WITH (NOLOCK) ON BCHL.FTBchCode = $tBchCodeSql AND BCHL.FNLngID = $nLangID
+            LEFT JOIN TCNMAddress_L ADDL WITH (NOLOCK) ON ADDL.FTAddRefCode = $tBchCodeSql AND ADDL.FTAddRefNo = '1' AND ADDL.FTAddGrpType = '1' AND ADDL.FNLngID = $nLangID
+            LEFT JOIN TCNMProvince_L PROVL WITH (NOLOCK) ON PROVL.FTPvnCode = ADDL.FTAddV1PvnCode AND PROVL.FNLngID = $nLangID
+            LEFT JOIN TCNMDistrict_L DISTL WITH (NOLOCK) ON DISTL.FTDstCode = ADDL.FTAddV1DstCode AND DISTL.FNLngID = $nLangID
+            LEFT JOIN TCNMSubDistrict_L SUBDISTL WITH (NOLOCK) ON SUBDISTL.FTSudCode = ADDL.FTAddV1SubDist AND SUBDISTL.FNLngID = $nLangID
+        ";
+        
+        $oQuery = $this->db->query($tSQL);
+        
+        if($oQuery->num_rows() > 0) {
+            $aItems = $oQuery->row_array();
+            $aResult = array(
+                'raItems'       => $aItems,
+                'rtCode'        => '1',
+                'rtDesc'        => 'success',
+            );
+        }else {
+            // No Data
+            $aResult = array(
+                'raItems' => [],
+                'rtCode' => '800',
+                'rtDesc' => 'data not found',
+            );
+        }
+        
+        $jResult = json_encode($aResult);
+        $aResult = json_decode($jResult, true);
+        return $aResult;
+    }
+
+    /**
+     * Functionality : Get Company Info
+     * Parameters : function parameters
+     * Creator :  31/07/2019 Piya
+     * Return : data
+     * Return Type : Array
+     */
+    public function FSaMCMPGetLanFromAgn($ptAgnCode,$tnLangID){
+
+        $tSQLGetCty = "
+            SELECT TOP 1
+                AGN.FTAgnCode,
+                AGN.FTCtyCode
+            FROM TCNMAgency AGN WITH (NOLOCK)
+            WHERE AGN.FTAgnCode = '$ptAgnCode'
+        ";
+        $oQueryGetCty = $this->db->query($tSQLGetCty);
+        $aItemsGetCty = $oQueryGetCty->row_array();
+        $tCtyCode = $aItemsGetCty['FTCtyCode'];
+        
+        if(isset($tCtyCode) && !empty($tCtyCode)){
+                $tSQLGetLan = "
+                SELECT TOP 1
+                    LAN.FNLngID
+                FROM TSysLanguage LAN WITH (NOLOCK)
+                WHERE LAN.FTLngStaLocal = '1' AND LAN.FTLngStaUse = '1' AND LAN.FTCtyCode = '$tCtyCode';
+            ";
+            $oQueryGetLan = $this->db->query($tSQLGetLan);
+            $aItemsGetLan = $oQueryGetLan->row_array();
+            $nLangID = $aItemsGetLan['FNLngID'];
+        }
+
+        if($nLangID == ''){
+            $nLangID = $tnLangID;
+        }
+
+        return $nLangID;
+    }
+
+    /**
+     * Functionality : Get Language
+     * Parameters : function parameters
+     * Creator :  31/07/2019 Piya
+     * Return : data
+     * Return Type : Array
+     */
+    public function FSaMCMPGetLanguage($paParams = []){
+        $nLangID = $paParams['nLngID'];
+        $tAgnCode = $paParams['tAgnCode'];
+
+        if(isset($paParams['tAgnCode']) && !empty($paParams['tAgnCode'])){
+            $tSQLGetCty = "
+                SELECT TOP 1
+                    AGN.FTAgnCode,
+                    AGN.FTCtyCode
+                FROM TCNMAgency AGN WITH (NOLOCK)
+                WHERE AGN.FTAgnCode = '$tAgnCode'
+            ";
+            $oQueryGetCty = $this->db->query($tSQLGetCty);
+            $aItemsGetCty = $oQueryGetCty->row_array();
+            $tCtyCode = $aItemsGetCty['FTCtyCode'];
+            
+            if(isset($tCtyCode) && !empty($tCtyCode)){
+                    $tSQLGetLan = "
+                    SELECT TOP 1
+                        LAN.FNLngID
+                    FROM TSysLanguage LAN WITH (NOLOCK)
+                    WHERE LAN.FTLngStaLocal = '1' AND LAN.FTLngStaUse = '1' AND LAN.FTCtyCode = '$tCtyCode';
+                ";
+                $oQueryGetLan = $this->db->query($tSQLGetLan);
+                $aItemsGetLan = $oQueryGetLan->row_array();
+                $nLangID = $aItemsGetLan['FNLngID'];
+            }
+        }else{
+            $nLangID = $paParams['nLngID'];
+        }
+
+        if($nLangID == ''){
+            $nLangID = $paParams['nLngID'];
+        }
+        // print_r($nLangID);
+
         
         if(isset($paParams['tBchCode']) && !empty($paParams['tBchCode'])){
             $tBchCodeSql = "'".$paParams['tBchCode']."'";

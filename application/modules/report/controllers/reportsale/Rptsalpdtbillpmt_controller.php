@@ -205,6 +205,7 @@ class Rptsalpdtbillpmt_controller extends MX_Controller
         $tFullHost = gethostbyaddr($tIP);
         $this->tCompName = $tFullHost;
         $this->nLngID = FCNaHGetLangEdit();
+        // $this->nLngID = FCNaHGetLangEdit();
         $this->tRptCode = $this->input->post('ohdRptCode');
         $this->tRptGroup = $this->input->post('ohdRptGrpCode');
         $this->tUserSessionID = $this->session->userdata('tSesSessionID');
@@ -297,6 +298,7 @@ class Rptsalpdtbillpmt_controller extends MX_Controller
             'nLngID' => $this->nLngID,
             'tBchCode' => $this->tBchCodeLogin,
         ];
+        
         $this->aCompanyInfo = FCNaGetCompanyInfo($aCompInfoParams)['raItems'];
     }
 

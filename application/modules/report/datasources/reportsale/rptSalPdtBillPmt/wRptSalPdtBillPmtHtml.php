@@ -4,6 +4,8 @@ $aDataTextRef = $aDataViewRpt['aDataTextRef'];
 $aDataReport = $aDataViewRpt['aDataReport'];
 $nTotalPage = $aDataReport['aPagination']['nTotalPage'];
 $nDisplayPage = $aDataReport['aPagination']['nDisplayPage'];
+
+// print_r($aCompanyInfo);
 ?>
 
 <style>

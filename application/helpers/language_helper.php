@@ -4,6 +4,8 @@
 function FCNaHCalllanguage($tFile, $tString) {
 	
 	$obj = & get_instance();
+    $obj->load->model('company/company/Company_model');
+
 
 	if (@$_SESSION['lang'] == '' || @$_SESSION['lang'] == 'th') {
 		@$_SESSION['lang'] = 'th';
@@ -30,7 +32,16 @@ function FCNaHCalllanguage($tFile, $tString) {
 //Return Type: Array
 function FCNaHGetLangEdit() {
 	//Lang ภาษา
+	$obj = & get_instance();
+    $obj->load->model('company/company/Company_model');
+
 	$nLangResort    = $_SESSION['tLangID'];
+	$tAgnCode    	= $_SESSION['tSesUsrAgnCode'];
+	if(isset($tAgnCode) && !empty($tAgnCode)){
+		$nLangResort = $obj->Company_model->FSaMCMPGetLanFromAgn($tAgnCode,$_SESSION['tLangID']);
+	}else{
+		$nLangResort    = $_SESSION['tLangID'];
+	}
 	// $nLangEdit      = $_SESSION['tLangEdit'];
 	// $aLangHave		= FCNaHGetAllLangByTable();
 	// $nLangHave      = count($aLangHave);

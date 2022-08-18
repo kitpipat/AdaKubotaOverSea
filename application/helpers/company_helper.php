@@ -10,8 +10,11 @@ function FCNaGetCompanyInfo($paParams = []){
 
     $aCompParams = [
         'nLngID' => $paParams['nLngID'],
-        'tBchCode' => $paParams['tBchCode']
+        'tBchCode' => $paParams['tBchCode'],
+        'tAgnCode' => $_SESSION['tSesUsrAgnCode']
     ];
+
+    // print_r($_SESSION);
 
     return $ci->Company_model->FSaMCMPGetCompanyInfo($aCompParams);
 }
@@ -32,6 +35,7 @@ function FCNaGetBranchInfo($paParams = []){
 
     return $ci->Branch_model->FSaMCMPGetBchInfo($aBchParams);
 }
+
 
 /**
  *
