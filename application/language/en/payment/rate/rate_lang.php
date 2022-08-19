@@ -12,6 +12,7 @@ $lang['tRTETBName']     = "Name";
 $lang['tRTETBRteName']  = "Rate Name";
 $lang['tRTETBSign']     = "Sign";
 $lang['tRTETBRate']     = "Rate";
+$lang['tRTETBRatechange']     = "Allow Change";
 $lang['tRTETBType']     = "Type";
 $lang['tRTETBTypeSeq']  = "-";
 $lang['tRTETBTypeSeq1']     = "Round up";

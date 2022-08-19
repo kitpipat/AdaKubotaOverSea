@@ -18,6 +18,7 @@ if($aResult['rtCode'] == "1"){
 	$tRteDecText       	= $aResult['raItems']['rtRteDecText'];
 	$cRteStaUse        	= $aResult['raItems']['rtRteStaUse'];         
 	$cRteStaLocal       = $aResult['raItems']['rtRteStaLocal'];
+	$cRteStaAlwChange   = $aResult['raItems']['rtRteStaAlwChange'];
 	$tRteIsoCode		= $aResult['raItems']['FTRteIsoCode'];
 	$tRteIsoName		= $aResult['raItems']['FTRteIsoName'];
 	//Agency
@@ -55,6 +56,7 @@ if($aResult['rtCode'] == "1"){
 	$tRteIsoName       	= "";
 	$cRteStaUse         = 1;
 	$cRteStaLocal       = 0;
+	$cRteStaAlwChange   = 1;
 	$tRoute         	= "rateEventAdd";
 	$nAutStaEdit = 0;	//Event Control
 	$tRteAgnCode 	= $tSessAgnCode;
@@ -256,17 +258,23 @@ if($aResult['rtCode'] == "1"){
 
 
 				<div class="form-group" > 
-							<div class="col-md-3">
-							<label class="fancy-checkbox">
-								<input id="" type="checkbox" class="" name="ocmRteStaUse" value="1" <?php if($cRteStaUse==1){ echo 'checked'; }  ?>>
-								<span>&nbsp;<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteStaUse')?></label> </span>
-							</label>
-							</div>
-							<div class="col-md-3">
-							<label class="fancy-checkbox">
-								<input id="" type="checkbox" class="" name="ocmRteStaLocal" value="1" <?php if($cRteStaLocal==1){ echo 'checked'; }  ?>>
-								<span>&nbsp;<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteStaLocal')?></label> </span>
-							</label>
+					<div class="col-md-3">
+						<label class="fancy-checkbox">
+							<input id="" type="checkbox" class="" name="ocmRteStaUse" value="1" <?php if($cRteStaUse==1){ echo 'checked'; }  ?>>
+							<span>&nbsp;<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteStaUse')?></label> </span>
+						</label>
+					</div>
+					<div class="col-md-3">
+						<label class="fancy-checkbox">
+							<input id="" type="checkbox" class="" name="ocmRteStaLocal" value="1" <?php if($cRteStaLocal==1){ echo 'checked'; }  ?>>
+							<span>&nbsp;<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteStaLocal')?></label> </span>
+						</label>
+					</div>
+					<div class="col-md-3">
+						<label class="fancy-checkbox">
+							<input id="" type="checkbox" class="" name="ocmRteStaAlwChange" value="1" <?php if($cRteStaAlwChange==1){ echo 'checked'; }  ?>>
+							<span>&nbsp;<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETBRatechange')?></label> </span>
+						</label>
 					</div>
 				</div>
 			

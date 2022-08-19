@@ -31,6 +31,8 @@ class Rate_model extends CI_Model
                         RTEL.FTRteDecText   AS rtRteDecText,
                         RTE.FTRteStaUse     AS rtRteStaUse,
                         RTE.FTRteStaLocal   AS rtRteStaLocal,
+                        RTE.FTRteStaLocal   AS rtRteStaLocal,
+                        RTE.FTRteStaAlwChange   AS rtRteStaAlwChange,
                         IMGO.FTImgObj       AS rtImgObj,
                         AGNL.FTAgnCode,
                         AGNL.FTAgnName,
@@ -40,7 +42,7 @@ class Rate_model extends CI_Model
                     LEFT JOIN [TFNMRate_L] RTEL WITH(NOLOCK) ON RTE.FTRteCode = RTEL.FTRteCode AND RTEL.FNLngID = $nLngID
                     LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RTE.FTRteCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FNImgSeq = 1
                     LEFT JOIN [TCNMAgency_L] AGNL WITH(NOLOCK) ON AGNL.FTAgnCode = RTE.FTAgnCode
-                    LEFT JOIN [TCNSRate_L] RATEL WITH(NOLOCK) ON RATEL.FTRteIsoCode = RTE.FTCurCode
+                    LEFT JOIN [TCNSRate_L] RATEL WITH(NOLOCK) ON RATEL.FTRteIsoCode = RTE.FTRteIsoCode
                     WHERE 1=1 
         ";
 
@@ -99,6 +101,7 @@ class Rate_model extends CI_Model
                                     IMGO.FTImgObj,
                                     RTE.FDCreateOn,
                                     AGNL.FTAgnCode,
+                                    RTE.FTRteStaAlwChange,
                                     AGNL.FTAgnName
                             FROM [TFNMRate] RTE
                             LEFT JOIN [TFNMRate_L] RTEL ON RTE.FTRteCode = RTEL.FTRteCode   AND RTEL.FNLngID    = $nLngID
@@ -190,9 +193,10 @@ class Rate_model extends CI_Model
         $this->db->set('FTRteSign', $paData['FTRteSign']);
         $this->db->set('FTRteStaUse', $paData['FTRteStaUse']);
         $this->db->set('FTRteStaLocal', $paData['FTRteStaLocal']);
+        $this->db->set('FTRteStaAlwChange', $paData['FTRteStaAlwChange']);
         $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
         $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
-        $this->db->set('FTCurCode', $paData['FTCurCode']);
+        $this->db->set('FTRteIsoCode', $paData['FTRteIsoCode']);
 
 
         $this->db->where('FTRteCode', $paData['FTRteCode']);
@@ -213,7 +217,7 @@ class Rate_model extends CI_Model
                 'FTRteType' => $paData['FTRteType'],
                 'FTRteSign' => $paData['FTRteSign'],
                 'FTRteStaUse' => $paData['FTRteStaUse'],
-                'FTCurCode' => $paData['FTCurCode'],
+                'FTRteIsoCode' => $paData['FTRteIsoCode'],
                 'FTRteStaLocal' => $paData['FTRteStaLocal'],
                 // เวลาอัปเดทล่าสุด
                 'FDLastUpdOn' => $paData['FDLastUpdOn'],

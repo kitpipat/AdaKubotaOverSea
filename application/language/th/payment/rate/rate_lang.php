@@ -12,6 +12,7 @@ $lang['tRTETBName']     = "ชื่อ";
 $lang['tRTETBRteName']  = "ชื่อสกุลเงิน";
 $lang['tRTETBSign']     = "สัญลักษณ์สกุลเงิน";
 $lang['tRTETBRate']     = "อัตราแลกเปลี่ยน";
+$lang['tRTETBRatechange']     = "อนุญาตทอน";
 $lang['tRTETBType']     = "ประเภท";
 $lang['tRTETBTypeSeq']  = "-";
 $lang['tRTETBTypeSeq1']     = "ปัดขึ้น";

@@ -22,6 +22,7 @@
 						<th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBRteCode')?></th>
 						<th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBRteName')?></th>
                         <th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBRate')?></th>
+                        <th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBRatechange')?></th>
                         <th class="xCNTextBold"><?= language('payment/rate/rate','tRTEAgency')?></th>
 						<!-- <th class="xCNTextBold"><?= language('payment/rate/rate','tRTETBManage')?></th> -->
 						<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) : ?>
@@ -48,6 +49,12 @@
                                 }else{
                                     $tPatchImg = base_url().'application/modules/common/assets/images/200x200.png';
                                 }
+
+                                if($aValue['FTRteStaAlwChange'] == '1'){
+                                    $AlwChange = 'อนุญาตทอน';
+                                }else{
+                                    $AlwChange = 'ไม่อนุญาตทอน';
+                                }
                             ?>
                         <tr class="xCNTextDetail2 otrRate" id="otrRate<?=$key?>" data-code="<?=$aValue['FTRteCode']?>" data-name="<?=$aValue['FTRteName']?>">
 							<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1)  : ?>
@@ -62,6 +69,7 @@
 							<td><?php echo $aValue['FTRteCode'];?></td>
                             <td><?php echo $aValue['FTRteName'];?></td>
                             <td class="text-right"><?php echo number_format($aValue['FCRteRate'],$nOptDecimalShow)?></td>
+                            <td class="text-left"><?php echo ($AlwChange)?></td>
                             <td><?= ($aValue['FTAgnCode']) ?  $aValue['FTAgnName']  :  language('payment/rate/rate','tRTEHq') ;?></td>
                             <!-- <td>tManage</td> -->
 							<?php if(($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) && (!$tAgnCode)) : ?>

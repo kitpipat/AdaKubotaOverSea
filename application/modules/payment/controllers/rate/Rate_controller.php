@@ -102,6 +102,12 @@ class Rate_controller extends MX_Controller
                 $cRteStaLocal = 2;
             }
 
+            if (!empty($this->input->post('ocmRteStaAlwChange'))) {
+                $cRteStaAlwChange = 1;
+            } else {
+                $cRteStaAlwChange = 2;
+            }
+
             $tRteAgnCode = $this->input->post('oetRteAgnCode');
             if(isset($tRteAgnCode) && !empty($tRteAgnCode)){
                 $tRteAgnCode = $this->input->post('oetRteAgnCode');
@@ -120,15 +126,14 @@ class Rate_controller extends MX_Controller
                 'FTRteName'     => $this->input->post('oetRteName'),
                 'FTRteStaUse'   => $cmRteStaUse,
                 'FTRteStaLocal' => $cRteStaLocal,
+                'FTRteStaAlwChange' => $cRteStaAlwChange,
                 'FNLngID'       => $this->session->userdata("tLangEdit"),
                 'FDCreateOn'    => date('Y-m-d H:i:s'),
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
-                'FTCurCode'     => $this->input->post('oetRteIsoCode'),
+                'FTRteIsoCode'     => $this->input->post('oetRteIsoCode'),
             );
-
-
 
 
             if ($aDataMaster['tIsAutoGenCode'] == '1') { // Check Auto Gen Department Code?
@@ -238,6 +243,12 @@ class Rate_controller extends MX_Controller
                 $cRteStaLocal = 2;
             }
 
+            if (!empty($this->input->post('ocmRteStaAlwChange'))) {
+                $cRteStaAlwChange = 1;
+            } else {
+                $cRteStaAlwChange = 2;
+            }
+
             $aDataMaster    = [
                 'FTRteCode'     => $this->input->post('oetRteCode'),
                 'FTImgObj'      => $this->input->post('oetImgInputrate'),
@@ -249,12 +260,13 @@ class Rate_controller extends MX_Controller
                 'FTRteName'     => $this->input->post('oetRteName'),
                 'FTRteStaUse'   => $cmRteStaUse,
                 'FTRteStaLocal' => $cRteStaLocal,
+                'FTRteStaAlwChange' => $cRteStaAlwChange,
                 'FNLngID'       => $this->session->userdata("tLangEdit"),
                 'FDCreateOn'    => date('Y-m-d H:i:s'),
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
-                'FTCurCode'     => $this->input->post('oetRteIsoCode'),
+                'FTRteIsoCode'     => $this->input->post('oetRteIsoCode'),
             ];
 
             $aDataUnitFac = [
