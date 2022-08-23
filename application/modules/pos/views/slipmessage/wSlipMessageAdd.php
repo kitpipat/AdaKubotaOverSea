@@ -46,6 +46,15 @@ $tEndReceiptPlaceholder = "End of Receipt";
 .xWSmgBtn {
     box-shadow: none;
 }
+button.btn.dropdown-toggle.btn-default {
+    height: 34px;
+}
+
+.filter-option-inner-inner{
+    font-size: 17px !important;
+    margin-top: 1px;
+    padding-left: 10px;
+}
 .xWSmgItemSelect {
     margin-bottom: 5px;
 }
@@ -139,30 +148,41 @@ $tEndReceiptPlaceholder = "End of Receipt";
                                                 }?>
                                         </select>
                                     </div>
+
                                     <div class="col-md-4">
                                         <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFontType'); ?></label>
                                         <select class="selectpicker form-control" id="ocmSmgFontsStyle" name="ocmSmgFontsStyle" value="<?=@$tSmgFontsStyle?>">
-                                            <option value="">
-                                                <?php echo '';?>
+                                            <option value="1"<?php echo (@$tSmgFontsStyle == '1')?  "selected" : "";?> >
+                                                Normal
                                             </option> 
+                                            <option value="2"<?php echo (@$tSmgFontsStyle == '2')?  "selected" : "";?>>
+                                                Bold
+                                            </option>
+                                            <option value="3"<?php echo (@$tSmgFontsStyle == '3')?  "selected" : "";?>>
+                                                Lighter
+                                            </option>
+                                            <option value="4"<?php echo (@$tSmgFontsStyle == '4')?  "selected" : "";?>>
+                                                Bolder
+                                            </option>
                                         </select>
                                     </div>
+                                    
                                     <div class="col-md-4">
                                         <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFontSize'); ?></label>
-                                        <select class="selectpicker form-control" id="ocmSmgFontsSize" name="ocmSmgFontsSize" value="<?=@$tSmgFontsSize?>">
-                                            <?php 
-                                                for($i=1;$i<73;$i++){
-                                                    if($i==$tSmgFontsSize){
-                                                        $tSel = 'selected';
-                                                    }else{
-                                                        $tSel = '';
-                                                    }      
-                                            ?>
-                                            <option value="<?=$i?>"<?=$tSel?>>
-                                                <?php echo $i;?>
-                                            </option>
-                                            <?php } ?>
-                                        </select>
+                                        <div class="validate-input">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                maxlength="50"
+                                                id="oetSmgFontsSize"
+                                                name="oetSmgFontsSize"
+                                                autocomplete="off"
+                                                placeholder ="<?php echo language('pos/slipmessage/slipmessage','tSMGFontSize'); ?>"
+                                                value="<?=@$tSmgFontsSize?>"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                data-validate-required = "<?php echo language('pos/slipmessage/slipmessage','tSMGValidFontSize')?>"
+                                            >
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +209,7 @@ $tEndReceiptPlaceholder = "End of Receipt";
                 </div>
                 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-xs-12 col-md-5 col-lg-5">
                         <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGSlipHead'); ?></label>
                         <div class="xWSmgSortContainer" id="odvSmgSlipHeadContainer">
 
@@ -215,7 +235,7 @@ $tEndReceiptPlaceholder = "End of Receipt";
                 </div>
                 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-xs-12 col-md-5 col-lg-5">
                         <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGSlipEnd'); ?></label>
                         <div class="xWSmgSortContainer" id="odvSmgSlipEndContainer">
 

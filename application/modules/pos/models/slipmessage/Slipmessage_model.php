@@ -201,6 +201,7 @@ class Slipmessage_model extends CI_Model {
             $this->db->set('FTSmgTitle' , $paData['FTSmgTitle']);
             $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
             $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
+            $this->db->set('FTFonts', $paData['FTFonts']);
             $this->db->where('FTSmgCode', $paData['FTSmgCode']);
             $this->db->where('FNLngID', $paData['FNLngID']);
             $this->db->update('TCNMSlipMsgHD_L');

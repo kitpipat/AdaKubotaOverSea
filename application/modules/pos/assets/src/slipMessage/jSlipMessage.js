@@ -282,6 +282,7 @@ function JSnAddEditSlipMessage(ptRoute){
                 "dublicateCode": {}
             },
             oetSmgTitle:  {"required" :{}},
+            oetSmgFontsSize:  {"required" :{}},
         },
         messages: {
             oetSmgCode: {
@@ -291,6 +292,10 @@ function JSnAddEditSlipMessage(ptRoute){
 
             oetSmgTitle: {
                 "required"      :  $('#oetSmgTitle').attr('data-validate-required'),
+            },
+            
+            oetSmgFontsSize: {
+                "required"      :  $('#ocmSmgFontsSize').attr('data-validate-required'), 
             }
         },
         errorElement: "em",

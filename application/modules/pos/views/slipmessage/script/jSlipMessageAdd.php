@@ -96,6 +96,7 @@
                     "dublicateCode" :{}
                 },
                 oetSmgTitle:     {"required" :{}},
+                oetSmgFontsSize:  {"required" :{}},
                 // ocmRcnGroup:    {"required" :{}},
             },
             messages: {
@@ -105,6 +106,9 @@
                 },
                 oetSmgTitle : {
                     "required"      : $('#oetSmgTitle').attr('data-validate-required'),
+                },
+                oetSmgFontsSize : {
+                    "required"      :  $('#ocmSmgFontsSize').attr('data-validate-required'), 
                 }
                 // ocmRcnGroup: {
                 //     "required"      : $('#osmSelect').attr('data-validate-required'),
