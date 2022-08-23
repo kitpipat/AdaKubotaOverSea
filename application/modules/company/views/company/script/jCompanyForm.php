@@ -213,7 +213,7 @@
         },
         Join: {
             Table: ['TCNMCountry_L'],
-            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND TCNMCountry.FNLngID = ' + nLangEdits, ]
+            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND TCNMCountry_L.FNLngID = ' + nLangEdits, ]
         },
         Where: {
             Condition: ['AND TCNMCountry.FTCtyStaUse = 1']
