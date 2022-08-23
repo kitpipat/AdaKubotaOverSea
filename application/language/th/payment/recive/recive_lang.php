@@ -25,6 +25,7 @@ $lang['tRCVStatus']     = "สถานะ";
 $lang['tRCVValidCode']    = 'กรุณากรอกรหัสประเภทการชำระเงิน';
 $lang['tRCVValidName']    = 'กรุณากรอกชื่อ ประเภทการชำระเงิน ';
 $lang['tRCVValidFormatName']    = 'กรุณากรอกเลือก อ้างอิงรูป ';
+$lang['tRCVValidCurrencyName']    = 'กรุณาเลือก ประเภทสกุลเงิน';
 $lang['tRCVValidCodeDup'] =  "รหัสประเภทการชำระเงินนี้มีอยู่ในระบบแล้วกรุณาตรวจสอบอีกครั้ง";
 
 $lang['tRCVBillerID']  = "รหัสเรียกเก็บเงิน";

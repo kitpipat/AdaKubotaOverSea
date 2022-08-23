@@ -25,6 +25,7 @@ $lang['tRCVStatus']     = "Status";
 $lang['tRCVValidCode']          = 'Please Enter Code or Click to Genarated Code';
 $lang['tRCVValidName']          = 'Please Enter Name Recive';
 $lang['tRCVValidFormatName']    = 'Please Enter Format Code ';
+$lang['tRCVValidCurrencyName']    = 'Please Select Currency';
 
 $lang['tRCVBillerID']  = "Biller ID";
 $lang['tRCVCurrency']  = "Currency";

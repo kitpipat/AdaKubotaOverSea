@@ -28,7 +28,8 @@ class Recive_model extends CI_Model
                     TRF.FTFmtStaAlwCfg,
                     TRFL.FTFmtName,
                     RCV.FTRcvRefRate,
-                    RCFL.FTRteName
+                    RCFL.FTRteName,
+                    RCV.FTRcvStaAllRte
                  FROM [TFNMRcv] RCV WITH(NOLOCK)
                  LEFT JOIN [TFNMRcv_L] RCVL WITH(NOLOCK) ON RCV.FTRcvCode = RCVL.FTRcvCode AND RCVL.FNLngID = $nLngID
                  LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RCV.FTRcvCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRcv' AND IMGO.FNImgSeq = 1
@@ -220,7 +221,7 @@ class Recive_model extends CI_Model
             $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
             $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
             $this->db->set('FTRcvRefRate', $paData['FTRcvRefRate']);
-
+            $this->db->set('FTRcvStaAllRte', $paData['FTRcvStaAllRte']);
             $this->db->set('FTAppStaAlwRet', $paData['FTAppStaAlwRet']);
             $this->db->set('FTAppStaAlwCancel', $paData['FTAppStaAlwCancel']);
             $this->db->set('FTAppStaPayLast', $paData['FTAppStaPayLast']);
@@ -256,7 +257,8 @@ class Recive_model extends CI_Model
                     'FTAppStaAlwRet'    => $paData['FTAppStaAlwRet'],
                     'FTAppStaAlwCancel' => $paData['FTAppStaAlwCancel'],
                     'FTAppStaPayLast'   => $paData['FTAppStaPayLast'],
-                    'FTRcvRefRate' => $paData['FTRcvRefRate'],
+                    'FTRcvRefRate'      => $paData['FTRcvRefRate'],
+                    'FTRcvStaAllRte'    => $paData['FTRcvStaAllRte'],
                 ));
 
 

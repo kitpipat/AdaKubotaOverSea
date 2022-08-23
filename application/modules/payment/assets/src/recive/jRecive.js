@@ -227,6 +227,18 @@ function JSnAddEditRecive(ptRoute) {
             },
             oetRcvName: { "required": {} },
             oetRcvFormatName: { "required": {} },
+            oetRcvCurrencyName: {
+                "required": {
+                    depends: function(oElement) {
+                        var ohasRequired = $(this).attr('required');
+                        if(typeof ohasRequired !== "undefined" && ohasRequired !== false){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                },
+            },
 
         },
         messages: {
@@ -240,6 +252,9 @@ function JSnAddEditRecive(ptRoute) {
             oetRcvFormatName: {
                 "required": $('#oetRcvFormatName').attr('data-validate-required'),
             },
+            oetRcvCurrencyName:{
+                "required": $('#oetRcvCurrencyName').attr('data-validate-required'),
+            }
         },
         errorElement: "em",
         errorPlacement: function(error, element) {
