@@ -136,7 +136,7 @@
         Table:{Master:'TCNMCountry', PK:'FTCtyCode'},
         Join :{
             Table: ['TCNMCountry_L'],
-            On: [' TCNMCountry.FTCtyCode = TCNMCountry_L.FTCtyCode AND TCNMCountry_L.FNLngID = 0']
+            On: [' TCNMCountry.FTCtyCode = TCNMCountry_L.FTCtyCode AND TCNMCountry_L.FNLngID = '+nLangEdits]
         },
         Where :{
             Condition : [tWhereAgn]

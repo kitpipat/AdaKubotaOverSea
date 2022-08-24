@@ -24,6 +24,16 @@
     $route ['branchEventDeleteFolder']      = 'company/branch/Branch_controller/FSaCBCHDeleteEventFolder';
     $route ['branchBrowseWareHouse']        = 'company/branch/Branch_controller/FSoCBCHCallWareHouse';
 
+    // Country (ประเทศ)
+    $route ['country/(:any)/(:any)']        = 'company/country/Country_controller/index/$1/$2';
+    $route ['countryList']                  = 'company/country/Country_controller/FSvCPUNListPage';
+    $route ['countryDataTable']             = 'company/country/Country_controller/FSvCPUNDataList';
+    $route ['countryPageAdd']               = 'company/country/Country_controller/FSvCPUNAddPage';
+    $route ['countryPageEdit']              = 'company/country/Country_controller/FSvCPUNEditPage';
+    $route ['countryEventAdd']              = 'company/country/Country_controller/FSoCPUNAddEvent';
+    $route ['countryEventEdit']             = 'company/country/Country_controller/FSoCPUNEditEvent';
+    $route ['countryEventDelete']           = 'company/country/Country_controller/FSoCPUNDeleteEvent';
+
     //  Branch Import
     $route ['branchPageImportDataTable']    = 'company/branch/Branch_controller/FSaCBCHImportDataTable';
     $route ['branchEventImportDelete']      = 'company/branch/Branch_controller/FSaCBCHImportDelete';
