@@ -117,6 +117,12 @@ class Koolreport extends Base
 				throw new \Exception("Could not find path to report's assets folder");
 			}
 			$reportClassFolder = dirname(Utility::getClassPath($this));
+			// echo $reportClassFolder."/".$targetAssetPath;
+
+			if(!is_dir($reportClassFolder."/".$targetAssetPath)){
+				mkdir($reportClassFolder."/".$targetAssetPath);
+			}
+
 			if(is_dir($reportClassFolder."/".$targetAssetPath))
 			{
 				//Check if relative targetAssetPath existed
