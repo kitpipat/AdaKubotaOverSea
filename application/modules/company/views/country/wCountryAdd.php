@@ -10,6 +10,8 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tRteCode			= $raResult['raItems']['rtIsoCode'];
 		$tVatCode			= $raResult['raItems']['rtCtyVatCode'];
 		$tVatRate 			= $raResult['raItems']['rtCtyVatRate'];
+		$tCtyLa				= $raResult['raItems']['rtCtyLatitude'];
+		$tCtyLon 			= $raResult['raItems']['rtCtyLongitude'];
 		
 	}else{
 		$tRoute				= 'countryEventAdd';
@@ -17,11 +19,13 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tCtyName			= '';
 		$tCtyCode			= '';
 		$tCtyLangID 		= '1';
-		$tCtyStaActive		= '';
-		$tExcRte			= '';
+		$tCtyStaActive		= '2';
+		$tExcRte			= '2';
 		$tRteCode			= '';
 		$tVatCode			= '';
 		$tVatRate 			= 'อัตราภาษี';
+		$tCtyLa				= '';
+		$tCtyLon 			= '';
 	}
 ?>
 <div id="odvBranchPanelBody" class="panel-body" style="padding-top:10px !important;">
@@ -55,8 +59,18 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 													<div class="form-group">
 															<label class="xCNLabelFrm">
-																<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryCode')?> </label>
-															<input type="text" class="form-control" maxlength="100" id="oetCtyCode" name="oetCtyCode" autocomplete="off" placeholder="รหัสประเทศ" data-validate-required="กรุณากรอกรหัสประเทศ เช่น ABC" value="<?php echo @$tCtyCode; ?>">
+															<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryCode')?> </label>
+															<input type="text" 
+																   class="form-control" 
+																   id="oetCtyCode" 
+																   name="oetCtyCode" 
+																   autocomplete="off" 
+																   maxlength="3"
+																   placeholder="<?php echo language('company/country/country','tCountryCode')?>" 
+																   oninput="this.value = this.value.replace(/[^A-Z]/ig, '').toUpperCase()"
+																   data-validate-required="<?php echo language('company/country/country','tCountryCodeValidate')?>" 
+																   value="<?php echo @$tCtyCode; ?>"
+																>
 														</div>
 													</div>
 											</div>
@@ -66,7 +80,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 														<div class="form-group">
 															<label class="xCNLabelFrm">
 																<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryName')?> </label>
-															<input type="text" class="form-control" maxlength="100" id="oetCtyName" name="oetCtyName" autocomplete="off" placeholder="ชื่อประเทศ" data-validate-required="กรุณากรอกชื่อประเทศ" value="<?php echo @$tCtyName; ?>">
+															<input type="text" class="form-control" maxlength="50" id="oetCtyName" name="oetCtyName" autocomplete="off" placeholder="<?php echo language('company/country/country','tCountryName')?>" data-validate-required="<?php echo language('company/country/country','tCountryNameValidate')?>" value="<?php echo @$tCtyName; ?>">
 														</div>
 													</div>
 												</div>
@@ -105,7 +119,17 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
 															<label class="xCNLabelFrm"><span class="text-danger">*</span> <?php echo language('company/country/country','tCountryIso')?></label>
-															<input type="text" class="form-control" maxlength="30" id="oetRteCode" name="oetRteCode" autocomplete="off" placeholder="<?php echo language('company/country/country','tCountryIso')?>" data-validate-required="กรุณากรอกรหัสสกุลเงินตามมาตราฐาน ISO 4217" value="<?php echo @$tRteCode; ?>">
+															<input 
+															type="text" 
+															class="form-control" 
+															maxlength="3" 
+															id="oetRteCode" 
+															name="oetRteCode" 
+															autocomplete="off" 
+															oninput="this.value = this.value.replace(/[^A-Z]/ig, '').toUpperCase()"
+															placeholder="<?php echo language('company/country/country','tCountryIso')?>" 
+															data-validate-required="<?php echo language('company/country/country','tCountryIsoValidate')?>" 
+															value="<?php echo @$tRteCode; ?>">
 														</div>
 													</div>
 												</div>
@@ -137,6 +161,44 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 																</select>														
 														</div>
 													</div>	
+												</div>
+
+												<div class="row">
+												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+														<div class="form-group">
+															<label class="xCNLabelFrm">
+																<?php echo language('company/country/country','tCountryla')?> </label>
+															<input 
+															type="text" 
+															class="form-control" 
+															id="oetCtyLa" 
+															name="oetCtyLa" 
+															autocomplete="off" 
+															maxlength="50"
+															oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+															placeholder="<?php echo language('company/country/country','tCountryla')?>" 
+															value="<?php echo @$tCtyLa; ?>">
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+														<div class="form-group">
+															<label class="xCNLabelFrm">
+																<?php echo language('company/country/country','tCountrylon')?> </label>
+															<input 
+															type="text" 
+															class="form-control" 
+															id="oetCtyLon" 
+															name="oetCtyLon" 
+															autocomplete="off" 
+															maxlength="50"
+															oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+															placeholder="<?php echo language('company/country/country','tCountrylon')?>" 
+															value="<?php echo @$tCtyLon; ?>">
+														</div>
+													</div>
 												</div>
 												
 											</div>

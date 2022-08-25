@@ -98,17 +98,16 @@ function JSnAddEditCountry(tRouteEvent) {
     var nStaSession = JCNxFuncChkSessionExpired();
     if (typeof(nStaSession) !== 'undefined' && nStaSession == 1) {
         $('#ofmAddCountry').validate().destroy();
-
         $('#ofmAddCountry').validate({
             rules: {
-                oetCtyCode:    { "required": {} },
+                oetCtyCode:  { "required": {} },
                 oetCtyName:  { "required": {} },
                 oetRteCode:  { "required": {} },
                 
             },
             messages: {
                 oetCtyCode: {
-                    "required" : $('#oetCtyCode').attr('data-validate-required'),
+                    "required" : $('#oetCtyCode').attr('data-validate-required'),                 
                 },
                 oetCtyName: {
                     "required": $('#oetCtyName').attr('data-validate-required'),
