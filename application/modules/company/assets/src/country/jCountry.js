@@ -191,7 +191,7 @@ function JSvBCHCallPageCountryEdit(ptCtyCode) {
         $.ajax({
             type: "POST",
             url: "countryPageEdit",
-            data: {odvModalDelCty,
+            data: {
                 tCtyCode: ptCtyCode
             },
             timeout: 0,
