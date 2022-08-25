@@ -560,7 +560,7 @@ class Rpttaxbyproduct_controller extends MX_Controller {
      */
     public function  FSvCCallRptRenderExcel(){
         ini_set('memory_limit','-1');
-        $tFileName = 'Rpt-'.$this->aText['tTitleReport'].'_'.date('YmdHis').'.xlsx';
+        $tFileName = $this->aText['tTitleReport'].'_'.date('YmdHis').'.xlsx';
         $oWriter = WriterEntityFactory::createXLSXWriter();
 
          $oWriter->openToBrowser($tFileName); // stream data directly to the browser
@@ -958,19 +958,44 @@ class Rpttaxbyproduct_controller extends MX_Controller {
         ];
         $aMulltiRow[] = WriterEntityFactory::createRow($aCells,$oStyleFilter);
 
+        
+        // if (isset($this->aRptFilter['tPosType'])) {
+            // if (empty($this->aRptFilter['tPosType'])) {
+            //     $tPosTypeText = $aDataTextRef['tRptPosType'];
+            // }
+            $tPosTypeText = $this->aText['tRptPosType'];
+            if ($this->aRptFilter['tPosType'] == '1') {
+                $tPosTypeText = $this->aText['tRptPosType1'];
+            }
+            if ($this->aRptFilter['tPosType'] == '2') {
+                $tPosTypeText = $this->aText['tRptPosType2'];
+            }
+            $aCells = [
+                WriterEntityFactory::createCell($this->aText['tRptPosTypeName'].' : '.$tPosTypeText),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+            ];
+            $aMulltiRow[] = WriterEntityFactory::createRow($aCells);
+        //   }
 
         if (isset($this->aRptFilter['tBchCodeSelect']) && !empty($this->aRptFilter['tBchCodeSelect'])) {
           $tBchSelect =  ($this->aRptFilter['bBchStaSelectAll']) ? $this->aText['tRptAll'] : $this->aRptFilter['tBchNameSelect'];
-        $aCells = [
-            WriterEntityFactory::createCell($this->aText['tRptBchFrom'].' : '.$tBchSelect),
-            WriterEntityFactory::createCell(NULL),
-            WriterEntityFactory::createCell(NULL),
-            WriterEntityFactory::createCell(NULL),
-            WriterEntityFactory::createCell(NULL),
-            WriterEntityFactory::createCell(NULL),
-            WriterEntityFactory::createCell(NULL),
-            WriterEntityFactory::createCell(NULL),
-            WriterEntityFactory::createCell(NULL),
+            $aCells = [
+                WriterEntityFactory::createCell($this->aText['tRptBchFrom'].' : '.$tBchSelect),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
+                WriterEntityFactory::createCell(NULL),
             ];
             $aMulltiRow[] = WriterEntityFactory::createRow($aCells);
         }
@@ -1009,7 +1034,7 @@ class Rpttaxbyproduct_controller extends MX_Controller {
           }
 
           if (isset($this->aRptFilter['tPosCodeSelect']) && !empty($this->aRptFilter['tPosCodeSelect'])) {
-            $tPosSelect =  ($this->aRptFilter['bPosStaSelectAll']) ? $this->aText['tRptAll'] : $this->aRptFilter['tPosCodeSelect'];
+            $tPosSelect =  ($this->aRptFilter['bPosStaSelectAll']) ? $this->aText['tRptAll'] : $this->aRptFilter['tPosNameSelect'];
             $aCells = [
                 WriterEntityFactory::createCell($this->aText['tRptPosFrom'].' : '.$tPosSelect),
                 WriterEntityFactory::createCell(NULL),

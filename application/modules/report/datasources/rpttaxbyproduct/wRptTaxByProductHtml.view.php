@@ -203,10 +203,10 @@ $bIsLastPage = ($nAllPage == $nCurrentPage);
                                 <th nowrap class="text-left xCNRptColumnHeader" width="18%"><?php echo $aDataTextRef['tRptBillNo']; ?></th>
                                 <th nowrap class="text-left xCNRptColumnHeader" width="10%"><?php echo $aDataTextRef['tRptTaxSalePosDocRef']; ?></th>
                                 <th nowrap class="text-left xCNRptColumnHeader" width="10%"><?php echo $aDataTextRef['tRptCst']; ?></th>
-                                <th nowrap style="border-right: 1px solid black !important;" nowrap class="text-left xCNRptColumnHeader" colspan="4"><?php echo $aDataTextRef['tRptDate']; ?></th>
-                                <th nowrap class="text-right xCNRptColumnHeader" colspan="2">มูลค่า(จากระบบ)</th>
-                                <th nowrap style="border-right: 1px solid black !important;" nowrap class="text-left xCNRptColumnHeader" colspan="2">มูลค่า(คำนวนใหม่)</th>
-                                <th nowrap style="border-right: 1px solid black !important;"></th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" nowrap class="text-left xCNRptColumnHeader" colspan="4"><?php echo $aDataTextRef['tRptDate']; ?></th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" class="text-center xCNRptColumnHeader" colspan="2">มูลค่า(จากระบบ)</th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" nowrap class="text-center xCNRptColumnHeader" colspan="2">มูลค่า(คำนวนใหม่)</th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;"></th>
                                 <th></th>
                             </tr>
                             <tr>
@@ -215,12 +215,12 @@ $bIsLastPage = ($nAllPage == $nCurrentPage);
                                 <th nowrap class="text-left xCNRptColumnHeader"><?php echo $aDataTextRef['tRptQty']; ?></th>
                                 <th nowrap class="text-right xCNRptColumnHeader"><?php echo $aDataTextRef['tRptPricePerUnit']; ?></th>
                                 <th nowrap class="text-right xCNRptColumnHeader"><?php echo $aDataTextRef['tRptSales']; ?></th>
-                                <th nowrap class="text-right xCNRptColumnHeader" style="border-right: 1px solid black !important;"><?php echo $aDataTextRef['tRptDiscount']; ?></th>
-                                <th nowrap class="text-right xCNRptColumnHeader"><?php echo $aDataTextRef['tRptVat'];?></th>
-                                <th nowrap class="text-right xCNRptColumnHeader"><?php echo $aDataTextRef['tRptSeparateTax'];?></th>
-                                <th nowrap class="text-right xCNRptColumnHeader"><?php echo $aDataTextRef['tRptVat'];?></th>
-                                <th nowrap style="border-right: 1px solid black !important;" nowrap class="text-right xCNRptColumnHeader"><?php echo $aDataTextRef['tRptSeparateTax'];?></th>
-                                <th nowrap style="border-right: 1px solid black !important;" nowrap class="text-center xCNRptColumnHeader">ผลต่างภาษี</th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" class="text-right xCNRptColumnHeader"><?php echo $aDataTextRef['tRptDiscount']; ?></th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" class="text-center xCNRptColumnHeader"><?php echo $aDataTextRef['tRptVat'];?></th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" class="text-center xCNRptColumnHeader"><?php echo $aDataTextRef['tRptSeparateTax'];?></th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" class="text-center xCNRptColumnHeader"><?php echo $aDataTextRef['tRptVat'];?></th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" nowrap class="text-center xCNRptColumnHeader"><?php echo $aDataTextRef['tRptSeparateTax'];?></th>
+                                <th nowrap style="border-right: 1px dashed #ccc !important;" nowrap class="text-center xCNRptColumnHeader">ผลต่างภาษี</th>
                                 <th nowrap class="text-right xCNRptColumnHeader"><?php echo $aDataTextRef['tRptGrandSale']; ?></th>
                             </tr>
                         </thead>
@@ -320,17 +320,20 @@ $bIsLastPage = ($nAllPage == $nCurrentPage);
 
                                     ?>
 
-                                    <?php if ($nRowPartID == 1) { // Display Group Header ?>
+                                    <?php if ( $nRowPartID == 1 || $nKey == 0 ) { // Display Group Header ?>
                                         <?php $nIndex = 1; ?>
                                         <tr>
                                             <td class="xCNRptGrouPing"><?php echo $tRptDocNo; ?></td>
                                             <td class="xCNRptGrouPing"><?php echo $tRptRefInt; ?></td>
                                             <td class="xCNRptGrouPing"><?php echo empty($tRptCstCode) ? $aDataTextRef['tRptCstNormal'] : '(' . $tRptCstCode . ')' . $tRptCstName; ?></td>
-                                            <td class="xCNRptGrouPing" colspan="2"><?php echo $tRptDocDate; ?></td>
+                                            <td class="xCNRptGrouPing" colspan="2"><?php echo date_format(date_create($tRptDocDate),'d/m/Y'); ?></td>
                                             <td></td>
-                                            <td style="border-right: 1px solid black !important;"></td>
-                                            <td style="border-right: 1px solid black !important;" colspan="4"></td>
-                                            <td style="border-right: 1px solid black !important;"></td>
+                                            <td style="border-right: 1px dashed #ccc !important;"></td>
+                                            <td style="border-right: 1px dashed #ccc !important;"></td>
+                                            <td style="border-right: 1px dashed #ccc !important;"></td>
+                                            <td style="border-right: 1px dashed #ccc !important;"></td>
+                                            <td style="border-right: 1px dashed #ccc !important;"></td>
+                                            <td style="border-right: 1px dashed #ccc !important;"></td>
                                         </tr>
                                     <?php } ?>
 
@@ -341,14 +344,14 @@ $bIsLastPage = ($nAllPage == $nCurrentPage);
                                             <td class="xCNRptDetail"><?php echo number_format($nRptXsdQty, $nOptDecimalShow); ?> <?php echo $tRptPunName; ?></td>
                                             <td class="text-right xCNRptDetail"><?php echo number_format($nRptXsdSetPrice, $nOptDecimalShow); ?></td>
                                             <td class="text-right xCNRptDetail"><?php echo number_format($nRptXsdAmt, $nOptDecimalShow); ?></td>
-                                            <td style="border-right: 1px solid black !important;" class="text-right xCNRptDetail"><?php echo number_format($nRptXsdDis, $nOptDecimalShow); ?></td>
+                                            <td style="border-right: 1px dashed #ccc !important;" class="text-right xCNRptDetail"><?php echo number_format($nRptXsdDis, $nOptDecimalShow); ?></td>
 
                                             <!-- เพิ่ม Vat และ Vatable เข้าไป -->
-                                            <td class="text-right xCNRptDetail"><?php echo number_format($nRptVat, $nOptDecimalShow);?></td>    
-                                            <td class="text-right xCNRptDetail"><?php echo number_format($nRptVatable, $nOptDecimalShow);?></td>
-                                            <td class="text-right xCNRptDetail"><?php echo number_format($nResultVat, $nOptDecimalShow);?></td>
-                                            <td style="border-right: 1px solid black !important;" class="text-right xCNRptDetail"><?php echo number_format($nResultSplitAmount, $nOptDecimalShow);?></td>
-                                            <td style="border-right: 1px solid black !important;" class="text-right xCNRptDetail"><?php echo number_format($nDiffVat, $nOptDecimalShow);?></td>
+                                            <td style="border-right: 1px dashed #ccc !important;" class="text-right xCNRptDetail"><?php echo number_format($nRptVat, $nOptDecimalShow);?></td>    
+                                            <td style="border-right: 1px dashed #ccc !important;" class="text-right xCNRptDetail"><?php echo number_format($nRptVatable, $nOptDecimalShow);?></td>
+                                            <td style="border-right: 1px dashed #ccc !important;" class="text-right xCNRptDetail"><?php echo number_format($nResultVat, $nOptDecimalShow);?></td>
+                                            <td style="border-right: 1px dashed #ccc !important;" class="text-right xCNRptDetail"><?php echo number_format($nResultSplitAmount, $nOptDecimalShow);?></td>
+                                            <td style="border-right: 1px dashed #ccc !important;" class="text-right xCNRptDetail"><?php echo number_format($nDiffVat, $nOptDecimalShow);?></td>
                                             <td class="text-right xCNRptDetail"><?php echo number_format($nRptXsdNet, $nOptDecimalShow); ?></td>
                                         </tr>
                                         <?php $nIndex++; ?>
@@ -369,14 +372,14 @@ $bIsLastPage = ($nAllPage == $nCurrentPage);
                                     <?php if ($nRowPartID == $nGroupMember && $nRowType == 3 && !$bIsRcFirst) { // Display Sub Sum HD ?>
                                         <?php
                                         $bIsRcFirst = true;
-                                        $aGetHDParams = [
-                                            'tDocNo' => $tRptDocNo,
-                                            'tCompName' => $tCompName,
-                                            'tRptCode' => $tRptCode,
-                                            'tUserSessionID' => $tUserSessionID,
-                                            'tPosType' => $tPosType
-                                        ];
-                                        $aHD = $oMTaxByProduct->FMaMRPTGetHDByDocNo($aGetHDParams);
+                                        // $aGetHDParams = [
+                                        //     'tDocNo' => $tRptDocNo,
+                                        //     'tCompName' => $tCompName,
+                                        //     'tRptCode' => $tRptCode,
+                                        //     'tUserSessionID' => $tUserSessionID,
+                                        //     'tPosType' => $tPosType
+                                        // ];
+                                        // $aHD = $oMTaxByProduct->FMaMRPTGetHDByDocNo($aGetHDParams);
                                         ?>
                                         <tr class="xCNRptLastGroupTr">
                                             <td style="padding:0px; margin:0px;" class="xCNRptGrouPing" colspan="14"></td>
@@ -387,15 +390,15 @@ $bIsLastPage = ($nAllPage == $nCurrentPage);
 
                                 <?php if ($bIsLastPage) { // Display Summary Footer ?>
                                     <?php
-                                    $aGetHDParams = [
-                                        'tDocNo' => $tRptDocNo,
-                                        'tCompName' => $tCompName,
-                                        'tRptCode' => $tRptCode,
-                                        'tUserSessionID' => $tUserSessionID,
-                                        'tPosType' => $tPosType
-                                    ];
+                                    // $aGetHDParams = [
+                                    //     'tDocNo' => $tRptDocNo,
+                                    //     'tCompName' => $tCompName,
+                                    //     'tRptCode' => $tRptCode,
+                                    //     'tUserSessionID' => $tUserSessionID,
+                                    //     'tPosType' => $tPosType
+                                    // ];
 
-                                    $aSumFooter = $oMTaxByProduct->FMaMRPTSumFooterAll($aGetHDParams);
+                                    // $aSumFooter = $oMTaxByProduct->FMaMRPTSumFooterAll($aGetHDParams);
 
                                         // $nSumVat = 7;
 
@@ -480,6 +483,7 @@ $bIsLastPage = ($nAllPage == $nCurrentPage);
                 if ($tPosType == '2') {
                     $tPosTypeText = $aDataTextRef['tRptPosType2'];
                 }
+                // echo "<pre>"; print_r($aDataFilter); echo "</pre>";
             ?>
             <!-- ============================ ฟิวเตอร์ข้อมูล ประเภทเครื่องจุดขาย ============================ -->
             <div class="xCNRptFilterBox">
@@ -535,15 +539,15 @@ $bIsLastPage = ($nAllPage == $nCurrentPage);
             <?php if ((isset($aDataFilter['tPosCodeFrom']) && !empty($aDataFilter['tPosCodeFrom'])) && (isset($aDataFilter['tPosCodeTo']) && !empty($aDataFilter['tPosCodeTo']))) : ?>
             <div class="xCNRptFilterBox">
                 <div class="text-left xCNRptFilter">
-                    <label class="xCNRptLabel xCNRptDisplayBlock"><span class="xCNRptFilterHead"><?php echo $aDataTextRef['tRptAdjPosFrom'].' : </span>'.$aDataFilter['tPosCodeFrom'];?></label>
-                    <label class="xCNRptLabel xCNRptDisplayBlock"><span class="xCNRptFilterHead"><?php echo $aDataTextRef['tRptAdjPosTo'].' : </span>'.$aDataFilter['tPosCodeTo'];?></label>
+                    <label class="xCNRptLabel xCNRptDisplayBlock"><span class="xCNRptFilterHead"><?php echo $aDataTextRef['tRptAdjPosFrom'].' : </span>'.$aDataFilter['tPosNameFrom'];?></label>
+                    <label class="xCNRptLabel xCNRptDisplayBlock"><span class="xCNRptFilterHead"><?php echo $aDataTextRef['tRptAdjPosTo'].' : </span>'.$aDataFilter['tPosNameTo'];?></label>
                 </div>
             </div>
             <?php endif; ?> 
             <?php if (isset($aDataFilter['tPosCodeSelect']) && !empty($aDataFilter['tPosCodeSelect'])) : ?>
                 <div class="xCNRptFilterBox">
                     <div class="xCNRptFilter">
-                        <label class="xCNRptDisplayBlock"><span class="xCNRptFilterHead"><?php echo $aDataTextRef['tRptPosFrom']; ?> : </span> <?php echo ($aDataFilter['bPosStaSelectAll']) ? $aDataTextRef['tRptAll'] : $aDataFilter['tPosCodeSelect']; ?></label>
+                        <label class="xCNRptDisplayBlock"><span class="xCNRptFilterHead"><?php echo $aDataTextRef['tRptPosFrom']; ?> : </span> <?php echo ($aDataFilter['bPosStaSelectAll']) ? $aDataTextRef['tRptAll'] : $aDataFilter['tPosNameSelect']; ?></label>
                     </div>
                 </div>
             <?php endif; ?>  
