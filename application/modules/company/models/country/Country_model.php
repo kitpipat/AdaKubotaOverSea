@@ -107,7 +107,9 @@ class Country_model extends CI_Model {
                                     VVA.FCVatRate AS rtCtyVatRate,
                                     CTY.FTRteIsoCode AS rtIsoCode,
                                     CTY.FTCtyStaUse AS  rtCtyStaUse,
-                                    CTY.FTCtyStaCtrlRate AS reCtyStaCtrlRate
+                                    CTY.FTCtyStaCtrlRate AS reCtyStaCtrlRate,
+                                    CTY.FTCtyLatitude AS rtCtyLatitude,
+	                                CTY.FTCtyLongitude AS rtCtyLongitude
                             FROM TCNMCountry CTY 
                             LEFT JOIN TCNMCountry_L CTY_L ON CTY.FTCtyCode = CTY_L.FTCtyCode 
                             LEFT JOIN TSysLanguage STSL ON CTY.FNLngID = STSL.FNLngID
@@ -139,10 +141,10 @@ class Country_model extends CI_Model {
     //Creator : 13/09/2018 Wasin
     //Return : data
     //Return Type : Array
-    public function FSnMPUNCheckDuplicate($ptPunCode){
-        $tSQL = "SELECT COUNT(PUN.FTPunCode) AS counts
-                 FROM TCNMPdtUnit PUN 
-                 WHERE PUN.FTPunCode = '$ptPunCode' ";
+    public function FSnMCTYCheckDuplicate($ptCtyCode){
+        $tSQL = "SELECT COUNT(CTY.FTCtyCode) AS counts
+                 FROM TCNMCountry CTY 
+                 WHERE CTY.FTCtyCode = '$ptCtyCode' ";
         $oQuery = $this->db->query($tSQL);
         if($oQuery->num_rows() > 0){
             return $oQuery->row_array();
@@ -156,20 +158,22 @@ class Country_model extends CI_Model {
     //Creator : 13/09/2018 Wasin
     //Return : Array Stutus Add Update
     //Return Type : Array
-    public function FSaMPUNAddUpdateMaster($paDataPdtUnit){
+    public function FSaMCTYAddUpdateMaster($paDataCty){
         try{
-            $this->db->where('FTCtyCode', $paDataPdtUnit['FTCtyCode']);
+            $this->db->where('FTCtyCode', $paDataCty['FTCtyCode']);
             $this->db->update('TCNMCountry',array(
-                'FTCtyCode'     => $paDataPdtUnit['FTCtyCode'],
-                    'FDCreateOn'    => $paDataPdtUnit['FDCreateOn'],
-                    'FTCreateBy'    => $paDataPdtUnit['FTCreateBy'],
-                    'FDLastUpdOn'   => $paDataPdtUnit['FDLastUpdOn'],
-                    'FTLastUpdBy'   => $paDataPdtUnit['FTLastUpdBy'],
-                    'FTVatCode'     => $paDataPdtUnit['FTVatCode'],
-                    'FNLngID'       => $paDataPdtUnit['FNLngID'],
-                    'FTCtyStaUse'   => $paDataPdtUnit['FTCtyStaUse'],
-                    'FTRteIsoCode'  => $paDataPdtUnit['FTRteIsoCode'],
-                    'FTCtyStaCtrlRate' => $paDataPdtUnit['FTCtyStaCtrlRate'],
+                'FTCtyCode'     => $paDataCty['FTCtyCode'],
+                    'FDCreateOn'    => $paDataCty['FDCreateOn'],
+                    'FTCreateBy'    => $paDataCty['FTCreateBy'],
+                    'FDLastUpdOn'   => $paDataCty['FDLastUpdOn'],
+                    'FTLastUpdBy'   => $paDataCty['FTLastUpdBy'],
+                    'FTVatCode'     => $paDataCty['FTVatCode'],
+                    'FNLngID'       => $paDataCty['FNLngID'],
+                    'FTCtyStaUse'   => $paDataCty['FTCtyStaUse'],
+                    'FTRteIsoCode'  => $paDataCty['FTRteIsoCode'],
+                    'FTCtyStaCtrlRate' => $paDataCty['FTCtyStaCtrlRate'],
+                    'FTCtyLongitude' => $paDataCty['FTCtyLongitude'],
+                    'FTCtyLatitude' => $paDataCty['FTCtyLatitude'],
             ));
             if($this->db->affected_rows() > 0){
                 $aStatus = array(
@@ -178,16 +182,18 @@ class Country_model extends CI_Model {
                 );
             }else{
                 $this->db->insert('TCNMCountry', array(
-                    'FTCtyCode'     => $paDataPdtUnit['FTCtyCode'],
-                    'FDCreateOn'    => $paDataPdtUnit['FDCreateOn'],
-                    'FTCreateBy'    => $paDataPdtUnit['FTCreateBy'],
-                    'FDLastUpdOn'   => $paDataPdtUnit['FDLastUpdOn'],
-                    'FTLastUpdBy'   => $paDataPdtUnit['FTLastUpdBy'],
-                    'FTVatCode'     => $paDataPdtUnit['FTVatCode'],
-                    'FNLngID'       => $paDataPdtUnit['FNLngID'],
-                    'FTCtyStaUse'   => $paDataPdtUnit['FTCtyStaUse'],
-                    'FTRteIsoCode'  => $paDataPdtUnit['FTRteIsoCode'],
-                    'FTCtyStaCtrlRate' => $paDataPdtUnit['FTCtyStaCtrlRate'],
+                    'FTCtyCode'     => $paDataCty['FTCtyCode'],
+                    'FDCreateOn'    => $paDataCty['FDCreateOn'],
+                    'FTCreateBy'    => $paDataCty['FTCreateBy'],
+                    'FDLastUpdOn'   => $paDataCty['FDLastUpdOn'],
+                    'FTLastUpdBy'   => $paDataCty['FTLastUpdBy'],
+                    'FTVatCode'     => $paDataCty['FTVatCode'],
+                    'FNLngID'       => $paDataCty['FNLngID'],
+                    'FTCtyStaUse'   => $paDataCty['FTCtyStaUse'],
+                    'FTRteIsoCode'  => $paDataCty['FTRteIsoCode'],
+                    'FTCtyStaCtrlRate' => $paDataCty['FTCtyStaCtrlRate'],
+                    'FTCtyLongitude' => $paDataCty['FTCtyLongitude'],
+                    'FTCtyLatitude' => $paDataCty['FTCtyLatitude'],
                 ));
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(
@@ -213,17 +219,17 @@ class Country_model extends CI_Model {
     //Update : 1/04/2019 Pap
     //Return : Array Stutus Add Update
     //Return Type : array
-    public function FSaMPUNAddUpdateLang($paDataPdtUnit){
+    public function FSaMCTYAddUpdateLang($paDataCty){
         // $tSQL = "INSERT INTO TCNMPdtUnit_L (FTPunCode,FNLngID,FTPunName)
-        //          VALUES('".$paDataPdtUnit["FTPunCode"]."',
+        //          VALUES('".$paDataCty["FTPunCode"]."',
         //                 '".$this->session->userdata("tLangID")."',
-        //                 '".$paDataPdtUnit["FTPunName"]."')";
+        //                 '".$paDataCty["FTPunName"]."')";
         // $this->db->query($tSQL);
         try{
             //Update Pdt Unit Lang
-            $this->db->where('FNLngID', $paDataPdtUnit['FNLngID']);
-            $this->db->where('FTCtyCode', $paDataPdtUnit['FTCtyCode']);
-            $this->db->update('TCNMCountry_L',array('FTCtyName' => $paDataPdtUnit['FTCtyName']));
+            $this->db->where('FNLngID', $paDataCty['FNLngID']);
+            $this->db->where('FTCtyCode', $paDataCty['FTCtyCode']);
+            $this->db->update('TCNMCountry_L',array('FTCtyName' => $paDataCty['FTCtyName']));
             if($this->db->affected_rows() > 0){
                 $aStatus = array(
                     'rtCode' => '1',
@@ -232,9 +238,9 @@ class Country_model extends CI_Model {
             }else{
                 //Add Pdt Unit Lang
                 $this->db->insert('TCNMCountry_L', array(
-                    'FTCtyCode' => $paDataPdtUnit['FTCtyCode'],
-                    'FNLngID'   => $paDataPdtUnit['FNLngID'],
-                    'FTCtyName' => $paDataPdtUnit['FTCtyName']
+                    'FTCtyCode' => $paDataCty['FTCtyCode'],
+                    'FNLngID'   => $paDataCty['FNLngID'],
+                    'FTCtyName' => $paDataCty['FTCtyName']
                 ));
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(

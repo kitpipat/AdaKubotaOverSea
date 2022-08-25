@@ -138,7 +138,7 @@ class Country_controller extends MX_Controller {
     //Return Type : String
     public function FSoCPUNAddEvent(){
         try{
-            $aDataPdtUnit   = array(
+            $aDataCty   = array(
                 'FTCtyCode'     => $this->input->post('oetCtyCode'),
                 'FTCtyName'     => $this->input->post('oetCtyName'),
                 'FTCtyStaUse'   => $this->input->post('ocmCtyStaActive'),
@@ -149,14 +149,16 @@ class Country_controller extends MX_Controller {
                 'FDCreateOn'    => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
-                'FNLngID'       => $this->input->post("oetCtyLangID")
+                'FNLngID'       => $this->input->post("oetCtyLangID"),
+                'FTCtyLongitude' => $this->input->post('oetCtyLon'),
+                'FTCtyLatitude' => $this->input->post('oetCtyLa')
             );
-            $oCountDup      = $this->Country_model->FSnMPUNCheckDuplicate($aDataPdtUnit['FTCtyCode']);
+            $oCountDup      = $this->Country_model->FSnMCTYCheckDuplicate($aDataCty['FTCtyCode']);
             $nStaDup        = $oCountDup['counts'];
             if($oCountDup !== FALSE && $nStaDup == 0){
                 $this->db->trans_begin();
-                $aStaDptMaster  = $this->Country_model->FSaMPUNAddUpdateMaster($aDataPdtUnit);
-                $aStaDptLang    = $this->Country_model->FSaMPUNAddUpdateLang($aDataPdtUnit);
+                $aStaDptMaster  = $this->Country_model->FSaMCTYAddUpdateMaster($aDataCty);
+                $aStaDptLang    = $this->Country_model->FSaMCTYAddUpdateLang($aDataCty);
                 if($this->db->trans_status() === false){
                     $this->db->trans_rollback();
                     $aReturn = array(
@@ -167,7 +169,7 @@ class Country_controller extends MX_Controller {
                     $this->db->trans_commit();
                     $aReturn = array(
                         'nStaCallBack'	=> $this->session->userdata('tBtnSaveStaActive'),
-                        'tCodeReturn'	=> $aDataPdtUnit['FTCtyCode'],
+                        'tCodeReturn'	=> $aDataCty['FTCtyCode'],
                         'nStaEvent'	    => '1',
                         'tStaMessg'		=> 'Success Add Product Unit'
                     );
@@ -202,11 +204,13 @@ class Country_controller extends MX_Controller {
                 'FDCreateOn'    => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
-                'FNLngID'       => $this->input->post("oetCtyLangID")
+                'FNLngID'       => $this->input->post("oetCtyLangID"),
+                'FTCtyLongitude' => $this->input->post('oetCtyLon'),
+                'FTCtyLatitude' => $this->input->post('oetCtyLa')
             );
             $this->db->trans_begin();
-            $aStaPunMaster  = $this->Country_model->FSaMPUNAddUpdateMaster($aDataPdtUnit);
-            $aStaPunLang    = $this->Country_model->FSaMPUNAddUpdateLang($aDataPdtUnit);
+            $aStaPunMaster  = $this->Country_model->FSaMCTYAddUpdateMaster($aDataPdtUnit);
+            $aStaPunLang    = $this->Country_model->FSaMCTYAddUpdateLang($aDataPdtUnit);
             if($this->db->trans_status() === FALSE){
                 $this->db->trans_rollback();
                 $aReturn = array(
