@@ -223,7 +223,7 @@ class Browser_controller extends CI_Controller {
             // Filter Data From Filter Element
             if (isset($tFilerGride)){
                 if ($tFilerGride != ''){
-                    $tSQL .= " AND ( $tColPk COLLATE THAI_BIN LIKE '%$tFilerGride%' ";
+                    $tSQL .= " AND ( UPPER($tColPk) COLLATE THAI_BIN LIKE UPPER('%$tFilerGride%') ";
                     for ($fc = 0; $fc < count($oPtions['GrideView']['DataColumns']); $fc++){
                         $tFilterCol = $oPtions['GrideView']['DataColumns'][$fc];
 
@@ -231,9 +231,9 @@ class Browser_controller extends CI_Controller {
                         $tCheckField = explode(".",$tFilterCol);
                         $tCheckField = substr($tCheckField[1],0,2);
                         if($tCheckField == 'FN'){
-                            $tSQL .= "  OR $tFilterCol LIKE '%$tFilerGride%' ";
+                            $tSQL .= "  OR $tFilterCol LIKE '%$tFilerGride%') ";
                         }else{
-                            $tSQL .= "  OR $tFilterCol COLLATE THAI_BIN LIKE '%$tFilerGride%' ";
+                            $tSQL .= "  OR UPPER($tFilterCol) COLLATE THAI_BIN LIKE UPPER('%$tFilerGride%') ";
                         }
 
                     }
@@ -691,7 +691,7 @@ class Browser_controller extends CI_Controller {
                     // Get  Limit Display Page
                     // Set  Limit Display Page
                     if ($p >= $nStartPage and $p <= $nEndPage):
-                        $tDataTable .= '<button onclick="JCNxSearchBrowse(' . $p . ",'" . $tOptions . "'" . ')" type="button" class="page-item btn xCNBTNNumPagenation" ' . $tActived . '">' . $p . '</button>';
+                        $tDataTable .= '<button onclick="JCNxSearchBrowse(' . $p . ",'" . $tOptions . "'" . ')" type="button" class="page-item btn xCNBTNNumPagenation ' . $tActived . '">' . $p . '</button>';
                     endif;
                     // End Set Limit Display Page
 
