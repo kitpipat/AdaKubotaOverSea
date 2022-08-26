@@ -14,7 +14,7 @@
 					</div>
 				</div>
 			</div>
-			<?php if($aAlwEventCty['tAutStaFull'] == 1 || $aAlwEventCty['tAutStaDelete'] == 1 ) : ?>
+			<?php if($aAlwEventUrl['tAutStaFull'] == 1 || $aAlwEventUrl['tAutStaDelete'] == 1 ) : ?>
 			<div class="col-xs-4 col-md-8 col-lg-8 text-right" style="margin-top:34px;">
 				<div id="odvMngTableList" class="btn-group xCNDropDrownGroup">
 					<button type="button" class="btn xCNBTNMngTable" data-toggle="dropdown">
@@ -23,7 +23,7 @@
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<li id="oliBtnDeleteAll" class="disabled">
-							<a data-toggle="modal" data-target="#odvModalDelCty"><?= language('common/main/main','tDelAll')?></a>
+							<a data-toggle="modal" data-target="#odvModalDelUrl"><?= language('common/main/main','tDelAll')?></a>
 						</li>
 					</ul>
 				</div>
@@ -36,7 +36,7 @@
 	</div>
 
 
-<div class="modal fade" id="odvModalDelCty">
+<div class="modal fade" id="odvModalDelUrl">
  	<div class="modal-dialog">
   		<div class="modal-content">
         	<div class="modal-header xCNModalHead">
@@ -47,7 +47,7 @@
     		<input type='hidden' id="ohdConfirmIDDelete">
    		</div>
    		<div class="modal-footer">
-    		<button id="osmConfirm" type="button" class="btn xCNBTNPrimery" onClick="JSoCtyDelChoose()">
+    		<button id="osmConfirm" type="button" class="btn xCNBTNPrimery" onClick="JSoUrlDelChoose()">
      			<?=language('common/main/main', 'tModalConfirm')?>
     		</button>
     		<button type="button" class="btn xCNBTNDefult" data-dismiss="modal">
@@ -64,12 +64,12 @@
 <script>
 	$('#oimSearchCty').click(function(){
 		JCNxOpenLoading();
-		JSvCtyDataTable();
+		JSvUrlDataTable();
 	});
 	$('#oetSearchCty').keypress(function(event){
 		if(event.keyCode == 13){
 			JCNxOpenLoading();
-			JSvCtyDataTable();
+			JSvUrlDataTable();
 		}
 	});
 </script>

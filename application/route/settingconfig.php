@@ -98,3 +98,12 @@ $route ['SettingDailyCurrencyLoadViewSearch']      = 'settingconfig/settingdairy
 $route ['SettingDailyCurrencyLoadTable']           = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSvSETDairyCurrencyGetTable';
 $route ['SettingDailyCurrencySave']                = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSxSETDailyCurrencyEventSave';
 
+//// ตั้งค่า Url Format /////////////
+    $route ['settingUrlFormat/(:any)/(:any)']           = 'settingconfig/settingurlformat/Settingurlformat_controller/index/$1/$2';
+    $route ['urlList']                              = 'settingconfig/settingurlformat/Settingurlformat_controller/FSvCURLListPage';
+    $route ['urlDataTable']                         = 'settingconfig/settingurlformat/Settingurlformat_controller/FSvCURLDataList';
+    $route ['urlPageAdd']                           = 'settingconfig/settingurlformat/Settingurlformat_controller/FSvCURLAddPage';
+    $route ['urlPageEdit']                          = 'settingconfig/settingurlformat/Settingurlformat_controller/FSvCURLEditPage';
+    $route ['urlEventAdd']                          = 'settingconfig/settingurlformat/Settingurlformat_controller/FSoCURLAddEvent';
+    $route ['urlEventEdit']                         = 'settingconfig/settingurlformat/Settingurlformat_controller/FSoCURLEditEvent';
+    $route ['urlEventDelete']                       = 'settingconfig/settingurlformat/Settingurlformat_controller/FSoCURLDeleteEvent';

@@ -11,18 +11,18 @@
     <div class="col-md-12">
         <input type="hidden" id="nCurrentPageTB" value="<?=$nCurrentPage?>">
        <div class="table-responsive">
-            <table id="otbPunDataList" class="table table-striped">
+            <table id="otbCtyDataList" class="table table-striped">
                 <thead>
                     <tr>
-                        <?php if($aAlwEventPdtUnit['tAutStaFull'] == 1 || $aAlwEventPdtUnit['tAutStaDelete'] == 1) : ?>
+                        <?php if($aAlwEventCty['tAutStaFull'] == 1 || $aAlwEventCty['tAutStaDelete'] == 1) : ?>
                         <th class="text-center" style="width:10%;"><?php echo language('product/pdtunit/pdtunit','tPUNTBChoose')?></th>
                         <?php endif; ?>
                         <th class="text-center" style="width:10%;"><?php echo language('company/country/country','tCountryCode')?></th>
                         <th class="text-center"><?php echo language('company/country/country','tCountryName')?></th>
-                        <?php if($aAlwEventPdtUnit['tAutStaFull'] == 1 || $aAlwEventPdtUnit['tAutStaDelete'] == 1) : ?>
+                        <?php if($aAlwEventCty['tAutStaFull'] == 1 || $aAlwEventCty['tAutStaDelete'] == 1) : ?>
                         <th class="text-center" style="width:10%;"><?php echo language('product/pdtunit/pdtunit','tPUNTBDelete')?></th>
                         <?php endif; ?>
-                        <?php if($aAlwEventPdtUnit['tAutStaFull'] == 1 || ($aAlwEventPdtUnit['tAutStaEdit'] == 1 || $aAlwEventPdtUnit['tAutStaRead'] == 1))  : ?>
+                        <?php if($aAlwEventCty['tAutStaFull'] == 1 || ($aAlwEventCty['tAutStaEdit'] == 1 || $aAlwEventCty['tAutStaRead'] == 1))  : ?>
                         <th class="text-center" style="width:10%;"><?php echo language('product/pdtunit/pdtunit','tCountryEdit')?></th>
                         <?php endif; ?>
                     </tr>
@@ -31,7 +31,7 @@
                     <?php if($aPunDataList['rtCode'] == 1 ):?>
                         <?php foreach($aPunDataList['raItems'] AS $nKey => $aValue):?>
                             <tr class="text-center otrPdtUnit" id="otrPdtUnit<?php echo $nKey?>" data-code="<?php echo $aValue['rtCtyCode']?>" data-name="<?php echo $aValue['rtCtyName']?>">
-                                <?php if($aAlwEventPdtUnit['tAutStaFull'] == 1 || $aAlwEventPdtUnit['tAutStaDelete'] == 1) : ?>
+                                <?php if($aAlwEventCty['tAutStaFull'] == 1 || $aAlwEventCty['tAutStaDelete'] == 1) : ?>
                                 <td class="text-center">
                                     <label class="fancy-checkbox">
                                         <input id="ocbListItem<?php echo $nKey?>" type="checkbox" class="ocbListItem" name="ocbListItem[]">
@@ -41,10 +41,10 @@
                                 <?php endif; ?>
                                 <td><?php echo $aValue['rtCtyCode']?></td>
                                 <td class="text-left"><?php echo $aValue['rtCtyName']?></td>
-                                <?php if($aAlwEventPdtUnit['tAutStaFull'] == 1 || $aAlwEventPdtUnit['tAutStaDelete'] == 1) : ?>
+                                <?php if($aAlwEventCty['tAutStaFull'] == 1 || $aAlwEventCty['tAutStaDelete'] == 1) : ?>
                                 <td><img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSoPdtUnitDel('<?=$nCurrentPage?>','<?php echo $aValue['rtCtyCode']?>','<?=$aValue['rtCtyName']?>','<?= language('common/main/main','tModalConfirmDeleteItemsYN')?>')"></td>
                                 <?php endif; ?>
-                                <?php if($aAlwEventPdtUnit['tAutStaFull'] == 1 || ($aAlwEventPdtUnit['tAutStaEdit'] == 1 || $aAlwEventPdtUnit['tAutStaRead'] == 1))  : ?>
+                                <?php if($aAlwEventCty['tAutStaFull'] == 1 || ($aAlwEventCty['tAutStaEdit'] == 1 || $aAlwEventCty['tAutStaRead'] == 1))  : ?>
                                 <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPagePdtUnitEdit('<?php echo $aValue['rtCtyCode']?>')"></td>
                                 <?php endif; ?>
                             </tr>

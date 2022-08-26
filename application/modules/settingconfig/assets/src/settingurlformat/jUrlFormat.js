@@ -6,9 +6,9 @@ $('document').ready(function() {
     JSxCheckPinMenuClose(); /*Check เปิดปิด Menu ตาม Pin*/
     JSxPunNavDefult();
     if (nStaCtyBrowseType != 1) {
-        JSvCallPageCountryList(1);
+        JSvCallPageURLList(1);
     } else {
-        JSvCallPageCountryAdd();
+        JSvCallPageURLAdd();
     }
     localStorage.removeItem('LocalItemData');
 });
@@ -23,10 +23,10 @@ function JSxPunNavDefult() {
         $('.xCNPunVBrowse').hide();
         $('.xCNPunVMaster').show();
         $('.xCNChoose').hide();
-        $('#oliCountryTitleAdd').hide();
-        $('#oliCountryTitleEdit').hide();
+        $('#oliUrlTitleAdd').hide();
+        $('#oliUrlTitleEdit').hide();
         $('#odvBtnAddEdit').hide();
-        $('#odvBtnCtyInfo').show();
+        $('#odvBtnUrlInfo').show();
     } else {
         $('#odvModalBody #odvPunMainMenu').removeClass('main-menu');
         $('#odvModalBody #oliPunNavBrowse').css('padding', '2px');
@@ -70,18 +70,18 @@ function JSxPunNavDefult() {
 //Creator :	13/09/2018 wasin
 //Return : View
 //Return Type : View
-function JSvCallPageCountryList(pnPage) {
-    localStorage.tStaPageNow = 'JSvCallPageCountryList';
+function JSvCallPageURLList(pnPage) {
+    localStorage.tStaPageNow = 'JSvCallPageURLList';
     $('#oetSearchAll').val('');
     JCNxOpenLoading();
     $.ajax({
         type: "POST",
-        url: "countryList",
+        url: "urlList",
         cache: false,
         timeout: 0,
         success: function(tResult) {
-            $('#odvContentPageCountry').html(tResult);
-            JSvCtyDataTable(pnPage);
+            $('#odvContentPageUrl').html(tResult);
+            JSvUrlDataTable(pnPage);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             JCNxResponseError(jqXHR, textStatus, errorThrown);
@@ -94,28 +94,50 @@ function JSvCallPageCountryList(pnPage) {
 //Creator : 27/03/2018 wasin(yoshi)
 //Return : Status Add
 //Return Type : n
-function JSnAddEditCountry(tRouteEvent) {
+function JSnAddEditUrl(tRouteEvent) {
     var nStaSession = JCNxFuncChkSessionExpired();
     if (typeof(nStaSession) !== 'undefined' && nStaSession == 1) {
-        $('#ofmAddCountry').validate().destroy();
-        $('#ofmAddCountry').validate({
+        $('#ofmAddUrl').validate().destroy();
+        $.validator.addMethod('dublicateCode', function(value, element) {
+            if (tRouteEvent == "urlEventAdd") {
+                if ($("#ohdCheckDuplicateUrlCode").val() == 1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        }, '');
+        $('#ofmAddUrl').validate({
             rules: {
-                oetCtyCode:  { "required": {} },
-                oetCtyName:  { "required": {} },
-                oetRteCode:  { "required": {} },
+                oetUrlCode: {
+                    "required": {
+                        depends: function(oElement) {
+                            if (tRouteEvent == "urlEventAdd") {
+                                if ($('#ocbUrlAutoGenCode').is(':checked')) {
+                                    return false;
+                                } else {
+                                    return true;
+                                }
+                            } else {
+                                return true;
+                            }
+                        }
+                    },
+                    "dublicateCode": {}
+                },
+                oetBchName: {"required": {}}
                 
             },
             messages: {
-                oetCtyCode: {
-                    "required" : $('#oetCtyCode').attr('data-validate-required'),                 
-                },
-                oetCtyName: {
-                    "required": $('#oetCtyName').attr('data-validate-required'),
-                },
-                oetRteCode: {
-                    "required": $('#oetRteCode').attr('data-validate-required'),
-                },
-                
+                oetUrlCode: {
+                    "required"      : $('#oetUrlCode').attr('data-validate-required'),
+                    "dublicateCode" : $('#oetUrlCode').attr('data-validate-dublicateCode')
+                },      
+                oetBchName:   {
+                    "required"      : $('#oetBchName').attr('data-validate-required'),
+                }, 
             },
             errorElement: "em",
             errorPlacement: function(error, element) {
@@ -142,18 +164,18 @@ function JSnAddEditCountry(tRouteEvent) {
                 $.ajax({
                     type: "POST",
                     url: tRouteEvent,
-                    data: $("#ofmAddCountry").serialize(),
+                    data: $("#ofmAddUrl").serialize(),
                     timeout: 0,
                     success: function(tResult) {
                         if (nStaCtyBrowseType != 1) {
                             var aReturn = JSON.parse(tResult);
                             if (aReturn['nStaEvent'] == 1) {
                                 if (aReturn['nStaCallBack'] == '1' || aReturn['nStaCallBack'] == null) {
-                                    JSvBCHCallPageCountryEdit(aReturn['tCodeReturn'])
+                                    JSvURLCallPageUrlEdit(aReturn['tCodeReturn'])
                                 } else if (aReturn['nStaCallBack'] == '2') {
-                                    JSvCallPageCountryAdd();
+                                    JSvCallPageURLAdd();
                                 } else if (aReturn['nStaCallBack'] == '3') {
-                                    JSvCallPageCountryList();
+                                    JSvCallPageURLList();
                                 }
                             } else {
                                 alert(aReturn['tStaMessg']);
@@ -182,27 +204,23 @@ function JSnAddEditCountry(tRouteEvent) {
 // Last Update: 15/01/2019 Wasin(Yoshi)
 // Return : View
 // Return Type : View
-function JSvBCHCallPageCountryEdit(ptCtyCode) {
+function JSvURLCallPageUrlEdit(ptUrlCode) {
     var nStaSession = JCNxFuncChkSessionExpired();
     if (typeof(nStaSession) !== 'undefined' && nStaSession == 1) {
         JCNxOpenLoading();
-        // JStCMMGetPanalLangSystemHTML('JSvBCHCallPageCountryEdit', ptCtyCode);
+        // JStCMMGetPanalLangSystemHTML('JSvURLCallPageUrlEdit', ptUrlCode);
         $.ajax({
             type: "POST",
-            url: "countryPageEdit",
+            url: "urlPageEdit",
             data: {
-                tCtyCode: ptCtyCode
+                tUrlCode: ptUrlCode
             },
             timeout: 0,
             success: function(tResult) {
-                $('#odvContentPageCountry').html(tResult);
-                
+                $('#odvContentPageUrl').html(tResult);
 
-                ohdCtyStaRate = $('#ohdCtyStaRate').val();
-                $("#ocmExcRte option[value='" + ohdCtyStaRate + "']").attr('selected', true).trigger('change');
-
-                ohdBchStaActive = $('#ohmCtyStaActive').val();
-                $("#ocmCtyStaActive option[value='" + ohdBchStaActive + "']").attr('selected', true).trigger('change');
+                ohdUrlStaActive = $('#ohmUrlStaActive').val();
+                $("#ocmUrlStaActive option[value='" + ohdUrlStaActive + "']").attr('selected', true).trigger('change');
 
                 oetZneCode = $('#oetZneCode').val();
                 if (oetZneCode != '') {
@@ -227,10 +245,14 @@ function JSvBCHCallPageCountryEdit(ptCtyCode) {
 
                 //Put Data
                 //Disabled input
+                 //Put Data
+                //Disabled input
+                $('#oetUrlCode').addClass('xCNCursorNotAlw').attr('readonly', true);
+                $('#odvUrlAutoGenCode').addClass('xCNHide');
 
-                $('#oliCountryTitleEdit').show();
-                $('#oliCountryTitleAdd').hide();
-                $('#odvBtnCtyInfo').hide();
+                $('#oliUrlTitleEdit').show();
+                $('#oliUrlTitleAdd').hide();
+                $('#odvBtnUrlInfo').hide();
                 $('#odvBtnAddEdit').show();
                 JCNxCloseLoading();
             },
@@ -248,12 +270,12 @@ function JSvBCHCallPageCountryEdit(ptCtyCode) {
 //Creator:	13/09/2018 wasin
 //Return : View
 //Return Type : View
-function JSvCtyDataTable(pnPage) {
+function JSvUrlDataTable(pnPage) {
     var tSearchAll = $('#oetSearchCty').val();
     var nPageCurrent = (pnPage === undefined || pnPage == '') ? '1' : pnPage;
     $.ajax({
         type: "POST",
-        url: "countryDataTable",
+        url: "urlDataTable",
         data: {
             tSearchAll: tSearchAll,
             nPageCurrent: nPageCurrent,
@@ -275,18 +297,61 @@ function JSvCtyDataTable(pnPage) {
     });
 }
 
+/**
+ * Functionality : Is create page.
+ * Parameters : -
+ * Creator : 12/06/2019 saharat(Golf)
+ * Last Modified : -
+ * Return : Status true is create page
+ * Return Type : Boolean
+ */
+ function JCNbUrlIsCreatePage() {
+    try {
+        const tBchCode = $('#oetUrlCode').data('is-created');
+        var bStatus = false;
+        if (tBchCode == "") { // No have data
+            bStatus = true;
+        }
+        return bStatus;
+    } catch (err) {
+        console.log('JCNbUrlIsCreatePage Error: ', err);
+    }
+}
+
+
+/**
+ * Functionality : Is update page.
+ * Parameters : -
+ * Creator : 12/06/2019 saharat(Golf)
+ * Last Modified : -
+ * Return : Status true is create page
+ * Return Type : Boolean
+ */
+function JCNbUrlsUpdatePage() {
+    try {
+        const tBchCode = $('#oetUrlCode').data('is-created');
+        var bStatus = false;
+        if (!tBchCode == "") { // Have data
+            bStatus = true;
+        }
+        return bStatus;
+    } catch (err) {
+        console.log('JCNbUrlsUpdatePage Error: ', err);
+    }
+}
+
 //Functionality : Call Product Unit Page Add  
 //Parameters : Event Button Click
 //Creator : 13/09/2018 wasin
 //Update : 29/03/2019 pap
 //Return : View
 //Return Type : View
-function JSvCallPageCountryAdd() {
+function JSvCallPageURLAdd() {
     JCNxOpenLoading();
     JStCMMGetPanalLangSystemHTML('', '');
     $.ajax({
         type: "POST",
-        url: "countryPageAdd",
+        url: "urlPageAdd",
         cache: false,
         timeout: 0,
         success: function(tResult) {
@@ -296,12 +361,12 @@ function JSvCallPageCountryAdd() {
             } else {
                 $('.xCNPunVBrowse').hide();
                 $('.xCNPunVMaster').show();
-                $('#oliCountryTitleEdit').hide();
-                $('#oliCountryTitleAdd').show();
-                $('#odvBtnCtyInfo').hide();
+                $('#oliUrlTitleEdit').hide();
+                $('#oliUrlTitleAdd').show();
+                $('#odvBtnUrlInfo').hide();
                 $('#odvBtnAddEdit').show();
             }
-            $('#odvContentPageCountry').html(tResult);
+            $('#odvContentPageUrl').html(tResult);
             JCNxLayoutControll();
             JCNxCloseLoading();
         },
@@ -310,7 +375,6 @@ function JSvCallPageCountryAdd() {
         }
     })
 }
-
 
 //Functionality : function submit by submit button only
 //Parameters : route
@@ -333,16 +397,16 @@ function JSxSubmitEventByButton(ptRoute) {
                     if (aReturn['nStaEvent'] == 1) {
                         switch (aReturn['nStaCallBack']) {
                             case '1':
-                                JSvCallPagePdtUnitEdit(aReturn['tCodeReturn']);
+                                JSvCallPageUrlEdit(aReturn['tCodeReturn']);
                                 break;
                             case '2':
-                                JSvCallPageCountryAdd();
+                                JSvCallPageURLAdd();
                                 break;
                             case '3':
-                                JSvCallPageCountryList(1);
+                                JSvCallPageURLList(1);
                                 break;
                             default:
-                                JSvCallPagePdtUnitEdit(aReturn['tCodeReturn']);
+                                JSvCallPageUrlEdit(aReturn['tCodeReturn']);
                         }
                     } else {
                         JCNxCloseLoading();
@@ -365,22 +429,22 @@ function JSxSubmitEventByButton(ptRoute) {
 //Creator : 13/09/2018 wasin
 //Return : View
 //Return Type : View
-function JSvCallPagePdtUnitEdit(ptCtyCode) {
+function JSvCallPageUrlEdit(ptUrlCode) {
     JCNxOpenLoading();
-    JStCMMGetPanalLangSystemHTML('JSvCallPagePdtUnitEdit', ptCtyCode);
+    JStCMMGetPanalLangSystemHTML('JSvCallPageUrlEdit', ptUrlCode);
     $.ajax({
         type: "POST",
-        url: "countryPageEdit",
-        data: { tCtyCode: ptCtyCode },
+        url: "urlPageEdit",
+        data: { tUrlCode: ptUrlCode },
         cache: false,
         timeout: 0,
         success: function(tResult) {
             if (tResult != '') {
-                $('#oliCountryTitleAdd').hide();
-                $('#oliCountryTitleEdit').show();
-                $('#odvBtnCtyInfo').hide();
+                $('#oliUrlTitleAdd').hide();
+                $('#oliUrlTitleEdit').show();
+                $('#odvBtnUrlInfo').hide();
                 $('#odvBtnAddEdit').show();
-                $('#odvContentPageCountry').html(tResult);
+                $('#odvContentPageUrl').html(tResult);
                 $('#oetPunCode').addClass('xCNDisable');
                 $('.xCNDisable').attr('readonly', true);
                 $('.xCNBtnGenCode').attr('disabled', true);
@@ -394,85 +458,8 @@ function JSvCallPagePdtUnitEdit(ptCtyCode) {
     });
 }
 
-//Functionality : set click status submit form from save button
-//Parameters : -
-//Creator : 26/03/2019 pap
-//Return : -
-//Return Type : -
-function JSxSetStatusClickPdtUnitSubmit() {
-    $("#ohdCheckPunClearValidate").val("1");
-}
 
 
-//Functionality : Event Add/Edit Product Unit
-//Parameters : From Submit
-//Creator : 13/09/2018 wasin
-//Update : 29/03/2019 pap
-//Return : Status Event Add/Edit Product Unit
-//Return Type : object
-function JSoAddEditPdtUnit(ptRoute) {
-    if ($("#ohdCheckPunClearValidate").val() == 1) {
-        $('#ofmAddPdtUnit').validate().destroy();
-        if (!$('#ocbPunAutoGenCode').is(':checked')) {
-            $.ajax({
-                type: "POST",
-                url: "CheckInputGenCode",
-                data: {
-                    tTableName: "TCNMPdtUnit",
-                    tFieldName: "FTPunCode",
-                    tCode: $("#oetPunCode").val()
-                },
-                cache: false,
-                timeout: 0,
-                success: function(tResult) {
-                    var aResult = JSON.parse(tResult);
-                    $("#ohdCheckDuplicatePunCode").val(aResult["rtCode"]);
-                    JSxValidationFormPdtUnit("JSxSubmitEventByButton", ptRoute);
-                    $('#ofmAddPdtUnit').submit();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    JCNxResponseError(jqXHR, textStatus, errorThrown);
-                }
-            });
-        } else {
-            JSxValidationFormPdtUnit("JSxSubmitEventByButton", ptRoute);
-        }
-
-    }
-}
-
-//Functionality : Generate Code Product Unit
-//Parameters : Event Button Click
-//Creator : 13/09/2018 wasin
-//Return : Event Push Value In Input
-//Return Type : -
-function JStGeneratePdtUnitCode() {
-    var tTableName = 'TCNMPdtUnit';
-    JCNxOpenLoading();
-    $.ajax({
-        type: "POST",
-        url: "generateCode",
-        data: { tTableName: tTableName },
-        cache: false,
-        timeout: 0,
-        success: function(tResult) {
-            var tData = $.parseJSON(tResult);
-            if (tData.rtCode == '1') {
-                $('#oetPunCode').val(tData.rtPunCode);
-                $('#oetPunCode').addClass('xCNDisable');
-                $('#oetPunCode').attr('readonly', true);
-                $('.xCNBtnGenCode').attr('disabled', true);
-                $('#oetPunName').focus();
-            } else {
-                $('#oetPunCode').val(tData.rtDesc);
-            }
-            JCNxCloseLoading();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            JCNxResponseError(jqXHR, textStatus, errorThrown);
-        }
-    });
-}
 
 //Functionality : Event Single Delete
 //Parameters : Event Icon Delete
@@ -480,7 +467,7 @@ function JStGeneratePdtUnitCode() {
 //Update: 01/04/2019 Pap
 //Return : object Status Delete
 //Return Type : object
-function JSoPdtUnitDel(tCurrentPage, tIDCode, tDelName, tYesOnNo) {
+function JSoUrlDel(tCurrentPage, tIDCode, tDelName, tYesOnNo) {
     var aData = $('#ohdConfirmIDDelete').val();
     var aTexts = aData.substring(0, aData.length - 2);
     var aDataSplit = aTexts.split(" , ");
@@ -490,12 +477,12 @@ function JSoPdtUnitDel(tCurrentPage, tIDCode, tDelName, tYesOnNo) {
     if (aDataSplitlength == '1') {
         // $('#ospConfirmDelete').html('ยืนยันการลบข้อมูล : ' + tIDCode+' ('+tDelName+')');
         $('#ospConfirmDelete').html($('#oetTextComfirmDeleteSingle').val() + tIDCode + ' ( ' + tDelName + ' ) ' + tYesOnNo);
-        $('#odvModalDelCty').modal('show');
+        $('#odvModalDelUrl').modal('show');
         $('#osmConfirm').on('click', function(evt) {
 
             $.ajax({
                 type: "POST",
-                url: "countryEventDelete",
+                url: "urlEventDelete",
                 data: { 'tIDCode': tIDCode },
                 cache: false,
                 timeout: 0,
@@ -503,12 +490,12 @@ function JSoPdtUnitDel(tCurrentPage, tIDCode, tDelName, tYesOnNo) {
                     var aReturn = JSON.parse(oResult);
                     // alert(aReturn['nStaEvent']);
                     // if (aReturn['nStaEvent'] == '1'){
-                    //     $('#odvModalDelCty').modal('hide');
+                    //     $('#odvModalDelUrl').modal('hide');
                     //     $('#ospConfirmDelete').empty();
                     //     localStorage.removeItem('LocalItemData');
 
                     //     setTimeout(function() {
-                    //         JSvCallPageCountryList(tCurrentPage);
+                    //         JSvCallPageURLList(tCurrentPage);
                     //     }, 500);
                     // }else{
                     //     JCNxOpenLoading();
@@ -519,25 +506,25 @@ function JSoPdtUnitDel(tCurrentPage, tIDCode, tDelName, tYesOnNo) {
 
 
                     if (aReturn['nStaEvent'] == '1') {
-                        $('#odvModalDelCty').modal('hide');
+                        $('#odvModalDelUrl').modal('hide');
                         $('#ospConfirmDelete').empty();
                         localStorage.removeItem('LocalItemData');
                         $('#ohdConfirmIDDelete').val('');
                         $('#ospConfirmIDDelete').val('');
                         setTimeout(function() {
-                            if (aReturn["nNumRowCty"] != 0) {
-                                if (aReturn["nNumRowCty"] > 10) {
-                                    nNumPage = Math.ceil(aReturn["nNumRowCty"] / 10);
+                            if (aReturn["nNumRowUrlFmt"] != 0) {
+                                if (aReturn["nNumRowUrlFmt"] > 10) {
+                                    nNumPage = Math.ceil(aReturn["nNumRowUrlFmt"] / 10);
                                     if (tCurrentPage <= nNumPage) {
-                                        JSvCallPageCountryList(tCurrentPage);
+                                        JSvCallPageURLList(tCurrentPage);
                                     } else {
-                                        JSvCallPageCountryList(nNumPage);
+                                        JSvCallPageURLList(nNumPage);
                                     }
                                 } else {
-                                    JSvCallPageCountryList(1);
+                                    JSvCallPageURLList(1);
                                 }
                             } else {
-                                JSvCallPageCountryList(1);
+                                JSvCallPageURLList(1);
                             }
                         }, 500);
                     } else {
@@ -565,7 +552,7 @@ function JSoPdtUnitDel(tCurrentPage, tIDCode, tDelName, tYesOnNo) {
 //Return:  object Status Delete
 //Return Type: object
 
-function JSoCtyDelChoose() {
+function JSoUrlDelChoose() {
     var tCurrentPage = $("#nCurrentPageTB").val();
     JCNxOpenLoading();
 
@@ -585,39 +572,39 @@ function JSoCtyDelChoose() {
 
         $.ajax({
             type: "POST",
-            url: "countryEventDelete",
+            url: "urlEventDelete",
             data: { 'tIDCode': aNewIdDelete },
             success: function(tResult) {
 
                 // setTimeout(function(){
-                // 		$('#odvModalDelCty').modal('hide');
+                // 		$('#odvModalDelUrl').modal('hide');
                 // 		$('#ospConfirmDelete').text('ยืนยันการลบข้อมูลของ : ');
                 // 		$('#ohdConfirmIDDelete').val('');
                 // 		localStorage.removeItem('LocalItemData');
-                // 		JSvCallPageCountryList(1);
+                // 		JSvCallPageURLList(1);
                 // 		$('.modal-backdrop').remove();
                 // },500);
                 var aReturn = JSON.parse(tResult);
                 if (aReturn['nStaEvent'] == '1') {
-                    $('#odvModalDelCty').modal('hide');
+                    $('#odvModalDelUrl').modal('hide');
                     $('#ospConfirmDelete').empty();
                     localStorage.removeItem('LocalItemData');
                     $('#ohdConfirmIDDelete').val('');
                     $('#ospConfirmIDDelete').val('');
                     setTimeout(function() {
-                        if (aReturn["nNumRowCty"] != 0) {
-                            if (aReturn["nNumRowCty"] > 10) {
-                                nNumPage = Math.ceil(aReturn["nNumRowCty"] / 10);
+                        if (aReturn["nNumRowUrlFmt"] != 0) {
+                            if (aReturn["nNumRowUrlFmt"] > 10) {
+                                nNumPage = Math.ceil(aReturn["nNumRowUrlFmt"] / 10);
                                 if (tCurrentPage <= nNumPage) {
-                                    JSvCallPageCountryList(tCurrentPage);
+                                    JSvCallPageURLList(tCurrentPage);
                                 } else {
-                                    JSvCallPageCountryList(nNumPage);
+                                    JSvCallPageURLList(nNumPage);
                                 }
                             } else {
-                                JSvCallPageCountryList(1);
+                                JSvCallPageURLList(1);
                             }
                         } else {
-                            JSvCallPageCountryList(1);
+                            JSvCallPageURLList(1);
                         }
                     }, 500);
                 } else {
@@ -649,7 +636,7 @@ function JSoCtyDelChoose() {
 //Creator : 13/09/2018 wasin
 //Return : View
 //Return Type : View
-function JSvPdtUnitClickPage(ptPage) {
+function JSvUrlClickPage(ptPage) {
     var nPageCurrent = '';
     switch (ptPage) {
         case 'next': //กดปุ่ม Next
@@ -668,7 +655,7 @@ function JSvPdtUnitClickPage(ptPage) {
             nPageCurrent = ptPage
     }
     JCNxOpenLoading();
-    JSvCtyDataTable(nPageCurrent);
+    JSvUrlDataTable(nPageCurrent);
 }
 
 //Functionality: Function Chack And Show Button Delete All
@@ -694,23 +681,6 @@ function JSxShowButtonChoose() {
         }
     }
 }
-
-
-
-function JSxShowButtonChoose() {
-    var aArrayConvert = [JSON.parse(localStorage.getItem("LocalItemData"))];
-    if (aArrayConvert[0] == null || aArrayConvert[0] == '') {
-        $('#odvMngTableList #oliBtnDeleteAll').addClass('disabled');
-    } else {
-        nNumOfArr = aArrayConvert[0].length;
-        if (nNumOfArr > 1) {
-            $('#odvMngTableList #oliBtnDeleteAll').removeClass('disabled');
-        } else {
-            $('#odvMngTableList #oliBtnDeleteAll').addClass('disabled');
-        }
-    }
-}
-
 
 
 
@@ -755,4 +725,28 @@ function findObjectByKey(array, key, value) {
         }
     }
     return 'None';
+}
+
+/**
+ * Functionality : Show or Hide Component
+ * Parameters : ptComponent is element on document(id or class or...),pbVisible is visible
+ * Creator : 12/06/2019 saharat(Golf)
+ * Last Modified : -
+ * Return : -
+ * Return Type : -
+ */
+ function JSxBrachVisibleComponent(ptComponent, pbVisible, ptEffect) {
+    try {
+        if (pbVisible == false) {
+            $(ptComponent).addClass('hidden');
+        }
+        if (pbVisible == true) {
+            // $(ptComponent).removeClass('hidden');
+            $(ptComponent).removeClass('hidden fadeIn animated').addClass('fadeIn animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                $(this).removeClass('hidden fadeIn animated');
+            });
+        }
+    } catch (err) {
+        console.log('JSxBrachVisibleComponent Error: ', err);
+    }
 }

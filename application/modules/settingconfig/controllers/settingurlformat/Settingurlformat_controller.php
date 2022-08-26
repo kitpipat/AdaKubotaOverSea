@@ -1,11 +1,11 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 
-class Country_controller extends MX_Controller {
+class Settingurlformat_controller extends MX_Controller {
 
     public function __construct(){
         parent::__construct ();
-        $this->load->model('company/country/Country_model');
+        $this->load->model('settingconfig/settingurlformat/Settingurlformat_model');
         date_default_timezone_set("Asia/Bangkok");
     }
 
@@ -17,15 +17,15 @@ class Country_controller extends MX_Controller {
             $this->load->view ( 'common/wTopBar', array ('nMsgResp'=>$nMsgResp));
             $this->load->view ( 'common/wMenu', array ('nMsgResp'=>$nMsgResp));
         }
-        $vBtnSave               = FCNaHBtnSaveActiveHTML('country/0/0'); //Load Html ของปุ่ม Save ที่เก็บ Session ปัจจุบัน
-        $aAlwEventCty	    = FCNaHCheckAlwFunc('country/0/0');
+        $vBtnSave               = FCNaHBtnSaveActiveHTML('settingUrlFormat/0/0'); //Load Html ของปุ่ม Save ที่เก็บ Session ปัจจุบัน
+        $aAlwEventUrl	    = FCNaHCheckAlwFunc('settingUrlFormat/0/0');
 
-        $this->load->view('company/country/wCountry', array (
+        $this->load->view('settingconfig/settingurlformat/wUrlFormat', array (
             'nMsgResp'          => $nMsgResp,
             'vBtnSave'          => $vBtnSave,
             'nPunBrowseType'    => $nPunBrowseType,
             'tPunBrowseOption'  => $tPunBrowseOption,
-            'aAlwEventCty'  => $aAlwEventCty
+            'aAlwEventUrl'  => $aAlwEventUrl
         ));
     }
 
@@ -34,10 +34,10 @@ class Country_controller extends MX_Controller {
     //Creator : 13/09/2018 wasin
     //Return : String View
     //Return Type : View
-    public function FSvCPUNListPage(){
-        $aAlwEventCty	    = FCNaHCheckAlwFunc('country/0/0');
-        $this->load->view('company/country/wCountryList',array(
-            'aAlwEventCty'  =>  $aAlwEventCty
+    public function FSvCURLListPage(){
+        $aAlwEventUrl	    = FCNaHCheckAlwFunc('settingUrlFormat/0/0');
+        $this->load->view('settingconfig/settingurlformat/wUrlFormatList',array(
+            'aAlwEventUrl'  =>  $aAlwEventUrl
         ));
     }
 
@@ -46,34 +46,26 @@ class Country_controller extends MX_Controller {
     //Creator : 13/09/2018 wasin
     //Return : String View
     //Return Type : View
-    public function FSvCPUNDataList(){
+    public function FSvCURLDataList(){
         try{
             $tSearchAll = $this->input->post('tSearchAll');
             $nPage      = ($this->input->post('nPageCurrent') == '' || null)? 1 : $this->input->post('nPageCurrent');   // Check Number Page
             $nLangResort    = $this->session->userdata("tLangID");
-            $aLangHave      = FCNaHGetAllLangByTable('TCNMCountry_L');
-            $nLangHave      = count($aLangHave);
-            if($nLangHave > 1){
-                $nLangEdit  = 1;
-            }else{
-                $nLangEdit  = (@$aLangHave[0]->nLangList == '')? '1' : $aLangHave[0]->nLangList;
-            }
-
             $aData  = array(
                 'nPage'         => $nPage,
                 'nRow'          => 15,
-                'FNLngID'       => $nLangEdit,
+                'FNLngID'       => $nLangResort,
                 'tSearchAll'    => $tSearchAll
             );
-            $aPunDataList           = $this->Country_model->FSaMPUNList($aData);
-            $aAlwEventCty	    = FCNaHCheckAlwFunc('country/0/0');
+            $aUrlDataList           = $this->Settingurlformat_model->FSaMURLList($aData);
+            $aAlwEventUrl	    = FCNaHCheckAlwFunc('SettingURLFormat/0/0');
             $aGenTable  = array(
-                'aPunDataList'          => $aPunDataList,
+                'aUrlDataList'          => $aUrlDataList,
                 'nPage'                 => $nPage,
                 'tSearchAll'            => $tSearchAll,
-                'aAlwEventCty'      => $aAlwEventCty
+                'aAlwEventUrl'      => $aAlwEventUrl
             );
-            $this->load->view('company/country/wCountryDataTable',$aGenTable);
+            $this->load->view('settingconfig/settingurlformat/wUrlFormatDataTable',$aGenTable);
         }catch(Exception $Error){
             echo $Error;
         }
@@ -84,12 +76,12 @@ class Country_controller extends MX_Controller {
     //Creator : 13/09/2018 wasin
     //Return : String View
     //Return Type : View
-    public function FSvCPUNAddPage(){
+    public function FSvCURLAddPage(){
         try{
-            $aDataPdtUnit = array(
+            $aDataUrl = array(
                 'nStaAddOrEdit'   => 99
             );
-            $this->load->view('company/country/wCountryAdd',$aDataPdtUnit);
+            $this->load->view('settingconfig/settingurlformat/wUrlFormatAdd',$aDataUrl);
         }catch(Exception $Error){
             echo $Error;
         }
@@ -101,30 +93,23 @@ class Country_controller extends MX_Controller {
     //Last Modified : -
     //Return : String View
     //Return Type : View
-    public function FSvCPUNEditPage(){
+    public function FSvCURLEditPage(){
         try{
-            $tCtyCode       = $this->input->post('tCtyCode');
+            $tUrlCode       = $this->input->post('tUrlCode');
             $nLangResort    = $this->session->userdata("tLangID");
             $nLangEdit      = $this->session->userdata("tLangEdit");
-            $aLangHave      = FCNaHGetAllLangByTable('TCNMCountry_L');
-            $nLangHave      = count($aLangHave);
-            if($nLangHave > 1){
-                $nLangEdit  = ($nLangEdit != '')? $nLangEdit : $nLangResort;
-            }else{
-                $nLangEdit  = (@$aLangHave[0]->nLangList == '')? '1' : $aLangHave[0]->nLangList;
-            }
 
             $aData  = array(
-                'FTCtyCode' => $tCtyCode,
+                'FTFspCode' => $tUrlCode,
                 'FNLngID'   => $nLangEdit
             );
 
-            $aCtyData       = $this->Country_model->FSaMCTYGetDataByID($aData);
-            $aDataCty      = array(
+            $aURLData       = $this->Settingurlformat_model->FSaMURLGetDataByID($aData);
+            $aDataURL     = array(
                 'nStaAddOrEdit' => 1,
-                'raResult'      => $aCtyData
+                'raResult'      => $aURLData
             );
-            $this->load->view('company/country/wCountryAdd',$aDataCty);
+            $this->load->view('settingconfig/settingurlformat/wUrlFormatAdd',$aDataURL);
         }catch(Exception $Error){
             echo $Error;
         }
@@ -136,42 +121,59 @@ class Country_controller extends MX_Controller {
     //Update : 23/08/2019 Saharat(Golf)
     //Return : Status Add Event
     //Return Type : String
-    public function FSoCPUNAddEvent(){
+    public function FSoCURLAddEvent(){
         try{
-            $aDataCty   = array(
-                'FTCtyCode'     => $this->input->post('oetCtyCode'),
-                'FTCtyName'     => $this->input->post('oetCtyName'),
-                'FTCtyStaUse'   => $this->input->post('ocmCtyStaActive'),
-                'FTCtyStaCtrlRate'  => $this->input->post('ocmExcRte'),
-                'FTVatCode'     => $this->input->post('oetVatCode'),
-                'FTRteIsoCode'  => $this->input->post('oetRteCode'),
+            $tIsAutoGenCode = $this->input->post('ocbUrlAutoGenCode');
+            $tUrlCode = "";
+            if(isset($tIsAutoGenCode) && $tIsAutoGenCode == '1'){
+                // Update new gencode
+                // 15/05/2020 Napat(Jame)
+                $aStoreParam = array(
+                    "tTblName"    => 'TCNMFmtRteSpc',
+                    "tDocType"    => 0,
+                    "tBchCode"    => "",
+                    "tShpCode"    => "",
+                    "tPosCode"    => "",
+                    "dDocDate"    => date("Y-m-d")
+                );
+                $aAutogen   = FCNaHAUTGenDocNo($aStoreParam);
+                $tUrlCode   = $aAutogen[0]["FTXxhDocNo"];
+
+            }else{
+                $tUrlCode = $this->input->post('oetUrlCode');
+            }
+
+            $aUrlData   = array(
+                'FTFspCode'     => $tUrlCode,
+                'FTFmtCode'     => $this->input->post('oetUrlFormatCode'),
+                'FTFspStaUse'   => $this->input->post('ocmUrlStaActive'),
+                'FTAgnCode'     => $this->input->post('oetBchAgnCode'),
+                'FTBchCode'     => $this->input->post('oetBchCode'),
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FDCreateOn'    => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
-                'FNLngID'       => $this->input->post("oetCtyLangID"),
-                'FTCtyLongitude' => $this->input->post('oetCtyLon'),
-                'FTCtyLatitude' => $this->input->post('oetCtyLa')
             );
-            $oCountDup      = $this->Country_model->FSnMCTYCheckDuplicate($aDataCty['FTCtyCode']);
+       
+
+            $oCountDup      = $this->Settingurlformat_model->FSnMURLCheckDuplicate($aUrlData['FTFspCode']);
             $nStaDup        = $oCountDup['counts'];
             if($oCountDup !== FALSE && $nStaDup == 0){
                 $this->db->trans_begin();
-                $aStaDptMaster  = $this->Country_model->FSaMCTYAddUpdateMaster($aDataCty);
-                $aStaDptLang    = $this->Country_model->FSaMCTYAddUpdateLang($aDataCty);
+                $aStaDptMaster  = $this->Settingurlformat_model->FSaMCTYAddUpdateMaster($aUrlData);
                 if($this->db->trans_status() === false){
                     $this->db->trans_rollback();
                     $aReturn = array(
                         'nStaEvent'    => '900',
-                        'tStaMessg'    => "Unsucess Add Product Unit"
+                        'tStaMessg'    => "Unsucess Add"
                     );
                 }else{
                     $this->db->trans_commit();
                     $aReturn = array(
                         'nStaCallBack'	=> $this->session->userdata('tBtnSaveStaActive'),
-                        'tCodeReturn'	=> $aDataCty['FTCtyCode'],
+                        'tCodeReturn'	=> $aUrlData['FTFspCode'],
                         'nStaEvent'	    => '1',
-                        'tStaMessg'		=> 'Success Add Product Unit'
+                        'tStaMessg'		=> 'Success Add'
                     );
                 }
             }else{
@@ -191,39 +193,34 @@ class Country_controller extends MX_Controller {
     //Creator : 13/09/2018 wasin
     //Return : Status Edit Event
     //Return Type : String
-    public function FSoCPUNEditEvent(){
+    public function FSoCURLEditEvent(){
         try{
-            $aDataPdtUnit   = array(
-                'FTCtyCode'     => $this->input->post('oetCtyCode'),
-                'FTCtyName'     => $this->input->post('oetCtyName'),
-                'FTCtyStaUse'   => $this->input->post('ocmCtyStaActive'),
-                'FTVatCode'     => $this->input->post('oetVatCode'),
-                'FTCtyStaCtrlRate'  => $this->input->post('ocmExcRte'),
-                'FTRteIsoCode'  => $this->input->post('oetRteCode'),
+            $aDataUrl   = array(
+                'FTFspCode'     => $this->input->post('oetUrlCode'),
+                'FTFmtCode'     => $this->input->post('oetUrlFormatCode'),
+                'FTFspStaUse'   => $this->input->post('ocmUrlStaActive'),
+                'FTAgnCode'     => $this->input->post('oetBchAgnCode'),
+                'FTBchCode'     => $this->input->post('oetBchCode'),
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FDCreateOn'    => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
-                'FNLngID'       => $this->input->post("oetCtyLangID"),
-                'FTCtyLongitude' => $this->input->post('oetCtyLon'),
-                'FTCtyLatitude' => $this->input->post('oetCtyLa')
             );
             $this->db->trans_begin();
-            $aStaPunMaster  = $this->Country_model->FSaMCTYAddUpdateMaster($aDataPdtUnit);
-            $aStaPunLang    = $this->Country_model->FSaMCTYAddUpdateLang($aDataPdtUnit);
+            $aStaPunMaster  = $this->Settingurlformat_model->FSaMCTYAddUpdateMaster($aDataUrl);
             if($this->db->trans_status() === FALSE){
                 $this->db->trans_rollback();
                 $aReturn = array(
                     'nStaEvent'    => '900',
-                    'tStaMessg'    => "Unsucess Edit Product Unit"
+                    'tStaMessg'    => "Unsucess Edit"
                 );
             }else{
                 $this->db->trans_commit();
                 $aReturn = array(
                     'nStaCallBack'	=> $this->session->userdata('tBtnSaveStaActive'),
-                    'tCodeReturn'	=> $aDataPdtUnit['FTCtyCode'],
+                    'tCodeReturn'	=> $aDataUrl['FTFspCode'],
                     'nStaEvent'	    => '1',
-                    'tStaMessg'		=> 'Success Edit Product Unit'
+                    'tStaMessg'		=> 'Success Edit'
                 );
             }
             echo json_encode($aReturn);
@@ -238,18 +235,18 @@ class Country_controller extends MX_Controller {
     //Update : 1/4/2019 Pap
     //Return : Status Delete Event
     //Return Type : String
-    public function FSoCPUNDeleteEvent(){
+    public function FSoCURLDeleteEvent(){
         $tIDCode = $this->input->post('tIDCode');
         $aDataMaster = array(
-            'FTCtyCode' => $tIDCode
+            'FTFspCode' => $tIDCode
         );
-        $aResDel        = $this->Country_model->FSaMPUNDelAll($aDataMaster);
-        $nNumRowCty = $this->Country_model->FSnMPUNGetAllNumRow();
-        if($nNumRowCty!==false){
+        $aResDel        = $this->Settingurlformat_model->FSaMPUNDelAll($aDataMaster);
+        $nNumRowUrlFmt = $this->Settingurlformat_model->FSnMPUNGetAllNumRow();
+        if($nNumRowUrlFmt!==false){
             $aReturn    = array(
                 'nStaEvent' => $aResDel['rtCode'],
                 'tStaMessg' => $aResDel['rtDesc'],
-                'nNumRowCty' => $nNumRowCty
+                'nNumRowUrlFmt' => $nNumRowUrlFmt
             );
             echo json_encode($aReturn);
         }else{

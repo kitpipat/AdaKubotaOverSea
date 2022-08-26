@@ -7,25 +7,25 @@
 			<div class="row xCNavRow" style="width:inherit;">
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                         <ol id="oliMenuNav" class="breadcrumb">
-                            <?php FCNxHADDfavorite('pdtunit/0/0');?> 
-                            <li id="oliCountryTitle" class="xCNLinkClick" onclick="JSvCallPageCountryList()" style="cursor:pointer"><?php echo language('company/country/country','tCountryTitle')?></li>
-                            <li id="oliCountryTitleAdd" class="active"><a><?php echo language('company/country/country','tCountryTitleAdd')?></a></li>
-                            <li id="oliCountryTitleEdit" class="active"><a><?php echo language('company/country/country','tCountryTitleEdit')?></a></li>
+                            <?php FCNxHADDfavorite('settingUrlFormat/0/0');?> 
+                            <li id="oliCountryTitle" class="xCNLinkClick" onclick="JSvCallPageURLList()" style="cursor:pointer"><?php echo language('settingconfig/settingurlformat/settingurlformat','tAngTitle')?></li>
+                            <li id="oliUrlTitleAdd" class="active"><a><?php echo language('settingconfig/settingurlformat/settingurlformat','tAngTitleAdd')?></a></li>
+                            <li id="oliUrlTitleEdit" class="active"><a><?php echo language('settingconfig/settingurlformat/settingurlformat','tAngTitleEdit')?></a></li>
                         </ol>
 					</div>
                         <div class="col-xs-12 col-md-4 text-right p-r-0">
-                        <div id="odvBtnCtyInfo">
-                            <?php if($aAlwEventCty['tAutStaFull'] == 1 || $aAlwEventCty['tAutStaAdd'] == 1) : ?>
-                            <button class="xCNBTNPrimeryPlus" type="button" onclick="JSvCallPageCountryAdd()">+</button>
+                        <div id="odvBtnUrlInfo">
+                            <?php if($aAlwEventUrl['tAutStaFull'] == 1 || $aAlwEventUrl['tAutStaAdd'] == 1) : ?>
+                            <button class="xCNBTNPrimeryPlus" type="button" onclick="JSvCallPageURLList()">+</button>
                             <?php endif; ?>
                         </div>
                         <div id="odvBtnAddEdit" style="margin-top:3px">
                             <div class="demo-button xCNBtngroup" style="width:100%;">
-                                <button onclick="JSvCallPageCountryList()" class="btn xCNBTNDefult xCNBTNDefult2Btn" type="button"> <?php echo language('common/main/main', 'tBack')?></button>
+                                <button onclick="JSvCallPageURLList()" class="btn xCNBTNDefult xCNBTNDefult2Btn" type="button"> <?php echo language('common/main/main', 'tBack')?></button>
                                 
-                                <?php if($aAlwEventCty['tAutStaFull'] == 1 || ($aAlwEventCty['tAutStaAdd'] == 1 || $aAlwEventCty['tAutStaEdit'] == 1)) : ?>
+                                <?php if($aAlwEventUrl['tAutStaFull'] == 1 || ($aAlwEventUrl['tAutStaAdd'] == 1 || $aAlwEventUrl['tAutStaEdit'] == 1)) : ?>
                                 <div class="btn-group">
-                                <button onclick="$('#obtSubmitCty').click();" class="btn btn-default xWBtnGrpSaveLeft" type="submit"> <?= language('common/main/main', 'tSave')?></button>
+                                <button onclick="$('#obtSubmitUrl').click();" class="btn btn-default xWBtnGrpSaveLeft" type="submit"> <?= language('common/main/main', 'tSave')?></button>
                                     <?php echo $vBtnSave?>
                                 </div>
                                 <?php endif; ?>
@@ -41,7 +41,7 @@
 		&nbsp;
 	</div>
 	<div class="main-content">
-		<div id="odvContentPageCountry" class="panel panel-headline"></div>
+		<div id="odvContentPageUrl" class="panel panel-headline"></div>
 	</div>
 	<input type="hidden" name="ohdDeleteChooseconfirm" id="ohdDeleteChooseconfirm" value="<?php echo language('common/main/main', 'tModalConfirmDeleteItemsAll') ?>">
     <?php else: ?>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
                 <div id="odvCtyBtnGroup" class="demo-button xCNBtngroup" style="width:100%;">
-                    <button type="button" class="btn xCNBTNPrimery" onclick="$('#obtSubmitCty').click()"><?php echo language('common/main/main', 'tSave')?></button>
+                    <button type="button" class="btn xCNBTNPrimery" onclick="$('#obtSubmitUrl').click()"><?php echo language('common/main/main', 'tSave')?></button>
                     </div>
                 </div>
             </div>
@@ -66,5 +66,5 @@
     <div id="odvModalBodyBrowse" class="modal-body xCNModalBodyAdd">
 </div>
 <?php endif;?>	
-<script src="<?php echo  base_url('application/modules/company/assets/src/country/jCountry.js')?>"></script>
+<script src="<?php echo  base_url('application/modules/settingconfig/assets/src/settingurlformat/jUrlFormat.js')?>"></script>
 

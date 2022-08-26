@@ -30,25 +30,16 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 ?>
 <div id="odvBranchPanelBody" class="panel-body" style="padding-top:10px !important;">
 <div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="custom-tabs-line tabs-line-bottom left-aligned">
-				<ul class="nav" role="tablist">
-					<li id="oliBchTabInfoNav" class="xCNBCHTab active" data-typetab="main" data-tabtitle="bchinfo">
-						<a role="tab" data-toggle="tab" data-target="#odvBranchDataInfo" aria-expanded="true">
-						<?php echo language('company/country/country','tCountryInfo')?>						</a>
-					</li>
-				</ul>
-			</div>
-			<div id="odvBchContentDataTab" class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">			
+			<div id="odvCtyContentDataTab" class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-xs-12">
 					<div class="tab-content">
 						<!-- Tab Info Data Branch -->
-						<div id="odvBranchDataInfo" class="tab-pane active" style="margin-top:10px;" role="tabpanel" aria-expanded="true">
+						<div id="odvCtyDataInfo" class="tab-pane active" style="margin-top:10px;" role="tabpanel" aria-expanded="true">
 							<div class="row" style="margin-right:-30px; margin-left:-30px;">
 								<div class="main-content" style="padding-bottom:0px !important;">
 									<form id="ofmAddCountry" class="validate-form" action="javascript:void(0)" method="post" enctype="multipart/form-data">
-										<input type="hidden" id="ohdBchPriority" value="<?php echo @$tBchPriority ?>">
-										<input type="hidden" id="ohdCtyStaRate" value="<?php echo @$tBchType?>">
+										<input type="hidden" id="ohdCtyStaRate" value="<?php echo @$tExcRte?>">
 										<input type="hidden" id="ohmCtyStaActive" value="<?php echo @$tCtyStaActive; ?>">
 										<input type="hidden" id="ohdBchRouteData" name="ohdBchRouteData" value="<?php echo $tRoute;?>">
 										<button type="submit" id="obtSubmitCty" class="btn xCNHide" onclick="JSnAddEditCountry('<?php echo @$tRoute?>');">
