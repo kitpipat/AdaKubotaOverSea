@@ -2,7 +2,6 @@
 //Agency
 $tSessAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
 $tSessAgnName 	= $this->session->userdata("tSesUsrAgnName");
-
 if($aResult['rtCode'] == "1"){
 	$tRteCode       	= $aResult['raItems']['rtRteCode'];
 	$cRteRate       	= number_format($aResult['raItems']['rcRteRate'],$nOptDecimalShow);
@@ -185,7 +184,7 @@ if($aResult['rtCode'] == "1"){
 					<input class="form-control xCNInputNumericWithDecimal text-right " 
 					type="text" id="oetRteRate" name="oetRteRate" 
 					placeholder="0.00"
-					maxlength="18"
+					maxlength="14"
 					value="<?php echo @$cRteRate?>">
 				</div>
 

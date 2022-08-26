@@ -259,5 +259,6 @@ var oBrowsetIso = {
         Value: ["oetRteIsoCode", "TCNSRate_L.FTRteIsoCode"],
         Text: ["oetRteIsoName", "TCNSRate_L.FTRteIsoName"]
     },
+    // DebugSQL: true,
 };
 </script>
