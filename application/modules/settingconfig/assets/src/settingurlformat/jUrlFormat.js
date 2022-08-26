@@ -284,7 +284,7 @@ function JSvUrlDataTable(pnPage) {
         Timeout: 0,
         success: function(tResult) {
             if (tResult != "") {
-                $('#ostDataCty').html(tResult);
+                $('#ostDataUrl').html(tResult);
             }
             JSxPunNavDefult();
             JCNxLayoutControll();

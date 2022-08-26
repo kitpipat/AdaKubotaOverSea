@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	<div class="panel-body">
-		<div id="ostDataCty"></div>
+		<div id="ostDataUrl"></div>
 	</div>
 
 
