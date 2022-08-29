@@ -213,7 +213,7 @@ class Slipmessage_controller extends MX_Controller {
             // $aFonts = array(
             //    'Fonts' => $this->input->post("ocmSmgFonts"),
             //    'FontsStyle' => $this->input->post("ocmSmgFontsStyle"),
-            //    'FontsSize' => $this->input->post("ocmSmgFontsSize"),
+            //    'FontsSize' => $this->input->post("oetSmgFontsSize"),
             // );
             $aDataMaster = array(
                 'FTSmgCode'             => $tSmgCode,
@@ -310,7 +310,7 @@ class Slipmessage_controller extends MX_Controller {
                 'FTCreateBy'            => $this->session->userdata('tSesUsername'),
                 'FDCreateOn'            => date('Y-m-d H:i:s'),
                 'FNLngID'               => $this->session->userdata("tLangEdit"),
-                'FTFonts'               => $this->input->post("ocmSmgFonts").','.$this->input->post("ocmSmgFontsStyle").','.$this->input->post("ocmSmgFontsSize"),
+                'FTFonts'               => $this->input->post("ocmSmgFonts").','.$this->input->post("ocmSmgFontsStyle").','.$this->input->post("oetSmgFontsSize"),
             );
             $this->db->trans_begin();
             // Add or Update Slip
