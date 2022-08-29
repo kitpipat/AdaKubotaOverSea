@@ -108,7 +108,7 @@
                     "required"      : $('#oetSmgTitle').attr('data-validate-required'),
                 },
                 oetSmgFontsSize : {
-                    "required"      :  $('#ocmSmgFontsSize').attr('data-validate-required'), 
+                    "required"      :  $('#oetSmgFontsSize').attr('data-validate-required'), 
                 }
                 // ocmRcnGroup: {
                 //     "required"      : $('#osmSelect').attr('data-validate-required'),

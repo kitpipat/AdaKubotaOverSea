@@ -4,7 +4,7 @@ var tCallPunBackOption = $('#oetPunCallBackOption').val();
 
 $('document').ready(function() {
     JSxCheckPinMenuClose(); /*Check เปิดปิด Menu ตาม Pin*/
-    JSxPunNavDefult();
+    JSxUrlNavDefult();
     if (nStaCtyBrowseType != 1) {
         JSvCallPageURLList(1);
     } else {
@@ -18,18 +18,14 @@ $('document').ready(function() {
 //Creator : 13/09/2018 wasin
 //Return : Show Tab Menu
 //Return Type : -
-function JSxPunNavDefult() {
+function JSxUrlNavDefult() {
     if (nStaCtyBrowseType != 1 || nStaCtyBrowseType == undefined) {
-        $('.xCNPunVBrowse').hide();
-        $('.xCNPunVMaster').show();
         $('.xCNChoose').hide();
         $('#oliUrlTitleAdd').hide();
         $('#oliUrlTitleEdit').hide();
         $('#odvBtnAddEdit').hide();
         $('#odvBtnUrlInfo').show();
     } else {
-        $('#odvModalBody #odvPunMainMenu').removeClass('main-menu');
-        $('#odvModalBody #oliPunNavBrowse').css('padding', '2px');
         $('#odvModalBody #odvCtyBtnGroup').css('padding', '0');
         $('#odvModalBody .xCNPunBrowseLine').css('padding', '0px 0px');
         $('#odvModalBody .xCNPunBrowseLine').css('border-bottom', '1px solid #e3e3e3');
@@ -286,7 +282,7 @@ function JSvUrlDataTable(pnPage) {
             if (tResult != "") {
                 $('#ostDataUrl').html(tResult);
             }
-            JSxPunNavDefult();
+            JSxUrlNavDefult();
             JCNxLayoutControll();
             JStCMMGetPanalLangHTML('TCNMCountry_L'); //โหลดภาษาใหม่
             JCNxCloseLoading();
@@ -501,7 +497,7 @@ function JSoUrlDel(tCurrentPage, tIDCode, tDelName, tYesOnNo) {
                     //     JCNxOpenLoading();
                     //     alert(aReturn['tStaMessg']);                        
                     // }
-                    // JSxPunNavDefult();
+                    // JSxUrlNavDefult();
 
 
 
@@ -531,7 +527,7 @@ function JSoUrlDel(tCurrentPage, tIDCode, tDelName, tYesOnNo) {
                         JCNxOpenLoading();
                         alert(tData['tStaMessg']);
                     }
-                    JSxPunNavDefult();
+                    JSxUrlNavDefult();
                 },
 
                 // error: function(data) {
@@ -611,7 +607,7 @@ function JSoUrlDelChoose() {
                     JCNxOpenLoading();
                     alert(tData['tStaMessg']);
                 }
-                JSxPunNavDefult();
+                JSxUrlNavDefult();
 
 
 

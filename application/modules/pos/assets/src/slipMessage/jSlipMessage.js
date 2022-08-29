@@ -295,7 +295,7 @@ function JSnAddEditSlipMessage(ptRoute){
             },
             
             oetSmgFontsSize: {
-                "required"      :  $('#ocmSmgFontsSize').attr('data-validate-required'), 
+                "required"      :  $('#oetSmgFontsSize').attr('data-validate-required'), 
             }
         },
         errorElement: "em",

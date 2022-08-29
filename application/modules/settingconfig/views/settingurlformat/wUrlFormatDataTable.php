@@ -50,7 +50,7 @@
                                 <td class="text-left"><?php echo language('settingconfig/settingurlformat/settingurlformat','tFmtStaUse')?></td>
                                 <?php endif; ?>
                                 <?php if($aValue['rtStaUse'] == 2):?>
-                                <td class="text-left"><?php echo language('settingconfig/settingurlformat/settingurlformat','tFmtStaUse')?></td>
+                                <td class="text-left"><?php echo language('settingconfig/settingurlformat/settingurlformat','tFmtStaNotUse')?></td>
                                 <?php endif; ?>
                                 <td><img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSoUrlDel('<?=$nCurrentPage?>','<?php echo $aValue['rtFspCode']?>','<?=$aValue['rtFmtName']?>','<?= language('common/main/main','tModalConfirmDeleteItemsYN')?>')"></td>
                                 <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageUrlEdit('<?php echo $aValue['rtFspCode']?>')"></td>

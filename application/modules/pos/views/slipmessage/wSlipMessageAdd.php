@@ -106,7 +106,6 @@ button.btn.dropdown-toggle.btn-default {
                         </div>
 
                         <div class="form-group">
-                        <span style="color:red">*</span>
                             <label class="xCNLabelFrm"><?php echo language('pos/slipmessage/slipmessage','tSMGLang');?></label>
                             <select class="selectpicker form-control" id="ocmSmgLngID" name="ocmSmgLngID" value="<?=@$tSmgLngID?>">
                                 <?php 
@@ -128,7 +127,7 @@ button.btn.dropdown-toggle.btn-default {
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFont'); ?></label>
+                                        <label class="xCNLabelFrm"><?php echo language('pos/slipmessage/slipmessage','tSMGFont'); ?></label>
                                         <select style="" class="selectpicker form-control" id="ocmSmgFonts" name="ocmSmgFonts" value="<?=@$tSmgFonts?>">
                                             <?php  
                                                 
@@ -150,7 +149,7 @@ button.btn.dropdown-toggle.btn-default {
                                     </div>
 
                                     <div class="col-md-4">
-                                        <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFontType'); ?></label>
+                                        <label class="xCNLabelFrm"><?php echo language('pos/slipmessage/slipmessage','tSMGFontType'); ?></label>
                                         <select class="selectpicker form-control" id="ocmSmgFontsStyle" name="ocmSmgFontsStyle" value="<?=@$tSmgFontsStyle?>">
                                             <option value="1"<?php echo (@$tSmgFontsStyle == '1')?  "selected" : "";?> >
                                                 Normal
@@ -168,26 +167,28 @@ button.btn.dropdown-toggle.btn-default {
                                     </div>
                                     
                                     <div class="col-md-4">
-                                        <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFontSize'); ?></label>
-                                        <div class="validate-input">
+                                        <div class="form-group">
+                                            <div class="validate-input">
+                                            <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('pos/slipmessage/slipmessage','tSMGFontSize'); ?></label>
                                             <input
                                                 type="text"
                                                 class="form-control"
-                                                maxlength="50"
+                                                maxlength="2"
                                                 id="oetSmgFontsSize"
                                                 name="oetSmgFontsSize"
                                                 autocomplete="off"
                                                 placeholder ="<?php echo language('pos/slipmessage/slipmessage','tSMGFontSize'); ?>"
                                                 value="<?=@$tSmgFontsSize?>"
                                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                data-validate-required = "<?php echo language('pos/slipmessage/slipmessage','tSMGValidFontSize')?>"
+                                                data-validate-required ="<?php echo language('pos/slipmessage/slipmessage','tSMGValidFontSize');?>"
                                             >
-                                        </div>
+                                            </div>
+                                        </div>                                  
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        <br>                                              
 
                         <div class="form-group">
                             <div class="validate-input">
@@ -219,7 +220,7 @@ button.btn.dropdown-toggle.btn-default {
                                         <span class="input-group-btn">
                                             <div class="btn xWSmgMoveIcon" type="button"><i class="icon-move fa fa-arrows"></i></div>
                                         </span>
-                                        <input type="text" class="form-control xWSmgDyForm" maxlength="50" id="oetSmgSlipHead<?php echo $nHIndex; ?>" name="oetSmgSlipHead[<?php echo $nHIndex; ?>]" value="<?php echo $oHeadItem; ?>" placeholder="<?php echo $tHeadReceiptPlaceholder; ?> <?php echo $nHIndex; ?>">
+                                        <input type="text" class="form-control xWSmgDyForm" maxlength="50" id="oetSmgSlipHead<?php echo $nHIndex; ?>" name="oetSmgSlipHead[<?php echo $nHIndex; ?>]" value="<?php echo $oHeadItem; ?>" placeholder="<?php echo $tHeadReceiptPlaceholder; ?> <?php echo $nHIndex; ?>"  data-validate-required="<?php echo language('pos/slipmessage/slipmessage','tSMGValidName');?>">
                                         <span class="input-group-btn">
                                             <button class="btn pull-right xWSmgBtn xWSmgBtnDelete" onclick="JSxSlipMessageDeleteRow(this, event)"><?php echo language('pos/slipmessage/slipmessage','tSMGDeleteRow'); ?></button>
                                         </span>

@@ -71,13 +71,18 @@ function JSnAddEditSlipMessage(ptRoute) {
                 //     digits: true,
                 //     maxlength: 5
                 // },
-                oetSmgTitle: {
-                    required: true
-                }
+                // },
+                oetSmgTitle:  {"required" :{}},
+            oetSmgFontsSize:  {"required" :{}},
             },
             messages: {
                 // oetSmgCode: $('#oetSmgCode').data('validate'),
-                oetSmgTitle: $('#oetSmgTitle').data('validate')
+                oetSmgTitle: {
+                "required"      :  $('#oetSmgTitle').attr('data-validate-required'),
+            },
+                oetSmgFontsSize: {
+                "required"      :  $('#oetSmgFontsSize').attr('data-validate-required'), 
+            }
             },
             submitHandler: function(form) {
                 $.ajax({

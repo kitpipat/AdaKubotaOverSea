@@ -16,7 +16,7 @@
                         <div class="col-xs-12 col-md-4 text-right p-r-0">
                         <div id="odvBtnUrlInfo">
                             <?php if($aAlwEventUrl['tAutStaFull'] == 1 || $aAlwEventUrl['tAutStaAdd'] == 1) : ?>
-                            <button class="xCNBTNPrimeryPlus" type="button" onclick="JSvCallPageURLList()">+</button>
+                            <button class="xCNBTNPrimeryPlus" type="button" onclick="JSvCallPageURLAdd()">+</button>
                             <?php endif; ?>
                         </div>
                         <div id="odvBtnAddEdit" style="margin-top:3px">

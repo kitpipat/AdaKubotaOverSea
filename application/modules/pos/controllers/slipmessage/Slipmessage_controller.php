@@ -225,7 +225,7 @@ class Slipmessage_controller extends MX_Controller {
                 'FTCreateBy'            => $this->session->userdata('tSesUsername'),
                 'FDCreateOn'            => date('Y-m-d H:i:s'),
                 'FNLngID'               => $this->input->post("ocmSmgLngID"),
-                'FTFonts'               => $this->input->post("ocmSmgFonts").','.$this->input->post("ocmSmgFontsStyle").','.$this->input->post("ocmSmgFontsSize"),
+                'FTFonts'               => $this->input->post("ocmSmgFonts").','.$this->input->post("ocmSmgFontsStyle").','.$this->input->post("oetSmgFontsSize"),
             );  
 
             //  print_r($aDataMaster);
