@@ -132,7 +132,7 @@ class Branch_model extends CI_Model {
                             LEFT JOIN [TCNMWaHouse_L]    WAHL    WITH(NOLOCK) ON BCH.FTWahCode = WAHL.FTWahCode AND BCH.FTBchCode = WAHL.FTBchCode  AND WAHL.FNLngID = $nLngID
                             LEFT JOIN [TCNMPdtPriList_L] PRL     WITH(NOLOCK) ON BCH.FTPplCode = PRL.FTPplCode  AND PRL.FNLngID = $nLngID
                             LEFT JOIN TCNMAgency_L       AGNL     WITH(NOLOCK) ON BCH.FTAgnCode = AGNL.FTAgnCode  AND AGNL.FNLngID = $nLngID
-                            LEFT JOIN TCNMCountry_L      CONL    WITH(NOLOCK)  ON BCH.FTCtyCode =  CONL.FTCtyCode AND CONL.FNLngID = '0'        
+                            LEFT JOIN TCNMCountry_L      CONL    WITH(NOLOCK)  ON BCH.FTCtyCode =  CONL.FTCtyCode AND CONL.FNLngID = $nLngID      
                             -- LEFT JOIN TCNMMerchant_L    MERL     WITH(NOLOCK) ON BCH.FTMerCode = MERL.FTMerCode  AND MERL.FNLngID = $nLngID
                             LEFT JOIN [TCNMImgObj]       IMGO    WITH(NOLOCK) ON BCH.FTBchCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TCNMBranch' 
             ";
