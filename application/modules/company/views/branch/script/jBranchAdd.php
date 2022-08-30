@@ -139,7 +139,7 @@
             On: [' TCNMCountry.FTCtyCode = TCNMCountry_L.FTCtyCode AND TCNMCountry_L.FNLngID = '+nLangEdits]
         },
         Where :{
-            Condition : [tWhereAgn]
+            Condition : [' AND TCNMCountry.FTCtyStaUse = 1 ']
         },
         GrideView:{
             ColumnPathLang	: 'company/branch/branch',
