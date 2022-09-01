@@ -832,6 +832,9 @@
                                         <option value = "15" <?= (!empty($tUrlType) && $tUrlType == '15')? "selected":""?>>
                                             <?php echo language('company/settingconnection/settingconnection','tCompURLAPI2RTStock');?>
                                         </option>
+                                        <option value = "16" <?= (!empty($tUrlType) && $tUrlType == '16')? "selected":""?>>
+                                            <?php echo language('company/settingconnection/settingconnection','tBchURLAPI2CNAda');?>
+                                        </option>
                                     </select>
                                     <input type="hidden" id="ocmUrlConnecttype" name="ocmUrlConnecttype" value="<?php echo $tUrlType;?>">
                                     <?php
@@ -884,8 +887,11 @@
                                         <option value = "15" >
                                             <?php echo language('company/settingconnection/settingconnection','tCompURLAPI2RTStock');?>
                                         </option>
+                                        <option value = "16" >
+                                            <?php echo language('company/settingconnection/settingconnection','tBchURLAPI2CNAda');?>
+                                        </option>
                                     </select>
-
+                                    
                                     <?php 
                                         } 
                                     ?>

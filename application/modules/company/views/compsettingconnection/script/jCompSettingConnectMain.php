@@ -127,6 +127,10 @@
             case '15' :
                 JSxCompSettingConControlPanalShow();
             break;
+            case '16' :
+                // ซ่อน Panel 1,2,3,4,5
+                JSxCompSettingConControlPanalHide();
+            break;
             default:
             JSxCompSettingConControlPanalHide();
         }   

@@ -21,6 +21,7 @@ $lang['tBchUrlType']            = "URL";  // type 1
 $lang['tBchURLAuthorized']      = "URL + Authorized"; // type 2
 $lang['tBchURLMQURL']           = "URL + MQ"; // type 3
 $lang['tBchURLAPI2PSMaster']    = "API2PSMaster"; // type 4
+$lang['tBchURLAPI2CNAda']       = "API2CNAda"; // type 16
 $lang['tBchURLAPI2PSSale']      = "API2PSSale"; // type 5
 $lang['tBchURLAPI2RTMaster']    = "API2RTMaster"; // type 6
 $lang['tBchURLAPI2RTSale']      = "API2RTSale"; // type 7
