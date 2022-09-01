@@ -222,7 +222,7 @@ button.btn.dropdown-toggle.btn-default {
                                         </span>
                                         <input type="text" class="form-control xWSmgDyForm" maxlength="50" id="oetSmgSlipHead<?php echo $nHIndex; ?>" name="oetSmgSlipHead[<?php echo $nHIndex; ?>]" value="<?php echo $oHeadItem; ?>" placeholder="<?php echo $tHeadReceiptPlaceholder; ?> <?php echo $nHIndex; ?>"  data-validate-required="<?php echo language('pos/slipmessage/slipmessage','tSMGValidName');?>">
                                         <span class="input-group-btn">
-                                            <button class="btn pull-right xWSmgBtn xWSmgBtnDelete" onclick="JSxSlipMessageDeleteRow(this, event)"><?php echo language('pos/slipmessage/slipmessage','tSMGDeleteRow'); ?></button>
+                                            <button class="btn pull-right xWSmgBtn xWSmgBtnDelete" onclick="JSxSlipMessageDeleteRowHead(this, event)"><?php echo language('pos/slipmessage/slipmessage','tSMGDeleteRow'); ?></button>
                                         </span>
                                     </div>
                                 </div>
@@ -248,7 +248,7 @@ button.btn.dropdown-toggle.btn-default {
                                         </span>
                                         <input type="text" class="form-control xWSmgDyForm" maxlength="50" id="oetSmgSlipEnd<?php echo $nEIndex; ?>" name="oetSmgSlipEnd[<?php echo $nEIndex; ?>]" value="<?php echo $oEndItem; ?>" placeholder="<?php echo $tEndReceiptPlaceholder; ?> <?php echo $nEIndex; ?>">
                                         <span class="input-group-btn">
-                                            <button class="btn pull-right xWSmgBtn xWSmgBtnDelete" onclick="JSxSlipMessageDeleteRow(this, event)"><?= language('pos/slipmessage/slipmessage','tSMGDeleteRow')?></button>
+                                            <button class="btn pull-right xWSmgBtn xWSmgBtnDelete" onclick="JSxSlipMessageDeleteRowEnd(this, event)"><?= language('pos/slipmessage/slipmessage','tSMGDeleteRow')?></button>
                                         </span>
                                     </div>
                                 </div>
