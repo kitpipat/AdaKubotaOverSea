@@ -12,7 +12,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tVatRate 			= $raResult['raItems']['rtCtyVatRate'];
 		$tCtyLa				= $raResult['raItems']['rtCtyLatitude'];
 		$tCtyLon 			= $raResult['raItems']['rtCtyLongitude'];
-		
+		$tRteName			= $raResult['raItems']['rtRteIsoName'];
 	}else{
 		$tRoute				= 'countryEventAdd';
 		$tCtyLangName 		= 'ภาษา';
@@ -26,6 +26,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tVatRate 			= 'อัตราภาษี';
 		$tCtyLa				= '';
 		$tCtyLon 			= '';
+		$tRteName			= 'สกุลเงิน';
 	}
 ?>
 <div id="odvBranchPanelBody" class="panel-body" style="padding-top:10px !important;">
@@ -107,23 +108,20 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 												</div>
 
 												<div class="row">
-													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
-															<label class="xCNLabelFrm"><span class="text-danger">*</span> <?php echo language('company/country/country','tCountryIso')?></label>
-															<input 
-															type="text" 
-															class="form-control" 
-															maxlength="3" 
-															id="oetRteCode" 
-															name="oetRteCode" 
-															autocomplete="off" 
-															oninput="this.value = this.value.replace(/[^A-Z]/ig, '').toUpperCase()"
-															placeholder="<?php echo language('company/country/country','tCountryIso')?>" 
-															data-validate-required="<?php echo language('company/country/country','tCountryIsoValidate')?>" 
-															value="<?php echo @$tRteCode; ?>">
+															<label class="xCNLabelFrm"><?php echo language('company/country/country','tCountryIso')?></label>
+															<div class="input-group">
+																<input type="text" class="form-control xCNHide" id="oetRteCode" name="oetRteCode" value="<?php echo @$tRteCode; ?>">
+																<input type="text" class="form-control xWPointerEventNone" id="oetRteName" name="oetRteName" value="<?php echo @$tRteName; ?>" readonly>
+																<span class="input-group-btn">
+																	<button id="oimBchBrowseRte" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
+																</span>
+															</div>
 														</div>
 													</div>
 												</div>
+
 												<div class="row">
 													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
@@ -138,21 +136,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 																</select>														
 														</div>
 													</div>	
-												</div>
-												
-												<div class="row">
-													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-														<div class="form-group">
-															<label class="xCNLabelFrm"><?php echo language('company/country/country','tCountryStaUse')?> </label>
-																<select class="form-control" id="ocmCtyStaActive" name="ocmCtyStaActive" value="<?php echo @$tCtyStaActive; ?>">
-																	<option value="1"<?php echo (@$tCtyStaActive == 1)? " selected" : "";?>>
-																	<?php echo language('company/country/country','tCountryUse')?></option>
-																	<option value="2"<?php echo (@$tCtyStaActive == 2)? " selected" : "";?>>
-																	<?php echo language('company/country/country','tCountryNotUse')?></option>
-																</select>														
-														</div>
-													</div>	
-												</div>
+												</div>																					
 
 												<div class="row">
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -192,6 +176,20 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 													</div>
 												</div>
 												
+												<div class="row">
+													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+														<div class="form-group">
+															<label class="xCNLabelFrm"><?php echo language('company/country/country','tCountryStaUse')?> </label>
+																<select class="form-control" id="ocmCtyStaActive" name="ocmCtyStaActive" value="<?php echo @$tCtyStaActive; ?>">
+																	<option value="1"<?php echo (@$tCtyStaActive == 1)? " selected" : "";?>>
+																	<?php echo language('company/country/country','tCountryUse')?></option>
+																	<option value="2"<?php echo (@$tCtyStaActive == 2)? " selected" : "";?>>
+																	<?php echo language('company/country/country','tCountryNotUse')?></option>
+																</select>														
+														</div>
+													</div>	
+												</div>
+
 											</div>
 										</div>
 									</form>

@@ -24,7 +24,7 @@ var oBchBrowseLang = function(poReturnInputCty){
         Title : ['company/country/country', 'tCountryLang'],
         Table:{Master:'TSysLanguage', PK:'FNLngID'},
         Where :{
-            Condition : ["AND TSysLanguage.FTCtyCode = '"+tCountryCode+"' "]
+            Condition : ["AND TSysLanguage.FTLngStaUse = '1' "]
         },
         GrideView:{
             ColumnPathLang	: 'company/country/country',
@@ -76,6 +76,36 @@ var oBchBrowseLang = function(poReturnInputCty){
         BrowseLev : nStaCtyBrowseType
     };
 
+    var oBchBrowseRate = {
+        Title : ['company/country/country', 'tVatTitle'],
+        Table:{Master:'TCNSRate_L', PK:'FTRteIsoCode'},
+        // Join :{
+        //     Table: ['TCNMCountry_L'],
+        //     On: [' TCNMCountry.FTCtyCode = TCNMCountry_L.FTCtyCode AND TCNMCountry_L.FNLngID = '+nLangEdits]
+        // },
+        Where :{
+            Condition : [tWhereAgn]
+        },
+        GrideView:{
+            ColumnPathLang	: 'company/country/country',
+            ColumnKeyLang	: ['tVatCode', 'tVatTitle'],
+            ColumnsSize     : ['15%', '85%'],
+            WidthModal      : 50,
+            DataColumns		: ['TCNSRate_L.FTRteIsoCode', 'TCNSRate_L.FTRteIsoName'],
+            DataColumnsFormat : ['', ''],
+            Perpage			: 10,
+            OrderBy			: ['TCNSRate_L.FTRteIsoCode ASC'],
+        },
+        CallBack:{
+            ReturnType      : 'S',
+            Value           : ["oetRteCode", "TCNSRate_L.FTRteIsoCode"],
+            Text            : ["oetRteName", "TCNSRate_L.FTRteIsoName"]
+        },
+        // RouteAddNew : 'RateCode',
+        //BrowseLev : nStaCtyBrowseType
+    };
+
+
 
 
     $(document).ready(function(){
@@ -95,6 +125,10 @@ var oBchBrowseLang = function(poReturnInputCty){
             JCNxBrowseData('oBchBrowseVat');
         });
 
+        $('#oimBchBrowseRte').click(function(){
+            JSxCheckPinMenuClose();
+            JCNxBrowseData('oBchBrowseRate');
+        });
         
     });
 

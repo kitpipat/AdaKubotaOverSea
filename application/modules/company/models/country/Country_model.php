@@ -109,11 +109,13 @@ class Country_model extends CI_Model {
                                     CTY.FTCtyStaUse AS  rtCtyStaUse,
                                     CTY.FTCtyStaCtrlRate AS reCtyStaCtrlRate,
                                     CTY.FTCtyLatitude AS rtCtyLatitude,
-	                                CTY.FTCtyLongitude AS rtCtyLongitude
+	                                CTY.FTCtyLongitude AS rtCtyLongitude,
+                                    RATE_L.FTRteIsoName AS rtRteIsoName
                             FROM TCNMCountry CTY 
                             LEFT JOIN TCNMCountry_L CTY_L ON CTY.FTCtyCode = CTY_L.FTCtyCode 
                             LEFT JOIN TSysLanguage STSL ON CTY.FNLngID = STSL.FNLngID
                             LEFT JOIN VCN_VatActive VVA ON CTY.FTVatCode = VVA.FTVatCode
+                            LEFT JOIN TCNSRate_L RATE_L ON CTY.FTRteIsoCode = RATE_L.FTRteIsoCode
                             AND CTY_L.FNLngID = $nLngID
                             WHERE 1 = 1 AND CTY.FTCtyCode = '$tCtyCode' ";
             $oQuery = $this->db->query($tSQL);
