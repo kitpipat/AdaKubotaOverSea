@@ -29,7 +29,7 @@ $lang['tRCVValidCurrencyName']    = 'กรุณาเลือก ประเ
 $lang['tRCVValidCodeDup'] =  "รหัสประเภทการชำระเงินนี้มีอยู่ในระบบแล้วกรุณาตรวจสอบอีกครั้ง";
 
 $lang['tRCVBillerID']  = "รหัสเรียกเก็บเงิน";
-$lang['tRCVCurrency']  = "ประเภทสกุลเงิน";
+$lang['tRCVCurrency']  = "อ้างอิงประเภทสกุลเงิน";
 $lang['tRCVMerchantID']  = "รหัสผู้ประกอบการ";
 $lang['tRCVMerchantRef']  = "รหัสอ้างอิงผู้ประกอบการ";
 $lang['tRCVMode']  = "โหมด";
@@ -46,3 +46,6 @@ $lang['tRCVURL']  = "URL";
 $lang['tRCVURLGenQR']  = "สร้าง URL QR Code";
 $lang['tRCVX-Key']  = "X-Key";
 $lang['tRCVSetConfigTitle']  = "ตั้งค่ารูปแบบ";
+
+$lang['tRCVStaActive1']     = "เปิดใช้งาน";
+$lang['tRCVStaActive2']     = "ปิดการใช้งาน";

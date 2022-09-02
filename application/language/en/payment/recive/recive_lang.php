@@ -28,7 +28,7 @@ $lang['tRCVValidFormatName']    = 'Please Enter Format Code ';
 $lang['tRCVValidCurrencyName']    = 'Please Select Currency';
 
 $lang['tRCVBillerID']  = "Biller ID";
-$lang['tRCVCurrency']  = "Currency";
+$lang['tRCVCurrency']  = "Refer Currency";
 $lang['tRCVMerchantID']  = "Merchant ID";
 $lang['tRCVMerchantRef']  = "Merchant Ref";
 $lang['tRCVMode']  = "Mode";
@@ -45,3 +45,6 @@ $lang['tRCVURL']  = "URL";
 $lang['tRCVURLGenQR']  = "URL Generate QR Code";
 $lang['tRCVX-Key']  = "X-Key";
 $lang['tRCVSetConfigTitle']  = "Setting Config";
+
+$lang['tRCVStaActive1']     = "Enable";
+$lang['tRCVStaActive2']     = "Disable";

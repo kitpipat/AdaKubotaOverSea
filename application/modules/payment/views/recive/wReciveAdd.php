@@ -219,10 +219,10 @@ if ($aResult['rtCode'] == "1") {
                                             <!-- <option value=""><?= language('common/main/main', 'tCMNBlank-NA') ?></option> -->
                                             <option value="1" <?php if ($tRcvchecked == 1) {
                                                                     echo "selected";
-                                                                } ?>><?= language('company/branch/branch', 'tBCHStaActive1') ?></option>
+                                                                } ?>><?= language('payment/recive/recive', 'tRCVStaActive1') ?></option>
                                             <option value="2" <?php if ($tRcvchecked == 2) {
                                                                     echo "selected";
-                                                                } ?>><?= language('company/branch/branch', 'tBCHStaActive2') ?></option>
+                                                                } ?>><?= language('payment/recive/recive', 'tRCVStaActive2') ?></option>
                                         </select>
                                     </div>
 
