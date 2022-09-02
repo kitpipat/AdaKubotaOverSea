@@ -138,8 +138,28 @@ class Country_controller extends MX_Controller {
     //Return Type : String
     public function FSoCPUNAddEvent(){
         try{
+            $tIsAutoGenCode = $this->input->post('ocbCtyAutoGenCode');
+            $tCtyCode = "";
+            if(isset($tIsAutoGenCode) && $tIsAutoGenCode == '1'){
+                // Update new gencode
+                // 15/05/2020 Napat(Jame)
+                $aStoreParam = array(
+                    "tTblName"    => 'TCNMCountry',
+                    "tDocType"    => 0,
+                    "tBchCode"    => "",
+                    "tShpCode"    => "",
+                    "tPosCode"    => "",
+                    "dDocDate"    => date("Y-m-d")
+                );
+                $aAutogen   = FCNaHAUTGenDocNo($aStoreParam);
+                $tCtyCode   = $aAutogen[0]["FTXxhDocNo"];
+
+            }else{
+                $tCtyCode = $this->input->post('oetCtyCode');
+            }
+
             $aDataCty   = array(
-                'FTCtyCode'     => $this->input->post('oetCtyCode'),
+                'FTCtyCode'     => $tCtyCode,
                 'FTCtyName'     => $this->input->post('oetCtyName'),
                 'FTCtyStaUse'   => $this->input->post('ocmCtyStaActive'),
                 'FTCtyStaCtrlRate'  => $this->input->post('ocmExcRte'),

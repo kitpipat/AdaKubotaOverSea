@@ -129,7 +129,121 @@ var oBchBrowseLang = function(poReturnInputCty){
             JSxCheckPinMenuClose();
             JCNxBrowseData('oBchBrowseRate');
         });
-        
+
+        if(JCNbCtyIsCreatePage()){
+            //Brach Code
+            $("#oetCtyCode").attr("disabled", true);
+            $("#oetCtyCode").attr("disabled", true);
+
+            $('#ocbCtyAutoGenCode').change(function(){
+    
+                if($('#ocbCtyAutoGenCode').is(':checked')) {
+                    $('#oetCtyCode').val('');
+                    $("#oetCtyCode").attr("disabled", true);
+                    $('#odvCtyCodeForm').removeClass('has-error');
+                    $('#odvCtyCodeForm em').remove();
+                }else{
+                    $("#oetCtyCode").attr("disabled", false);
+                }
+            });
+            JSxBrachVisibleComponent('#ocbCtyAutoGenCode', true);
+        }
+
+        if(JCNbCtysUpdatePage()){
+            // Brach Code
+            $("#oetCtyCode").attr("readonly", true);
+            $('#ocbCtyAutoGenCode input').attr('disabled', true);
+            JSxBrachVisibleComponent('#ocbCtyAutoGenCode', false);    
+        }
+
+        $('#oetCtyCode').blur(function(){
+            JSxCheckUrlCodeDupInDB();
+        });
+
+        //Functionality : Event Check Brach
+    //Parameters : Event Blur Input Brach Code
+    //Creator : 20/09/2019 Saharat (Golf)
+    //Return : -
+    //Return Type : -
+    function JSxCheckUrlCodeDupInDB(){
+        if(!$('#ocbCtyAutoGenCode').is(':checked')){
+            $.ajax({
+                type: "POST",
+                url: "CheckInputGenCode",
+                data: { 
+                    tTableName: "TCNMCountry",
+                    tFieldName: "FTCtyCode",
+                    tCode: $("#oetCtyCode").val()
+                },
+                cache: false,
+                timeout: 0,
+                success: function(tResult){
+                    var aResult = JSON.parse(tResult);
+                    $("#ohdCheckDuplicateCtyCode").val(aResult["rtCode"]);  
+                // Set Validate Dublicate Code
+                $.validator.addMethod('dublicateCode', function(value, element) {
+                    if($("#ohdCheckDuplicateCtyCode").val() == 1){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                },'');
+
+                // From Summit Validate
+                $('#ofmAddCountry').validate({
+                    rules: {
+                        oetUrlCode : {
+                            "required" :{
+                                // ตรวจสอบเงื่อนไข validate
+                                depends: function(oElement) {
+                                if($('#ocbCtyAutoGenCode').is(':checked')){
+                                    return false;
+                                }else{
+                                    return true;
+                                }
+                                }
+                            },
+                            "dublicateCode" :{}
+                        },
+                    },
+                    messages: {
+                        oetUrlCode : {
+                            "required"      : $('#oetUrlCode').attr('data-validate-required'),
+                            "dublicateCode" : $('#oetUrlCode').attr('data-validate-dublicateCode')
+                        },
+                    },
+                    errorElement: "em",
+                    errorPlacement: function (error, element ) {
+                        error.addClass( "help-block" );
+                        if ( element.prop( "type" ) === "checkbox" ) {
+                            error.appendTo( element.parent( "label" ) );
+                        } else {
+                            var tCheck = $(element.closest('.form-group')).find('.help-block').length;
+                            if(tCheck == 0){
+                                error.appendTo(element.closest('.form-group')).trigger('change');
+                             }
+                        }
+                    },
+                    highlight: function ( element, errorClass, validClass ) {
+                        $( element ).closest('.form-group').addClass( "has-error" ).removeClass( "has-success" );
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $( element ).closest('.form-group').addClass( "has-success" ).removeClass( "has-error" );
+                    },
+                    submitHandler: function(form){}
+                });
+
+                // Submit From brach
+                $('#ofmAddCountry').submit();
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    JCNxResponseError(jqXHR, textStatus, errorThrown);
+                }
+            });
+
+        }   
+    }
     });
 
 </script>
