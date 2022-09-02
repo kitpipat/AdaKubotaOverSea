@@ -13,7 +13,7 @@ class Settingurlformat_model extends CI_Model {
             $aRowLen        = FCNaHCallLenData($paData['nRow'],$paData['nPage']);
             $nLngID         = $paData['FNLngID'];
             $tSearchList    = $paData['tSearchAll'];
-
+            $tAngCode       = $this->session->userdata('tSesUsrAgnCode');           
 
             $tSQL       = "SELECT c.* FROM(
                                  SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC , rtFspCode DESC) AS rtRowID,* FROM
@@ -29,6 +29,9 @@ class Settingurlformat_model extends CI_Model {
                                     LEFT JOIN [TCNMBranch_L]  BCH_L ON FMT.FTBchCode = BCH_L.FTBchCode AND BCH_L.FNLngID = $nLngID
                                     LEFT JOIN [TFNSFmtURL_L]  FMT_L ON FMT.FTFmtCode = FMT_L.FTFmtCode AND FMT_L.FNLngID = $nLngID
                                     WHERE 1=1 ";
+            if(!empty($tAngCode)){
+                $tSQL .= "AND FMT.FTAgnCode = '$tAngCode'";
+            }
 
             if(isset($tSearchList) && !empty($tSearchList)){
                 $tSQL .= " AND (FMT.FTFspCode COLLATE THAI_BIN LIKE '%$tSearchList%'";
