@@ -543,3 +543,31 @@ function FSaGetLanguage() {
         return array();
     }
 }
+
+function FCNaGetLngListByCty(){
+    $ci = & get_instance();
+    $ci->load->database();
+    $tDefCty  = @$_SESSION ['tSesDefCountry'];
+    $tSQL = "SELECT * 
+            FROM TSysLanguage WITH(NOLOCK) 
+            WHERE FTLngStaUse = '1' 
+            ORDER BY CASE FTLngShortName WHEN '$tDefCty' THEN 0
+				     ELSE FNLngID END ASC";
+    $oQuery = $ci->db->query($tSQL);
+    $oQuery = $oQuery->result_array();
+    foreach($oQuery as $nKey => $aObject){
+        switch ($aObject['FTLngShortName']) {
+            case 'ENG':
+                $nLang = 'en';
+                break;
+            case 'LAO':
+                $nLang = 'la';
+                break; 
+            default:
+                $nLang = 'th';
+                break;
+        }
+        $oQuery[$nKey]['nLang'] = $nLang;
+    }
+    return $oQuery;
+}
