@@ -81,7 +81,7 @@ var oBchBrowseAgency = {
         Title : ['settingconfig/settingurlformat/settingurlformat', 'tUrlFormatTitle'],
         Table:{Master:'TFNSFmtURL_L', PK:'FTFmtCode'},
         Where :{
-            Condition : [tWhereAgn]
+            Condition : ['AND TFNSFmtURL_L.FTFmtType = 1']
         },
         GrideView:{
             ColumnPathLang	: 'settingconfig/settingurlformat/settingurlformat',
