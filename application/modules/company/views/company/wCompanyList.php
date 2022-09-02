@@ -94,7 +94,7 @@
 												$tTextCompStaHQ = language('company/company/company','tCmpStaSubBch');
 											}
 										?>
-										<label class="xCNLabelFrm" style="font-size:25px !important;color:green !important;">[ <?php echo $tTextCompStaHQ;?> ]</label>
+										<!-- <label class="xCNLabelFrm" style="font-size:25px !important;color:green !important;">[ <?php echo $tTextCompStaHQ;?> ]</label> -->
 									</div>
 								</div>
 								<div class="row p-l-40">
