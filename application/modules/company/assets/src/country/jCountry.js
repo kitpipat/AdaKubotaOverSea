@@ -85,6 +85,48 @@ function JSvCallPageCountryList(pnPage) {
     });
 }
 
+/**
+ * Functionality : Is create page.
+ * Parameters : -
+ * Creator : 12/06/2019 saharat(Golf)
+ * Last Modified : -
+ * Return : Status true is create page
+ * Return Type : Boolean
+ */
+ function JCNbCtyIsCreatePage() {
+    try {
+        const tBchCode = $('#oetCtyCode').data('is-created');
+        var bStatus = false;
+        if (tBchCode == "") { // No have data
+            bStatus = true;
+        }
+        return bStatus;
+    } catch (err) {
+        console.log('JCNbUrlIsCreatePage Error: ', err);
+    }
+}
+
+/**
+ * Functionality : Is update page.
+ * Parameters : -
+ * Creator : 12/06/2019 saharat(Golf)
+ * Last Modified : -
+ * Return : Status true is create page
+ * Return Type : Boolean
+ */
+ function JCNbCtysUpdatePage() {
+    try {
+        const tBchCode = $('#oetCtyCode').data('is-created');
+        var bStatus = false;
+        if (!tBchCode == "") { // Have data
+            bStatus = true;
+        }
+        return bStatus;
+    } catch (err) {
+        console.log('JCNbCtysUpdatePage Error: ', err);
+    }
+}
+
 //Functionality : (event) Add/Edit Reason
 //Parameters : form
 //Creator : 27/03/2018 wasin(yoshi)
@@ -737,18 +779,18 @@ function JSxTextinModal() {
 }
 
 
-
-
-//Functionality: Function Chack Value LocalStorage
-//Parameters: Event Select List Reason
-//Creator: 13/09/2018 wasin
-//Return: Duplicate/none
-//Return Type: string
-function findObjectByKey(array, key, value) {
-    for (var i = 0; i < array.length; i++) {
-        if (array[i][key] === value) {
-            return 'Dupilcate';
+function JSxBrachVisibleComponent(ptComponent, pbVisible, ptEffect) {
+    try {
+        if (pbVisible == false) {
+            $(ptComponent).addClass('hidden');
         }
+        if (pbVisible == true) {
+            // $(ptComponent).removeClass('hidden');
+            $(ptComponent).removeClass('hidden fadeIn animated').addClass('fadeIn animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                $(this).removeClass('hidden fadeIn animated');
+            });
+        }
+    } catch (err) {
+        console.log('JSxBrachVisibleComponent Error: ', err);
     }
-    return 'None';
 }

@@ -51,18 +51,34 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 													<div class="form-group">
 															<label class="xCNLabelFrm">
-															<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryCode')?> </label>
-															<input type="text" 
-																   class="form-control" 
-																   id="oetCtyCode" 
-																   name="oetCtyCode" 
-																   autocomplete="off" 
-																   maxlength="3"
-																   placeholder="<?php echo language('company/country/country','tCountryCode')?>" 
-																   oninput="this.value = this.value.replace(/[^A-Z]/ig, '').toUpperCase()"
-																   data-validate-required="<?php echo language('company/country/country','tCountryCodeValidate')?>" 
-																   value="<?php echo @$tCtyCode; ?>"
-																>
+															<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryCode')?> 
+															</label>
+															<div id="odvUrlAutoGenCode" class="form-group">
+																<div class="validate-input">
+																	<label class="fancy-checkbox">
+																		<input type="checkbox" id="ocbCtyAutoGenCode" name="ocbCtyAutoGenCode" checked="true" value="1">
+																		<span> <?php echo language('common/main/main','tGenerateAuto');?></span>
+																	</label>
+																</div>
+															</div>
+															<div id="odvCtyCodeForm" class="form-group">
+																<input type="hidden" id="ohdCheckDuplicateCtyCode" name="ohdCheckDuplicateCtyCode" value="1">
+																<div class="validate-input">
+																	<input 
+																		type="text" 
+																		class="form-control xCNGenarateCodeTextInputValidate" 
+																		maxlength="5" 
+																		id="oetCtyCode" 
+																		name="oetCtyCode"
+																		value="<?php echo @$tCtyCode; ?>"
+																		data-is-created="<?php echo @$tCtyCode; ?>"
+																		autocomplete="off"
+																		placeholder="<?php echo language('company/country/country','tCountryCode')?>" 
+																		data-validate-required="<?php echo language('company/country/country','tCountryCodeValidate')?>" 
+																		data-validate-dublicateCode="<?php echo language('company/branch/branch','tSHPValidCheckCode');?>"
+																	>
+																</div>
+															</div>											
 														</div>
 													</div>
 											</div>

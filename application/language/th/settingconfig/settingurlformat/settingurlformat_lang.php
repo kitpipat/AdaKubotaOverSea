@@ -1,7 +1,7 @@
 <?php
 $lang['tUrlName']           = "URL";
 $lang['tUrlCode']           = "รหัส URL";
-$lang['tAngName']           = "ตัวแทน";
+$lang['tAngName']           = "ตัวแทนขาย";
 $lang['tBchName']           = "สาขา";
 $lang['tAngDel']            = "ลบ";
 $lang['tAngEdit']           = "แก้ไข";
@@ -16,6 +16,7 @@ $lang['tFmtSta']         = "สถานะ";
 $lang['tFmtStaUse']         = "ใช้งาน";
 $lang['tFmtStaNotUse']         = "ไม่ใช้งาน";
 
+$lang['tAngName']         = "ตัวแทนขาย";
 $lang['tSHPValiBranchCode']         = "กรุณาเลือกสาขา";
 $lang['tVatTitle']              = "อัตราภาษี";
 $lang['tVatCode']               = "รหัสภาษี";
@@ -25,7 +26,7 @@ $lang['tVatStart']              = "วันที่เริ่มใช้ง
 $lang['tCountryInfo']               = "ข้อมูลทั่วไป";
 $lang['tCountryVat']                = "อัตราภาษี";
 $lang['tCountryIso']                = "รหัสสกุลเงิน";
-$lang['tCountryExCtrl']           = "ให้ควบคุม Excahnage rate รายวัน";
+$lang['tCountryExCtrl']           = "สถานะควบคุม Excahnage rate รายวัน";
 $lang['tCountryStaUse']           = "สถานะ";
 $lang['tCountryAllow']           = "อนุญาต";
 $lang['tCountryNotAllow']           = "ไม่อนุญาต";
@@ -40,3 +41,4 @@ $lang['tCountryNameValidate']           = "กรุณากรอกชื่�
 $lang['tCountryCodeValidate']           = "กรุณากรอกรหัสประเทศ เช่น ABC";
 $lang['tUrlFormatTitle']           = "URL";
 $lang['tUrlFormatTitleCode']           = "รหัส URL";
+$lang['tFormatName']           = "เลือก Format";
