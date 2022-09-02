@@ -343,13 +343,14 @@ function JSoGenerateProductCode() {
 // Creator:	14/02/2019 wasin(Yoshi)
 // Return: object View Event Not Sale Data Table
 // Return Type: object
+
 function JSoAddEditProduct(ptRoute) {
     // console.log('ptRoute: ' + ptRoute);
     var nStaSession = JCNxFuncChkSessionExpired();
     if (typeof(nStaSession) !== 'undefined' && nStaSession == 1) {
         $('#ofmAddEditProduct').validate().destroy();
-
         $('#ofmAddEditProduct').validate({
+            ignore: "",
             rules: {
                 oetPdtCode: {
                     "required": {
@@ -400,8 +401,16 @@ function JSoAddEditProduct(ptRoute) {
                     }
                 }
             },
+            invalidHandler: function(e, validator){
+                if(validator.errorList.length)
+                $('#tabs a[href="#' + $(validator.errorList[0].element).closest(".tab-pane").attr('id') + '"]').tab('show')
+            },
             highlight: function(element, errorClass, validClass) {
                 $(element).closest('.form-group').addClass("has-error").removeClass("has-success");
+                $(".tab-content").find("div.tab-pane:hidden:has(div.has-error)").each( function(){
+                    var id = $(this).attr("id");
+                    $('#ofmAddEditProduct .nav-tabs a[href="#' + id + '"]').tab('show');
+                });
             },
             unhighlight: function(element, errorClass, validClass) {
                 var nStaCheckValid = $(element).parents('.form-group').find('.help-block').length
@@ -432,6 +441,7 @@ function JSoAddEditProduct(ptRoute) {
                     'tPdtName': $('#oetPdtName').val(),
                     'tPdtNameOth': $('#oetPdtNameOth').val(),
                     'tPdtNameABB': $('#oetPdtNameABB').val(),
+                    'tPdtRefID': $('#oetPdtRefID').val(),
                     // 'tPdtVatCode': $('#ocmPdtVatCode').val(),
                     'tPdtVatCode': $('#ocmPdtVatCode').val(),
                     'nPdtStaVatBuy': ($('#ocbPdtStaVatBuy').is(':checked')) ? 1 : 2,
@@ -546,7 +556,8 @@ function JSxAjaxPostDataProduct(paPackData, pnTypeAdd) { //paTypeAdd 1 = เพ�
             'aPdtDataInfo1'     : paPackData['aPdtDataInfo1'],
             'aPdtDataInfo2'     : paPackData['aPdtDataInfo2'],
             'aPdtDataRental'    : paPackData['aPdtDataRental'],
-            'pnTypeAdd'         : pnTypeAdd
+            'pnTypeAdd'         : pnTypeAdd,
+            'aPdtInputTab'      : $('#ofmAddEditProduct').serialize()
                 // 'aPdtDataPackSize'  : aPdtDataPackSize,
                 // 'aPdtDataAllSet'    : aPdtDataAllSet,
                 // 'tPdtEvnNotSale'    : tPdtEvnNotSale,

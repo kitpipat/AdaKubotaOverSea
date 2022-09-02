@@ -116,7 +116,8 @@ class Product_model extends CI_Model
                                 PDT.FTPdtCode,
                                 PDT.FTPdtType,
                                 PDT.FTPgpChain,
-                                PDT.FDCreateOn
+                                PDT.FDCreateOn,
+                                PDT.FTCtyCode
                             FROM
                                 TCNMPdt PDT WITH (NOLOCK)
                             LEFT JOIN TCNMPdtSpcBch PDLSPC WITH (NOLOCK) ON PDT.FTPdtCode = PDLSPC.FTPdtCode ";
@@ -140,6 +141,7 @@ class Product_model extends CI_Model
                         PBAR.FTBarCode,
                         PGL.FTPgpName,
                         PTL.FTPtyName,
+                        CUNL.FTCtyName AS FTCtyCode,
                         PIMG.FTImgObj,
                     ISNULL(PRI.FCPgdPriceRet, 0) AS FCPgdPriceRet
                     FROM
@@ -160,13 +162,21 @@ class Product_model extends CI_Model
                                 c.FNRowID > $aRowLen[0]
                             AND c.FNRowID <= $aRowLen[1]
                         ) PDT
-                    LEFT JOIN TCNMPdt_L PDTL WITH (NOLOCK)       ON PDT.FTPdtCode = PDTL.FTPdtCode  AND PDTL.FNLngID    = $nLngID
+                    -- LEFT JOIN TCNMPdt_L PDTL WITH (NOLOCK)    ON PDT.FTPdtCode = PDTL.FTPdtCode AND PDTL.FNLngID = $nLngID
+                    LEFT JOIN 
+                        (
+                        SELECT  FTPdtCode,FTPdtName,FNLngID , ROW_NUMBER()
+                                OVER (PARTITION BY FTPdtCode ORDER BY FTPdtCode) AS RowNum
+                        FROM    TCNMPdt_L WITH (NOLOCK)   
+                        ) PDTL ON PDTL.FTPdtCode = PDT.FTPdtCode And RowNum = 1
                     LEFT JOIN TCNMPdtPackSize PPCZ WITH (NOLOCK) ON PDT.FTPdtCode = PPCZ.FTPdtCode
                     LEFT JOIN TCNMPdtBar PBAR WITH (NOLOCK)      ON PDT.FTPdtCode = PBAR.FTPdtCode  AND PPCZ.FTPunCode = PBAR.FTPunCode
                     LEFT JOIN TCNMImgPdt PIMG WITH (NOLOCK)      ON PDT.FTPdtCode = PIMG.FTImgRefID AND PIMG.FTImgTable = 'TCNMPdt' AND PIMG.FNImgSeq = 1
                     LEFT JOIN TCNMPdtType_L PTL WITH (NOLOCK)    ON PDT.FTPdtType = PTL.FTPtyCode   AND PTL.FNLngID = $nLngID
                     LEFT JOIN TCNMPdtUnit_L PUNL WITH (NOLOCK)   ON PPCZ.FTPunCode = PUNL.FTPunCode AND PUNL.FNLngID = $nLngID
                     LEFT JOIN TCNMPdtGrp_L PGL WITH (NOLOCK)     ON PGL.FTPgpChain = PDT.FTPgpChain
+                    LEFT JOIN TSysLanguage LNG WITH (NOLOCK)     ON LNG.FNLngID = PDTL.FNLngID
+                    LEFT JOIN TCNMCountry_L CUNL WITH (NOLOCK)   ON CUNL.FTCtyCode = PDT.FTCtyCode
                     LEFT JOIN (
                         SELECT
                             *
@@ -175,6 +185,8 @@ class Product_model extends CI_Model
                     ) AS PRI ON PRI.FTPdtCode = PDT.FTPdtCode
                     AND PPCZ.FTPunCode = PRI.FTPunCode
                     WHERE 1=1 ";
+        $tSQL .= " AND LNG.FTLngStaUse = '1'";
+
         if (!empty($tSearch)) {
             $tSQL .= $aSpcWhereTableMaster[$nSearchProductType];
         }
@@ -197,7 +209,7 @@ class Product_model extends CI_Model
             // หา Page All จำนวน Rec หาร จำนวนต่อหน้า
             $nPageAll       = ceil($nFoundRow / $paData['nRow']);
             $aDataReturn    = array(
-                // 'tSQL'          => $tSQL,
+                'tSQL'          => $tSQL,
                 'raItems'       => $aList,
                 'rnAllRow'      => $nFoundRow,
                 'rnCurrentPage' => $paData['nPage'],
@@ -207,7 +219,7 @@ class Product_model extends CI_Model
             );
         } else {
             $aDataReturn    = array(
-                // 'tSQL'          => $tSQL,
+                'tSQL'          => $tSQL,
                 'rnAllRow'      => 0,
                 'rnCurrentPage' => $paData['nPage'],
                 "rnAllPage"     => 0,
@@ -692,28 +704,45 @@ class Product_model extends CI_Model
     // Return Type : array
     public function FSaMPDTAddUpdateLang($paPdtWhere, $paPdtDataLang)
     {
-        $this->db->where('FNLngID', $paPdtWhere['FNLngID']);
-        $this->db->where('FTPdtCode', $paPdtWhere['FTPdtCode']);
-        $this->db->update('TCNMPdt_L', $paPdtDataLang);
+        foreach($paPdtDataLang AS $aPdt){
+            if(!$aPdt['FTPdtName']){
+                $aPdtDelete = array(
+                    'FTPdtCode' => $paPdtWhere['FTPdtCode'],
+                    'FNLngID'   => $aPdt['FNLngID']
+                );
+            $this->db->delete('TCNMPdt_L',$aPdtDelete);
+            }
+            $this->db->where('FNLngID', $aPdt['FNLngID']);
+            $this->db->where('FTPdtCode', $paPdtWhere['FTPdtCode']);
+            $this->db->update('TCNMPdt_L', $aPdt);
 
-        if ($this->db->affected_rows() > 0) {
-            $aStatus = array(
-                'rtCode' => '1',
-                'rtDesc' => 'Update Product Lang Success.',
-            );
-        } else {
-            $aDataInsertLang    = array_merge($paPdtWhere, $paPdtDataLang);
-            $this->db->insert('TCNMPdt_L', $aDataInsertLang);
             if ($this->db->affected_rows() > 0) {
                 $aStatus = array(
                     'rtCode' => '1',
-                    'rtDesc' => 'Add Product Lang Success',
+                    'rtDesc' => 'Update Product Lang Success.',
                 );
             } else {
-                $aStatus = array(
-                    'rtCode' => '801',
-                    'rtDesc' => 'Error Cannot Add/Update Product Lang.',
-                );
+                if($aPdt['FTPdtName']){
+                    $aDataInsertLang    = array_merge($paPdtWhere, $aPdt);
+                    $this->db->insert('TCNMPdt_L', $aDataInsertLang);
+                }else{
+                    $aPdtDelete = array(
+                        'FTPdtCode' => $paPdtWhere['FTPdtCode'],
+                        'FNLngID'   => $aPdt['FNLngID']
+                    );
+                    $this->db->delete('TCNMPdt_L',$aPdtDelete);
+                }
+                if ($this->db->affected_rows() > 0) {
+                    $aStatus = array(
+                        'rtCode' => '1',
+                        'rtDesc' => 'Add Product Lang Success',
+                    );
+                } else {
+                    $aStatus = array(
+                        'rtCode' => '801',
+                        'rtDesc' => 'Error Cannot Add/Update Product Lang.',
+                    );
+                }
             }
         }
         return $aStatus;
@@ -1189,7 +1218,7 @@ class Product_model extends CI_Model
     public function FSaMPDTGetDataInfoByID($paDataWhere)
     {
         $tPdtCode   = $paDataWhere['FTPdtCode'];
-        $nLngID     = $paDataWhere['FNLngID'];
+        $nLngID     = $paDataWhere['FNLngID'];   
         $tSQL       = " SELECT
                             PDT.FTPdtCode,PDTL.FTPdtName,PDTL.FTPdtNameOth,PDTL.FTPdtNameABB,PDT.FTPdtStkControl,PDT.FTPdtGrpControl,PDT.FTPdtForSystem,
                             PDT.FCPdtQtyOrdBuy,PDT.FCPdtCostDef,PDT.FCPdtCostOth,PDT.FCPdtCostStd,PDT.FCPdtMax,PDT.FTPdtPoint,PDT.FCPdtPointTime,PDT.FTPdtType,
@@ -1210,7 +1239,9 @@ class Product_model extends CI_Model
                             CONVERT(CHAR(10),PDT.FDPdtSaleStop,126)     AS FDPdtSaleStop,
                             PDTL.FTPdtRmk,
                             CYL.FTCtyCode,
-                            CYL.FTCtyName
+                            CYL.FTCtyName,
+                            PDT.FTPdtRefID,
+                            PDT.FTCreateBy
                         FROM TCNMPdt PDT
                         LEFT JOIN TCNMPdt_L         PDTL    ON PDT.FTPdtCode    = PDTL.FTPdtCode    AND PDTL.FNLngID = $nLngID
                         LEFT JOIN TCNMPdtTouchGrp_L TCGL    ON PDT.FTTcgCode    = TCGL.FTTcgCode    AND TCGL.FNLngID = $nLngID
@@ -1231,10 +1262,48 @@ class Product_model extends CI_Model
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
             $aDataQuery = $oQuery->row_array();
+            $tCtyPdt = $this->FSaMPDTGetCtyByID($aDataQuery['FTCreateBy']);
+            $aDataQuery['FTCtyName'] = $tCtyPdt;
+            $tSQLPdt    = "SELECT
+                        PDT.FTPdtCode,
+                        PDTL.FTPdtName,
+                        PDTL.FTPdtNameOth,
+                        PDTL.FTPdtNameABB,
+                        PDTL.FTPdtRmk,
+                        LNG.FNLngID,
+                        LNG.FTLngNameEng,
+                        LNG.FTLngShortName,
+                        LNG.FTLngStaLocal
+                    FROM [TSysLanguage] LNG WITH(NOLOCK)
+                    LEFT JOIN [TCNMPdt_L] PDTL WITH(NOLOCK) ON LNG.FNLngID = PDTL.FNLngID AND PDTL.FTPdtCode = '$tPdtCode'
+                    LEFT JOIN [TCNMPdt] PDT WITH(NOLOCK) ON PDT.FTPdtCode = PDTL.FTPdtCode
+
+                    WHERE 1=1
+                ";
+
+            $tSQLPdt .= "AND LNG.FTLngStaUse = '1'";
+            $tSQLPdt .= "ORDER BY CASE LNG.FTLngShortName WHEN '$tCtyPdt' THEN 0 ELSE LNG.FNLngID END ASC";
+            $oQueryPdt = $this->db->query($tSQLPdt);
+            $oDetailPdtname = $oQueryPdt->result_array();
+            foreach($oDetailPdtname as $nKey => $aObject){
+                switch ($aObject['FTLngShortName']) {
+                case 'ENG':
+                    $nLang = 'en';
+                break;
+                case 'LAO':
+                    $nLang = 'la';
+                break; 
+                default:
+                    $nLang = 'th';
+                break;
+                }
+            $oDetailPdtname[$nKey]['nLang'] = $nLang;
+            }
             $aResult    =  array(
-                'raItems'   => $aDataQuery,
-                'rtCode'    => '1',
-                'rtDesc'    => 'success'
+                'raItems'       => $aDataQuery,
+                'raPdtName_L'   => $oDetailPdtname,
+                'rtCode'        => '1',
+                'rtDesc'        => 'success'
             );
         } else {
             $aResult =  array(
@@ -2689,6 +2758,48 @@ class Product_model extends CI_Model
             return $aStatus;
         } catch (Exception $Error) {
             return $Error;
+        }
+    }
+
+    public function FSaMPDTGetListByID($ptPdtCode,$ptCtyCode = null){
+        $tPdtCode   = $ptPdtCode;
+
+        $tSQLPdt    = "SELECT
+                        PDT.FTPdtCode,
+                        PDTL.FTPdtName,
+                        PDTL.FTPdtNameOth,
+                        PDTL.FTPdtNameABB,
+                        PDTL.FTPdtRmk,
+                        LNG.FNLngID,
+                        LNG.FTLngNameEng,
+                        LNG.FTLngShortName,
+                        LNG.FTLngStaLocal
+                    FROM [TSysLanguage] LNG WITH(NOLOCK)
+                    LEFT JOIN [TCNMPdt_L] PDTL WITH(NOLOCK) ON LNG.FNLngID = PDTL.FNLngID AND PDTL.FTPdtCode = '$tPdtCode'
+                    LEFT JOIN [TCNMPdt] PDT WITH(NOLOCK) ON PDT.FTPdtCode = PDTL.FTPdtCode
+                    WHERE 1=1
+                ";
+        // if($ptCtyCode){
+        //     $tSQLPdt .= "AND LNG.FTCtyCode = '$ptCtyCode'";
+        // }
+        $tSQLPdt .= "AND LNG.FTLngStaUse = '1'";
+        $oQueryCst = $this->db->query($tSQLPdt);
+        $oDetailPdtname = $oQueryCst->result_array();
+        return $oDetailPdtname;
+    }
+
+    public function FSaMPDTGetCtyByID($pUsrCode){
+        $tSQL = "SELECT 
+                    USRG.FTUsrCode,
+                    IIF(AGN.FTCtyCode <> '', AGN.FTCtyCode, (SELECT FTCtyCode FROM [TCNMComp] WITH (NOLOCK))) AS FTCtyCode
+                FROM [TCNTUsrGroup] USRG WITH (NOLOCK)
+                LEFT JOIN [TCNMAgency] AGN WITH (NOLOCK) ON USRG.FTAgnCode = AGN.FTAgnCode
+                WHERE USRG.FTUsrCode = '$pUsrCode'";
+        $oQuery = $this->db->query($tSQL);
+        if ($oQuery->num_rows() > 0) {
+            return $oQuery->result_array()[0]['FTCtyCode'];
+        } else {
+            return 'THA';
         }
     }
 }

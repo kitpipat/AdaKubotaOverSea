@@ -33,6 +33,9 @@
 <?php
     //Decimal Show ลง 2 ตำแหน่ง
     $nDecShow =  FCNxHGetOptionDecimalShow();
+    // echo '<pre>';
+    // print_r($aPdtDataList['raItems']);
+    // echo '</pre>';
 ?>
 
 <div class="row">
@@ -118,7 +121,12 @@
                                             $tDataCol       = number_format($aDataPdtVal[$tColumnName],0);
                                         }else{
                                             $tAlignFormat = 'text-left';
-                                            $tDataCol = $aDataPdtVal[$tColumnName];
+                                            if($aDataPdtVal['FTCtyCode']){
+                                                $tDataCol = $aDataPdtVal[$tColumnName];
+                                            }else{
+                                                // $aDataPdtVal['FTCtyCode'] = 'Thailand';
+                                                $tDataCol = $aDataPdtVal[$tColumnName];
+                                            }
                                         }
                                     ?>
                                         <?php
@@ -148,7 +156,6 @@
                                                 $tDataCol = $tDataCol;
                                             }
                                         ?>
-                                        
                                         <td nowrap class="<?php echo $tAlignFormat;?> <?php echo $tClassMerge;?>" style="width:<?php echo $nColWidth?>%"><?php echo $tDataCol?></td>
                                     <?php endforeach; ?>
                                     <?php if($aAlwEventPdt['tAutStaFull'] == 1 || $aAlwEventPdt['tAutStaDelete'] == 1) : ?>

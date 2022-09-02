@@ -64,6 +64,7 @@ $lang['tPDTCode']       = "รหัสสินค้า";
 $lang['tPDTName']       = "ชื่อสินค้า";
 $lang['tPDTNameOth']    = "ชื่อสินค้าเพิ่มเติม";
 $lang['tPDTNameABB']    = "ชื่อสินค้าอย่างย่อ";
+$lang['tPDTRefID']      = "รหัสอ้างอิงสินค้า";
 $lang['tPDTVatrate']    = "อัตราภาษี";
 $lang['tPDTStaVatBuy']  = "ภาษีซื้อ";
 $lang['tPDTStaVat']     = "ภาษีขาย";
@@ -472,3 +473,4 @@ $lang['tPdtSreachType6']          = "ประเภทสินค้า";
 $lang['tPdtRefCountry']     = "อ้างอิงประเทศ";
 $lang['tPdtCyCode']         = "รหัสประเทศ";
 $lang['tPdtCyName']         = "ชื่อประเทศ";
+

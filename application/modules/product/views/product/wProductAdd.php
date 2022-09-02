@@ -96,8 +96,13 @@ if (isset($aPdtInfoData) && $aPdtInfoData['rtCode'] == '1') {
     $tAgnCode      = $aPdtInfoData['raItems']['FTAgnCode'];
     $tAgnName      = $aPdtInfoData['raItems']['FTAgnName'];
 
-    $tPdtCyCode    = $aPdtInfoData['raItems']['FTCtyCode'];
+    // $tPdtCyCode    = $aPdtInfoData['raItems']['FTCtyCode'];
+    $tPdtCyCode = "";
     $tPdtCyName    = $aPdtInfoData['raItems']['FTCtyName'];
+
+    $tPdtRefID     = $aPdtInfoData['raItems']['FTPdtRefID'];
+
+    $tPdtCreateBY  = $aPdtInfoData['raItems']['FTCreateBy'];
 } else {
     // TabInfo 1 
     $tPdtCode       = "";
@@ -177,6 +182,10 @@ if (isset($aPdtInfoData) && $aPdtInfoData['rtCode'] == '1') {
 
     $tPdtCyCode    = "";
     $tPdtCyName    = "";
+
+    $tPdtRefID     = "";
+
+    $tPdtCreateBY  = "";
 }
 
 if ($tPdtForSystem != '4') {
@@ -278,7 +287,7 @@ $ocheck = base_url() . 'application/modules/common/assets/images/icons/check.png
 <input type="hidden" id="oetShpCode" name="oetShpCode" value="<?php echo $nUsrShpCode; ?>">
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>application/modules/product/assets/css/product/ada.product.css">
-<form action="javascript:void(0);" class="validate-form" method="post" id="ofmAddEditProduct">
+<form action="javascript:void(0);" class="validate-form" method="post" role="form" id="ofmAddEditProduct">
     <button type="submit" id="obtSubmitProduct" class="btn btn-primary xCNHide"></button>
     <input type="hidden" id="ohdStaAddOrEdit" class="form-control" value="<?php echo $nStaAddOrEdit; ?>">
     <div class="panel-body" style="padding-top:20px !important;">
@@ -526,7 +535,102 @@ $ocheck = base_url() . 'application/modules/common/assets/images/icons/check.png
                                         <input type="text" class="form-control xCNGenarateCodeTextInputValidate" maxlength="20" id="oetPdtCode" name="oetPdtCode" data-is-created="<?php echo $tPdtCode; ?>" placeholder="<?php echo language('product/product/product', 'tPDTCode') ?>" autocomplete="off" value="<?php echo $tPdtCode; ?>" data-validate-required="<?php echo language('product/product/product', 'tPDTValidPdtCode'); ?>" data-validate-dublicateCode="<?php echo language('product/product/product', 'tPDTValidPdtCodeDup'); ?>">
                                     </div>
                                 </div>
-                                <div class="form-group">
+
+                                <!-- tab สินค้า -->
+
+                                <div>
+                                    <div>
+                                        <ul class="nav nav-tabs">
+                                        <?php  if(!empty($aPdtInfoData['raPdtName_L']) || isset($aPdtInfoData['raPdtName_L'])){ ?>
+                                            <?php foreach($aPdtInfoData['raPdtName_L'] AS $Lng){?>
+                                                <li role="presentation" <?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'class="active"' : false ?>>
+                                                    <a href="#<?= $Lng['FTLngShortName'];?>" role="tab" data-toggle="tab"><?= ($Lng['FTLngShortName'] == $tPdtCyName) ? '<span style="color:red">* </span>' : false;?><?= $Lng['FTLngNameEng'];?></a>
+                                                </li>
+                                            <?php }?>
+                                        <?php }else{ ?>
+                                            <?php foreach($aLangList AS $Lng){?>
+                                                <li role="presentation" <?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'class="active"' : false ?>>
+                                                    <a href="#<?= $Lng['FTLngShortName'];?>" role="tab" data-toggle="tab"><?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? '<span style="color:red">* </span>' : false;?><?= $Lng['FTLngNameEng'];?></a>
+                                                </li>
+                                            <?php }?>
+                                        <?php } ?>
+                                        </ul>
+                                    </div>
+                                    <div class="panel-body">
+                                            <div class="tab-content" style="margin-top:0;">
+                                            <?php  if(!empty($aPdtInfoData['raPdtName_L']) || isset($aPdtInfoData['raPdtName_L'])){ ?>
+                                                    <?php foreach($aPdtInfoData['raPdtName_L'] AS $Lng){?>
+                                                        <?php 
+                                                            $tPdtLabelStyle = ($Lng['FTLngShortName'] == 'LAO' || $Lng['FTLngNameEng'] == 'FTLngNameEng') ? 'xCNLabelLaos' : 'xCNLabelFrm';
+                                                            $tPdtInputStyle = ($Lng['FTLngShortName'] == 'LAO' || $Lng['FTLngNameEng'] == 'FTLngNameEng') ? 'xCNInputLaos' : false;    
+                                                        ?>
+                                                        <div role="tabpanel" style="padding:0;" class="tab-pane fade in <?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'active' : false ?>" id="<?= $Lng['FTLngShortName'];?>">
+                                                            <div class="form-group">
+                                                                <input type="hidden" id="<?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'ohdPdtLngID' : 'ohdPdtLngID'.$Lng['FTLngShortName'] ?>" name="<?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'ohdPdtLngID' : 'ohdPdtLngID'.$Lng['FTLngShortName'] ?>" value="<?= $Lng['FNLngID']?>"> 
+                                                                <label class="xCNLabelFrm <?= $tPdtLabelStyle ?>"><?= ($Lng['FTLngShortName'] == $tPdtCyName) ? '<span style="color:red">*</span>' : false ?> <?php echo language('product/product/product', 'tPDTName','',$Lng['nLang']); ?></label>
+                                                                <input type="text" class="form-control <?= $tPdtInputStyle ?>" maxlength="100" id="<?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'oetPdtName' : 'oetPdtName'.$Lng['FTLngShortName'] ?>" name="<?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'oetPdtName' : 'oetPdtName'.$Lng['FTLngShortName'] ?>" 
+                                                                    value="<?= $Lng['FTPdtName']; ?>" placeholder="<?= language('product/product/product','tPDTName','',$Lng['nLang']) ?>" 
+                                                                    autocomplete="off" data-validate-required="<?= language('product/product/product','tPDTValidPdtName','',$Lng['nLang']) ?>"
+                                                                >
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="xCNLabelFrm <?= $tPdtLabelStyle ?>"><?php echo language('product/product/product', 'tPDTNameOth','',$Lng['nLang']); ?></label>
+                                                                <input type="text" id="<?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'oetPdtNameOth' : 'oetPdtNameOth'.$Lng['FTLngShortName'] ?>" class="form-control <?= $tPdtInputStyle ?>" maxlength="100" name="<?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'oetPdtNameOth' : 'oetPdtNameOth'.$Lng['FTLngShortName'] ?>" 
+                                                                    placeholder="<?php echo language('product/product/product', 'tPDTNameOth','',$Lng['nLang']); ?>" 
+                                                                    autocomplete="off" value="<?= $Lng['FTPdtNameOth']; ?>"
+                                                                >
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="xCNLabelFrm <?= $tPdtLabelStyle ?>"><?php echo language('product/product/product', 'tPDTNameABB','',$Lng['nLang']); ?></label>
+                                                                <input type="text" id="<?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'oetPdtNameABB' : 'oetPdtNameABB'.$Lng['FTLngShortName'] ?>" class="form-control <?= $tPdtInputStyle ?>" maxlength="50" name="<?= ($Lng['FTLngShortName'] == $tPdtCyName) ? 'oetPdtNameABB' : 'oetPdtNameABB'.$Lng['FTLngShortName'] ?>" 
+                                                                    value="<?= $Lng['FTPdtNameABB']; ?>" placeholder="<?php echo language('product/product/product', 'tPDTNameABB','',$Lng['nLang']); ?>" 
+                                                                    autocomplete="off"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                <?php }else{ ?>
+                                                    <?php foreach($aLangList AS $Lng){?>
+                                                        <?php 
+                                                            $tPdtLabelStyle = ($Lng['FTLngShortName'] == 'LAO' || $Lng['FTLngNameEng'] == 'FTLngNameEng') ? 'xCNLabelLaos' : 'xCNLabelFrm';
+                                                            $tPdtInputStyle = ($Lng['FTLngShortName'] == 'LAO' || $Lng['FTLngNameEng'] == 'FTLngNameEng') ? 'xCNInputLaos' : false;
+                                                        ?>
+                                                        <div role="tabpanel" style="padding:0;" class="tab-pane fade in <?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'active' : false ?>" id="<?= $Lng['FTLngShortName'];?>">
+                                                            <div class="form-group">
+                                                                <input type="hidden" id="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'ohdPdtLngID' : 'ohdPdtLngID'.$Lng['FTLngShortName'] ?>" name="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'ohdPdtLngID' : 'ohdPdtLngID'.$Lng['FTLngShortName'] ?>" value="<?= $Lng['FNLngID']?>"> 
+                                                                <label class="<?= $tPdtLabelStyle ?>"><?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? '<span style="color:red">*</span>' : false ?> <?php echo language('product/product/product', 'tPDTName','',$Lng['nLang']); ?></label>
+                                                                <input type="text" class="form-control <?= $tPdtInputStyle ?>" maxlength="100" id="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtName' : 'oetPdtName'.$Lng['FTLngShortName'] ?>" name="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtName' : 'oetPdtName'.$Lng['FTLngShortName'] ?>" 
+                                                                    value="<?php echo $tPdtName; ?>" placeholder="<?= language('product/product/product','tPDTName','',$Lng['nLang']) ?>" 
+                                                                    autocomplete="off" data-validate-required="<?= language('product/product/product','tPDTValidPdtName','',$Lng['nLang']) ?>"
+                                                                >
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="<?= $tPdtLabelStyle ?>"><?php echo language('product/product/product', 'tPDTNameOth','',$Lng['nLang']); ?></label>
+                                                                <input type="text" id="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtNameOth' : 'oetPdtNameOth'.$Lng['FTLngShortName'] ?>" 
+                                                                    class="form-control <?= $tPdtInputStyle ?>" maxlength="100" name="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtNameOth' : 'oetPdtNameOth'.$Lng['FTLngShortName'] ?>" 
+                                                                    placeholder="<?php echo language('product/product/product', 'tPDTNameOth','',$Lng['nLang']); ?>" 
+                                                                    autocomplete="off" value="<?php echo $tPdtNameOth; ?>"
+                                                                >
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="<?= $tPdtLabelStyle ?>"><?php echo language('product/product/product', 'tPDTNameABB','',$Lng['nLang']); ?></label>
+                                                                <input type="text" id="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtNameABB' : 'oetPdtNameABB'.$Lng['FTLngShortName'] ?>" 
+                                                                    class="form-control <?= $tPdtInputStyle ?>" maxlength="50" name="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtNameABB' : 'oetPdtNameABB'.$Lng['FTLngShortName'] ?>" 
+                                                                    value="<?php echo $tPdtNameABB; ?>" placeholder="<?php echo language('product/product/product', 'tPDTNameABB','',$Lng['nLang']); ?>" 
+                                                                    autocomplete="off"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="ohdCreateCode" id="ohdCreateCode" value="<?= $tPdtCreateBY ?>">
+                                <hr style="margin-top : 0;">
+
+
+                                <!-- <div class="form-group">
                                     <label class="xCNLabelFrm"><span style="color:red">*</span> <?php echo language('product/product/product', 'tPDTName'); ?></label>
                                     <input type="text" class="form-control" maxlength="100" id="oetPdtName" name="oetPdtName" value="<?php echo $tPdtName; ?>" placeholder="<?php echo language('product/product/product', 'tPDTName'); ?>" autocomplete="off" data-validate-required="<?php echo language('product/product/product', 'tPDTValidPdtName'); ?>">
                                 </div>
@@ -536,8 +640,18 @@ $ocheck = base_url() . 'application/modules/common/assets/images/icons/check.png
                                 </div>
                                 <div class="form-group">
                                     <label class="xCNLabelFrm"><?php echo language('product/product/product', 'tPDTNameABB'); ?></label>
-                                    <input type="text" id="oetPdtNameABB" class="form-control" maxlength="100" name="oetPdtNameABB" value="<?php echo $tPdtNameABB; ?>" placeholder="<?php echo language('product/product/product', 'tPDTNameABB'); ?>" autocomplete="off">
+                                    <input type="text" id="oetPdtNameABB" class="form-control" maxlength="50" name="oetPdtNameABB" value="<?php echo $tPdtNameABB; ?>" placeholder="<?php echo language('product/product/product', 'tPDTNameABB'); ?>" autocomplete="off">
+                                </div> -->
+
+                                <!-- end tab สินค้า -->
+
+                                <!-- รหัสอ้างอิงสินค้า -->
+                                <div class="form-group">
+                                    <label class="xCNLabelFrm"><?= language('product/product/product', 'tPDTRefID') ;?></label>
+                                    <input type="text" id="oetPdtRefID" class="form-control" maxlength="20" name="oetPdtRefID" value="<?= $tPdtRefID; ?>" placeholder="<?= language('product/product/product', 'tPDTRefID') ;?>" autocomplete="off">
                                 </div>
+                                <!-- end -->
+
                                 <div class="form-group">
                                     <label class="xCNLabelFrm"><?php echo language('product/product/product', 'tPdtTypeTitle'); ?></label>
                                     <select class="selectpicker form-control" id="ocmPdtType" name="ocmPdtType" maxlength="1">
@@ -1727,12 +1841,16 @@ $ocheck = base_url() . 'application/modules/common/assets/images/icons/check.png
     </div>
 
 </div>
-
 <script src="<?php echo base_url(); ?>application/modules/common/assets/js/jquery.mask.js"></script>
+<!-- <script src="<?php echo base_url(); ?>application/modules/common/assets/js/jquery.validate-2.min.js"></script> -->
+
 <script src="<?php echo base_url(); ?>application/modules/common/assets/src/jFormValidate.js"></script>
+
 <script src="<?= base_url('application/modules/common/assets/js/bootstrap-colorpicker.min.js') ?>"></script>
 <?php include "script/jProductAdd.php"; ?>
+
 <script type="text/javascript">
+     
     $(document).ready(function() {
         $(function() {
             $('.xCNSltColor').colorpicker();
@@ -1929,3 +2047,4 @@ $ocheck = base_url() . 'application/modules/common/assets/images/icons/check.png
         }
     });
 </script>
+

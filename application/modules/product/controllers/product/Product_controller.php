@@ -234,6 +234,7 @@ class Product_controller extends MX_Controller
                     'tVatRate'  =>  "0.00"
                 );
             }
+            $aLangList      = FCNaGetLngListByCty();
             $aVatRate       = FCNoHCallVatlist();
             $aAlwEventPdt   = FCNaHCheckAlwFunc('product/0/0');
             $aDatProduct    = array(
@@ -246,7 +247,8 @@ class Product_controller extends MX_Controller
                 'dGetDataNow'       => $dGetDataNow,
                 'dGetDataFuture'    => $dGetDataFuture,
                 'tVatCompany'       => $aDataVatrate,
-                'aDataPdtSpcWah'       => $aDataPdtSpcWah
+                'aDataPdtSpcWah'    => $aDataPdtSpcWah,
+                'aLangList'         => $aLangList
 
             );
             $aReturnData    =   array(
@@ -286,7 +288,7 @@ class Product_controller extends MX_Controller
                 'DeleteType'        => 2, //1 Delete Singal , 2 Delete All
                 'FTMttSessionID'    => $this->session->userdata("tSesSessionID"),
                 'dDate'             => date('Y-m-d H:i:s'),
-                'tUser'             => $this->session->userdata('tSesUsername')
+                'tUser'             => $this->session->userdata('tSesUsername'),
             );
             // Insert into PackSize Temp
             $aDataWhereBarCode     = array(
@@ -317,6 +319,8 @@ class Product_controller extends MX_Controller
             $aVatRate       = FCNoHCallVatlist();
             $aAlwEventPdt   = FCNaHCheckAlwFunc('product/0/0');
 
+            $aLangList      = FCNaGetLngListByCty();
+
             // View Product Add Main
             $tViewPagePdtAdd    = $this->load->view('product/product/wProductAdd', array(
                 'nStaAddOrEdit'     => 1,
@@ -329,7 +333,8 @@ class Product_controller extends MX_Controller
                 'nUseType'          => $nUseType,
                 'nUsrBchCode'       => $nUsrBchCode,
                 'nUsrShpCode'       => $nUsrShpCode,
-                'aChkChainPdtSet'   => $aChkChainPdtSet
+                'aChkChainPdtSet'   => $aChkChainPdtSet,
+                'aLangList'         => $aLangList
             ), true);
             $aReturnData    = array(
                 'vPdtPageAdd'       => $tViewPagePdtAdd,
@@ -569,7 +574,8 @@ class Product_controller extends MX_Controller
                 'FTCtyCode'             => $aPdtDataInfo2['tPdtCyCode'],
                 'FTVatCode'             => $aPdtDataInfo1['tPdtVatCode'],
                 'FDPdtSaleStart'        => ($aPdtDataInfo2['tPdtSaleStart'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStart'],
-                'FDPdtSaleStop'         => ($aPdtDataInfo2['tPdtSaleStop'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStop']
+                'FDPdtSaleStop'         => ($aPdtDataInfo2['tPdtSaleStop'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStop'],
+                'FTPdtRefID'            => $aPdtDataInfo1['tPdtRefID']
             );
 
             $aDataSpcBch        = array(
@@ -594,12 +600,24 @@ class Product_controller extends MX_Controller
                 'FTPdtRmk'      => $aPdtDataInfo2['tPdtRmk']
             );
 
+            $aLangList = FCNaGetLngListByCty();
+            $aPdtList  = array();
+            parse_str($this->input->post('aPdtInputTab'), $aPdtListForm);
+            foreach($aLangList AS $Lng){
+                $aPdtList[$Lng['FTLngShortName']] = array(
+                    'FTPdtName'      => $aPdtListForm[($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtName' : 'oetPdtName'.$Lng['FTLngShortName']],
+                    'FNLngID'        => $aPdtListForm[($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'ohdPdtLngID' : 'ohdPdtLngID'.$Lng['FTLngShortName']],
+                    'FTPdtNameOth'   => $aPdtListForm[($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtNameOth' : 'oetPdtNameOth'.$Lng['FTLngShortName']],
+                    'FTPdtNameABB'   => $aPdtListForm[($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetPdtNameABB' : 'oetPdtNameABB'.$Lng['FTLngShortName']],
+                    'FTPdtRmk'       => $aPdtDataInfo2['tPdtRmk']
+                );
+            }
             // Check Product Dup In DataBase
             $aStaPdtDup =   $this->Product_model->FSaMPDTCheckDuplicate($aDataWherePdt['FTPdtCode']);
             if ($aStaPdtDup['rtCode'] == '1' && $aStaPdtDup['rnCountPdt'] == '0') {
                 $this->db->trans_begin();
                 $this->Product_model->FSaMPDTAddUpdateMaster($aDataWherePdt, $aDataAddUpdatePdt);
-                $this->Product_model->FSaMPDTAddUpdateLang($aDataWhereLangPdt, $aDataLangPdt);
+                $this->Product_model->FSaMPDTAddUpdateLang($aDataWhereLangPdt, $aPdtList);
                 if ($aDataSpcBch['FTAgnCode'] != "" || $aDataSpcBch['FTBchCode'] != "" || $aDataSpcBch['FTMerCode'] != "" || $aDataSpcBch['FTShpCode'] != "" || $aDataSpcBch['FTMgpCode'] != "" || $aDataSpcBch['FCPdtMin'] != "") {
                     $this->Product_model->FSxMPDTAddUpdateSpcBch($aDataSpcBch);
                 }
@@ -660,7 +678,7 @@ class Product_controller extends MX_Controller
                         'nStaCallBack'    => $this->session->userdata('tBtnSaveStaActive'),
                         'tCodeReturn'    => $aDataWherePdt['FTPdtCode'],
                         'nStaEvent'        => '1',
-                        'tStaMessg'        => 'Success Add Event'
+                        'tStaMessg'        => 'Success Add Event',
                     );
                 }
             } else {
@@ -763,9 +781,10 @@ class Product_controller extends MX_Controller
                 'FTCtyCode' => $aPdtDataInfo2['tPdtCyCode'],
                 'FTVatCode' => $aPdtDataInfo1['tPdtVatCode'],
                 'FDPdtSaleStart' => ($aPdtDataInfo2['tPdtSaleStart'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStart'],
-                'FDPdtSaleStop' => ($aPdtDataInfo2['tPdtSaleStop'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStop']
+                'FDPdtSaleStop' => ($aPdtDataInfo2['tPdtSaleStop'] == '') ? NULL : $aPdtDataInfo2['tPdtSaleStop'],
                 // 'FTBchCode' => $aPdtDataInfo2['tPdtBchCode'],
                 // 'FTBchCode' => $aPdtDataInfo2['tPdtBchCode'],
+                'FTPdtRefID'    => $aPdtDataInfo1['tPdtRefID']
             );
             $aDataSpcBch = array(
                 'FTPdtCode' => $aPdtDataInfo1['tPdtCode'],
@@ -788,10 +807,25 @@ class Product_controller extends MX_Controller
                 'FTPdtRmk' => $aPdtDataInfo2['tPdtRmk']
             );
 
+            $aLangList = FCNaGetLngListByCty();
+            $aPdtList  = array();
+            parse_str($this->input->post('aPdtInputTab'), $aPdtListForm);
+            $tCtyCode     = $this->Product_model->FSaMPDTGetCtyByID($aPdtListForm['ohdCreateCode']);
+            $aPdtNameList = $this->Product_model->FSaMPDTGetListByID($aPdtDataInfo1['tPdtCode'],$tCtyCode);
+            foreach($aPdtNameList AS $Lng){
+                $aPdtList[$Lng['FTLngShortName']] = array(
+                    'FTPdtName'      => $aPdtListForm[($Lng['FTLngShortName'] == $tCtyCode) ? 'oetPdtName' : 'oetPdtName'.$Lng['FTLngShortName']],
+                    'FNLngID'        => $aPdtListForm[($Lng['FTLngShortName'] == $tCtyCode) ? 'ohdPdtLngID' : 'ohdPdtLngID'.$Lng['FTLngShortName']],
+                    'FTPdtNameOth'   => $aPdtListForm[($Lng['FTLngShortName'] == $tCtyCode) ? 'oetPdtNameOth' : 'oetPdtNameOth'.$Lng['FTLngShortName']],
+                    'FTPdtNameABB'   => $aPdtListForm[($Lng['FTLngShortName'] == $tCtyCode) ? 'oetPdtNameABB' : 'oetPdtNameABB'.$Lng['FTLngShortName']],
+                    'FTPdtRmk'       => $aPdtDataInfo2['tPdtRmk']
+                );
+            }
+
             $this->db->trans_begin();
 
             $this->Product_model->FSaMPDTAddUpdateMaster($aDataWherePdt, $aDataAddUpdatePdt);
-            $this->Product_model->FSaMPDTAddUpdateLang($aDataWhereLangPdt, $aDataLangPdt);
+            $this->Product_model->FSaMPDTAddUpdateLang($aDataWhereLangPdt, $aPdtList);
             $this->Product_model->FSxMPDTAddUpdatePackSize($aDataWherePdt, $aDataWherePackSize);
             $this->Product_model->FSxMPDTAddUpdateBarCode($aDataWherePdt, $aDataWhereBarCode);
             $this->Product_model->FSxMPDTAddUpdateSupplier($aDataWherePdt, $aDataWhereBarCode);

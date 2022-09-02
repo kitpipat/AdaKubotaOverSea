@@ -38,6 +38,7 @@ $lang['tPDTCode']       = "Product Code";
 $lang['tPDTName']       = "Product Name";
 $lang['tPDTNameOth']    = "Product Name Oth.";
 $lang['tPDTNameABB']    = "Product Name ABB.";
+$lang['tPDTRefID']    = "Product reference code";
 $lang['tPDTVatrate']    = "VatRate";
 $lang['tPDTStaVatBuy']  = "VatBuy";
 $lang['tPDTStaVat']     = "VatSale";

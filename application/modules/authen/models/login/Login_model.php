@@ -345,6 +345,18 @@ class Login_model extends CI_Model {
         return $oQuery->result_array()[0]['FNRolLevel'];
     }
 
+    public function FSaMGetCountry($ptAgnCode){
+       if($ptAgnCode){
+            $tSQL = "SELECT FTCtyCode FROM TCNMAgency WHERE FTAgnCode = '$ptAgnCode'";
+            $oQuery = $this->db->query($tSQL);
+            return $oQuery->result_array()[0]['FTCtyCode'];
+       }else{
+            $tSQL = "SELECT FTCmpCode, FTCtyCode FROM TCNMComp";
+            $oQuery = $this->db->query($tSQL);
+            return $oQuery->result_array()[0]['FTCtyCode'];
+       }
+    }
+
 }
 
 

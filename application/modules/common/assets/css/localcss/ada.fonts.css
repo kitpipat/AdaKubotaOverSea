@@ -27,6 +27,10 @@
     font-family: THSarabunNew-Italic;
     src: url(../../fonts/THSarabunNew-Italic.ttf);
 }
+@font-face {
+    font-family: Phetsarath_OT;
+    src: url(../../fonts/Phetsarath_OT.ttf);
+}
 
 html,
 body,
@@ -105,6 +109,21 @@ ol.breadcrumb li.active a {
     font-weight: bold;
     color: #232C3D !important;
 }
+
+.xCNLabelLaos{
+    font-family: Phetsarath_OT;
+    font-size: 12px !important;
+    font-weight: normal;
+    color: #232C3D !important;
+}
+
+.xCNInputLaos{
+    font-family: Phetsarath_OT;
+    font-size: 12px !important;
+    font-weight: normal;
+    color: #555 !important;
+}
+
 
 .xCNLabelColorWhite {
     font-family: THSarabunNew-Bold;
