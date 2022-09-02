@@ -52,6 +52,6 @@ $lang['tBrowseAgnCode']     = "รหัส";
 $lang['tBrowseAgnName']     = "ชื่อตัวแทน";
 
 // ISO Code
-$lang['tRteIsoName']    = "สกุลเงินสากล";
+$lang['tRteIsoName']    = "อ้างอิงสกุลเงินสากล";
 $lang['tBrowseIsoCode']     = "รหัสสกุลเงิน";
 $lang['tBrowseIsoName']     = "ชื่อสกุลเงิน";

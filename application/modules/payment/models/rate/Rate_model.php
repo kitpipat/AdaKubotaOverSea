@@ -112,12 +112,12 @@ class Rate_model extends CI_Model
 
         $tSessAgn = $this->session->userdata('tSesUsrAgnCode');
         if ($tSessAgn != '') {
-            $tSQL   .= " AND RTE.FTAgnCode = '' OR RTE.FTAgnCode = '$tSessAgn'";
+            $tSQL   .= " AND (RTE.FTAgnCode = '' OR RTE.FTAgnCode = '$tSessAgn')";
         }
 
         if ($tSearchList != '') {
-            $tSQL   .= " AND (RTE.FTRteCode COLLATE  THAI_BIN LIKE '%$tSearchList%'";
-            $tSQL   .= " OR RTEL.FTRteName COLLATE THAI_BIN LIKE '%$tSearchList%')";
+            $tSQL   .= " AND (UPPER(RTE.FTRteCode) COLLATE  THAI_BIN LIKE UPPER('%$tSearchList%')";
+            $tSQL   .= " OR UPPER(RTEL.FTRteName) COLLATE THAI_BIN LIKE UPPER('%$tSearchList%'))";
         }
 
         $tSQL .= ") Base) AS c WHERE c.FNRowID > $aRowLen[0] AND c.FNRowID <= $aRowLen[1]";

@@ -51,6 +51,6 @@ $lang['tBrowseAgnCode']     = "Code";
 $lang['tBrowseAgnName']     = "Representative Name";
 
 // ISO code
-$lang['tRteIsoName']    = "ISO Code";
+$lang['tRteIsoName']    = "Refer ISO Code";
 $lang['tBrowseIsoCode']     = "Code";
 $lang['tBrowseIsoName']     = "Currency Name";
