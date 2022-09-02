@@ -97,9 +97,7 @@ var oBchBrowseAgency = {
             ReturnType      : 'S',
             Value           : ["oetUrlFormatCode", "TFNSFmtURL_L.tBchAgnCode"],
             Text            : ["oetUrlFormatName", "TFNSFmtURL_L.FTFmtName"]
-        },
-        RouteAddNew : 'urlformat',
-        BrowseLev : nStaCtyBrowseType
+        }
     };
 
 

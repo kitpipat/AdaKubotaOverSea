@@ -169,7 +169,7 @@
 													
 													
 													
-													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="<?=($tBchCountryCode=="")?'margin-top:40px':''?>">								
+													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="<?=($tBchCode=="")?'margin-top:40px':''?>">								
 															<div class="form-group">
 																<label class="xCNLabelFrm"><?php echo 'ประเทศ';?></label>
 																	<div class="input-group">
