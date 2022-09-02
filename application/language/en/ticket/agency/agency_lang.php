@@ -106,3 +106,5 @@ $lang['tAGNReferAgency']    = "Refer Agency";
 $lang['tAGNRefCountry']     = "Refer Country";
 $lang['tAGNCyCode']         = "Country Code";
 $lang['tAGNCyName']         = "Country Name";
+
+$lang['tAggCty']            = "Country";

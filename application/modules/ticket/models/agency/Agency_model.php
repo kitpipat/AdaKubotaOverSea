@@ -96,7 +96,7 @@ class Agency_model extends CI_Model
         $nLngID = $paData['FNLngID'];
 
         // $tSQL   = "SELECT c.* FROM( SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC , FTAgnCode DESC) AS FNRowID,* FROM
-        $tSQL   = "SELECT c.* FROM( SELECT  ROW_NUMBER() OVER(ORDER BY  FTAgnCode DESC) AS FNRowID,* FROM
+        $tSQL   = "SELECT c.* FROM( SELECT  ROW_NUMBER() OVER(ORDER BY  FDCreateOn DESC) AS FNRowID,* FROM
                   (SELECT DISTINCT
                     AGN.FTAgnCode,
                     AGNL.FTAgnName,
@@ -115,10 +115,14 @@ class Agency_model extends CI_Model
                             LEFT JOIN TCNMAgency_L AGNL ON AGNL.FTAgnCode = AGN.FTAgnCode AND AGNL.FNLngID = " . $this->session->userdata("tLangEdit") . "
                                 LEFT JOIN TCNMImgPerson IMP ON IMP.FTImgRefID = AGN.FTAgnCode AND IMP.FTImgTable = 'TCNMAgency'
                             WHERE 1 = 1
-                        ) AS counts     
+                        ) AS counts,
+                    AGN.FTCtyCode,
+                    CUNL.FTCtyName
                     FROM TCNMAgency AGN
                     LEFT JOIN TCNMAgency_L AGNL ON AGNL.FTAgnCode = AGN.FTAgnCode AND AGNL.FNLngID = " . $this->session->userdata("tLangEdit") . "
                     LEFT JOIN TCNMImgPerson IMP ON IMP.FTImgRefID = AGN.FTAgnCode AND IMP.FTImgTable = 'TCNMAgency'
+                    LEFT JOIN TCNMCountry_L CUNL ON CUNL.FTCtyCode = AGN.FTCtyCode
+
                     WHERE 1=1  
                     $tWhere ";
 
@@ -129,8 +133,6 @@ class Agency_model extends CI_Model
         }
 
         $tSQL .= ") Base) AS c WHERE c.FNRowID > $aRowLen[0] AND c.FNRowID <= $aRowLen[1]";
-
-
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
             $oList = $oQuery->result();
@@ -213,7 +215,7 @@ class Agency_model extends CI_Model
 
 
             $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
-            $this->db->set('FDCreateOn', $paData['FDCreateOn']);
+            // $this->db->set('FDCreateOn', $paData['FDCreateOn']);
             $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
             $this->db->set('FTCreateBy', $paData['FTCreateBy']);
 

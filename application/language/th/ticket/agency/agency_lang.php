@@ -120,4 +120,4 @@ $lang['tAGNRefCountry'] = "อ้างอิงประเทศ";
 $lang['tAGNCyCode'] = "รหัสประเทศ";
 $lang['tAGNCyName'] = "ชื่อประเทศ";
 
-
+$lang['tAggCty']    = "ประเทศ";

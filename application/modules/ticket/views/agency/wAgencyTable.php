@@ -18,6 +18,7 @@
                         <th class="xCNTextBold" style="width:10%;"><?= language('ticket/agency/agency','tAggCode')?></th>
 						<th class="xCNTextBold"><?= language('ticket/agency/agency','tPicture')?></th>
 						<th class="xCNTextBold"><?= language('ticket/agency/agency','tAggName')?></th>
+                        <th class="xCNTextBold"><?= language('ticket/agency/agency','tAggCty')?></th>
 						<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) : ?>
 						<th class="xCNTextBold" style="width:10%;"><?= language('common/main/main','tCMNActionDelete')?></th>
 						<?php endif; ?>
@@ -55,7 +56,7 @@
                             <td class="text-center"><?=$aValue['FTAgnCode']?></td>
                             <td class="text-center"><img src="<?php echo $tPatchImg?>" style='width:38px;'></td>
                             <td class="text-left"><?=$aValue['FTAgnName']?></td>
-                        
+                            <td class="text-left"><?=($aValue['FTCtyName']) ? $aValue['FTCtyName'] : 'Thailand' ?></td>
 							<?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) : ?>
 								<td><img class="xCNIconTable xCNIconDel" src="<?= base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnAgencyDel('<?php echo $nCurrentPage?>','<?=$aValue['FTAgnName']?>','<?php echo $aValue['FTAgnCode']?>','<?= language('common/main/main','tModalConfirmDeleteItemsYN')?>')"></td>
 							<?php endif; ?>
