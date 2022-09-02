@@ -1,4 +1,6 @@
 <?php
+$tAgnCode = $this->session->userdata('tSesUsrAgnCode');
+$tAngName = $this->session->userdata('tSesUsrAgnName');
 if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tRoute				= 'urlEventEdit';	
 		$tFspCode			= $raResult['raItems']['rtFspCode'];
@@ -8,19 +10,23 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tBchCode 			= $raResult['raItems']['rtBchCode'];
 		$tUrlFormatName		= $raResult['raItems']['rtFmtName'];
 		$tUrlFormatCode 	= $raResult['raItems']['rtFmtCode'];
-		$tUrlStaActive		= $raResult['raItems']['rtStaUse'];
-
-		
+		$tUrlStaActive		= $raResult['raItems']['rtStaUse'];	
 	}else{
 		$tRoute				= 'urlEventAdd';
 		$tBchName 			= '';
 		$tBchCode       	= "";
 		$tUrlStaActive		= '2';
-		$tAngCode			= '';
-		$tAngName 			= 'ตัวแทนขาย';
 		$tUrlFormatName		= 'URL';
 		$tUrlFormatCode		= '';
 		$tFspCode			= "";
+		if(!empty($tAgnCode) && !empty($tAngName) ){
+			$tAngCode			= $this->session->userdata('tSesUsrAgnCode');
+			$tAngName 			= $this->session->userdata('tSesUsrAgnName');
+		}else{
+			$tAngCode			= '';
+			$tAngName 			= 'ตัวแทนขาย';
+		}
+		
 	}
 ?>
 <div id="odvBranchPanelBody" class="panel-body" style="padding-top:10px !important;">

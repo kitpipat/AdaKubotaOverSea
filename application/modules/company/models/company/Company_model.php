@@ -558,9 +558,9 @@ class Company_model extends CI_Model{
         if(isset($tCtyCode) && !empty($tCtyCode)){
                 $tSQLGetLan = "
                 SELECT TOP 1
-                    LAN.FNLngID
-                FROM TSysLanguage LAN WITH (NOLOCK)
-                WHERE LAN.FTLngStaLocal = '1' AND LAN.FTLngStaUse = '1' AND LAN.FTCtyCode = '$tCtyCode';
+                    CTY.FNLngID
+                FROM TCNMCountry CTY WITH (NOLOCK)
+                WHERE CTY.FTCtyCode = '$tCtyCode'
             ";
             $oQueryGetLan = $this->db->query($tSQLGetLan);
             $aItemsGetLan = $oQueryGetLan->row_array();
