@@ -137,8 +137,8 @@
                                     <div role="tabpanel" class="tab-pane fade in <?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'active' : false ?>" id="<?= $Lng['FTLngShortName'];?>">
                                         <div class="form-group">
                                             <input type="hidden" id="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'ohdCstLngID' : 'ohdCstLngID'.$Lng['FTLngShortName'] ?>" name="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'ohdCstLngID' : 'ohdCstLngID'.$Lng['FTLngShortName'] ?>" value="<?= $Lng['FNLngID']?>"> 
-                                            <label class="xCNLabelFrm"><?php echo language('customer/customer/customer','tCSTName','',$Lng['nLang']); ?></label>
-                                            <input type="text" class="form-control" maxlength="100" id="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'oetCstName' : 'oetCstName'.$Lng['FTLngShortName'] ?>" 
+                                            <label class="<?= $tPdtLabelStyle?>"><?php echo language('customer/customer/customer','tCSTName','',$Lng['nLang']); ?></label>
+                                            <input type="text" class="form-control <?= $tPdtInputStyle ?>" maxlength="100" id="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'oetCstName' : 'oetCstName'.$Lng['FTLngShortName'] ?>" 
                                             name="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'oetCstName' : 'oetCstName'.$Lng['FTLngShortName'] ?>" value="<?= $Lng['rtCstName']; ?>"
                                             placeholder="<?php echo language('customer/customer/customer','tCSTName','',$Lng['nLang']); ?>"
                                             autocomplete="off"
