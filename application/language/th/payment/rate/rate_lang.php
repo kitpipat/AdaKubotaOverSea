@@ -14,6 +14,7 @@ $lang['tRTETBSign']     = "สัญลักษณ์สกุลเงิน";
 $lang['tRTETBRate']     = "อัตราแลกเปลี่ยน";
 $lang['tRTETBRatechange']     = "อนุญาตทอน";
 $lang['tRTETBType']     = "ประเภท";
+$lang['tRTETBTypeChg']     = "ปัดเศษเงินทอน";
 $lang['tRTETBTypeSeq']  = "-";
 $lang['tRTETBTypeSeq1']     = "ปัดขึ้น";
 $lang['tRTETBTypeSeq2']     = "ปัดลง";

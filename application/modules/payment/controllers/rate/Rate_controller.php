@@ -133,6 +133,7 @@ class Rate_controller extends MX_Controller
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
                 'FTRteIsoCode'     => $this->input->post('oetRteIsoCode'),
+                'FTRteTypeChg'  => $this->input->post('ocmRteTypeChg'),
             );
 
 
@@ -266,7 +267,8 @@ class Rate_controller extends MX_Controller
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
-                'FTRteIsoCode'     => $this->input->post('oetRteIsoCode'),
+                'FTRteIsoCode'  => $this->input->post('oetRteIsoCode'),
+                'FTRteTypeChg'  => $this->input->post('ocmRteTypeChg'),
             ];
 
             $aDataUnitFac = [

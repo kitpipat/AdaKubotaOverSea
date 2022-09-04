@@ -313,6 +313,8 @@ function JSvCallPageRateEdit(ptRteCode) {
             //Check Select By Value
             ohdRteType = $('#ohdRteType').val();
             $("#ocmRteType option[value='" + ohdRteType + "']").attr('selected', true).trigger('change');
+            ohdRteTypeChg = $('#ohdRteTypeChg').val();
+            $("#ocmRteTypeChg option[value='" + ohdRteTypeChg + "']").attr('selected', true).trigger('change');
             //Check Select By Value
 
 

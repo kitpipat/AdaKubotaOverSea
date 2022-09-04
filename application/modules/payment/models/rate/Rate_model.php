@@ -190,6 +190,7 @@ class Rate_model extends CI_Model
         $this->db->set('FCRteRate', $paData['FCRteRate']);
         $this->db->set('FCRteFraction', $paData['FCRteFraction']);
         $this->db->set('FTRteType', $paData['FTRteType']);
+        $this->db->set('FTRteTypeChg', $paData['FTRteTypeChg']);
         $this->db->set('FTRteSign', $paData['FTRteSign']);
         $this->db->set('FTRteStaUse', $paData['FTRteStaUse']);
         $this->db->set('FTRteStaLocal', $paData['FTRteStaLocal']);
@@ -215,6 +216,7 @@ class Rate_model extends CI_Model
                 'FCRteRate' => $paData['FCRteRate'],
                 'FCRteFraction' => $paData['FCRteFraction'],
                 'FTRteType' => $paData['FTRteType'],
+                'FTRteTypeChg'  => $paData['FTRteTypeChg'],
                 'FTRteSign' => $paData['FTRteSign'],
                 'FTRteStaUse' => $paData['FTRteStaUse'],
                 'FTRteIsoCode' => $paData['FTRteIsoCode'],

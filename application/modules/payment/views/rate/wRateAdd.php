@@ -87,6 +87,7 @@ if($aResult['rtCode'] == "1"){
 </style>
 <input type="hidden" id="ohdRteAutStaEdit" value="<?php echo $nAutStaEdit?>">
 <input type="hidden" id="ohdRteType" value="<?php echo $tRteType?>">
+<input type="hidden" id="ohdRteTypeChg" value="<?php echo $cRteTypeChg?>">
 
 <form class="contact100-form validate-form" action="javascript:void(0)" method="post" enctype="multipart/form-data" autocorrect="off" autocapitalize="off" autocomplete="off" id="ofmAddRate">
 	<button style="display:none" type="submit" id="obtSubmitRate" onclick="JSnAddEditRate('<?php echo $tRoute;?>')"></button>
@@ -220,6 +221,16 @@ if($aResult['rtCode'] == "1"){
 					maxlength="18" value="<?php echo @$cRteFraction?>">
 				</div>
 
+				<div class="form-group">
+					<label class="xCNLabelFrm"><?php echo language('payment/rate/rate','tRTETBTypeChg')?></label>
+					<select class="selectpicker form-control " id="ocmRteTypeChg" name="ocmRteTypeChg" maxlength="1">
+						<option value="1"><?php echo  language('payment/rate/rate', 'tRTETBTypeSeq1') ?></option>
+						<option value="2"><?php echo  language('payment/rate/rate', 'tRTETBTypeSeq2') ?></option>
+						<option value="3"><?php echo  language('payment/rate/rate', 'tRTETBTypeSeq3') ?></option>
+						<option value="4"><?php echo  language('payment/rate/rate', 'tRTETBTypeSeq4') ?></option>
+						<option value="5"><?php echo  language('payment/rate/rate', 'tRTETBTypeSeq5') ?></option>
+					</select>
+				</div>
 
 				<div class="form-group xRateFacBox"  > 
 				<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteUnit')?></label> 

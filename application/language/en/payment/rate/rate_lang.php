@@ -14,6 +14,7 @@ $lang['tRTETBSign']     = "Sign";
 $lang['tRTETBRate']     = "Rate";
 $lang['tRTETBRatechange']     = "Allow Change";
 $lang['tRTETBType']     = "Type";
+$lang['tRTETBTypeChg']     = "round off change";
 $lang['tRTETBTypeSeq']  = "-";
 $lang['tRTETBTypeSeq1']     = "Round up";
 $lang['tRTETBTypeSeq2']     = "Round down";
