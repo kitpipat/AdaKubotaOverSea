@@ -56,7 +56,7 @@
                                 <img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSaCSTDelete('<?php echo $aValue['rtCstCode']; ?>')">
                             </td>
                             <td>
-                                <img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCSTCallPageCustomerEdit('<?=$aValue['rtCstCode']?>')">
+                                <img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCSTCallPageCustomerEdit('<?=$aValue['rtCstCode']?>','<?=$aValue['FTCreateBy']?>')">
                             </td>
                         </tr>
                     <?php } ?>

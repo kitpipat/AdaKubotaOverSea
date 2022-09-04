@@ -23,7 +23,7 @@
 							<button onclick="JSvCSTCallPageCustomer()" class="btn xCNBTNDefult xCNBTNDefult2Btn" type="button"> <?= language('common/main/main', 'tBack')?></button>
                             <div class="btn-group xWBtnSave">
 								<button type="submit" class="btn xWBtnGrpSaveLeft" onclick="JSxCheckCustomerValidateForm();$('#ohdCheckSubmitByButton').val(1);$('#ofmAddCustomerInfo1').submit();"> <?= language('common/main/main', 'tSave')?></button>
-								<?=$vBtnSave?>
+                                <?=$vBtnSave?>
 							</div>
 						</div>
 					</div>

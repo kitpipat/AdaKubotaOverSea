@@ -629,20 +629,6 @@ $ocheck = base_url() . 'application/modules/common/assets/images/icons/check.png
                                 <input type="hidden" name="ohdCreateCode" id="ohdCreateCode" value="<?= $tPdtCreateBY ?>">
                                 <hr style="margin-top : 0;">
 
-
-                                <!-- <div class="form-group">
-                                    <label class="xCNLabelFrm"><span style="color:red">*</span> <?php echo language('product/product/product', 'tPDTName'); ?></label>
-                                    <input type="text" class="form-control" maxlength="100" id="oetPdtName" name="oetPdtName" value="<?php echo $tPdtName; ?>" placeholder="<?php echo language('product/product/product', 'tPDTName'); ?>" autocomplete="off" data-validate-required="<?php echo language('product/product/product', 'tPDTValidPdtName'); ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label class="xCNLabelFrm"><?php echo language('product/product/product', 'tPDTNameOth'); ?></label>
-                                    <input type="text" id="oetPdtNameOth" class="form-control" maxlength="100" name="oetPdtNameOth" placeholder="<?php echo language('product/product/product', 'tPDTNameOth'); ?>" autocomplete="off" value="<?php echo $tPdtNameOth; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label class="xCNLabelFrm"><?php echo language('product/product/product', 'tPDTNameABB'); ?></label>
-                                    <input type="text" id="oetPdtNameABB" class="form-control" maxlength="50" name="oetPdtNameABB" value="<?php echo $tPdtNameABB; ?>" placeholder="<?php echo language('product/product/product', 'tPDTNameABB'); ?>" autocomplete="off">
-                                </div> -->
-
                                 <!-- end tab สินค้า -->
 
                                 <!-- รหัสอ้างอิงสินค้า -->

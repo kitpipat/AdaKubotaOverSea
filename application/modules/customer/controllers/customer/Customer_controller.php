@@ -110,14 +110,16 @@ class Customer_controller extends MX_Controller {
      * Return Type : View
      */
     public function FSvCSTAddPage(){
-        $nLangEdit      = $this->session->userdata("tLangEdit");
+        $nLangEdit    = $this->session->userdata("tLangEdit");
+        $aLangList      = FCNaGetLngListByCty();
         $aData  = array(
             'FNLngID'   => $nLangEdit,
         );
         $tAPIReq        = "";
         $tMethodReq     = "GET";
         $aDataAdd = array(
-            'aResult'   => array('rtCode'=>'99')
+            'aResult'   => array('rtCode'=>'99'),
+            'aLangList' => $aLangList
         );
         
         $this->load->view('customer/customer/wCustomerAdd',$aDataAdd);
@@ -132,15 +134,21 @@ class Customer_controller extends MX_Controller {
      * Return Type : View
      */
     public function FSvCSTEditPage(){
-        $tCstCode   = $this->input->post('tCstCode');
-        $nLangEdit  = $this->session->userdata("tLangEdit");
+        $tCstCode       = $this->input->post('tCstCode');
+        $tCreateByCode  = $this->input->post('tCreateByCode');
+        $nLangEdit      = $this->session->userdata("tLangEdit");
+        $aLangList      = FCNaGetLngListByCty();
+
         $aData      = [
-            'FTCstCode' => $tCstCode,
-            'FNLngID'   => $nLangEdit
+            'FTCstCode'  => $tCstCode,
+            'FNLngID'    => $nLangEdit,
+            'FTCtryCode' => $this->Customer_model->FSaMCSTGetCtyByID($tCreateByCode),
         ];
         $tAPIReq        = "";
         $tMethodReq     = "GET";
         $aCstData       = $this->Customer_model->FSaMCSTSearchByID($tAPIReq, $tMethodReq, $aData);
+
+        $aCstData['raItems']['FTCtryCode'] = $this->Customer_model->FSaMCSTGetCtyByID($tCreateByCode);
 
         $nMemAmtActive = $this->Customer_model->FScMCSTGetAmtActive($tCstCode); //ยอดซื้อสะสม
         $nMemPntActive = $this->Customer_model->FScMCSTGetPntActive($tCstCode); //แต้มสะสม
@@ -163,7 +171,8 @@ class Customer_controller extends MX_Controller {
             'aResult'       => $aCstData,
             'nMemAmtActive' => $nMemAmtActive,
             'nMemPntActive' => $nMemPntActive,
-            'nMemPntExp'    => $nMemPntExp 
+            'nMemPntExp'    => $nMemPntExp,
+            'aLangList'     => $aLangList,
         ];
         $this->load->view('customer/customer/wCustomerAdd',$aDataEdit);
     }
@@ -193,7 +202,7 @@ class Customer_controller extends MX_Controller {
                 'tIsAutoGenCode'=> $this->input->post('ocbCustomerAutoGenCode'),
                 'FTImgObj'      => $this->input->post('oetImgInputCustomer'),
                 'FTCstCode'     => $this->input->post('oetCstCode'),
-                'FTCstName'     => $this->input->post('oetCstName'),
+                // 'FTCstName'     => $this->input->post('oetCstName'),
                 'FTCstRmk'      => $this->input->post('otaCstRemark'),
                 'FTCstTel'      => $this->input->post('oetCstTel'),
                 'FTCstEmail'    => $this->input->post('oetCstEmail'),
@@ -225,9 +234,10 @@ class Customer_controller extends MX_Controller {
                 'FDLastUpdOn'   => date('Y-m-d H:i:s'),
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
                 'FDCreateOn'    => date('Y-m-d H:i:s'),
-                'FNLngID'       => $this->session->userdata('tLangEdit')
+                'FNLngID'       => $this->session->userdata('tLangEdit'),
+                'FTCtryCode'    => $this->session->userdata('tSesDefCountry')
             );
-      
+            
             // Check Auto Gen Customer Code?
             if($aDataMaster['tIsAutoGenCode'] == '1'){ 
                     // Auto Gen Customer Code
@@ -236,6 +246,13 @@ class Customer_controller extends MX_Controller {
                     $aDataMaster['FTCstCode'] = $aGenCode['rtCstCode'];
                 }
             }
+            $aLangList = FCNaGetLngListByCty();
+            $aCstName  = array();
+            foreach($aLangList AS $Lng){
+                $aCstName[$Lng['FTLngShortName']] = array(
+                    'FTCstName' => $this->input->post($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry') ? 'oetCstName' : 'oetCstName'.$Lng['FTLngShortName']),
+                    'FNLngID'   => $this->input->post($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry') ? 'ohdCstLngID' : 'ohdCstLngID'.$Lng['FTLngShortName']));
+            }
 
             $oCountDup  = $this->Customer_model->FSoMCSTCheckDuplicate($aDataMaster['FTCstCode']);
             $nStaDup    = $oCountDup[0]->counts;
@@ -243,7 +260,7 @@ class Customer_controller extends MX_Controller {
                 $this->db->trans_begin();
 
                 $this->Customer_model->FSaMCSTAddUpdateMaster($aDataMaster);
-                $this->Customer_model->FSaMCSTAddUpdateLang($aDataMaster);
+                $this->Customer_model->FSaMCSTAddUpdateLang($aDataMaster,$aCstName);
 
                 if($this->db->trans_status() === false){
                     $this->db->trans_rollback();
@@ -285,7 +302,8 @@ class Customer_controller extends MX_Controller {
                         'nStaCallBack'	=> $this->session->userdata('tBtnSaveStaActive'),
                         'tCodeReturn'	=> $aDataMaster['FTCstCode'],
                         'nStaEvent'	    => '1',
-                        'tStaMessg'		=> 'Success Add Event'
+                        'tStaMessg'		=> 'Success Add Event',
+                        'tCtyReturn'    => $aDataMaster['FTCreateBy'],
                     );
                 }
             }else{
@@ -314,7 +332,7 @@ class Customer_controller extends MX_Controller {
             $tImgInputCustomer      = $this->input->post('oetImgInputCustomer');
             $tImgInputCustomerOld   = $this->input->post('oetImgInputCustomerOld');
             // ***** Image Data Customer *****
-
+            $tCstCode = $this->input->post('oetCstCode');
             if($this->input->post('ocbCstHeadQua')==1){
                 $tBchCode = FCNtGetBchInComp();
             }else{
@@ -324,7 +342,7 @@ class Customer_controller extends MX_Controller {
             $aDataMaster = array(
                 // Master
                 'FTImgObj'          => $this->input->post('oetImgInputCustomer'),
-                'FTCstCode'         => $this->input->post('oetCstCode'),
+                'FTCstCode'         => $tCstCode,
                 'FTCstName'         => $this->input->post('oetCstName'),
                 'FTCstRmk'          => $this->input->post('otaCstRemark'),
                 'FTCstTel'          => $this->input->post('oetCstTel'),
@@ -359,10 +377,19 @@ class Customer_controller extends MX_Controller {
                 'FDCreateOn'        => date('Y-m-d H:i:s'),
                 'FNLngID'           => $this->session->userdata('tLangEdit')
             );
-            
+
+            $tCreateByCode = $this->input->post('ohdCtyCode');
+            $tCtyCode = $this->Customer_model->FSaMCSTGetCtyByID($tCreateByCode);
+            $aCstNameList = $this->Customer_model->FSaMCSTGetListByID($tCstCode,$tCtyCode);
+            $aCstName  = array();
+            foreach($aCstNameList AS $CstLng){
+                $aCstName[$CstLng['FTLngShortName']] = array(
+                    'FTCstName' => $this->input->post(($CstLng['FTLngShortName'] == $tCtyCode) ? 'oetCstName' : 'oetCstName'.$CstLng['FTLngShortName']),
+                    'FNLngID'   => $this->input->post(($CstLng['FTLngShortName'] == $tCtyCode) ? 'ohdCstLngID' : 'ohdCstLngID'.$CstLng['FTLngShortName']));
+            }
             $this->db->trans_begin();
             $this->Customer_model->FSaMCSTAddUpdateMaster($aDataMaster);
-            $this->Customer_model->FSaMCSTAddUpdateLang($aDataMaster);
+            $this->Customer_model->FSaMCSTAddUpdateLang($aDataMaster,$aCstName);
             
             if($this->db->trans_status() === FALSE){
                 $this->db->trans_rollback();
@@ -402,7 +429,8 @@ class Customer_controller extends MX_Controller {
                     'nStaCallBack'	=> $this->session->userdata('tBtnSaveStaActive'),
                     'tCodeReturn'	=> $aDataMaster['FTCstCode'],
                     'nStaEvent'	    => '1',
-                    'tStaMessg'		=> 'Success Update Event'
+                    'tStaMessg'		=> 'Success Update Event',
+                    'tCtyReturn'    => $tCreateByCode,
                 );
             }
             echo json_encode($aReturn);

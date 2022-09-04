@@ -93,7 +93,7 @@ function JSnCSTAddEditCustomer(ptRoute) {
                         if (aReturn["nStaCallBack"] == "1" ||
                             aReturn["nStaCallBack"] == null
                         ) {
-                            JSvCSTCallPageCustomerEdit(aReturn["tCodeReturn"]);
+                            JSvCSTCallPageCustomerEdit(aReturn["tCodeReturn"],aReturn["tCtyReturn"]);
                         } else if (aReturn["nStaCallBack"] == "2") {
                             JSvCSTCallPageCustomerAdd();
                         } else if (aReturn["nStaCallBack"] == "3") {
@@ -417,6 +417,7 @@ function JSxCheckCustomerValidateForm(){
         onclick: false,
         onfocusout: false,                     
         onkeyup: false,
+        ignore: "",
         rules: {
             oetCstCode : {
                 "required" : {
@@ -462,6 +463,10 @@ function JSxCheckCustomerValidateForm(){
         },
         highlight: function ( element, errorClass, validClass ) {
             $( element ).closest('.form-group').addClass( "has-error" ).removeClass( "has-success" );
+            $(".tab-content").find("div.tab-pane:hidden:has(div.has-error)").each( function(){
+                var id = $(this).attr("id");
+                $('#ofmAddCustomerInfo1 .nav-tabs a[href="#' + id + '"]').tab('show');
+            });
         },
         unhighlight: function (element, errorClass, validClass) {
             $( element ).closest('.form-group').addClass( "has-success" ).removeClass( "has-error" );
@@ -482,7 +487,7 @@ function JSxCheckCustomerValidateForm(){
         }
     });
     $('#ofmAddCustomerInfo1').submit();       
-       
+
 }    
 
    //Functionality : Event Check Customer
@@ -588,7 +593,7 @@ function JSxCheckCustomerValidateForm(){
  * Return : view
  * Return Type : view
  */
-function JSvCSTCallPageCustomerEdit(ptCstCode) {
+function JSvCSTCallPageCustomerEdit(ptCstCode,ptCreateByCode = null) {
     try{
         JCNxOpenLoading();
         JStCMMGetPanalLangSystemHTML('JSvCallPageCustomerEdit', ptCstCode);
@@ -596,7 +601,7 @@ function JSvCSTCallPageCustomerEdit(ptCstCode) {
         $.ajax({
             type: "POST",
             url: "customerPageEdit",
-            data: { tCstCode: ptCstCode },
+            data: { tCstCode: ptCstCode ,tCreateByCode: ptCreateByCode},
             cache: false,
             timeout: 0,
             success: function(tResult) {

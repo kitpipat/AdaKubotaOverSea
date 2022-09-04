@@ -14,6 +14,42 @@ class Customer_model extends CI_Model {
     public function FSaMCSTSearchByID($ptAPIReq, $ptMethodReq, $paData){
         $tCstCode   = $paData['FTCstCode'];
         $nLngID     = $paData['FNLngID'];
+
+        $tCtyCode   = $paData['FTCtryCode'];
+        $tSQLCst    = "SELECT
+                        CST.FTCstCode       AS rtCstCode,
+                        CSTL.FTCstName      AS rtCstName,
+                        CSTL.FTCstRmk       AS rtCstRmk,
+                        LNG.FNLngID,
+                        LNG.FTLngNameEng,
+                        LNG.FTLngShortName,
+                        LNG.FTLngStaLocal
+                         
+                    FROM [TSysLanguage] LNG WITH(NOLOCK)
+                    LEFT JOIN [TCNMCst_L]  CSTL WITH(NOLOCK) ON LNG.FNLngID = CSTL.FNLngID AND CSTL.FTCstCode = '$tCstCode'
+                    LEFT JOIN [TCNMCst] CST WITH(NOLOCK) ON CST.FTCstCode = CSTL.FTCstCode
+                    WHERE 1=1
+                ";
+    
+        $tSQLCst .= "AND LNG.FTLngStaUse = '1'";
+        $tSQLCst .= "ORDER BY CASE LNG.FTLngShortName WHEN '$tCtyCode' THEN 0 ELSE LNG.FNLngID END ASC";
+        $oQueryCst = $this->db->query($tSQLCst);
+        $oDetailCstname = $oQueryCst->result_array();
+        foreach($oDetailCstname as $nKey => $aObject){
+            switch ($aObject['FTLngShortName']) {
+                case 'ENG':
+                    $nLang = 'en';
+                    break;
+                case 'LAO':
+                    $nLang = 'la';
+                    break; 
+                default:
+                    $nLang = 'th';
+                    break;
+            }
+            $oDetailCstname[$nKey]['nLang'] = $nLang;
+        }
+
         $tSQL       = "SELECT
                             CST.FTCstCode       AS rtCstCode,
                             CST.FTCstCardID     AS rtCstCardID,
@@ -24,6 +60,9 @@ class Customer_model extends CI_Model {
                             CST.FTCstStaActive  AS rtCstStaActive,
                             CST.FTCstEmail      AS rtCstEmail,
                             CST.FTCstTel        AS rtCstTel,
+                            CST.FTCreateBy,
+
+                            CSTL.FNLngID,
                             CSTL.FTCstName      AS rtCstName,
                             CSTL.FTCstRmk       AS rtCstRmk,
                             CST.FTCgpCode       AS rtCstCgpCode,
@@ -52,8 +91,9 @@ class Customer_model extends CI_Model {
                             CST.FTCstStaAlwPosCalSo    AS rtCstStaAlwPosCalSo,
                             IMGP.FTImgObj       AS rtImgObj
                             
+                            
                         FROM [TCNMCst] CST WITH(NOLOCK)
-                        LEFT JOIN [TCNMCst_L]  CSTL WITH(NOLOCK) ON CST.FTCstCode = CSTL.FTCstCode AND CSTL.FNLngID = $nLngID
+                        LEFT JOIN [TCNMCst_L]  CSTL WITH(NOLOCK) ON CST.FTCstCode = CSTL.FTCstCode
                         LEFT JOIN [TCNMCstGrp_L] CSTGL WITH(NOLOCK) ON CSTGL.FTCgpCode = CST.FTCgpCode AND CSTGL.FNLngID = $nLngID
                         LEFT JOIN [TCNMCstType_L] CSTTL WITH(NOLOCK) ON CSTTL.FTCtyCode = CST.FTCtyCode AND CSTTL.FNLngID = $nLngID
                         LEFT JOIN [TCNMCstLev_L] CSTLevL WITH(NOLOCK) ON CSTLevL.FTClvCode = CST.FTClvCode AND CSTLevL.FNLngID = $nLngID  
@@ -189,7 +229,7 @@ class Customer_model extends CI_Model {
                     WHERE RFID.FTCstCode = '$tCstCode'
                     AND RFID.FNLngID = $nLngID";
         $oRfidQuery = $this->db->query($tRfidSQL);
-        
+        $aDataQuery['raItems'] = $tCtyCode;
         if ($oQuery->num_rows() > 0){
             $oDetail = $oQuery->result();
             $oCreditDetail = $oCreditQuery->result();
@@ -199,6 +239,7 @@ class Customer_model extends CI_Model {
             $oAddressDetail = $oAddressQuery->result();
             $aResult = array(
                 'raItems'       => @$oDetail[0],
+                'raCstName_L'   => @$oDetailCstname,
                 'raAddress'     => @$oAddressDetail[0],
                 'raContact'     => [],//@$oContactDetail,
                 'raCardInfo'    => @$oCardInfoDetail[0],
@@ -243,14 +284,23 @@ class Customer_model extends CI_Model {
                             CSTL.FTCstRmk AS rtCstRmk,
                             CSTGL.FTCgpName AS rtCgpName,
                             IMGP.FTImgObj AS rtImgObj,
-                            CST.FDCreateOn  
+                            CST.FTCreateBy,
+                            CST.FDCreateOn
                         FROM [TCNMCst] CST
-                        LEFT JOIN [TCNMCst_L]  CSTL ON CST.FTCstCode = CSTL.FTCstCode AND CSTL.FNLngID = $nLngID
+                        -- LEFT JOIN [TCNMCst_L]  CSTL ON CST.FTCstCode = CSTL.FTCstCode 
+                        LEFT JOIN 
+                            (
+                            SELECT  FTCstCode,FTCstName,FNLngID,FTCstRmk , ROW_NUMBER()
+                                    OVER (PARTITION BY FTCstCode ORDER BY FTCstCode) AS RowNum
+                            FROM    TCNMCst_L WITH (NOLOCK)   
+                            ) CSTL ON CST.FTCstCode = CSTL.FTCstCode And RowNum = 1
                         LEFT JOIN [TCNMCstGrp] CSTG ON CSTG.FTCgpCode = CST.FTCgpCode
                         LEFT JOIN [TCNMCstGrp_L] CSTGL ON CSTGL.FTCgpCode = CST.FTCgpCode AND CSTGL.FNLngID = $nLngID
                         LEFT JOIN [TCNMImgPerson] IMGP ON IMGP.FTImgRefID = CST.FTCstCode    
+                        LEFT JOIN [TSysLanguage] LNG ON LNG.FNLngID = CSTL.FNLngID
                         WHERE 1=1";
         
+        $tSQL .= "AND LNG.FTLngStaUse = '1'";
         $tSearchList = $paData['tSearchAll'];
         if ($tSearchList != ''){
             $tSQL .= " AND (CST.FTCstCode COLLATE THAI_BIN LIKE '%$tSearchList%'";  
@@ -423,7 +473,7 @@ class Customer_model extends CI_Model {
                     'FTCstBchCode' => $paData['FTCstBchCode'],
             
                     'FDCreateOn' => $paData['FDCreateOn'],
-                    'FTCreateBy'  => $paData['FTCreateBy']
+                    'FTCreateBy'  => $paData['FTCreateBy'],
                 ));
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(
@@ -451,36 +501,56 @@ class Customer_model extends CI_Model {
      * Return : Status response
      * Return Type : array
      */
-    public function FSaMCSTAddUpdateLang($paData){
+    public function FSaMCSTAddUpdateLang($paData,$paCstName){
         try{
             // Update Lang
-            $this->db->set('FTCstName', $paData['FTCstName']);
-            $this->db->set('FTCstRmk', $paData['FTCstRmk']);
-            $this->db->where('FNLngID', $paData['FNLngID']);
-            $this->db->where('FTCstCode', $paData['FTCstCode']);
-            $this->db->update('TCNMCst_L');
-            if($this->db->affected_rows() > 0 ){
-                $aStatus = array(
-                    'rtCode' => '1',
-                    'rtDesc' => 'Update Lang Success.',
-                );
-            }else{ // Add Lang
-                $this->db->insert('TCNMCst_L',array(
-                    'FTCstCode' => $paData['FTCstCode'],
-                    'FNLngID'   => $paData['FNLngID'],
-                    'FTCstName' => $paData['FTCstName'],
-                    'FTCstRmk'  => $paData['FTCstRmk']
-                ));
-                if($this->db->affected_rows() > 0){
+            // $this->db->set('FTCstName', $paData['FTCstName']);
+            foreach($paCstName AS $aCst){
+                if(!$aCst['FTCstName']){
+                    $aPdtDelete = array(
+                        'FTCstCode' => $paData['FTCstCode'],
+                        'FNLngID'   => $aCst['FNLngID']
+                    );
+                $this->db->delete('TCNMCst_L',$aPdtDelete);
+                }
+                $this->db->set('FTCstName', $aCst['FTCstName']);
+                $this->db->set('FTCstRmk', $paData['FTCstRmk']);
+                $this->db->where('FNLngID', $aCst['FNLngID']);
+                $this->db->where('FTCstCode', $paData['FTCstCode']);
+                $this->db->update('TCNMCst_L');
+            
+            
+                if($this->db->affected_rows() > 0 ){
                     $aStatus = array(
                         'rtCode' => '1',
-                        'rtDesc' => 'Add Lang Success',
+                        'rtDesc' => 'Update Lang Success.',
                     );
-                }else{
-                    $aStatus = array(
-                        'rtCode' => '905',
-                        'rtDesc' => 'Error Cannot Add/Edit Lang.',
-                    );
+                }else{ // Add Lang
+                    // $this->db->insert('TCNMCst_L',array(
+                    //     // 'FTCstCode' => $paData['FTCstCode'],
+                    //     // 'FNLngID'   => $paData['FNLngID'],
+                    //     'FTCstName' => $paData['FTCstName'],
+                    //     'FTCstRmk'  => $paData['FTCstRmk']
+                    // ));
+                        if($aCst['FTCstName']){
+                            $this->db->insert('TCNMCst_L',array(
+                                'FTCstCode' => $paData['FTCstCode'],
+                                'FNLngID'   => $aCst['FNLngID'],
+                                'FTCstName' => $aCst['FTCstName'],
+                                'FTCstRmk'  => $paData['FTCstRmk']
+                            ));
+                        }
+                    if($this->db->affected_rows() > 0){
+                        $aStatus = array(
+                            'rtCode' => '1',
+                            'rtDesc' => 'Add Lang Success',
+                        );
+                    }else{
+                        $aStatus = array(
+                            'rtCode' => '905',
+                            'rtDesc' => 'Error Cannot Add/Edit Lang.',
+                        );
+                    }
                 }
             }
             return $aStatus;
@@ -1357,4 +1427,44 @@ class Customer_model extends CI_Model {
         return $cTxnPnt2ExpYear;
       }
 
+    public function FSaMCSTGetListByID($ptCstCode,$ptCtyCode = null){
+        $tCstCode   = $ptCstCode;
+
+        $tSQLCst    = "SELECT
+                        CST.FTCstCode       AS rtCstCode,
+                        CSTL.FTCstName      AS rtCstName,
+                        CSTL.FTCstRmk       AS rtCstRmk,
+                        LNG.FNLngID,
+                        LNG.FNLngID,
+                        LNG.FTLngNameEng,
+                        LNG.FTLngShortName,
+                        LNG.FTLngStaLocal
+                    FROM [TSysLanguage] LNG WITH(NOLOCK)
+                    LEFT JOIN [TCNMCst_L]  CSTL WITH(NOLOCK) ON LNG.FNLngID = CSTL.FNLngID AND CSTL.FTCstCode = '$tCstCode'
+                    LEFT JOIN [TCNMCst] CST WITH(NOLOCK) ON CST.FTCstCode = CSTL.FTCstCode
+                    WHERE 1=1
+                ";
+        // if($ptCtyCode){
+        //     $tSQLCst .= "AND LNG.FTCtyCode = '$ptCtyCode'";
+        // }
+        $tSQLCst .= "AND LNG.FTLngStaUse = '1'";
+        $oQueryCst = $this->db->query($tSQLCst);
+        $oDetailCstname = $oQueryCst->result_array();
+        return $oDetailCstname;
+    }
+
+    public function FSaMCSTGetCtyByID($pUsrCode){
+        $tSQL = "SELECT 
+                    USRG.FTUsrCode,
+                    IIF(AGN.FTCtyCode <> '', AGN.FTCtyCode, (SELECT FTCtyCode FROM [TCNMComp] WITH (NOLOCK))) AS FTCtyCode
+                FROM [TCNTUsrGroup] USRG WITH (NOLOCK)
+                LEFT JOIN [TCNMAgency] AGN WITH (NOLOCK) ON USRG.FTAgnCode = AGN.FTAgnCode
+                WHERE USRG.FTUsrCode = '$pUsrCode'";
+        $oQuery = $this->db->query($tSQL);
+        if ($oQuery->num_rows() > 0) {
+            return $oQuery->result_array()[0]['FTCtyCode'];
+        } else {
+            return 'THA';
+        }
+    }
 }

@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="xCNLabelFrm"><?php echo language('customer/customer/customer','tCSTName'); ?></label>
                     <input type="text" class="form-control" maxlength="100" id="oetCstName" 
                     name="oetCstName" value="<?php echo $tCstName; ?>"
@@ -105,7 +105,75 @@
                     autocomplete="off"
                     data-validate-required = "<?= language('customer/customer/customer','tCSTValidName')?>"
                     >
+                </div> -->
+
+                <!-- Tab ภาษา -->
+                <div>
+                    <div>
+                        <ul class="nav nav-tabs">
+                        <?php  if(!empty($aResult['raCstName_L']) || isset($aResult['raCstName_L'])){ ?>
+                            <?php foreach($aResult['raCstName_L'] AS $Lng){?>
+                                <li role="presentation" <?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'class="active"' : false ?>>
+                                    <a href="#<?= $Lng['FTLngShortName'];?>" role="tab" data-toggle="tab"><?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? '<span style="color:red">* </span>' : false;?><?= $Lng['FTLngNameEng'];?></a>
+                                </li>
+                            <?php }?>
+                        <?php }else{ ?>
+                            <?php foreach($aLangList AS $Lng){?>
+                                <li role="presentation" <?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'class="active"' : false ?>>
+                                    <a href="#<?= $Lng['FTLngShortName'];?>" role="tab" data-toggle="tab"><?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? '<span style="color:red">* </span>' : false;?><?= $Lng['FTLngNameEng'];?></a>
+                                </li>
+                            <?php }?>
+                        <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content" style="margin-top:0;">
+                            <?php  if(!empty($aResult['raCstName_L']) || isset($aResult['raCstName_L'])){ ?>
+                                <?php foreach($aResult['raCstName_L'] AS $Lng){?>
+                                    <?php 
+                                        $tPdtLabelStyle = ($Lng['FTLngShortName'] == 'LAO' || $Lng['FTLngNameEng'] == 'FTLngNameEng') ? 'xCNLabelLaos' : 'xCNLabelFrm';
+                                        $tPdtInputStyle = ($Lng['FTLngShortName'] == 'LAO' || $Lng['FTLngNameEng'] == 'FTLngNameEng') ? 'xCNInputLaos' : false;    
+                                    ?>
+                                    <div role="tabpanel" class="tab-pane fade in <?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'active' : false ?>" id="<?= $Lng['FTLngShortName'];?>">
+                                        <div class="form-group">
+                                            <input type="hidden" id="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'ohdCstLngID' : 'ohdCstLngID'.$Lng['FTLngShortName'] ?>" name="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'ohdCstLngID' : 'ohdCstLngID'.$Lng['FTLngShortName'] ?>" value="<?= $Lng['FNLngID']?>"> 
+                                            <label class="xCNLabelFrm"><?php echo language('customer/customer/customer','tCSTName','',$Lng['nLang']); ?></label>
+                                            <input type="text" class="form-control" maxlength="100" id="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'oetCstName' : 'oetCstName'.$Lng['FTLngShortName'] ?>" 
+                                            name="<?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'oetCstName' : 'oetCstName'.$Lng['FTLngShortName'] ?>" value="<?= $Lng['rtCstName']; ?>"
+                                            placeholder="<?php echo language('customer/customer/customer','tCSTName','',$Lng['nLang']); ?>"
+                                            autocomplete="off"
+                                            <?= ($Lng['FTLngShortName'] == $tCstCtryCode) ? 'data-validate-required = '.language('customer/customer/customer','tCSTValidName','',$Lng['nLang']) : false ?>
+                                            >
+                                        </div>
+                                    </div>
+                                <?php }?>
+                            <?php }else{ ?>
+                                <?php foreach($aLangList AS $Lng){?>
+                                    <?php 
+                                        $tPdtLabelStyle = ($Lng['FTLngShortName'] == 'LAO' || $Lng['FTLngNameEng'] == 'FTLngNameEng') ? 'xCNLabelLaos' : 'xCNLabelFrm';
+                                        $tPdtInputStyle = ($Lng['FTLngShortName'] == 'LAO' || $Lng['FTLngNameEng'] == 'FTLngNameEng') ? 'xCNInputLaos' : false;
+                                    ?>
+                                    <div role="tabpanel" class="tab-pane fade in <?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'active' : false ?>" id="<?= $Lng['FTLngShortName'];?>">
+                                        <div class="form-group">
+                                            <input type="hidden" id="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'ohdCstLngID' : 'ohdCstLngID'.$Lng['FTLngShortName'] ?>" name="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'ohdCstLngID' : 'ohdCstLngID'.$Lng['FTLngShortName'] ?>" value="<?= $Lng['FNLngID']?>"> 
+                                            <label class="<?= $tPdtLabelStyle ?>" style="font-weight: normal;"><?php echo language('customer/customer/customer','tCSTName','',$Lng['nLang']); ?></label>
+                                            <input type="text" class="form-control <?= $tPdtInputStyle ?>" style="font-weight: normal;" maxlength="100" id="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetCstName' : 'oetCstName'.$Lng['FTLngShortName'] ?>" 
+                                            name="<?= ($Lng['FTLngShortName'] == $this->session->userdata('tSesDefCountry')) ? 'oetCstName' : 'oetCstName'.$Lng['FTLngShortName'] ?>" value="<?php echo $tCstName; ?>"
+                                            placeholder="<?php echo language('customer/customer/customer','tCSTName','',$Lng['nLang']); ?>"
+                                            autocomplete="off"
+                                            data-validate-required = '<?= language('customer/customer/customer','tCSTValidName','',$Lng['nLang']) ?>'
+                                            >
+                                        </div>
+                                    </div>
+                                <?php }?>
+                            <?php } ?>
+                        </div>
+                    </div>
                 </div>
+                <input type="hidden" name="ohdCtyCode" id="ohdCtyCode" value="<?= $tCstCreateBY ?>">
+                <hr style="margin-top : 0;">
+
+                <!-- END tab ภาษา -->
 
                 <div class="form-group">
                     <label class="xCNLabelFrm"><?php echo language('customer/customer/customer','tCSTIdenNum'); ?></label>

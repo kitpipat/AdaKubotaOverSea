@@ -1,5 +1,6 @@
 <?php
     if($aResult['rtCode'] == "1"){
+    
         // Master Info
         $tCstCode       = $aResult['raItems']['rtCstCode'];
         $tCstCardID     = $aResult['raItems']['rtCstCardID'];
@@ -8,7 +9,12 @@
         $tCstBusiness   = $aResult['raItems']['rtCstBusiness'];
         $tCstTaxNo      = $aResult['raItems']['rtCstTaxNo'];
         $tCstStaActive  = $aResult['raItems']['rtCstStaActive'];
+
+        $tCstCtryCode   = $aResult['raItems']['FTCtryCode'];
+        $tCstCreateBY   = $aResult['raItems']['FTCreateBy'];
+
         $tCstName       = $aResult['raItems']['rtCstName'];
+        
         $tCstRmk        = $aResult['raItems']['rtCstRmk'];
         $tCstTel        = $aResult['raItems']['rtCstTel'];
         $tCstEmail      = $aResult['raItems']['rtCstEmail'];
@@ -80,6 +86,8 @@
         $tPplNameNet    = "";
         $tCstStaAlwPosCalSo  ="1";
 
+        $tCstCtryCode = "";
+        $tCstCreateBY = "";
         // Route
         $tRoute = "customerEventAdd";
     }
