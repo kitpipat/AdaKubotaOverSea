@@ -305,12 +305,16 @@ class Rate_model extends CI_Model
                 }
                 foreach ($aRtuFac as $nKey => $cRtuFac) {
                     $this->db->insert('TFNMRateUnit', array(
+                        'FTAgnCode'     => $paData['FTAgnCode'],
                         'FTRteCode'     => $tRteCode,
                         'FNRtuSeq'      => ($nKey + 1),
                         'FCRtuFac'      => $cRtuFac
 
                     ));
                 }
+            }else{
+                $this->db->where('FTRteCode', $tRteCode);
+                $this->db->delete('TFNMRateUnit');
             }
 
             if ($this->db->affected_rows() > 0) {
