@@ -83,6 +83,54 @@ class Settingdairycurrency_controller extends MX_Controller {
         echo $aReturn;
     }
 
+    //Event Save (แท็บตั้งค่าระบบ)
+    public function FSxSETDailyCurrencyRefresh(){
+        try{
+            $tAgnCode           = $this->input->post('tAgnCode');
+            $tUsrCode           = $this->input->post('tUsrCode');
+
+            $aMQParams = [
+                "queueName" => "CN_QTask",
+                "tVhostType" => "M",
+                "params"    => [
+                    'ptFunction'        => 'SYNCEXCHANGERATE',
+                    'ptSource'          => 'AdaStoreBack',
+                    'ptDest'            => 'MQReceivePrc',
+                    'ptFilter'          => '',
+                    'ptData'            => json_encode([
+                        "ptAgnCode"     => $this->session->userdata('tSesUsrAgnCode'),
+                        "ptUsrCode"     => $this->session->userdata("tSesUsername"),
+                    ]),
+                    'ptConnStr'          => NULL,
+                ]
+            ];
+
+            // print_r($aMQParams);
+            // exit();
+
+            // เชื่อม Rabbit MQ
+            $nStaSendMQ = FCNxCallRabbitMQ($aMQParams);
+
+            // print_r($nStaSendMQ);
+
+            if ($nStaSendMQ == 1) {
+                $aReturnData = array(
+                    'nStaEvent'    => '1',
+                );
+            }else{
+                $aReturnData = array(
+                    'nStaEvent'    => '900',
+                );
+            }
+            
+        } catch (Exception $Error) {
+            $aReturnData = array(
+                'nStaEvent' => '500',
+            );
+        }
+        echo json_encode($aReturnData);
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////// แท็บรหัสอัตโนมัติ
 
     //Get Page List (Content : แท็บรหัสอัตโนมัติ)

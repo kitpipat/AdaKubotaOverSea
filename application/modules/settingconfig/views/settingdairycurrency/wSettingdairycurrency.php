@@ -12,6 +12,14 @@
                     </ol>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-right p-r-0">
+                    <div id="odvBtnAddEdit" style="display: block;">
+                        <div class="btn-group"> 
+                            <button onclick="JSxCurrentcySave()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="margin-left: 5px;" style="display: block;"><?=language('common/main/main', 'tModalConfirm'); ?></button>
+                        </div>
+                    </div>
+                </div>
+
         </div>
     </div>
 </div>

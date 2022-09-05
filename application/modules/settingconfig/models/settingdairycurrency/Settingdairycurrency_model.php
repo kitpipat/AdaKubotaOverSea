@@ -44,6 +44,7 @@ class Settingdairycurrency_model extends CI_Model
     {
         $nLngID = $paData['FNLngID'];
         $tAgnCode   = $paData['FTAgnCode'];
+        $tSearchList = $paData['tSearchAll'];
 
         $tSQL   = "SELECT
                     RATE.FTAgnCode,
@@ -65,6 +66,11 @@ class Settingdairycurrency_model extends CI_Model
                 ";
             if($tAgnCode != ''){
                 $tSQL .= " AND RATE.FTAgnCode = '$tAgnCode' ";
+            }
+
+            if ($tSearchList != '') {
+                $tSQL .= " AND (RATEL.FTRteName LIKE '%$tSearchList%'";
+                $tSQL .= "      OR RATE.FTRteCode LIKE '%$tSearchList%')";
             }
 
         $tSQL   .= " ORDER BY RATE.FTRteCode DESC ";

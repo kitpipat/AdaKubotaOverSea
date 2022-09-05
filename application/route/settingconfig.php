@@ -97,6 +97,7 @@ $route ['SettingDailyCurrencyGetList']             = 'settingconfig/settingdairy
 $route ['SettingDailyCurrencyLoadViewSearch']      = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSvSETGetDairyCurrencyPageListSearch';
 $route ['SettingDailyCurrencyLoadTable']           = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSvSETDairyCurrencyGetTable';
 $route ['SettingDailyCurrencySave']                = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSxSETDailyCurrencyEventSave';
+$route ['docGetCurrentDairy']                      = 'settingconfig/settingdairycurrency/Settingdairycurrency_controller/FSxSETDailyCurrencyRefresh';
 
 //// ตั้งค่า Url Format /////////////
     $route ['settingUrlFormat/(:any)/(:any)']           = 'settingconfig/settingurlformat/Settingurlformat_controller/index/$1/$2';

@@ -19,15 +19,32 @@ use PhpAmqpLib\Message\AMQPMessage;
 function FCNxCallRabbitMQ($paParams,$pbStaUse = true) {
     $tQueueName             = $paParams['queueName'];
     $aParams                = $paParams['params'];
+    $tVhostType = (isset($paParams['tVhostType'])) ?$paParams['tVhostType']:'D';
     if($pbStaUse == true){
         $aParams['ptConnStr']   = DB_CONNECT;
     }
     $tExchange              = EXCHANGE; // This use default exchange
     
-    $oConnection = new AMQPStreamConnection(HOST, PORT, USER, PASS, VHOST);
+    switch($tVhostType){
+        case 'M': {
+            $oConnection = new AMQPStreamConnection(MQ_LOCKER_HOST, MQ_LOCKER_PORT, MQ_LOCKER_USER, MQ_LOCKER_PASS, MQ_LOCKER_VHOST);
+            // $aParams['ptData']['ptConnStr'] = DB_CONNECT;
+            // $bDurable = true;
+            break;
+        }
+        default : {
+            $oConnection = new AMQPStreamConnection(HOST, PORT, USER, PASS, VHOST);
+            // $bDurable = false;
+        }
+    }
+
+    // $oConnection = new AMQPStreamConnection(HOST, PORT, USER, PASS, VHOST);
     $oChannel = $oConnection->channel();
-    $oChannel->queue_declare($tQueueName, false, false, false, false);
-    $oMessage = new AMQPMessage(json_encode($aParams));
+    // $oChannel->queue_declare($tQueueName, false, false, false, false);
+    // $oMessage = new AMQPMessage(json_encode($aParams));
+    $oChannel->queue_declare($tQueueName, false, true, false, false);
+    $oMessage = new AMQPMessage(json_encode($aParams,JSON_UNESCAPED_UNICODE));
+    // print_r($oMessage);
     $oChannel->basic_publish($oMessage, "", $tQueueName);
     $oChannel->close();
     $oConnection->close();

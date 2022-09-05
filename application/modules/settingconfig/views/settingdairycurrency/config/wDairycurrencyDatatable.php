@@ -90,8 +90,8 @@
 </style>
 
 <!-- TABLE สำหรับ checkbox -->
-<?php if($FTAgnCode != '') { ?>
-<div style='text-align: right;'>ยืนยันล่าสุดเมื่อ <?= $dJobDate; ?></div>
+<?php if ($FTAgnCode != '') { ?>
+    <div style='text-align: right;'>ยืนยันล่าสุดเมื่อ <?= $dJobDate; ?></div>
 <?php } ?>
 <div class="row">
     <div class="col-md-12">
@@ -105,15 +105,24 @@
                         <th class="xCNTextBold" style=""><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyName') ?></th>
                         <th class="xCNTextBold" style=""><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRate') ?></th>
                         <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?></th>
-                        <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyuSERateLast') ?></th>
+                        <th class="xCNTextBold" style="width:160px;">
+                            <!-- <label class="fancy-checkbox" style = 'color: #232C3D !important;'> -->
+                                <input type="checkbox" class="ocmCENCheckUseLast" id="ocmCENCheckUseLast">
+                                <span class="ospListItem">
+                                </span>
+                                <?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyuSERateLast') ?>
+
+                            <!-- </label> -->
+
+                        </th>
                         <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($aListRate['rtCode'] == 1) : ?>
-                        <?php foreach ($aListRate['raItems'] as $key => $aValue) { 
+                        <?php foreach ($aListRate['raItems'] as $key => $aValue) {
                             // print_r($aValue['FTRteCode']); 
-                            ?>
+                        ?>
                             <tr class="text-center xCNTextDetail2">
                                 <td style="text-align:left;"><?php echo ($aValue['FTAgnName'] == '') ? '-' : $aValue['FTAgnName']; ?></td>
                                 <td style="text-align:left;"><?php echo $aValue['FTRteCode'] ?></td>
@@ -124,13 +133,13 @@
 
                                 <td>
                                     <label class="fancy-checkbox">
-                                        <input type="checkbox" data-seq ='<?=$key?>' data-rterate ='<?=$aValue['FCRteRate']?>' data-rtelastrate ='<?=$aValue['FCRteLastRate']?>' onclick="JSxEventClickCheckboxCurrentcy(this);"><span></span>
+                                        <input type="checkbox" class='ocbListItem' data-seq='<?= $key ?>' data-rterate='<?= $aValue['FCRteRate'] ?>' data-rtelastrate='<?= $aValue['FCRteLastRate'] ?>' onclick="JSxEventClickCheckboxCurrentcy(this);"><span></span>
                                     </label>
                                 </td>
 
-                                
+
                                 <td>
-                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy" data-seq ='<?=$key?>' data-agncode ='<?=$aValue['FTAgnCode']?>' data-rtecode ='<?=$aValue['FTRteCode']?>' id='oetUseCurrency<?= $key ?>' value = '<?php echo $aValue['FCRteRate'] ?>'>
+                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' id='oetUseCurrency<?= $key ?>' value='<?php echo $aValue['FCRteRate'] ?>'>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -197,14 +206,14 @@
         }
     }
 
-    var oBrowseConfigMake = function(poParameters){
-        var tInputReturnCode    = poParameters.tReturnInputCode;
-        var tInputReturnName    = poParameters.tReturnInputName;
-        var tConfigName         = poParameters.tConfigName;
-        var nLangEdits          = <?= $this->session->userdata("tLangEdit") ?>;
-        var tWhereCondition     = "";
+    var oBrowseConfigMake = function(poParameters) {
+        var tInputReturnCode = poParameters.tReturnInputCode;
+        var tInputReturnName = poParameters.tReturnInputName;
+        var tConfigName = poParameters.tConfigName;
+        var nLangEdits = <?= $this->session->userdata("tLangEdit") ?>;
+        var tWhereCondition = "";
 
-        switch(tConfigName){
+        switch (tConfigName) {
             case 'tPS_Warehouse':
                 var oOptionReturn = {
                     Title: ['company/warehouse/warehouse', 'tWAHTitle'],
@@ -227,17 +236,17 @@
                         OrderBy: ['TCNMWaHouse.FTWahCode'],
                         SourceOrder: "ASC"
                     },
-                    CallBack:{
-                        ReturnType	: 'S',
-                        Value		: [tInputReturnCode,"TCNMWaHouse.FTWahCode"],
-                        Text		: [tInputReturnName,"TCNMWaHouse_L.FTWahName"],
+                    CallBack: {
+                        ReturnType: 'S',
+                        Value: [tInputReturnCode, "TCNMWaHouse.FTWahCode"],
+                        Text: [tInputReturnName, "TCNMWaHouse_L.FTWahName"],
                     }
                 }
                 break;
             case 'tPS_Channel':
                 var tAgnCode = $('#oetAgnCode').val();
-                if( typeof(tAgnCode) != 'undefined' || tAgnCode !== undefined ){
-                    tWhereCondition += " AND (TCNMChannelSpc.FTAgnCode = '"+tAgnCode+"' OR TCNMChannelSpc.FTChnCode IS NULL) "
+                if (typeof(tAgnCode) != 'undefined' || tAgnCode !== undefined) {
+                    tWhereCondition += " AND (TCNMChannelSpc.FTAgnCode = '" + tAgnCode + "' OR TCNMChannelSpc.FTChnCode IS NULL) "
                 }
                 var oOptionReturn = {
                     Title: ['company/warehouse/warehouse', 'tWAHTitle'],
@@ -246,9 +255,9 @@
                         PK: 'FTChnCode'
                     },
                     Join: {
-                        Table: ['TCNMChannel_L','TCNMChannelSpc'],
+                        Table: ['TCNMChannel_L', 'TCNMChannelSpc'],
                         On: [
-                            'TCNMChannel_L.FTChnCode = TCNMChannel.FTChnCode AND TCNMChannel_L.FNLngID = ' + nLangEdits, 
+                            'TCNMChannel_L.FTChnCode = TCNMChannel.FTChnCode AND TCNMChannel_L.FNLngID = ' + nLangEdits,
                             'TCNMChannel.FTChnCode = TCNMChannelSpc.FTChnCode'
                         ]
                     },
@@ -265,10 +274,10 @@
                         Perpage: 10,
                         OrderBy: ['TCNMChannel.FDCreateOn DESC']
                     },
-                    CallBack:{
-                        ReturnType	: 'S',
-                        Value		: [tInputReturnCode,"TCNMChannel.FTChnCode"],
-                        Text		: [tInputReturnName,"TCNMChannel_L.FTChnName"],
+                    CallBack: {
+                        ReturnType: 'S',
+                        Value: [tInputReturnCode, "TCNMChannel.FTChnCode"],
+                        Text: [tInputReturnName, "TCNMChannel_L.FTChnName"],
                     }
                 }
                 break;
@@ -277,19 +286,19 @@
     }
 
     function JSxClickMakeBrowse(elemID, ptBrowseName) {
-        window.oBrowseOption  = oBrowseConfigMake({
-            'tReturnInputCode'  : 'oetMakeBrowseID'+elemID,
-            'tReturnInputName'  : 'oetMakeBrowseName'+elemID,
-            'tConfigName'       : ptBrowseName
+        window.oBrowseOption = oBrowseConfigMake({
+            'tReturnInputCode': 'oetMakeBrowseID' + elemID,
+            'tReturnInputName': 'oetMakeBrowseName' + elemID,
+            'tConfigName': ptBrowseName
         });
         JCNxBrowseData('oBrowseOption');
     }
 
     function JSxClickRefBrowse(elemID, ptBrowseName) {
-        window.oBrowseOption  = oBrowseConfigMake({
-            'tReturnInputCode'  : 'oetRefBrowseID'+elemID,
-            'tReturnInputName'  : 'oetRefBrowseName'+elemID,
-            'tConfigName'       : ptBrowseName
+        window.oBrowseOption = oBrowseConfigMake({
+            'tReturnInputCode': 'oetRefBrowseID' + elemID,
+            'tReturnInputName': 'oetRefBrowseName' + elemID,
+            'tConfigName': ptBrowseName
         });
         JCNxBrowseData('oBrowseOption');
     }
@@ -478,5 +487,24 @@
 
         $('#odvContentFooterText').show();
         $('#ospDetailFooterText').text(tResultText);
+    }
+
+    $(document).on('click', '.ocmCENCheckUseLast', function(e) {
+        var nStaClick = $(e.target).is(':checked');
+        JCNxClickCheckUseCurrentBox(nStaClick);
+    });
+
+    function JCNxClickCheckUseCurrentBox(pnStaClick) {
+        $('.ocbListItem').each(function() {
+            if (pnStaClick) { // กรณีติ๊กถูก
+                if (!$(this).is(':checked')) { // ตรวจสอบ checkbox ในหน้าจอ จะติ๊กเฉพาะที่ยังไม่ถูกติ๊ก (ปล.checkbox ที่ถูกติ๊กก่อนหน้าที่จะกด checkall จะไม่ถูกติ๊กซ้ำ)
+                    $(this).trigger("click");
+                }
+            } else { // กรณียกเลิกติ๊กถูก
+                if ($(this).is(':checked')) { // ตรวจสอบ checkbox ในหน้าจอ จะติ๊กเฉพาะที่ถูกติ๊กไว้ก่อนหน้าเท่านั้น
+                    $(this).trigger("click");
+                }
+            }
+        });
     }
 </script>

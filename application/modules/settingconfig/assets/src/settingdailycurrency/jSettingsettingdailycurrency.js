@@ -72,7 +72,7 @@ function JSvSettingDairyCurrencyLoadTable() {
             localStorage.removeItem('LocalItemData');
 
             var tAppType = $("#ocmAppType option:selected").val();
-            var tSearch = $('#oetSearchAll').val();
+            var tSearch = $('#oetSearchCurrentDairy').val();
             var tTypePage = $('#ohdSETTypePage').val();
             if (tTypePage == "Agency") {
                 tAgnCode = $('#oetAgnCode').val();
@@ -368,5 +368,40 @@ function JSvCallPageUpdateAutonumber(ptTable, pnSeq) {
         }
     } else {
         JCNxShowMsgSessionExpired();
+    }
+}
+
+// แนะนำช่องฝาก
+function JSxCurrentcyCurrentRate() {
+    try {
+        var tAgnCode    = $('#ohdCurrentAgnCode').val();
+        var tUsrCode    = $('#ohdCurrentUsrCode').val();
+
+    //     JCNxOpenLoading();
+        $.ajax({
+            type: "POST",
+            url: "docGetCurrentDairy",
+            data: {
+                tAgnCode    : tAgnCode,
+                tUsrCode    : tUsrCode
+            },
+            cache: false,
+            timeout: 0,
+            success: function(tResult) {
+                var aReturnData = JSON.parse(tResult);
+                alert('Success');
+                // if(aReturnData['nStaEvent'] == 1){
+                //     localStorage.setItem("SuggestLay",0);
+                //     JSxDBRGetMsgSuggestLay(tRefInDocNo);
+                // }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                JCNxResponseError(jqXHR, textStatus, errorThrown);
+            }
+        });
+
+
+    } catch (err) {
+        console.log("JSxDBRApproveDocument Error: ", err);
     }
 }
