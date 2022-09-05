@@ -13,13 +13,13 @@
 </style>
 
 <?php
-$aUserData = $this->session->userdata('tSesUsrInfo');
+// $aUserData = $this->session->userdata('tSesUsrInfo');
 ?>
 
 
 <input type="hidden" class="form-control" id="ohdSETTypePage" name="ohdSETTypePage" value="<?= $tTypePage; ?>">
 <input type="hidden" class="form-control" id="ohdCurrentAgnCode" name="ohdCurrentAgnCode" value="<?= $this->session->userdata('tSesUsrAgnCode'); ?>">
-<input type="hidden" class="form-control" id="ohdCurrentUsrCode" name="ohdCurrentUsrCode" value="<?= $aUserData['FTUsrCode']; ?>">
+<input type="hidden" class="form-control" id="ohdCurrentUsrCode" name="ohdCurrentUsrCode" value="<?= $this->session->userdata("tSesUsername"); ?>">
 
 <div class="row">
     <div class="col-xs-8 col-md-4 col-lg-4">

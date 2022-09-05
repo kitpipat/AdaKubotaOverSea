@@ -389,7 +389,7 @@ function JSxCurrentcyCurrentRate() {
             timeout: 0,
             success: function(tResult) {
                 var aReturnData = JSON.parse(tResult);
-                alert('Success');
+                JSoDailySubscribeMQ();
                 // if(aReturnData['nStaEvent'] == 1){
                 //     localStorage.setItem("SuggestLay",0);
                 //     JSxDBRGetMsgSuggestLay(tRefInDocNo);
@@ -404,4 +404,65 @@ function JSxCurrentcyCurrentRate() {
     } catch (err) {
         console.log("JSxDBRApproveDocument Error: ", err);
     }
+}
+
+function JSoDailySubscribeMQ(){
+	
+	//RabbitMQ
+    /*===========================================================================*/
+
+    var tAgnCode    = $('#ohdCurrentAgnCode').val();
+    var tUsrCode    = $('#ohdCurrentUsrCode').val();
+    var tLangCode = $("#ohdLangEdit").val();
+    var tUsrBchCode = $("#oetBchCode").val();
+    var tUsrApv     = $("#oetXthApvCodeUsrLogin").val();
+    var tStaPrcDoc = $("#oetStaPrcDoc").val();
+    var tDocNo = $("#oetXphDocNo").val();
+    var tPrefix = 'RESEXCHANGERATE';
+    var tStaDelMQ = $("#oetStaDelQname").val();
+    var tStaApv = $("#oetStaApv").val();
+    var tQName = tPrefix + '_' + tAgnCode + '_' +tUsrCode;
+
+    // alert(tQName);
+
+    // MQ Message Config
+    var poDocConfig = {
+        tLangCode: tLangCode,
+        tUsrBchCode: tUsrBchCode,
+        tUsrApv: tUsrApv,
+        tDocNo: tDocNo,
+        tPrefix: tPrefix,
+        tStaDelMQ: tStaDelMQ,
+        tStaApv: tStaApv,
+        tQName: tQName
+    };
+
+    var poMqConfig = {
+        host: 'ws://' + '147.50.143.126' + ':15674/ws',
+        username: 'Admin',
+        password: 'Admin',
+        vHost: 'AdaPos5.0SKCDev_Master'
+    };
+
+    // Callback Page Control(function)
+    var poCallback = {
+        tCallPageEdit: 'SettingDailyCurrencyGetList',
+        tCallPageList: 'SettingDailyCurrencyGetList'
+    };
+
+    // Update Status For Delete Qname Parameter
+    var poUpdateStaDelQnameParams = {
+        ptDocTableName : "TCNTPdtAdjPriHD",
+        ptDocFieldDocNo: "FTXphDocNo",
+        ptDocFieldStaApv: "FTXphStaPrcDoc",
+        ptDocFieldStaDelMQ: "FTXphStaDelMQ",
+        ptDocStaDelMQ: "1",
+        ptDocNo : tDocNo    
+    };
+
+    //Check Show Progress %
+	FSxCMNRabbitMQMessage(poDocConfig, poMqConfig, poUpdateStaDelQnameParams, poCallback);
+    /*===========================================================================*/
+    //RabbitMQ
+	
 }
