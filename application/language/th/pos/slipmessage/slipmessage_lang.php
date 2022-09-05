@@ -32,5 +32,9 @@ $lang['tSMGFontType']       = 'ชนิดตัวอักษร';
 $lang['tSMGFontSize']       = 'ขนาดตัวอักษร';
 $lang['tSMGValidFontSize'] = 'กรุณากรอกขนาดตัวอักษร';
 
+$lang['tSMGHeadReceiptPlaceholder'] = 'หัวใบเสร็จ';
+$lang['tSMGEndReceiptPlaceholder'] = 'ท้ายใบเสร็จ';
+
+
 
 
