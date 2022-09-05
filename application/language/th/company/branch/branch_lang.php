@@ -103,6 +103,7 @@ $lang['tBchAgnCode']		            = "รหัสตัวแทนขาย";
 $lang['tBchAgnName']		            = "ชื่อตัวแทนขาย";
 $lang ['tAddSalesAgent']                = 'เพิ่มตัวแทนขาย';
 
-
-
 $lang['tCHNTitle']      = "ช่องทางขาย";
+
+$lang['tBCHAgn']       = "ตัวแทนขาย";
+$lang['tBCHCty']       = "ประเทศ";

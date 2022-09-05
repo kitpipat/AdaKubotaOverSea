@@ -192,6 +192,8 @@ class Branch_model extends CI_Model {
                                     -- MERL.FTMerName AS rtMerName,
                                     BCH.FDCreateOn                          AS rtCreateOn,
                                     BCH.FTBchPriority                       AS rtBchPriority,
+                                    AGNL.FTAgnName                           AS rtBchAgn,
+                                    CTYL.FTCtyName                           AS rtBchCty,
                                     CONVERT(CHAR(10),FDBchStart,120)        AS rdBchStart,
                                     CONVERT(CHAR(10),FDBchStop,120)         AS rdBchStop,
                                     IMGO.FTImgObj                           AS rtImgObj,
@@ -200,6 +202,8 @@ class Branch_model extends CI_Model {
                                 LEFT JOIN TCNMBranch_L  BCHL    WITH(NOLOCK) ON BCH.FTBchCode = BCHL.FTBchCode  AND BCHL.FNLngID = $nLngID
                                 -- LEFT JOIN TCNMMerchant_L MERL   WITH(NOLOCK) ON BCH.FTMerCode = MERL.FTMerCode  AND MERL.FNLngID = $nLngID
                                 LEFT JOIN TCNMImgObj    IMGO    WITH(NOLOCK) ON BCH.FTBchCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TCNMBranch' AND IMGO.FNImgSeq = 1
+                                LEFT JOIN TCNMAgency_L  AGNL    WITH(NOLOCK) ON BCH.FTAgnCode = AGNL.FTAgnCode
+                                LEFT JOIN TCNMCountry_L CTYL    WITH(NOLOCK) ON BCH.FTCtyCode = CTYL.FTCtyCode
                                 WHERE 1 = 1
         ";
 

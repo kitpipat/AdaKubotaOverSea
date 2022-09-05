@@ -24,7 +24,9 @@
                         <th nowrap class="xCNTextBold" style="width:10%;text-align:center;"><?php echo  language('company/branch/branch','tBCHLogo');?></th>
 						<th nowrap class="xCNTextBold" style="width:10%;text-align:center;"><?php echo  language('common/main/main','tCMNCode');?></th>
 						<th nowrap class="xCNTextBold" style="width:15%;text-align:center;"><?php echo  language('common/main/main','tCMNName');?></th>
-						<th nowrap class="xCNTextBold" style="width:15%;text-align:center;"><?php echo  language('company/branch/branch','tBCHBchPriority');?></th>
+                        <th nowrap class="xCNTextBold" style="width:15%;text-align:center;"><?php echo  language('common/main/main','tBCHAgn');?></th>
+						<th nowrap class="xCNTextBold" style="width:15%;text-align:center;"><?php echo  language('common/main/main','tBCHCty');?></th>
+						<th nowrap class="xCNTextBold" style="width:5%;text-align:center;"><?php echo  language('company/branch/branch','tBCHBchPriority');?></th>
 						<th nowrap class="xCNTextBold" style="width:20%;text-align:center;"><?php echo  language('company/branch/branch','tBCHDateStartStop');?></th>
                         <?php if($BchCode == '' || $BchCode == null) : ?><?php if($aAlwEventBranch['tAutStaFull'] == 1 || $aAlwEventBranch['tAutStaDelete'] == 1 ) : ?>
                         <th nowrap class="xCNTextBold" style="width:10%;text-align:center;"><?php echo  language('common/main/main','tCMNActionDelete');?></th>
@@ -64,6 +66,8 @@
                             <td><img class="" src="<?=$tPatchImg?>" style="width:40px;"></td>
                             <td nowrap class="text-left"><?php echo $aValue['rtBchCode']?></td>
                             <td nowrap class="text-left"><?php echo $aValue['rtBchName']?></td>
+                            <td nowrap class="text-left"><?php echo ($aValue['rtBchAgn']) ? $aValue['rtBchAgn'] : '-' ?></td>
+                            <td nowrap class="text-left"><?php echo ($aValue['rtBchCty']) ? $aValue['rtBchCty'] : '-' ?></td>
                             <td nowrap class="text-left"><?php echo language('company/branch/branch','tBCHPriority'.$aValue['rtBchPriority'])?></td>
                             <td nowrap class="text-center"><?php echo $aValue['rdBchStart'].' - '.$aValue['rdBchStop']?></td>
                             <?php if($BchCode == '' || $BchCode == null) : ?><?php if($aAlwEventBranch['tAutStaFull'] == 1 || $aAlwEventBranch['tAutStaDelete'] == 1 ) : ?>
