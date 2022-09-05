@@ -102,3 +102,6 @@ $lang['tBchAgnName']		            = "Agency Name";
 
 
 $lang['tCHNTitle']      = "Chanel";
+
+$lang['tCMNAgn']       = "Agency";
+$lang['tCMNCty']       = "Country";
