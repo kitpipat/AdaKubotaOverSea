@@ -27,7 +27,7 @@ class Settingurlformat_model extends CI_Model {
                                     FROM [TCNMFmtRteSpc] FMT
                                     LEFT JOIN [TCNMAgency_L]  AGN_L ON FMT.FTAgnCode = AGN_L.FTAgnCode AND AGN_L.FNLngID = $nLngID
                                     LEFT JOIN [TCNMBranch_L]  BCH_L ON FMT.FTBchCode = BCH_L.FTBchCode AND BCH_L.FNLngID = $nLngID
-                                    LEFT JOIN [TFNSFmtURL_L]  FMT_L ON FMT.FTFmtCode = FMT_L.FTFmtCode AND FMT_L.FNLngID = $nLngID
+                                    LEFT JOIN [TFNSFmtURL_L]  FMT_L ON FMT.FTFmtCode = FMT_L.FTFmtCode AND FMT_L.FNLngID = $nLngID AND FTFmtType = 1
                                     WHERE 1=1 ";
             if(!empty($tAngCode)){
                 $tSQL .= "AND FMT.FTAgnCode = '$tAngCode'";
@@ -36,10 +36,8 @@ class Settingurlformat_model extends CI_Model {
             if(isset($tSearchList) && !empty($tSearchList)){
                 $tSQL .= " AND (FMT.FTFspCode COLLATE THAI_BIN LIKE '%$tSearchList%'";
                 $tSQL .= " OR AGN_L.FTAgnName COLLATE THAI_BIN LIKE '%$tSearchList%' ";
-                $tSQL .= " OR LEFT(FMT.FTAgnCode,1)   = '%$tSearchList%' " ;
                 $tSQL .= " OR LEFT(AGN_L.FTAgnName,1) = '%$tSearchList%' " ;
                 $tSQL .= " OR BCH_L.FTBchName COLLATE THAI_BIN LIKE '%$tSearchList%' ";
-                $tSQL .= " OR LEFT(FMT.FTBchCode,1)   = '%$tSearchList%' " ;
                 $tSQL .= " OR LEFT(BCH_L.FTBchName,1) = '%$tSearchList%' " ;
                 $tSQL .= " OR FMT_L.FTFmtName COLLATE THAI_BIN LIKE '%$tSearchList%' ";
                 $tSQL .= " OR LEFT(FMT.FTFmtCode,1)   = '%$tSearchList%' " ;
@@ -85,13 +83,21 @@ class Settingurlformat_model extends CI_Model {
     //Return Type : Object 
     public function FSoMURLGetPageAll($ptSearchList,$ptLngID){
         try{
-            $tSQL = "SELECT COUNT (FMT.FTFmtCode) AS counts
+            $tSQL = "SELECT COUNT (FMT.FTFspCode) AS counts
                      FROM [TCNMFmtRteSpc] FMT
-                     LEFT JOIN [TFNSFmtURL_L]  FMT_L ON FMT.FTFmtCode = FMT_L.FTFmtCode AND FMT_L.FNLngID = $ptLngID
+                     LEFT JOIN [TCNMAgency_L]  AGN_L ON FMT.FTAgnCode = AGN_L.FTAgnCode AND AGN_L.FNLngID = $ptLngID
+                    LEFT JOIN [TCNMBranch_L]  BCH_L ON FMT.FTBchCode = BCH_L.FTBchCode AND BCH_L.FNLngID = $ptLngID
+                    LEFT JOIN [TFNSFmtURL_L]  FMT_L ON FMT.FTFmtCode = FMT_L.FTFmtCode AND FMT_L.FNLngID = $ptLngID AND FTFmtType = 1
                      WHERE 1=1 ";
             if(isset($ptSearchList) && !empty($ptSearchList)){
-                $tSQL .= " AND (FMT.FTFmtCode COLLATE THAI_BIN LIKE '%$ptSearchList%'";
-                $tSQL .= " OR FMT_L.FTFmtCode  COLLATE THAI_BIN LIKE '%$ptSearchList%')";
+                $tSQL .= " AND (FMT.FTFspCode COLLATE THAI_BIN LIKE '%$ptSearchList%'";
+                $tSQL .= " OR AGN_L.FTAgnName COLLATE THAI_BIN LIKE '%$ptSearchList%' ";
+                $tSQL .= " OR LEFT(AGN_L.FTAgnName,1) = '%$ptSearchList%' " ;
+                $tSQL .= " OR BCH_L.FTBchName COLLATE THAI_BIN LIKE '%$ptSearchList%' ";
+                $tSQL .= " OR LEFT(BCH_L.FTBchName,1) = '%$ptSearchList%' " ;
+                $tSQL .= " OR FMT_L.FTFmtName COLLATE THAI_BIN LIKE '%$ptSearchList%' ";
+                $tSQL .= " OR LEFT(FMT.FTFmtCode,1)   = '%$ptSearchList%' " ;
+                $tSQL .= " OR LEFT(FMT_L.FTFmtName,1) = '%$ptSearchList%' )" ;
             }
             $oQuery = $this->db->query($tSQL);
             if ($oQuery->num_rows() > 0) {
