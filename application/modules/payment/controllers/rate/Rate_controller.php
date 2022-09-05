@@ -112,7 +112,7 @@ class Rate_controller extends MX_Controller
             if(isset($tRteAgnCode) && !empty($tRteAgnCode)){
                 $tRteAgnCode = $this->input->post('oetRteAgnCode');
             }else{
-                $tRteAgnCode = '';
+                $tRteAgnCode = ' ';
             }
 
             $aDataMaster = array(
@@ -151,6 +151,7 @@ class Rate_controller extends MX_Controller
                 $aDataMaster['FTRteCode']   = $aAutogen[0]["FTXxhDocNo"];
             }
             $aDataUnitFac = [
+                'FTAgnCode' => $tRteAgnCode,
                 'FTRteCode' => $aDataMaster['FTRteCode'],
                 'aRtuFac' => $aRtuFac
             ];
@@ -250,10 +251,16 @@ class Rate_controller extends MX_Controller
                 $cRteStaAlwChange = 2;
             }
 
+            $tRteAgnCode = $this->input->post('oetRteAgnCode');
+            if(isset($tRteAgnCode) && !empty($tRteAgnCode)){
+                $tRteAgnCode = $this->input->post('oetRteAgnCode');
+            }else{
+                $tRteAgnCode = ' ';
+            }
             $aDataMaster    = [
                 'FTRteCode'     => $this->input->post('oetRteCode'),
                 'FTImgObj'      => $this->input->post('oetImgInputrate'),
-                'FTAgnCode'     => $this->input->post('oetRteAgnCode'),
+                'FTAgnCode'     => $tRteAgnCode,
                 'FCRteRate'     => $cRateRate,
                 'FCRteFraction' => $cRteFraction,
                 'FTRteType'     => $this->input->post('ocmRteType'),
@@ -272,9 +279,11 @@ class Rate_controller extends MX_Controller
             ];
 
             $aDataUnitFac = [
+                'FTAgnCode' => $tRteAgnCode,
                 'FTRteCode' => $this->input->post('oetRteCode'),
                 'aRtuFac' => $aRtuFac
             ];
+            
             $this->db->trans_begin();
             $aStaEventMaster  = $this->Rate_model->FSaMRTEAddUpdateMaster($aDataMaster);
             $aStaEventLang    = $this->Rate_model->FSaMRTEAddUpdateLang($aDataMaster);
