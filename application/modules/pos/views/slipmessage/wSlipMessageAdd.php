@@ -8,8 +8,15 @@ if($aResult['rtCode'] == "1"){
     $aSmgEndItems = $aResult['raDTEndItems'];
     $tRoute = "slipMessageEventEdit";
     $tSmgFonts = explode(",",$oSmgFonts)[0];
-    $tSmgFontsStyle = explode(",",$oSmgFonts)[1];
-    $tSmgFontsSize = explode(",",$oSmgFonts)[2];
+    $tSmgFontsSize = explode(",",$oSmgFonts)[1];
+    $tSmgFontsStyle = explode(",",$oSmgFonts)[2];
+    if(empty($tSmgFontsStyle)){
+        $tSmgFontsStyle = explode(",",$oSmgFonts)[3];
+        if(empty($tSmgFontsStyle)){
+            $tSmgFontsStyle = explode(",",$oSmgFonts)[4];
+        }
+    }
+    
 }else{
     $tSmgCode = "";
     $tSmgTitle = "";
@@ -24,8 +31,8 @@ if($aResult['rtCode'] == "1"){
     $tSmgFontsSize = "";
 }
 $tLang = "";
-$tHeadReceiptPlaceholder = "Head of Receipt";
-$tEndReceiptPlaceholder = "End of Receipt";
+$tHeadReceiptPlaceholder = language('pos/slipmessage/slipmessage','tSMGHeadReceiptPlaceholder');
+$tEndReceiptPlaceholder = language('pos/slipmessage/slipmessage','tSMGEndReceiptPlaceholder');
 ?>
 <style>
 .xWSmgMoveIcon {
@@ -151,17 +158,17 @@ button.btn.dropdown-toggle.btn-default {
                                     <div class="col-md-4">
                                         <label class="xCNLabelFrm"><?php echo language('pos/slipmessage/slipmessage','tSMGFontType'); ?></label>
                                         <select class="selectpicker form-control" id="ocmSmgFontsStyle" name="ocmSmgFontsStyle" value="<?=@$tSmgFontsStyle?>">
-                                            <option value="1"<?php echo (@$tSmgFontsStyle == '1')?  "selected" : "";?> >
+                                            <option value="1"<?php echo (@$tSmgFontsStyle == '')?  "selected" : "";?> >
                                                 Normal
                                             </option> 
-                                            <option value="2"<?php echo (@$tSmgFontsStyle == '2')?  "selected" : "";?>>
+                                            <option value="2"<?php echo (@$tSmgFontsStyle == 'B')?  "selected" : "";?>>
                                                 Bold
                                             </option>
-                                            <option value="3"<?php echo (@$tSmgFontsStyle == '3')?  "selected" : "";?>>
-                                                Lighter
+                                            <option value="3"<?php echo (@$tSmgFontsStyle == 'I')?  "selected" : "";?>>
+                                                Italic 
                                             </option>
-                                            <option value="4"<?php echo (@$tSmgFontsStyle == '4')?  "selected" : "";?>>
-                                                Bolder
+                                            <option value="4"<?php echo (@$tSmgFontsStyle == 'U')?  "selected" : "";?>>
+                                                Underline        
                                             </option>
                                         </select>
                                     </div>

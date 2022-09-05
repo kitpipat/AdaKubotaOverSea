@@ -192,8 +192,10 @@ class Slipmessage_controller extends MX_Controller {
     public function FSaSMGAddEvent(){
         try{
             $tIsAutoGenCode = $this->input->post('ocbSlipmessageAutoGenCode');
+            $tIsFontsStyle = $this->input->post('ocmSmgFontsStyle');
 
             // Setup Reason Code
+            $tFTFonts ="";
             $tSmgCode   = "";
             if(isset($tIsAutoGenCode) &&  $tIsAutoGenCode == 1){
                 $aStoreParam = array(
@@ -210,6 +212,25 @@ class Slipmessage_controller extends MX_Controller {
             }else{
                 $tSmgCode = $this->input->post('oetSmgCode');
             }
+            //Check Style
+            if(isset($tIsFontsStyle)){
+                switch ($tIsFontsStyle) {
+                    case '1':
+                        $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.','.',';
+                        break;
+                    case '2':
+                        $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.'B'.','.',';
+                        break;
+                    case '3':
+                        $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.','.'I'.',';
+                        break;
+                    case '4':
+                        $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.','.','.'U';
+                        break;
+                }            
+            }else{
+                $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.','.',';
+            }
             // $aFonts = array(
             //    'Fonts' => $this->input->post("ocmSmgFonts"),
             //    'FontsStyle' => $this->input->post("ocmSmgFontsStyle"),
@@ -225,7 +246,7 @@ class Slipmessage_controller extends MX_Controller {
                 'FTCreateBy'            => $this->session->userdata('tSesUsername'),
                 'FDCreateOn'            => date('Y-m-d H:i:s'),
                 'FNLngID'               => $this->input->post("ocmSmgLngID"),
-                'FTFonts'               => $this->input->post("ocmSmgFonts").','.$this->input->post("ocmSmgFontsStyle").','.$this->input->post("oetSmgFontsSize"),
+                'FTFonts'               => $tFTFonts,
             );  
 
             //  print_r($aDataMaster);
@@ -300,6 +321,27 @@ class Slipmessage_controller extends MX_Controller {
      */
     public function FSaSMGEditEvent(){
         try{
+            $tIsFontsStyle = $this->input->post('ocmSmgFontsStyle');
+            $tFTFonts ="";
+             //Check Style
+             if(isset($tIsFontsStyle)){
+                switch ($tIsFontsStyle) {
+                    case '1':
+                        $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.','.',';
+                        break;
+                    case '2':
+                        $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.'B'.','.',';
+                        break;
+                    case '3':
+                        $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.','.'I'.',';
+                        break;
+                    case '4':
+                        $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.','.','.'U';
+                        break;
+                }            
+            }else{
+                $tFTFonts = $this->input->post("ocmSmgFonts").','.$this->input->post("oetSmgFontsSize").','.','.',';
+            }
             $aDataMaster = array(
                 'FTSmgCode'             => $this->input->post('oetSmgCode'),
                 'FTSmgTitle'            => $this->input->post('oetSmgTitle'),
@@ -310,7 +352,7 @@ class Slipmessage_controller extends MX_Controller {
                 'FTCreateBy'            => $this->session->userdata('tSesUsername'),
                 'FDCreateOn'            => date('Y-m-d H:i:s'),
                 'FNLngID'               => $this->session->userdata("tLangEdit"),
-                'FTFonts'               => $this->input->post("ocmSmgFonts").','.$this->input->post("ocmSmgFontsStyle").','.$this->input->post("oetSmgFontsSize"),
+                'FTFonts'               => $tFTFonts,
             );
             $this->db->trans_begin();
             // Add or Update Slip

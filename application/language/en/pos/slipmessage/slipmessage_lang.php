@@ -27,3 +27,6 @@ $lang['tSMGValidCodeDup']   = 'This receipt is already in the system. Please che
 $lang['tSMGValidName']      = 'Please enter the name of the receipt.';
 $lang['tSMGValidHead']      = 'Please enter the head name of the receipt.';
 
+$lang['tSMGHeadReceiptPlaceholder'] = 'Head of Receipt';
+$lang['tSMGEndReceiptPlaceholder'] = 'End of Receipt';
+
