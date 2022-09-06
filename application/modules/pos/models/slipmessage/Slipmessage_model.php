@@ -26,7 +26,6 @@ class Slipmessage_model extends CI_Model {
                     WHERE 1=1 
                     AND SMGHD.FNLngID = $nLngID
                     AND SMGHD.FTSmgCode = '$tDstCode'";
-        echo $tHDSQL;
         $oHDQuery = $this->db->query($tHDSQL);
         
         // Head of receipt and End of receipt query
