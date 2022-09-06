@@ -147,10 +147,10 @@ class Slipmessage_controller extends MX_Controller {
      * Return Type : View
      */
     public function FSvSMGEditPage(){
-
+        $tSmgLang       = $this->input->post('tSmgLang');
         $tSmgCode       = $this->input->post('tSmgCode');
         $nLangResort    = $this->session->userdata("tLangID");
-        $nLangEdit      = $this->session->userdata("tLangEdit");
+        // $nLangEdit      = $this->session->("tLangEdit");
         $aGetLang       = $this->Slipmessage_model->FSaMSMGGetStaUse();
         // $aLangHave      = FCNaHGetAllLangByTable('TCNMSlipMsgHD_L');
         // $nLangHave      = count($aLangHave);
@@ -171,7 +171,7 @@ class Slipmessage_controller extends MX_Controller {
 
         $aData  = array(
             'FTSmgCode' => $tSmgCode,
-            'FNLngID'   => $nLangEdit,
+            'FNLngID'   => $tSmgLang,
         );
 
         $tAPIReq        = "";
@@ -351,7 +351,7 @@ class Slipmessage_controller extends MX_Controller {
                 'FDLastUpdOn'           => date('Y-m-d H:i:s'),
                 'FTCreateBy'            => $this->session->userdata('tSesUsername'),
                 'FDCreateOn'            => date('Y-m-d H:i:s'),
-                'FNLngID'               => $this->session->userdata("tLangEdit"),
+                'FNLngID'               => $this->input->post('ocmSmgLngID'),
                 'FTFonts'               => $tFTFonts,
             );
             $this->db->trans_begin();

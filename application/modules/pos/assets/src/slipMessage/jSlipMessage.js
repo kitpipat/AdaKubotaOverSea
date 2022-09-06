@@ -209,7 +209,7 @@ function JSvCallPageSlipMessageAdd() {
  * Return : view
  * Return Type : view
  */
-function JSvCallPageSlipMessageEdit(ptSmgCode) {
+function JSvCallPageSlipMessageEdit(ptSmgCode,ptSmgLang) {
     try{
         JCNxOpenLoading();
         JStCMMGetPanalLangSystemHTML('JSvCallPageSlipMessageEdit', ptSmgCode);
@@ -217,7 +217,9 @@ function JSvCallPageSlipMessageEdit(ptSmgCode) {
         $.ajax({
             type: "POST",
             url: "slipMessagePageEdit",
-            data: { tSmgCode: ptSmgCode },
+            data: { tSmgCode: ptSmgCode, 
+                    tSmgLang: ptSmgLang 
+            },
             cache: false,
             timeout: 0,
             success: function(tResult) {

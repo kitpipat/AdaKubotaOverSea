@@ -89,7 +89,6 @@ class Slipmessage_model extends CI_Model {
     public function FSaMSMGList($ptAPIReq, $ptMethodReq, $paData){
     	// return null;
         $aRowLen    = FCNaHCallLenData($paData['nRow'], $paData['nPage']);
-        $nLngID     = $paData['FNLngID'];
         
         $tSQL       = "SELECT c.* FROM(
                        SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC , rtSmgCode DESC) AS rtRowID,*
@@ -97,10 +96,10 @@ class Slipmessage_model extends CI_Model {
                        (SELECT DISTINCT
                                 SMGHD.FTSmgCode   AS rtSmgCode,
                                 SMGHD.FTSmgTitle AS rtSmgTitle,
+                                SMGHD.FNLngID   AS rtSmgLanID,
                                 SMGHD.FDCreateOn
                             FROM [TCNMSlipMsgHD_L] SMGHD
-                            WHERE 1=1
-                            AND SMGHD.FNLngID = $nLngID";
+                            WHERE 1=1";
         
         $tSearchList = $paData['tSearchAll'];
         if ($tSearchList != ''){
@@ -112,7 +111,7 @@ class Slipmessage_model extends CI_Model {
         $oQuery = $this->db->query($tSQL);
         if($oQuery->num_rows() > 0){
             $oList = $oQuery->result();
-            $aFoundRow = $this->FSnMSMGGetPageAll(/*$tWhereCode,*/ $tSearchList, $nLngID);
+            $aFoundRow = $this->FSnMSMGGetPageAll(/*$tWhereCode,*/ $tSearchList);
             $nFoundRow = $aFoundRow[0]->counts;
             $nPageAll = ceil($nFoundRow/$paData['nRow']); //หา Page All จำนวน Rec หาร จำนวนต่อหน้า
             $aResult = array(
@@ -147,11 +146,10 @@ class Slipmessage_model extends CI_Model {
      * Return : data
      * Return Type : array
      */
-    public function FSnMSMGGetPageAll(/*$ptWhereCode,*/ $ptSearchList, $ptLngID){
+    public function FSnMSMGGetPageAll(/*$ptWhereCode,*/ $ptSearchList){
         $tSQL = "SELECT COUNT (SMGHD.FTSmgCode) AS counts
                 FROM [TCNMSlipMsgHD_L] SMGHD
-                WHERE 1=1 
-                AND SMGHD.FNLngID = $ptLngID";
+                WHERE 1=1";
         
         if($ptSearchList != ''){
             $tSQL .= " AND (SMGHD.FTSmgCode LIKE '%$ptSearchList%'";
@@ -202,8 +200,8 @@ class Slipmessage_model extends CI_Model {
             $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
             $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
             $this->db->set('FTFonts', $paData['FTFonts']);
+            $this->db->set('FNLngID', $paData['FNLngID']);
             $this->db->where('FTSmgCode', $paData['FTSmgCode']);
-            $this->db->where('FNLngID', $paData['FNLngID']);
             $this->db->update('TCNMSlipMsgHD_L');
             if($this->db->affected_rows() > 0){
                 $aStatus = array(
