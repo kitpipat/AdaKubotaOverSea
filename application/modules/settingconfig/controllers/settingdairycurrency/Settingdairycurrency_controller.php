@@ -56,12 +56,17 @@ class Settingdairycurrency_controller extends MX_Controller {
 
         $aListRate       = $this->Settingdairycurrency_model->FSaMSETConfigDataTableByCurrentcy($aData,'checkbox');
 
+        if($aListRate ['rtCode'] == '800'){
+            $JobDate = '';
+        }else{
+            $JobDate = $aListRate['raItems'][0]['FDJobDateCfm'];
+        }
         $aGenTable  = array(
             'tTypePage'             => $this->input->post("ptTypePage"),
             'aAlwEvent'             => $aAlwEvent,
             'aListRate'             => $aListRate,
             'nDecimalShow'          => $nDecimalShow,
-            'dJobDate'              => $aListRate['raItems'][0]['FDJobDateCfm'],
+            'dJobDate'              => $JobDate,
             'FTAgnCode'             => $this->session->userdata('tSesUsrAgnCode')
         );
 

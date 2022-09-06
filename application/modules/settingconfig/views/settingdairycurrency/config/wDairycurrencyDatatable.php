@@ -90,7 +90,7 @@
 </style>
 
 <!-- TABLE สำหรับ checkbox -->
-<?php if ($FTAgnCode != '') { ?>
+<?php if ($FTAgnCode != '' && $dJobDate != '') { ?>
     <div style='text-align: right;'>ยืนยันล่าสุดเมื่อ <?= $dJobDate; ?></div>
 <?php } ?>
 <div class="row">
