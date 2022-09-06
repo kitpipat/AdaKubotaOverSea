@@ -117,7 +117,7 @@ button.btn.dropdown-toggle.btn-default {
                             <select class="selectpicker form-control" id="ocmSmgLngID" name="ocmSmgLngID" value="<?=@$tSmgLngID?>">
                                 <?php 
                                     foreach($aLang as $aData){ 
-                                        if($aData==$tSmgLngID){
+                                        if($aData['FNLngID']==$tSmgLngID){
                                             $tSel = 'selected';
                                         }else{
                                             $tSel = '';

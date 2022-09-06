@@ -41,8 +41,6 @@ var oBchBrowseLang = function(poReturnInputCty){
             Value           : ["oetCtyLangID", "TSysLanguage.FNLngID"],
             Text            : ["oetCtyLangName", "TSysLanguage.FTLngShortName"]
         },
-        RouteAddNew : 'SysLang',
-        BrowseLev : nStaCtyBrowseType
     };
     return oBchBrowseLang;
 }
@@ -72,12 +70,10 @@ var oBchBrowseLang = function(poReturnInputCty){
             Value           : ["oetVatCode", "VCN_VatActive.FTVatCode"],
             Text            : ["oetVatRate", "VCN_VatActive.FCVatRate"]
         },
-        RouteAddNew : 'SysLang',
-        BrowseLev : nStaCtyBrowseType
     };
 
     var oBchBrowseRate = {
-        Title : ['company/country/country', 'tVatTitle'],
+        Title : ['company/country/country', 'tRateTitle'],
         Table:{Master:'TCNSRate_L', PK:'FTRteIsoCode'},
         // Join :{
         //     Table: ['TCNMCountry_L'],
@@ -88,7 +84,7 @@ var oBchBrowseLang = function(poReturnInputCty){
         },
         GrideView:{
             ColumnPathLang	: 'company/country/country',
-            ColumnKeyLang	: ['tVatCode', 'tVatTitle'],
+            ColumnKeyLang	: ['tRateCode', 'tRateTitle'],
             ColumnsSize     : ['15%', '85%'],
             WidthModal      : 50,
             DataColumns		: ['TCNSRate_L.FTRteIsoCode', 'TCNSRate_L.FTRteIsoName'],

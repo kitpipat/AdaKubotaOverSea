@@ -15,6 +15,10 @@ $lang['tVatCode']               = "รหัสภาษี";
 $lang['tCountryLangID']         = "รหัสภาษา";
 $lang['tVatStart']              = "วันที่เริ่มใช้งาน";
 
+$lang['tRateTitle']              = "สกุลเงิน";
+$lang['tRateCode']               = "รหัสสกุลเงิน";
+$lang['tCountryLangID']         = "รหัสภาษา";
+
 $lang['tCountryInfo']               = "ข้อมูลทั่วไป";
 $lang['tCountryVat']                = "อัตราภาษี";
 $lang['tCountryIso']                = "รหัสสกุลเงิน";

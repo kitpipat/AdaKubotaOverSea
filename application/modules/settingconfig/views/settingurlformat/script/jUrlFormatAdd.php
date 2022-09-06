@@ -18,7 +18,7 @@ var oBchBrowseLang = function(poReturnInputCty){
     
         let oBchBrowseLang = {
         
-        Title : ['company/country/country', 'tCountryLang'],
+        Title : ['company/branch/branch', 'tBCHTitle'],
         Table:{Master:'TCNMBranch', PK:'FTBchCode'},
         Join :{
             Table: ['TCNMBranch_L'],
@@ -28,8 +28,8 @@ var oBchBrowseLang = function(poReturnInputCty){
             Condition : ["AND TCNMBranch.FTAgnCode = '"+tCountryCode+"' "]
         },
         GrideView:{
-            ColumnPathLang	: 'company/country/country',
-            ColumnKeyLang	: ['tCountryLangID', 'tCountryLangName'],
+            ColumnPathLang	: 'company/branch/branch',
+            ColumnKeyLang	: ['tBCHCode', 'tBCHTitle'],
             ColumnsSize     : ['15%', '85%'],
             WidthModal      : 50,
             DataColumns		: ['TCNMBranch.FTBchCode', 'TCNMBranch_L.FTBchName'],

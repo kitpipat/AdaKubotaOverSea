@@ -36,7 +36,7 @@
                                 <img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSaSlipMessageDelete('<?=$nCurrentPage?>','<?=$aValue['rtSmgTitle']?>','<?=$aValue['rtSmgCode']?>')" title="<?php echo language('pos/slipmessage/slipmessage', 'tSMGTBDelete'); ?>">
                             </td>
                             <td>
-                                <img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageSlipMessageEdit('<?php echo $aValue['rtSmgCode']; ?>')" title="<?php echo language('pos/slipmessage/slipmessage', 'tSMGTBEdit'); ?>">
+                                <img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageSlipMessageEdit('<?php echo $aValue['rtSmgCode']; ?>','<?php echo $aValue['rtSmgLanID']; ?>')" title="<?php echo language('pos/slipmessage/slipmessage', 'tSMGTBEdit'); ?>">
                             </td>
                         </tr>
                     <?php } ?>
