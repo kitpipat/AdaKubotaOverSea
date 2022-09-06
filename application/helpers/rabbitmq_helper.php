@@ -176,3 +176,48 @@ function FSaHRabbitMQUpdateStaDelQnameHD($paData){
         }
     }
 
+
+    function FCNxRabbitMQGetMassageCurrentDaily($paData){
+
+        /*$tQname = $paData['tQname'];
+		$connection = new AMQPStreamConnection(HOST, PORT, USER, PASS, VHOST);
+		$channel = $connection->channel();
+        $channel->queue_declare($tQname, false, true, false, false);
+        $message = $channel->basic_get($tQname);
+        if(!empty($message)){
+            $channel->basic_ack($message->delivery_info['delivery_tag']);
+            $nProgress = intval($message->body);
+        }else{
+            $nProgress = 'false' ;
+        }
+        $channel->close();
+        $connection->close();
+        return $nProgress;*/
+
+        try{
+            $tQname     = $paData['tQname'];
+            $connection = new AMQPStreamConnection(MQ_LOCKER_HOST, MQ_LOCKER_PORT, MQ_LOCKER_USER, MQ_LOCKER_PASS, MQ_LOCKER_VHOST);
+            $channel    = $connection->channel();
+            $channel->queue_declare($tQname, false, true, false, false);
+            $message    = $channel->basic_get($tQname);
+
+            if(!empty($message)){
+                if(!empty($message->body)){
+                    $channel->basic_ack($message->delivery_info['delivery_tag']);
+                    $aArrayProgress = json_decode($message->body);
+                    $nProgress = intval($aArrayProgress->rnProg);
+                }else{
+                    $nProgress = 'end' ;
+                }
+            }else{
+                $nProgress = 'false';
+            }
+
+            $channel->close();
+            $connection->close();
+            return $nProgress;
+        }catch(Exception $Error){
+            return $Error;
+        }
+    }
+

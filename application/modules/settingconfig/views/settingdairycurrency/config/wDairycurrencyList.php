@@ -14,6 +14,9 @@
 
 <?php
 // $aUserData = $this->session->userdata('tSesUsrInfo');
+$tAgnCode = $this->session->userdata('tSesUsrAgnCode');
+$tAgnName = $this->session->userdata('tSesUsrAgnName');
+$tBchCount = $this->session->userdata('nSesUsrBchCount');
 ?>
 
 
@@ -33,11 +36,38 @@
         </div>
     </div>
 
+
+<?php if( $tBchCount > 0 && $tAgnCode == ''){ ?>
+<?php }else{ ?>
     <div class="col-xs-4 col-md-8 col-lg-8 text-right">
-        <div id="odvBtnAddEdit" style="display: block;padding-bottom:10px;">
-            <button onclick="JSxCurrentcyCurrentRate()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="margin-left: 5px;" style="display: block;"><?= language('common/main/main', 'Refresh'); ?></button>
+        <div class="col-lg-7 col-md-6 col-xs-6 no-padding padding-left-15">
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-xs-12 no-padding padding-left-15">
+            <div class="form-group">
+                <div class="input-group"><input type="text" class="form-control xCNHide" id="oetSpcAgncyCode" name="oetSpcAgncyCode" maxlength="5" value="<?= @$tAgnCode; ?>">
+                    <input type="hidden" id="oetSpcAgncyCodeOld" name="oetSpcAgncyCodeOld" value="<?= @$tAgnCode; ?>">
+                    <input type="text" class="form-control xWPointerEventNone" id="oetSpcAgncyName" name="oetSpcAgncyName" maxlength="100" placeholder="<?php echo language('authen/role/role', 'tRolegency'); ?>" value="<?= @$tAgnName; ?>" data-validate-required="<?php echo language('authen/role/role', 'tValiSpcAgency') ?>" readonly>
+                    <span class="input-group-btn">
+                        <button id="oimBrowseSpcAgncy" type="button" class="btn xCNBtnBrowseAddOn" <?= @$tDisabled ?> <?php
+                                                                                                                        if ($this->session->userdata("nSesUsrBchCount") != 0) {
+                                                                                                                            echo 'disabled';
+                                                                                                                        }
+                                                                                                                        ?>>
+                            <img src="<?php echo  base_url() . '/application/modules/common/assets/images/icons/find-24.png' ?>">
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-xs-1 no-padding padding-left-15">
+
+            <div id="odvBtnAddEdit" style="display: block;padding-bottom:10px;">
+                <button onclick="JSxCurrentcyCurrentRate()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="margin-left: 5px;" style="display: block;"><?= language('common/main/main', 'Refresh'); ?></button>
+            </div>
         </div>
     </div>
+<?php } ?>
 </div>
 </div>
 </div>
@@ -52,16 +82,16 @@
     //LoadTable
     JSvSettingDairyCurrencyLoadTable();
 
-    $('#oimSearchCurrentDairy').click(function(){
-		JCNxOpenLoading();
-		JSvSettingDairyCurrencyLoadTable();
-	});
-	$('#xCNInputWithoutSingleQuote').keypress(function(event){
-		if(event.keyCode == 13){
-			JCNxOpenLoading();
-			JSvSettingDairyCurrencyLoadTable();
-		}
-	});
+    $('#oimSearchCurrentDairy').click(function() {
+        JCNxOpenLoading();
+        JSvSettingDairyCurrencyLoadTable();
+    });
+    $('#xCNInputWithoutSingleQuote').keypress(function(event) {
+        if (event.keyCode == 13) {
+            JCNxOpenLoading();
+            JSvSettingDairyCurrencyLoadTable();
+        }
+    });
 
 
     //function Insert Data
@@ -100,5 +130,55 @@
                 },
             });
         }
+    }
+
+    $('#oimBrowseSpcAgncy').click(function(e){
+    e.preventDefault();
+        var nStaSession = JCNxFuncChkSessionExpired();
+        if(typeof(nStaSession) != 'undefined' && nStaSession == 1){
+            JSxCheckPinMenuClose();
+            window.oBrowseSpcAgencyOption = oBrowseSpcAgncy({
+                'tReturnInputCode'  : 'oetSpcAgncyCode',
+                'tReturnInputName'  : 'oetSpcAgncyName',
+                'tBchCodeWhere'     : $('#oetSpcBranchCode').val(),
+            });
+            JCNxBrowseData('oBrowseSpcAgencyOption');
+        }else{
+            JCNxShowMsgSessionExpired();
+        }
+    });
+
+    //Option Browse
+    var oBrowseSpcAgncy = function(poReturnInput){
+        var tInputReturnCode    = poReturnInput.tReturnInputCode;
+        var tInputReturnName    = poReturnInput.tReturnInputName;
+        var tBchCodeWhere       = poReturnInput.tBchCodeWhere;
+        
+        var oOptionReturn       = {
+            Title : ['ticket/agency/agency', 'tAggTitle'],
+            Table:{Master:'TCNMAgency', PK:'FTAgnCode'},
+            Join :{
+            Table: ['TCNMAgency_L'],
+                On: ['TCNMAgency_L.FTAgnCode = TCNMAgency.FTAgnCode AND TCNMAgency_L.FNLngID = '+nLangEdits]
+            },
+            GrideView:{
+                ColumnPathLang	: 'ticket/agency/agency',
+                ColumnKeyLang	: ['tAggCode', 'tAggName'],
+                ColumnsSize     : ['15%', '85%'],
+                WidthModal      : 50,
+                DataColumns		: ['TCNMAgency.FTAgnCode', 'TCNMAgency_L.FTAgnName'],
+                DataColumnsFormat : ['', ''],
+                Perpage			: 10,
+                OrderBy			: ['TCNMAgency.FDCreateOn DESC'],
+            },
+            CallBack:{
+                ReturnType	: 'S',
+                Value		: [tInputReturnCode,"TCNMAgency.FTAgnCode"],
+                Text		: [tInputReturnName,"TCNMAgency_L.FTAgnName"],
+            },
+            RouteAddNew : 'agency',
+            BrowseLev : 1,
+        }
+        return oOptionReturn;
     }
 </script>

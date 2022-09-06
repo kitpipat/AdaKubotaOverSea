@@ -162,5 +162,13 @@ class Common_controller extends MX_Controller {
         
     }
 
+    public function FCNtCCMMGetMassageProgressDailyCurrent(){
+
+        $aParam['tQname'] = $this->input->post('tQName');
+        $tProgress =  FCNxRabbitMQGetMassageCurrentDaily($aParam);
+        echo $tProgress;
+        
+    }
+
 }
 

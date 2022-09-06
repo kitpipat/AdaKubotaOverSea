@@ -98,7 +98,7 @@ class Settingdairycurrency_controller extends MX_Controller {
                     'ptDest'            => 'MQReceivePrc',
                     'ptFilter'          => '',
                     'ptData'            => json_encode([
-                        "ptAgnCode"     => $this->session->userdata('tSesUsrAgnCode'),
+                        "ptAgnCode"     => $tAgnCode,
                         "ptUsrCode"     => $this->session->userdata("tSesUsername"),
                     ]),
                     'ptConnStr'          => NULL,

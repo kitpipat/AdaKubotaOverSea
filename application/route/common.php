@@ -70,3 +70,4 @@ $route['InsDataNotification']           = "common/Home_controller/FSxAddDataNoti
 $route['ImportFileExcel']               = "common/Home_controller/FSxImpImportFileExcel";
 
 $route['GetMassageQueue']               = "common/Common_controller/FCNtCCMMGetMassageProgress";
+$route['GetMassageQueueDailyCurrent']   = "common/Common_controller/FCNtCCMMGetMassageProgressDailyCurrent";

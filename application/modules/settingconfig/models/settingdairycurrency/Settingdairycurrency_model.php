@@ -99,6 +99,8 @@ class Settingdairycurrency_model extends CI_Model
         try {
             $tAgnCode = $paData['FTAgnCode'];
                 $this->db->set('FCRteRate', $paData['FCRteRate']);
+                $this->db->set('FDLastUpdOn', date('Y-m-d H:i:s'));
+                $this->db->set('FTLastUpdBy', $_SESSION['tSesUsername']);
                 $this->db->where('FTAgnCode', $paData['FTAgnCode']);
                 $this->db->where('FTRteCode', $paData['FTRteCode']);
                 $this->db->update('TFNMRate');

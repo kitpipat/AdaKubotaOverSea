@@ -374,10 +374,11 @@ function JSvCallPageUpdateAutonumber(ptTable, pnSeq) {
 // แนะนำช่องฝาก
 function JSxCurrentcyCurrentRate() {
     try {
-        var tAgnCode    = $('#ohdCurrentAgnCode').val();
+        var tAgnCode    = $('#oetSpcAgncyCode').val();
         var tUsrCode    = $('#ohdCurrentUsrCode').val();
 
     //     JCNxOpenLoading();
+    if(tAgnCode != ''){
         $.ajax({
             type: "POST",
             url: "docGetCurrentDairy",
@@ -399,6 +400,9 @@ function JSxCurrentcyCurrentRate() {
                 JCNxResponseError(jqXHR, textStatus, errorThrown);
             }
         });
+    }else{
+        FSvCMNSetMsgErrorDialog('กรุณาเลือกตัวแทนขาย');
+    }
 
 
     } catch (err) {
@@ -411,7 +415,7 @@ function JSoDailySubscribeMQ(){
 	//RabbitMQ
     /*===========================================================================*/
 
-    var tAgnCode    = $('#ohdCurrentAgnCode').val();
+    var tAgnCode    = $('#oetSpcAgncyCode').val();
     var tUsrCode    = $('#ohdCurrentUsrCode').val();
     var tLangCode = $("#ohdLangEdit").val();
     var tUsrBchCode = $("#oetBchCode").val();
@@ -446,8 +450,8 @@ function JSoDailySubscribeMQ(){
 
     // Callback Page Control(function)
     var poCallback = {
-        tCallPageEdit: 'SettingDailyCurrencyGetList',
-        tCallPageList: 'SettingDailyCurrencyGetList'
+        tCallPageEdit: 'JSvSettingConfigDailyCurrencyCallPageList',
+        tCallPageList: 'JSvSettingConfigDailyCurrencyCallPageList'
     };
 
     // Update Status For Delete Qname Parameter
@@ -461,8 +465,9 @@ function JSoDailySubscribeMQ(){
     };
 
     //Check Show Progress %
-	FSxCMNRabbitMQMessage(poDocConfig, poMqConfig, poUpdateStaDelQnameParams, poCallback);
+	FSxCMNRabbitMQMessageDailyCurrent(poDocConfig, poMqConfig, poUpdateStaDelQnameParams, poCallback);
     /*===========================================================================*/
     //RabbitMQ
 	
 }
+
