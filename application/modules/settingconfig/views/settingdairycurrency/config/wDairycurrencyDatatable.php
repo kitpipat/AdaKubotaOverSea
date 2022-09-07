@@ -94,9 +94,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
 ?>
 
 <!-- TABLE สำหรับ checkbox -->
-<?php if ($FTAgnCode != '' && $dJobDate != '') { ?>
-    <div style='text-align: right;'>ยืนยันล่าสุดเมื่อ <?= $dJobDate; ?></div>
-<?php } ?>
+
 <div class="row">
     <div class="col-md-12">
         <!-- <div class="table-responsive xCNTableScrollY xCNTableHeightCheckbox">  ของ เดิม -->
@@ -109,6 +107,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                         <th class="xCNTextBold" style=""><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyName') ?></th>
                         <th class="xCNTextBold" style=""><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRate') ?></th>
                         <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?></th>
+                        <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingCalDailyCurrencyuSERateLast') ?></th>
                         <th class="xCNTextBold" style="width:160px;">
                             <!-- <label class="fancy-checkbox" style = 'color: #232C3D !important;'> -->
                                 <input type="checkbox" class="ocmCENCheckUseLast" id="ocmCENCheckUseLast">
@@ -119,7 +118,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                             <!-- </label> -->
 
                         </th>
-                        <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?></th>
+                        <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyConfirm') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -131,8 +130,18 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                                 <td style="text-align:left;"><?php echo ($aValue['FTAgnName'] == '') ? '-' : $aValue['FTAgnName']; ?></td>
                                 <td style="text-align:left;"><?php echo $aValue['FTRteCode'] ?></td>
                                 <td style="text-align:left;"><?php echo ($aValue['FTRteName'] == '') ? '-' : $aValue['FTRteName']; ?></td>
-                                <td style="text-align:right;"><?php echo number_format($aValue['FCRteRate'],$nDecimalCurrentcyShow) ?></td>
-                                <td style="text-align:right;"><?php echo number_format($aValue['FCRteLastRate'],$nDecimalCurrentcyShow) ?></td>
+
+                                <?php 
+                                    if( $aValue['FCRteRate'] == $aValue['FCRteLastRate']){
+                                        $tColor = 'color : green !important;';
+                                    }else{
+                                        $tColor = 'color : red !important;';
+                                    }
+                                ?>
+                                
+                                <td style="text-align:right; <?php echo $tColor ?>" ><?php echo number_format($aValue['FCRteRate'],$nDecimalCurrentcyShow) ?></td>
+                                <td style="text-align:right; <?php echo $tColor ?>"><?php echo number_format($aValue['FCRteLastRate'],$nDecimalCurrentcyShow) ?></td>
+                                <td style="text-align:right;"><?php echo number_format((1/$aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
 
 
                                 <td>
@@ -157,6 +166,9 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
         </div>
     </div>
 </div>
+<?php if ($FTAgnCode != '' && $dJobDate != '') { ?>
+    <div style='text-align: right;'>ยืนยันล่าสุดเมื่อ <?= $dJobDate; ?></div>
+<?php } ?>
 
 <div class="row" style="margin-top:10px;" id="odvContentFooterText">
     <div class="col-md-12">

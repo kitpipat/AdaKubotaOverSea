@@ -73,5 +73,7 @@ $lang['tSettingDailyCurrencyCode']                          = "Currency Name";
 $lang['tSettingDailyCurrencyRate']                          = "exchange rate";
 $lang['tSettingDailyCurrencyRateLast']                      = "Last exchange rate";
 $lang['tSettingDailyCurrencyuSERateLast']                   = "Use Last exchange rate";
+$lang['tSettingCalDailyCurrencyuSERateLast']                = "Cal Last exchange rate";
+$lang['tSettingDailyCurrencyConfirm']                       = "Confirm Currentcy";
 $lang['tSettingDailyCurrencyuSERateNew']                    = "New exchange rate";
 $lang['tSettingDailyCurrencyuAgency']                       = "Agency";

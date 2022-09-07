@@ -74,5 +74,7 @@ $lang['tSettingDailyCurrencyCode']                          = "รหัสส�
 $lang['tSettingDailyCurrencyRate']                          = "อัตราแลกเปลี่ยนเดิม";
 $lang['tSettingDailyCurrencyRateLast']                      = "อัตราแลกเปลี่ยนล่าสุด";
 $lang['tSettingDailyCurrencyuSERateLast']                   = "ใช้อัตราแลกเปลี่ยนล่าสุด";
+$lang['tSettingCalDailyCurrencyuSERateLast']                = "คำนวณอัตราแลกเปลี่ยนล่าสุด";
+$lang['tSettingDailyCurrencyConfirm']                       = "อัตราแลกเปลี่ยนยืนยัน";
 $lang['tSettingDailyCurrencyuSERateNew']                    = "อัตราใหม่";
 $lang['tSettingDailyCurrencyuAgency']                       = "ตัวแทนขาย";
