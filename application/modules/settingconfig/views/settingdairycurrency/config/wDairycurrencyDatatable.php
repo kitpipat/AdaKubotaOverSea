@@ -141,7 +141,11 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                                 
                                 <td style="text-align:right; <?php echo $tColor ?>" ><?php echo number_format($aValue['FCRteRate'],$nDecimalCurrentcyShow) ?></td>
                                 <td style="text-align:right; <?php echo $tColor ?>"><?php echo number_format($aValue['FCRteLastRate'],$nDecimalCurrentcyShow) ?></td>
-                                <td style="text-align:right;"><?php echo number_format((1/$aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
+                                <?php if($aValue['FCRteRate'] > 0) {?>
+                                    <td style="text-align:right;"><?php echo number_format((1/$aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
+                                <?php }else{ ?>
+                                    <td style="text-align:right;"><?php echo number_format(($aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
+                                <?php }?>
 
 
                                 <td>

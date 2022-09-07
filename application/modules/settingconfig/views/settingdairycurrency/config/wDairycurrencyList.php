@@ -17,6 +17,8 @@
 $tAgnCode = $this->session->userdata('tSesUsrAgnCode');
 $tAgnName = $this->session->userdata('tSesUsrAgnName');
 $tBchCount = $this->session->userdata('nSesUsrBchCount');
+
+// print_r($this->session->userdata());
 ?>
 
 
@@ -50,7 +52,7 @@ $tBchCount = $this->session->userdata('nSesUsrBchCount');
                     <input type="text" class="form-control xWPointerEventNone" id="oetSpcAgncyName" name="oetSpcAgncyName" maxlength="100" placeholder="<?php echo language('authen/role/role', 'tRolegency'); ?>" value="<?= @$tAgnName; ?>" data-validate-required="<?php echo language('authen/role/role', 'tValiSpcAgency') ?>" readonly>
                     <span class="input-group-btn">
                         <button id="oimBrowseSpcAgncy" type="button" class="btn xCNBtnBrowseAddOn" <?= @$tDisabled ?> <?php
-                                                                                                                        if ($this->session->userdata("nSesUsrBchCount") != 0) {
+                                                                                                                        if ($this->session->userdata("tSesUsrLoginLevel") != 'HQ') {
                                                                                                                             echo 'disabled';
                                                                                                                         }
                                                                                                                         ?>>
