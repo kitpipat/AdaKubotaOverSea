@@ -418,7 +418,7 @@ function JSxAgencyVisibleComponent(ptComponent, pbVisible, ptEffect) {
 //Return : View
 //Return Type : View
 function JSvCallPageAgencyEdit(ptAgnCode, ptStaApv, ptStaActive) {
-    JCNxOpenLoading();
+    // JCNxOpenLoading();
     JStCMMGetPanalLangSystemHTML('JSvCallPageAgencyEdit', ptAgnCode);
     $.ajax({
         type: "POST",
