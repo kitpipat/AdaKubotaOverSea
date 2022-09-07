@@ -117,16 +117,22 @@ class Browser_controller extends CI_Controller {
             }else{
                 $tSQL .= "SELECT ROW_NUMBER() OVER(ORDER BY $tOrderBy) AS rtRowID , ";
             }
-
             // Select Column From Options
             if (isset($oPtions['GrideView'])):
                 if (isset($oPtions['GrideView']['DataColumns'])):
                     $aColumns = $oPtions['GrideView']['DataColumns']; // Return Column
-
                     if(empty($aDistinct)){
                         if (is_array($aColumns)){
                             $tColumns = implode(',', $aColumns);
-                            $tSQL .= " $tColumns ";
+                            // $tSQL .= " $tColumns ";
+                            if (isset($oPtions['CheckLng'])):
+                                if ($oPtions['CheckLng']['status'] == true):
+                                    $tColumns = str_replace(end($aColumns),'ISNULL('.end($aColumns).' , (SELECT TOP 1 '.end($aColumns).' FROM '.$oPtions['CheckLng']['Lang'].' WHERE '.$oPtions['CheckLng']['Lang'].'.'.$oPtions['Table']['PK'].' = '.reset($aColumns).')) AS '.substr(strrchr(end($aColumns),"."), 1).'',$tColumns);
+                                    $tSQL .= " $tColumns ";
+                                endif;
+                            else:
+                                $tSQL .= " $tColumns ";
+                            endif;
                         }else{
                             echo "Error:No column select.";
                             exit();

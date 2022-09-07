@@ -155,7 +155,11 @@
             ReturnType      : 'S',
             Value           : ["oetBchCountryCode", "TCNMCountry.FTCtyCode"],
             Text            : ["oetBchCountryName", "TCNMCountry_L.FTCtyName"]
-        }
+        },
+        CheckLng : {
+            status: true,
+            Lang:'TCNMCountry_L',
+        },
     };
     // Create By Napat(Jame) 11/06/2020
     function JSxBCHChkBchTypeShowAGNBrowse(){

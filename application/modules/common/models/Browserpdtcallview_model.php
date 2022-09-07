@@ -50,7 +50,9 @@ class Browserpdtcallview_model extends CI_Model {
             $tSQL      .= "$tSqlSPL";
             $tSQL      .= " ProductM.*, ".$tSelectFiledPrice." FROM ( ";
             $tSQL      .= " SELECT * FROM (";
-            $tSQL      .= " SELECT *  , ROW_NUMBER() OVER(ORDER BY FTPdtCode ASC) AS ROWSUB from VCN_ProductsHQ WHERE FNLngIDPdt = '$nLngID' AND FNLngIDUnit = '$nLngID' ";
+            $tSQL      .= " SELECT *  , ROW_NUMBER() OVER(ORDER BY FTPdtCode ASC) AS ROWSUB from VCN_ProductsHQ WHERE 
+            -- FNLngIDPdt = '$nLngID' AND 
+            FNLngIDUnit = '$nLngID' ";
             $tSQL      .= str_replace('Products.','',$ptFilter);
             $tSQL      .= " ) MAINPDT WHERE 1=1 ";
             $tSQL      .= " ) AS ProductM";
@@ -189,6 +191,8 @@ class Browserpdtcallview_model extends CI_Model {
             $tMerSession        = $this->session->userdata("tSesUsrMerCode");
             $aRowLen            = FCNaHCallLenData($paData['nRow'],$paData['nPage']);
             $nLngID             = $this->session->userdata("tLangEdit");
+            $nLngUserID     = $this->session->userdata("tSesDefLanguage");
+            
 
             //หาว่า brach นี้ mer อะไร
             if($paData['tBCH'] == ''){
@@ -246,7 +250,7 @@ class Browserpdtcallview_model extends CI_Model {
             $tSQL       .= "FROM (";
             $tSQL       .= "SELECT * ";
             $tSQL       .= "FROM VCN_ProductsBranch";
-            $tSQL       .= " WHERE FTPdtSpcBch IN ($tBCH) OR ISNULL(FTPdtSpcBch, '') = '' AND FNLngIDPdt = '$nLngID' AND FNLngIDUnit = '$nLngID' ";
+            $tSQL       .= " WHERE FTPdtSpcBch IN ($tBCH) OR ISNULL(FTPdtSpcBch, '') = '' AND FNLngIDPdt = '$nLngUserID' AND FNLngIDUnit = '$nLngID' ";
 
             //เพิ่ม สินค้าที่อยู่ ใน AGN
             if($tAGN != 'null'){

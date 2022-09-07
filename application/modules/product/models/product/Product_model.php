@@ -23,6 +23,7 @@ class Product_model extends CI_Model
             $tPdtForSysLine1    = "";
         }
 
+
         /* |-------------------------------------------------------------------------------------------| */
         /* |                            สิทธิในการมองเห็นสินค้า CR.wat                                      | */
         /* |-------------------------------------------------------------------------------------------| */
@@ -37,6 +38,8 @@ class Product_model extends CI_Model
         /* | */
         $tSessionBchCode        = $this->session->userdata('tSesUsrBchCodeMulti');      // | */ 
         /* | */
+        $tCtyCode               = $this->session->userdata('tSesDefCountry');      // | */ 
+        /* | */
         $tWHEREPermission_BCH   = '';                                                   // | */ 
         /* | */
         $tWHEREPermission_SHP   = '';                                                   // | */     
@@ -45,6 +48,8 @@ class Product_model extends CI_Model
         /* | */                       //: และ Mer ตัวเองที่ไม่ผูกกับสาขา                                  // | */ 
         /* | */
         if ($tSesUsrLevel == 'BCH') {                                                     // | */
+             /* | */
+             $tWHEREPermission_BCH   .= " AND PDT.FTCtyCode = '$tCtyCode'  ";       // | */ 
             /* | */
             $tWHEREPermission_BCH   .= " AND ( ISNULL(PDLSPC.FTPdtCode,'') = ''  ";       // | */ 
             /* | */

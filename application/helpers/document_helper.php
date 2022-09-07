@@ -570,6 +570,67 @@ function FCNxHGetOptionDecimalShow(){
     return $tDataShwDec;
 }
 
+//Functionality: Get Option Decical Show Currentcy
+//Parameters:  Function Parameter
+//Creator: 11/10/2018 Krit(Copter)
+//Last Modified :
+//Return : 
+//Return Type: Array
+function FCNxHGetOptionDecimalCurrencyShow(){
+
+    $ci = &get_instance();
+    $ci->load->database();
+    $tSQL = "SELECT FTSysStaDefValue,FTSysStaUsrValue
+             FROM  TSysConfig 
+             WHERE FTSysCode = 'ADecPntShwRte'
+            ";
+
+    $oQuery = $ci->db->query($tSQL);
+
+    if ($oQuery->num_rows() > 0) {
+        $oRes  = $oQuery->result();
+        if ($oRes[0]->FTSysStaUsrValue != '') {
+            $tDataShwDec = $oRes[0]->FTSysStaUsrValue;
+        } else {
+            $tDataShwDec = $oRes[0]->FTSysStaDefValue;
+        }
+    } else {
+        //Decimal Default = 2 
+        $tDataShwDec = 2;
+    }
+    return $tDataShwDec;
+}
+
+//Functionality: Get Option Decical Show Currentcy
+//Parameters:  Function Parameter
+//Creator: 11/10/2018 Krit(Copter)
+//Last Modified :
+//Return : 
+//Return Type: Array
+function FCNxHGetOptionDecimalCurrencySave(){
+
+    $ci = &get_instance();
+    $ci->load->database();
+    $tSQL = "SELECT FTSysStaDefValue,FTSysStaUsrValue
+             FROM  TSysConfig 
+             WHERE FTSysCode = 'ADecPntSavRte'
+            ";
+
+    $oQuery = $ci->db->query($tSQL);
+
+    if ($oQuery->num_rows() > 0) {
+        $oRes  = $oQuery->result();
+        if ($oRes[0]->FTSysStaUsrValue != '') {
+            $tDataShwDec = $oRes[0]->FTSysStaUsrValue;
+        } else {
+            $tDataShwDec = $oRes[0]->FTSysStaDefValue;
+        }
+    } else {
+        //Decimal Default = 2 
+        $tDataShwDec = 2;
+    }
+    return $tDataShwDec;
+}
 
 //Functionality: Get Option Doc Save
 //Parameters:  Function Parameter

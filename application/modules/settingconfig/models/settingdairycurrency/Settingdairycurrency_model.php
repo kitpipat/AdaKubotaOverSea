@@ -134,7 +134,7 @@ class Settingdairycurrency_model extends CI_Model
                 $this->db->where('FTAgnCode', $tValAgn);
                 $this->db->update('TCNSJobTask');
             } else {
-                $tSQL = "INSERT INTO TCNSJobTask(FTAgnCode, FTJobRefTbl, FDJobDateCfm, FDJobStaUse)
+                $tSQL = "INSERT INTO TCNSJobTask(FTAgnCode, FTJobRefTbl, FDJobDateCfm, FTJobStaUse)
                 VALUES( 
                     '$tValAgn',
                     'TFNMRate',
