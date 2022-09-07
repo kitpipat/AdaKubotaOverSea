@@ -123,7 +123,7 @@ function JSnAddEditUrl(tRouteEvent) {
                     },
                     "dublicateCode": {}
                 },
-                oetBchName: {"required": {}}
+                // oetUrlFormatName: {"required": {}}
                 
             },
             messages: {
@@ -131,9 +131,9 @@ function JSnAddEditUrl(tRouteEvent) {
                     "required"      : $('#oetUrlCode').attr('data-validate-required'),
                     "dublicateCode" : $('#oetUrlCode').attr('data-validate-dublicateCode')
                 },      
-                oetBchName:   {
-                    "required"      : $('#oetBchName').attr('data-validate-required'),
-                }, 
+                // oetUrlFormatName:   {
+                //     "required"      : $('#oetUrlFormatName').attr('data-validate-required'),
+                // }, 
             },
             errorElement: "em",
             errorPlacement: function(error, element) {
@@ -441,7 +441,6 @@ function JSvCallPageUrlEdit(ptUrlCode) {
                 $('#odvBtnUrlInfo').hide();
                 $('#odvBtnAddEdit').show();
                 $('#odvContentPageUrl').html(tResult);
-                $('#oetPunCode').addClass('xCNDisable');
                 $('.xCNDisable').attr('readonly', true);
                 $('.xCNBtnGenCode').attr('disabled', true);
             }

@@ -78,14 +78,14 @@ var oBchBrowseAgency = {
     };
 
     var oBchBrowseUrl = {
-        Title : ['settingconfig/settingurlformat/settingurlformat', 'tUrlFormatTitle'],
+        Title : ['settingconfig/settingurlformat/settingurlformat', 'tUrlName'],
         Table:{Master:'TFNSFmtURL_L', PK:'FTFmtCode'},
         Where :{
             Condition : ['AND TFNSFmtURL_L.FTFmtType = 1']
         },
         GrideView:{
             ColumnPathLang	: 'settingconfig/settingurlformat/settingurlformat',
-            ColumnKeyLang	: ['tUrlFormatTitleCode', 'tUrlFormatTitle'],
+            ColumnKeyLang	: ['tUrlCode', 'tUrlName'],
             ColumnsSize     : ['15%', '85%'],
             WidthModal      : 50,
             DataColumns		: ['TFNSFmtURL_L.FTFmtCode', 'TFNSFmtURL_L.FTFmtName'],
@@ -106,13 +106,21 @@ var oBchBrowseAgency = {
 
         $('.selectpicker').selectpicker('refresh');
 
+        if($('#oetAngCode').val()){
+         $('#oimBchBrowseVat').attr('disabled', true);
+        }
+
+        if($('#oetUrlCode').val()){
+         $('#odvUrlAutoGenCode').addClass('xCNHide');
+        }
+
         $('.xCNDatePicker').datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true,
             todayHighlight: true,
             startDate: new Date(),
         });
-
+        
         
         $('#oimBchBrowseVat').click(function(){
             JSxCheckPinMenuClose();
