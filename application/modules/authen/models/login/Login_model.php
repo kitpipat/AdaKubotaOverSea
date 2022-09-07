@@ -357,6 +357,14 @@ class Login_model extends CI_Model {
        }
     }
 
+    public function FSaMGetLanguage($ptCtyCode){
+        
+        $tSQL = "SELECT TOP 1 FNLngID FROM TCNMCountry WHERE FTCtyCode = '$ptCtyCode'";
+        $oQuery = $this->db->query($tSQL);
+        return $oQuery->result_array()[0]['FNLngID'];
+        
+     }
+
 }
 
 

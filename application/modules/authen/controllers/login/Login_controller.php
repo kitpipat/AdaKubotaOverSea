@@ -44,6 +44,7 @@ class Login_controller extends MX_Controller {
 					$aDataUsrGroup = $this->Login_model->FSaMLOGGetDataUserLoginGroup($aDataUsr[0]['FTUsrCode']);
 					$aDataUsrRole  = $this->Login_model->FSaMLOGGetUserRole($aDataUsr[0]['FTUsrCode']);
 					$aDataDefCty   = $this->Login_model->FSaMGetCountry($aDataUsrGroup[0]['FTAgnCode']);
+					$aDataDefLanguage   = $this->Login_model->FSaMGetLanguage($aDataDefCty);
 					if(empty($aDataUsrGroup[0]['FTMerCode']) && empty($aDataUsrGroup[0]['FTBchCode']) && empty($aDataUsrGroup[0]['FTShpCode'])){
 						$aDataComp 			= $this->Login_model->FSaMLOGGetBch();
 
@@ -105,6 +106,8 @@ class Login_controller extends MX_Controller {
 
 					// Default Country
 					$this->session->set_userdata("tSesDefCountry", $aDataDefCty);
+					$this->session->set_userdata("tSesDefLanguage", $aDataDefLanguage);
+					
 
 					// Merchant
 					$this->session->set_userdata("tSesUsrMerCode", $tUsrMerCodeDefult);

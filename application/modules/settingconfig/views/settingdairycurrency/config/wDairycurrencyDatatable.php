@@ -88,6 +88,10 @@
         font-weight: bold;
     }
 </style>
+<?php
+$nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
+$nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
+?>
 
 <!-- TABLE สำหรับ checkbox -->
 <?php if ($FTAgnCode != '' && $dJobDate != '') { ?>
@@ -127,8 +131,8 @@
                                 <td style="text-align:left;"><?php echo ($aValue['FTAgnName'] == '') ? '-' : $aValue['FTAgnName']; ?></td>
                                 <td style="text-align:left;"><?php echo $aValue['FTRteCode'] ?></td>
                                 <td style="text-align:left;"><?php echo ($aValue['FTRteName'] == '') ? '-' : $aValue['FTRteName']; ?></td>
-                                <td style="text-align:right;"><?php echo $aValue['FCRteRate'] ?></td>
-                                <td style="text-align:right;"><?php echo $aValue['FCRteLastRate'] ?></td>
+                                <td style="text-align:right;"><?php echo number_format($aValue['FCRteRate'],$nDecimalCurrentcyShow) ?></td>
+                                <td style="text-align:right;"><?php echo number_format($aValue['FCRteLastRate'],$nDecimalCurrentcyShow) ?></td>
 
 
                                 <td>
@@ -139,7 +143,7 @@
 
 
                                 <td>
-                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' id='oetUseCurrency<?= $key ?>' value='<?php echo $aValue['FCRteRate'] ?>'>
+                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy xCNInputNumericWithDecimal" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' id='oetUseCurrency<?= $key ?>' value='<?php echo number_format( $aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>'>
                                 </td>
                             </tr>
                         <?php } ?>

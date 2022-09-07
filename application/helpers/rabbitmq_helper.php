@@ -42,7 +42,15 @@ function FCNxCallRabbitMQ($paParams,$pbStaUse = true) {
     $oChannel = $oConnection->channel();
     // $oChannel->queue_declare($tQueueName, false, false, false, false);
     // $oMessage = new AMQPMessage(json_encode($aParams));
-    $oChannel->queue_declare($tQueueName, false, true, false, false);
+    switch($tVhostType){
+        case 'M': {
+            $oChannel->queue_declare($tQueueName, false, true, false, false);
+            break;
+        }
+        default : {
+            $oChannel->queue_declare($tQueueName, false, false, false, false);
+        }
+    }
     $oMessage = new AMQPMessage(json_encode($aParams,JSON_UNESCAPED_UNICODE));
     // print_r($oMessage);
     $oChannel->basic_publish($oMessage, "", $tQueueName);
