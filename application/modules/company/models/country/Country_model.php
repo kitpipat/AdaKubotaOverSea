@@ -8,7 +8,7 @@ class Country_model extends CI_Model {
     //Creator :  13/09/2018 Wasin
     //Return : data
     //Return Type : Array
-    public function FSaMPUNList($paData){
+    public function FSaMCTYList($paData){
         try{
             $aRowLen        = FCNaHCallLenData($paData['nRow'],$paData['nPage']);
             $nLngID         = $paData['FNLngID'];
@@ -110,7 +110,8 @@ class Country_model extends CI_Model {
                                     CTY.FTCtyStaCtrlRate AS reCtyStaCtrlRate,
                                     CTY.FTCtyLatitude AS rtCtyLatitude,
 	                                CTY.FTCtyLongitude AS rtCtyLongitude,
-                                    RATE_L.FTRteIsoName AS rtRteIsoName
+                                    RATE_L.FTRteIsoName AS rtRteIsoName,
+                                    CTY.FTCtyRefID AS rtCtyRefID
                             FROM TCNMCountry CTY 
                             LEFT JOIN TCNMCountry_L CTY_L ON CTY.FTCtyCode = CTY_L.FTCtyCode 
                             LEFT JOIN TSysLanguage STSL ON CTY.FNLngID = STSL.FNLngID
@@ -176,6 +177,7 @@ class Country_model extends CI_Model {
                     'FTCtyStaCtrlRate' => $paDataCty['FTCtyStaCtrlRate'],
                     'FTCtyLongitude' => $paDataCty['FTCtyLongitude'],
                     'FTCtyLatitude' => $paDataCty['FTCtyLatitude'],
+                    'FTCtyRefID'    => $paDataCty['FTCtyRefID'],
             ));
             if($this->db->affected_rows() > 0){
                 $aStatus = array(
@@ -196,6 +198,7 @@ class Country_model extends CI_Model {
                     'FTCtyStaCtrlRate' => $paDataCty['FTCtyStaCtrlRate'],
                     'FTCtyLongitude' => $paDataCty['FTCtyLongitude'],
                     'FTCtyLatitude' => $paDataCty['FTCtyLatitude'],
+                    'FTCtyRefID'    => $paDataCty['FTCtyRefID'],
                 ));
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(

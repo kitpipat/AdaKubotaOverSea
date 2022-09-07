@@ -7,26 +7,28 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tCtyLangID 		= $raResult['raItems']['rtCtyLangID'];
 		$tCtyStaActive		= $raResult['raItems']['rtCtyStaUse'];
 		$tExcRte			= $raResult['raItems']['reCtyStaCtrlRate'];
-		$tRteCode			= $raResult['raItems']['rtIsoCode'];
 		$tVatCode			= $raResult['raItems']['rtCtyVatCode'];
 		$tVatRate 			= $raResult['raItems']['rtCtyVatRate'];
 		$tCtyLa				= $raResult['raItems']['rtCtyLatitude'];
 		$tCtyLon 			= $raResult['raItems']['rtCtyLongitude'];
 		$tRteName			= $raResult['raItems']['rtRteIsoName'];
+		$tRteCode			= $raResult['raItems']['rtIsoCode'];
+		$tCtyRef			= $raResult['raItems']['rtCtyRefID'];
 	}else{
 		$tRoute				= 'countryEventAdd';
 		$tCtyLangName 		= 'ภาษา';
 		$tCtyName			= '';
+		$tCtyRef			= '';
 		$tCtyCode			= '';
 		$tCtyLangID 		= '1';
 		$tCtyStaActive		= '2';
 		$tExcRte			= '2';
-		$tRteCode			= '';
 		$tVatCode			= '';
-		$tVatRate 			= 'อัตราภาษี';
+		$tVatRate 			= '';
 		$tCtyLa				= '';
 		$tCtyLon 			= '';
-		$tRteName			= 'สกุลเงิน';
+		$tRteName			= '';
+		$tRteCode			= '';
 	}
 ?>
 <div id="odvBranchPanelBody" class="panel-body" style="padding-top:10px !important;">
@@ -81,7 +83,17 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 															</div>											
 														</div>
 													</div>
-											</div>
+												</div>
+
+												<div class="row">
+												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+														<div class="form-group">
+															<label class="xCNLabelFrm">
+																<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryRef')?> </label>
+															<input type="text" class="form-control" maxlength="5" id="oetCtyRef" name="oetCtyRef" autocomplete="off" placeholder="<?php echo language('company/country/country','tCountryRef')?>" data-validate-required="<?php echo language('company/country/country','tCountryRefValidate')?>" value="<?php echo @$tCtyRef; ?>">
+														</div>
+													</div>
+												</div>
 
 												<div class="row">
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -92,6 +104,8 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 														</div>
 													</div>
 												</div>
+
+												
 
 												<div class="row">
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -114,7 +128,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 															<label class="xCNLabelFrm"><?php echo language('company/country/country','tCountryVat')?></label>
 															<div class="input-group">
 																<input type="text" class="form-control xCNHide" id="oetVatCode" name="oetVatCode" value="<?php echo @$tVatCode; ?>">
-																<input type="text" class="form-control xWPointerEventNone" id="oetVatRate" name="oetVatRate" value="<?php echo @$tVatRate; ?>" readonly>
+																<input type="text" class="form-control xWPointerEventNone" placeholder="อัตราภาษี" id="oetVatRate" name="oetVatRate" value="<?php echo @$tVatRate; ?>" readonly data-validate-required="<?php echo language('company/country/country','tCountryVatValidate')?>">
 																<span class="input-group-btn">
 																	<button id="oimBchBrowseVat" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
 																</span>
@@ -129,7 +143,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 															<label class="xCNLabelFrm"><?php echo language('company/country/country','tCountryIso')?></label>
 															<div class="input-group">
 																<input type="text" class="form-control xCNHide" id="oetRteCode" name="oetRteCode" value="<?php echo @$tRteCode; ?>">
-																<input type="text" class="form-control xWPointerEventNone" id="oetRteName" name="oetRteName" value="<?php echo @$tRteName; ?>" readonly>
+																<input type="text" class="form-control xWPointerEventNone" placeholder="สกุลเงินสากล" id="oetRteName" name="oetRteName" value="<?php echo @$tRteName; ?>" readonly data-validate-required="<?php echo language('company/country/country','tCountryIsoValidate')?>">
 																<span class="input-group-btn">
 																	<button id="oimBchBrowseRte" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
 																</span>
@@ -155,7 +169,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 												</div>																					
 
 												<div class="row">
-												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+												   <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 														<div class="form-group">
 															<label class="xCNLabelFrm">
 																<?php echo language('company/country/country','tCountryla')?> </label>
@@ -171,9 +185,26 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 															value="<?php echo @$tCtyLa; ?>">
 														</div>
 													</div>
+
+													<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+														<div class="form-group">
+															<label class="xCNLabelFrm">
+																<?php echo language('company/country/country','tCountrylon')?> </label>
+															<input 
+															type="text" 
+															class="form-control" 
+															id="oetCtyLon" 
+															name="oetCtyLon" 
+															autocomplete="off" 
+															maxlength="50"
+															oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+															placeholder="<?php echo language('company/country/country','tCountrylon')?>" 
+															value="<?php echo @$tCtyLon; ?>">
+														</div>
+													</div>
 												</div>
 
-												<div class="row">
+												<!-- <div class="row">
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
 															<label class="xCNLabelFrm">
@@ -191,7 +222,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 														</div>
 													</div>
 												</div>
-												
+												 -->
 												<div class="row">
 													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">

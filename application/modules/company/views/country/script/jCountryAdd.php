@@ -115,6 +115,9 @@ var oBchBrowseLang = function(poReturnInputCty){
             startDate: new Date(),
         });
 
+        if($('#oetCtyCode').val()){
+         $('#odvUrlAutoGenCode').addClass('xCNHide');
+        }
         
         $('#oimBchBrowseVat').click(function(){
             JSxCheckPinMenuClose();

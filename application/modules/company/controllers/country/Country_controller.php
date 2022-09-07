@@ -34,7 +34,7 @@ class Country_controller extends MX_Controller {
     //Creator : 13/09/2018 wasin
     //Return : String View
     //Return Type : View
-    public function FSvCPUNListPage(){
+    public function FSvCCTYListPage(){
         $aAlwEventCty	    = FCNaHCheckAlwFunc('country/0/0');
         $this->load->view('company/country/wCountryList',array(
             'aAlwEventCty'  =>  $aAlwEventCty
@@ -45,8 +45,8 @@ class Country_controller extends MX_Controller {
     //Parameters : Ajax Call View DataTable
     //Creator : 13/09/2018 wasin
     //Return : String View
-    //Return Type : View
-    public function FSvCPUNDataList(){
+    //Return Type : ViewoetCtyRef
+    public function FSvCCTYDataList(){
         try{
             $tSearchAll = $this->input->post('tSearchAll');
             $nPage      = ($this->input->post('nPageCurrent') == '' || null)? 1 : $this->input->post('nPageCurrent');   // Check Number Page
@@ -65,7 +65,7 @@ class Country_controller extends MX_Controller {
                 'FNLngID'       => $nLangEdit,
                 'tSearchAll'    => $tSearchAll
             );
-            $aPunDataList           = $this->Country_model->FSaMPUNList($aData);
+            $aPunDataList           = $this->Country_model->FSaMCTYList($aData);
             $aAlwEventCty	    = FCNaHCheckAlwFunc('country/0/0');
             $aGenTable  = array(
                 'aPunDataList'          => $aPunDataList,
@@ -84,7 +84,7 @@ class Country_controller extends MX_Controller {
     //Creator : 13/09/2018 wasin
     //Return : String View
     //Return Type : View
-    public function FSvCPUNAddPage(){
+    public function FSvCCTYAddPage(){
         try{
             $aDataPdtUnit = array(
                 'nStaAddOrEdit'   => 99
@@ -101,7 +101,7 @@ class Country_controller extends MX_Controller {
     //Last Modified : -
     //Return : String View
     //Return Type : View
-    public function FSvCPUNEditPage(){
+    public function FSvCCTYEditPage(){
         try{
             $tCtyCode       = $this->input->post('tCtyCode');
             $nLangResort    = $this->session->userdata("tLangID");
@@ -136,7 +136,7 @@ class Country_controller extends MX_Controller {
     //Update : 23/08/2019 Saharat(Golf)
     //Return : Status Add Event
     //Return Type : String
-    public function FSoCPUNAddEvent(){
+    public function FSoCCTYAddEvent(){
         try{
             $tIsAutoGenCode = $this->input->post('ocbCtyAutoGenCode');
             $tCtyCode = "";
@@ -171,7 +171,8 @@ class Country_controller extends MX_Controller {
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
                 'FNLngID'       => $this->input->post("oetCtyLangID"),
                 'FTCtyLongitude' => $this->input->post('oetCtyLon'),
-                'FTCtyLatitude' => $this->input->post('oetCtyLa')
+                'FTCtyLatitude' => $this->input->post('oetCtyLa'),
+                'FTCtyRefID'    => $this->input->post('oetCtyRef'),
             );
             $oCountDup      = $this->Country_model->FSnMCTYCheckDuplicate($aDataCty['FTCtyCode']);
             $nStaDup        = $oCountDup['counts'];
@@ -211,7 +212,7 @@ class Country_controller extends MX_Controller {
     //Creator : 13/09/2018 wasin
     //Return : Status Edit Event
     //Return Type : String
-    public function FSoCPUNEditEvent(){
+    public function FSoCCTYEditEvent(){
         try{
             $aDataPdtUnit   = array(
                 'FTCtyCode'     => $this->input->post('oetCtyCode'),
@@ -226,7 +227,8 @@ class Country_controller extends MX_Controller {
                 'FTCreateBy'    => $this->session->userdata('tSesUsername'),
                 'FNLngID'       => $this->input->post("oetCtyLangID"),
                 'FTCtyLongitude' => $this->input->post('oetCtyLon'),
-                'FTCtyLatitude' => $this->input->post('oetCtyLa')
+                'FTCtyLatitude' => $this->input->post('oetCtyLa'),
+                'FTCtyRefID'    => $this->input->post('oetCtyRef'),
             );
             $this->db->trans_begin();
             $aStaPunMaster  = $this->Country_model->FSaMCTYAddUpdateMaster($aDataPdtUnit);
@@ -258,7 +260,7 @@ class Country_controller extends MX_Controller {
     //Update : 1/4/2019 Pap
     //Return : Status Delete Event
     //Return Type : String
-    public function FSoCPUNDeleteEvent(){
+    public function FSoCCTYDeleteEvent(){
         $tIDCode = $this->input->post('tIDCode');
         $aDataMaster = array(
             'FTCtyCode' => $tIDCode
