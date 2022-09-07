@@ -1,5 +1,5 @@
 <?php
-
+$tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 	if(isset($aResult['rtCode']) && $aResult['rtCode'] == 1){
 		$tRoute				= 'branchEventEdit';
 		// Control Tab Menu
@@ -43,7 +43,11 @@
 		$dBchStop	    = date('Y-m-d', strtotime('+1 year'));
 		$dBchSaleStart  = date('Y-m-d');
 		$dBchSaleStop   = date('Y-m-d', strtotime('+1 year'));
+		if(!empty($tAngCodeHide)){
+		$tBchType		= '4';
+		}else{
 		$tBchType		= "";
+		}
 		$tBchCode		= "";
 		$tBchName       = "";
 		$tBchWahCode	= "00001";
