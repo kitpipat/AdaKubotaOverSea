@@ -140,8 +140,9 @@ function JSnAddEditCountry(tRouteEvent) {
             rules: {
                 oetCtyCode:  { "required": {} },
                 oetCtyName:  { "required": {} },
-                oetRteCode:  { "required": {} },
-                
+                oetRteName:  { "required": {} },
+                oetCtyRef:  { "required": {} },
+                oetVatRate:  { "required": {} },
             },
             messages: {
                 oetCtyCode: {
@@ -150,8 +151,14 @@ function JSnAddEditCountry(tRouteEvent) {
                 oetCtyName: {
                     "required": $('#oetCtyName').attr('data-validate-required'),
                 },
-                oetRteCode: {
-                    "required": $('#oetRteCode').attr('data-validate-required'),
+                oetRteName: {
+                    "required": $('#oetRteName').attr('data-validate-required'),
+                },
+                oetCtyRef: {
+                    "required": $('#oetCtyRef').attr('data-validate-required'),
+                },
+                oetVatRate: {
+                    "required": $('#oetVatRate').attr('data-validate-required'),
                 },
                 
             },
