@@ -297,20 +297,20 @@ function JSxSaveVatRate(tRoute){
 
             $('#ofmSaveVatRate').validate({
                 rules: {
-                    oetVatCode: {
-                        uniqueVatCode: JCNVatrateIsCreatePage(),
-                        required: true,
-                        digits: true,
-                        maxlength: 5
-                    }
+                    // oetVatCode: {
+                    //     uniqueVatCode: JCNVatrateIsCreatePage(),
+                    //     required: true,
+                    //     digits: true,
+                    //     maxlength: 5
+                    // }
                 },
                 messages: {
-                    oetVatCode: {
-                        uniqueVatCode: "<?php echo language('company/vatrate/vatrate','tVatvalidateDupicateCode'); ?>",
-                        required: "<?php echo language('company/vatrate/vatrate','tVATvalidateCode'); ?>",
-                        digits: "<?php echo language('company/vatrate/vatrate','tVATvalidateOnlyDigit'); ?>",
-                        maxlength: jQuery.validator.format("<?php echo language('company/vatrate/vatrate','tVatvalidateCharacters'); ?>")
-                    }
+                    // oetVatCode: {
+                    //     uniqueVatCode: "<?php echo language('company/vatrate/vatrate','tVatvalidateDupicateCode'); ?>",
+                    //     required: "<?php echo language('company/vatrate/vatrate','tVATvalidateCode'); ?>",
+                    //     digits: "<?php echo language('company/vatrate/vatrate','tVATvalidateOnlyDigit'); ?>",
+                    //     maxlength: jQuery.validator.format("<?php echo language('company/vatrate/vatrate','tVatvalidateCharacters'); ?>")
+                    // }
                 },
                 submitHandler: function(form) {
                     // Set data

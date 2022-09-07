@@ -88,8 +88,12 @@ class Agency_model extends CI_Model
 
         $tWhere = "";
 
+        // print_r($paData['tStaUsrLevel']);
+
         if (!empty($paData['tStaUsrLevel']) && $paData['tStaUsrLevel'] != "HQ") {
-            // $tWhere .=  " AND ((AGN.FTAgnCode = '$tUsrAgnCode') OR ( AGN.FTCreateBy ='$tSesUserCode' )) ";
+            $tWhere .=  " AND ((AGN.FTAgnCode = '$tUsrAgnCode') 
+            -- OR ( AGN.FTCreateBy ='$tSesUserCode' )
+            ) ";
         }
 
         $aRowLen = FCNaHCallLenData($paData['nRow'], $paData['nPage']);
@@ -170,11 +174,27 @@ class Agency_model extends CI_Model
     //Return Type : Array
     public function FSnMAGNGetPageAll($ptSearchList, $ptLngID)
     {
+        $tUsrAgnCode = $this->session->userdata("tSesUsrAgnCode");
+        $tSesUserCode = $this->session->userdata("tSesUserCode");
+
+        $tWhere = "";
+
+        $tUsrLevel = $this->session->userdata("tSesUsrLevel");
+
+
+        if (!empty($tUsrLevel) && $tUsrLevel != "HQ") {
+            $tWhere .=  " AND ((ANG.FTAgnCode = '$tUsrAgnCode') 
+            ) ";
+        }
+
+        
 
         $tSQL = "SELECT COUNT (ANG.FTAgnCode) AS counts
                  FROM TCNMAgency ANG
                  LEFT JOIN [TCNMAgency_L] ANGL ON ANG.FTAgnCode = ANGL.FTAgnCode AND ANGL.FNLngID = $ptLngID
-                 WHERE 1=1 ";
+                 WHERE 1=1 
+                $tWhere
+                 ";
 
         if ($ptSearchList != '') {
             $tSQL .= " AND (ANG.FTAgnCode COLLATE THAI_BIN LIKE '%$ptSearchList%'";
