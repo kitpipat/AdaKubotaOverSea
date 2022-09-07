@@ -139,7 +139,7 @@ class Product_model extends CI_Model
         }
 
 
-        $tSQL = "SELECT
+        $tSQL = "SELECT DISTINCT
                         PDT.*, PDTL.FTPdtName,
                         PUNL.FTPunCode,
                         PUNL.FTPunName,
