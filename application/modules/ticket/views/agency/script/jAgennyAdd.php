@@ -351,7 +351,7 @@
         Join: {
             Table: ['TCNMCountry_L'],
             On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND TCNMCountry_L.FNLngID = ' + nLangEdits, ]
-        },
+        },  
         Where: {
             Condition: ['AND TCNMCountry.FTCtyStaUse = 1']
         },
@@ -370,6 +370,11 @@
             ReturnType: 'S',
             Value: ["oetAgnCyCode", "TCNMCountry.FTCtyCode"],
             Text: ["oetAgnCyName", "TCNMCountry_L.FTCtyName"],
+        },
+        // DebugSQL : true,
+        CheckLng : {
+            status: true,
+            Lang:'TCNMCountry_L',
         },
     };
 </script>

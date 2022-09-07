@@ -234,6 +234,10 @@
             Value: ["oetCmpCyCode", "TCNMCountry.FTCtyCode"],
             Text: ["oetCmpCyName", "TCNMCountry_L.FTCtyName"],
         },
+        CheckLng : {
+            status: true,
+            Lang:'TCNMCountry_L',
+        },
     };
 
 
