@@ -1,6 +1,6 @@
 <?php
-$lang['tUrlName']           = "URL";
-$lang['tUrlCode']           = "รหัส URL";
+$lang['tUrlName']           = "รายละเอียด";
+$lang['tUrlCode']           = "รหัส";
 $lang['tAngName']           = "ตัวแทนขาย";
 $lang['tBchName']           = "สาขา";
 $lang['tAngDel']            = "ลบ";

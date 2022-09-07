@@ -1,5 +1,5 @@
 <?php
-$tAgnCode = $this->session->userdata('tSesUsrAgnCode');
+$tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 $tAngName = $this->session->userdata('tSesUsrAgnName');
 if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tRoute				= 'urlEventEdit';	
@@ -19,7 +19,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tUrlFormatName		= 'URL';
 		$tUrlFormatCode		= '';
 		$tFspCode			= "";
-		if(!empty($tAgnCode) && !empty($tAngName) ){
+		if(!empty($tAngCodeHide) && !empty($tAngName) ){
 			$tAngCode			= $this->session->userdata('tSesUsrAgnCode');
 			$tAngName 			= $this->session->userdata('tSesUsrAgnName');
 		}else{
@@ -86,6 +86,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 														<div class="form-group">
 															<label class="xCNLabelFrm"><?php echo language('settingconfig/settingurlformat/settingurlformat','tAngName');?></label>
 															<div class="input-group">
+																<input type="hidden" id="oetAngCode" value="<?php echo @$tAngCodeHide; ?>">
 																<input type="text" class="form-control xCNHide" id="oetBchAgnCode" name="oetBchAgnCode" value="<?php echo @$tAngCode; ?>">
 																<input type="text" class="form-control xWPointerEventNone" id="oetBchAgnName" name="oetBchAgnName" value="<?php echo @$tAngName; ?>" readonly>
 																<span class="input-group-btn">
@@ -99,7 +100,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 												<div class="row">
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
-															<label class="xCNLabelFrm"><span class="text-danger">*</span><?php echo language('settingconfig/settingurlformat/settingurlformat','tBchName');?></label>
+															<label class="xCNLabelFrm"><?php echo language('settingconfig/settingurlformat/settingurlformat','tBchName');?></label>
 															<div class="input-group">
 																<input type="text" class="form-control xCNHide" id="oetBchCode" name="oetBchCode" value="<?php echo @$tBchCode; ?>" >
 																<input type="text" class="form-control xWPointerEventNone" id="oetBchName" name="oetBchName" placeholder="เลือกสาขา" value="<?php echo @$tBchName; ?>" readonly data-validate-required="<?php echo language('settingconfig/settingurlformat/settingurlformat','tSHPValiBranchCode');?>">
@@ -114,7 +115,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 												<div class="row">
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
-															<label class="xCNLabelFrm"><?php echo language('settingconfig/settingurlformat/settingurlformat','tFormatName');?></label>
+															<label class="xCNLabelFrm"><span class="text-danger">*</span><?php echo language('settingconfig/settingurlformat/settingurlformat','tFormatName');?></label>
 															<div class="input-group">
 																<input type="text" class="form-control xCNHide" id="oetUrlFormatCode" name="oetUrlFormatCode" value="<?php echo @$tUrlFormatCode; ?>">
 																<input type="text" class="form-control xWPointerEventNone" id="oetUrlFormatName" name="oetUrlFormatName" value="<?php echo @$tUrlFormatName; ?>" readonly>
