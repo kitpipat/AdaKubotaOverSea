@@ -197,13 +197,17 @@ class Branch_model extends CI_Model {
                                     CONVERT(CHAR(10),FDBchStart,120)        AS rdBchStart,
                                     CONVERT(CHAR(10),FDBchStop,120)         AS rdBchStop,
                                     IMGO.FTImgObj                           AS rtImgObj,
+                                    SLANG.FTLngName                         AS rtLngName,
+                                    BCH.FNBchDefLang                        AS rtBchLng,
                                     rnCountLang = (SELECT COUNT (DISTINCT(FNLngID)) FROM TCNMBranch_L)
                                 FROM TCNMBranch         BCH     WITH(NOLOCK)
                                 LEFT JOIN TCNMBranch_L  BCHL    WITH(NOLOCK) ON BCH.FTBchCode = BCHL.FTBchCode  AND BCHL.FNLngID = $nLngID
                                 -- LEFT JOIN TCNMMerchant_L MERL   WITH(NOLOCK) ON BCH.FTMerCode = MERL.FTMerCode  AND MERL.FNLngID = $nLngID
                                 LEFT JOIN TCNMImgObj    IMGO    WITH(NOLOCK) ON BCH.FTBchCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TCNMBranch' AND IMGO.FNImgSeq = 1
                                 LEFT JOIN TCNMAgency_L  AGNL    WITH(NOLOCK) ON BCH.FTAgnCode = AGNL.FTAgnCode
+                                LEFT JOIN TCNMCountry   CTY     WITH(NOLOCK) ON BCH.FTCtyCode = CTY.FTCtyCode
                                 LEFT JOIN TCNMCountry_L CTYL    WITH(NOLOCK) ON BCH.FTCtyCode = CTYL.FTCtyCode
+                                LEFT JOIN TSysLanguage  SLANG   WITH(NOLOCK) ON CTY.FNLngID = SLANG.FNLngID
                                 WHERE 1 = 1
         ";
 
@@ -1335,6 +1339,31 @@ class Branch_model extends CI_Model {
         }
     }
 
+    public function FSaMSMGGetStaUse(){
+        $tSQL = "SELECT DISTINCT * FROM TSysLanguage";
+        $tSQL .= " WHERE FTLngStaUse = '1' ";
+        $oDTQuery = $this->db->query($tSQL);
+        if($oDTQuery->num_rows() > 0){
+            return $oDTQuery->result_array();
+        }else{
+            //No Data
+            return array();
+        }  
+    }
+
+    public function FSaMSMGGetLangAgn($paAngCodeHide){
+        $tSQL = "SELECT CTY.FNLngID,AGN.FTCtyCode,CTYL.FTCtyName  FROM TCNMAgency AGN";
+        $tSQL .= " LEFT JOIN TCNMCountry CTY ON AGN.FTCtyCode = CTY.FTCtyCode ";
+        $tSQL .= " LEFT JOIN TCNMCountry_L CTYL ON AGN.FTCtyCode = CTYL.FTCtyCode ";
+        $tSQL .= " WHERE AGN.FTAgnCode = '$paAngCodeHide' ";
+        $oDTQuery = $this->db->query($tSQL);
+        if($oDTQuery->num_rows() > 0){
+            return $oDTQuery->result_array();
+        }else{
+            //No Data
+            return array();
+        }  
+    }
 
 }
 

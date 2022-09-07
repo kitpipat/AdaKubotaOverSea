@@ -24,7 +24,7 @@ $lang['tCountryLangID']         = "รหัสภาษา";
 
 $lang['tCountryInfo']               = "ข้อมูลทั่วไป";
 $lang['tCountryVat']                = "อัตราภาษี";
-$lang['tCountryIso']                = "รหัสสกุลเงิน";
+$lang['tCountryIso']                = "รหัสสกุลเงินสากล";
 $lang['tCountryExCtrl']           = "ยืนยันอัตราแลกเปลี่ยนรายวัน";
 $lang['tCountryStaUse']           = "สถานะ";
 $lang['tCountryAllow']           = "อนุญาต";
