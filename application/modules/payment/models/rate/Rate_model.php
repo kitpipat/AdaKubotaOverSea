@@ -15,8 +15,10 @@ class Rate_model extends CI_Model
 
         $tRteCode   = $paData['FTRteCode'];
         $nLngID     = $paData['FNLngID'];
+        $tAgnCode   = $paData['FTAgnCode'];
 
         $tSQL   = " SELECT
+                        DISTINCT
                         RTE.FTRteCode       AS rtRteCode,
                         RTE.FCRteRate       AS rcRteRate,
                         RTE.FCRteFraction   AS rcRteFraction,
@@ -39,7 +41,7 @@ class Rate_model extends CI_Model
                         RATEL.FTRteIsoCode,
                         RATEL.FTRteIsoName
                     FROM [TFNMRate] RTE WITH(NOLOCK)
-                    LEFT JOIN [TFNMRate_L] RTEL WITH(NOLOCK) ON RTE.FTRteCode = RTEL.FTRteCode AND RTEL.FNLngID = $nLngID
+                    LEFT JOIN [TFNMRate_L] RTEL WITH(NOLOCK) ON RTE.FTRteCode = RTEL.FTRteCode AND RTEL.FNLngID = $nLngID  AND RTE.FTAgnCode = RTEL.FTAgnCode
                     LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RTE.FTRteCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FNImgSeq = 1
                     LEFT JOIN [TCNMAgency_L] AGNL WITH(NOLOCK) ON AGNL.FTAgnCode = RTE.FTAgnCode
                     LEFT JOIN [TCNSRate_L] RATEL WITH(NOLOCK) ON RATEL.FTRteIsoCode = RTE.FTRteIsoCode
@@ -47,9 +49,9 @@ class Rate_model extends CI_Model
         ";
 
         if ($tRteCode != "") {
-            $tSQL .= "AND RTE.FTRteCode = '$tRteCode'";
+            $tSQL .= "AND RTE.FTRteCode = '$tRteCode' ";
         }
-
+        $tSQL .= "AND RTE.FTAgnCode = '$tAgnCode'";
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
             $oDetail = $oQuery->result();
@@ -83,6 +85,7 @@ class Rate_model extends CI_Model
         $tSearchList = $paData['tSearchAll'];
 
         $tSQL   = " SELECT c.* FROM(
+                        --  SELECT  ROW_NUMBER() OVER(ORDER BY FTAgnCode ASC,FTRteCode ASC) AS FNRowID,* 
                          SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC,FTRteCode DESC) AS FNRowID,* 
                         FROM
                             (SELECT DISTINCT
@@ -104,7 +107,7 @@ class Rate_model extends CI_Model
                                     RTE.FTRteStaAlwChange,
                                     AGNL.FTAgnName
                             FROM [TFNMRate] RTE
-                            LEFT JOIN [TFNMRate_L] RTEL ON RTE.FTRteCode = RTEL.FTRteCode   AND RTEL.FNLngID    = $nLngID
+                            LEFT JOIN [TFNMRate_L] RTEL ON RTE.FTRteCode = RTEL.FTRteCode   AND RTEL.FNLngID    = $nLngID AND RTE.FTAgnCode = RTEL.FTAgnCode
                             LEFT JOIN [TCNMImgObj] IMGO ON RTE.FTRteCode = IMGO.FTImgRefID  AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FNImgSeq  = 1
                             LEFT JOIN [TCNMAgency_L] AGNL WITH(NOLOCK) ON AGNL.FTAgnCode = RTE.FTAgnCode
                             WHERE 1=1
@@ -121,6 +124,7 @@ class Rate_model extends CI_Model
         }
 
         $tSQL .= ") Base) AS c WHERE c.FNRowID > $aRowLen[0] AND c.FNRowID <= $aRowLen[1]";
+        
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
             $oList = $oQuery->result();
@@ -161,12 +165,13 @@ class Rate_model extends CI_Model
         if ($paData['FTRteStaLocal'] == 1) {
             $tRteCode = $paData['FTRteCode'];
             $tRteStalocal = $paData['FTRteStaLocal'];
+            $tAgnCode = $paData['FTAgnCode'];
 
             $tSQL = "
                 SELECT 
                     FTRteCode
                 FROM TFNMRate WITH(NOLOCK)
-                WHERE FTRteStaLocal = '$tRteStalocal' 
+                WHERE FTRteStaLocal = '$tRteStalocal' AND FTAgnCode = '$tAgnCode'
             ";
 
             $oQuery = $this->db->query($tSQL);
@@ -201,6 +206,7 @@ class Rate_model extends CI_Model
 
 
         $this->db->where('FTRteCode', $paData['FTRteCode']);
+        $this->db->where('FTAgnCode', $paData['FTAgnCode']);
         $this->db->update('TFNMRate');
 
         if ($this->db->affected_rows() > 0) {
@@ -255,6 +261,7 @@ class Rate_model extends CI_Model
         $this->db->set('FTAgnCode', $paData['FTAgnCode']);
         $this->db->set('FTRteName', $paData['FTRteName']);
         $this->db->where('FNLngID', $paData['FNLngID']);
+        $this->db->where('FTAgnCode', $paData['FTAgnCode']);
         $this->db->where('FTRteCode', $paData['FTRteCode']);
         $this->db->update('TFNMRate_L');
 
@@ -298,9 +305,10 @@ class Rate_model extends CI_Model
             $aRtuFac = $paData['aRtuFac'];
 
             if (!empty($aRtuFac)) {
-                $nRateUnit = $this->db->where('FTRteCode', $tRteCode)->order_by('FNRtuSeq', 'ASC')->get('TFNMRateUnit')->num_rows();
+                $nRateUnit = $this->db->where(array('FTRteCode'=> $tRteCode,'FTAgnCode'=>$paData['FTAgnCode']))->order_by('FNRtuSeq', 'ASC')->get('TFNMRateUnit')->num_rows();
                 if ($nRateUnit > 0) {
                     $this->db->where('FTRteCode', $tRteCode);
+                    $this->db->where('FTAgnCode', $paData['FTAgnCode']);
                     $this->db->delete('TFNMRateUnit');
                 }
                 foreach ($aRtuFac as $nKey => $cRtuFac) {
@@ -314,6 +322,7 @@ class Rate_model extends CI_Model
                 }
             }else{
                 $this->db->where('FTRteCode', $tRteCode);
+                $this->db->where('FTAgnCode', $paData['FTAgnCode']);
                 $this->db->delete('TFNMRateUnit');
             }
 
@@ -344,7 +353,7 @@ class Rate_model extends CI_Model
     public function FSaMRTERateUnit($paData)
     {
         $tRteCode = $paData['FTRteCode'];
-        $aRateUnit = $this->db->where('FTRteCode', $tRteCode)->order_by('FNRtuSeq', 'ASC')->get('TFNMRateUnit')->result_array();
+        $aRateUnit = $this->db->where(array('FTRteCode'=> $tRteCode,'FTAgnCode'=>$paData['FTAgnCode']))->order_by('FNRtuSeq', 'ASC')->get('TFNMRateUnit')->result_array();
 
         if (count($aRateUnit) > 0) {
             return $aRateUnit;
@@ -362,13 +371,19 @@ class Rate_model extends CI_Model
     //Return Type : Array
     public function FSnMRTEGetPageAll($ptSearchList, $ptLngID)
     {
-        $tSQL = "SELECT COUNT (RTE.FTRteCode) AS counts 
+        $tSessAgn = $this->session->userdata('tSesUsrAgnCode');
+
+        $tSQL = "SELECT  COUNT (RTE.FTRteCode) AS counts 
                  FROM TFNMRate RTE
-                 LEFT JOIN [TFNMRate_L] RTEL ON RTE.FTRteCode = RTEL.FTRteCode AND RTEL.FNLngID = $ptLngID
+                 LEFT JOIN [TFNMRate_L] RTEL ON RTE.FTRteCode = RTEL.FTRteCode AND RTE.FTAgnCode = RTEL.FTAgnCode AND RTEL.FNLngID = $ptLngID
                  WHERE 1=1 ";
         if ($ptSearchList != '') {
-            $tSQL .= " AND (   RTE.FTRteCode     COLLATE THAI_BIN LIKE '%$ptSearchList%'";
-            $tSQL .= "      OR RTEL.FTRteName    COLLATE THAI_BIN LIKE '%$ptSearchList%')";
+            $tSQL .= " AND (   UPPER(RTE.FTRteCode) COLLATE THAI_BIN LIKE UPPER('%$ptSearchList%')";
+            $tSQL .= "      OR UPPER(RTEL.FTRteName)  COLLATE THAI_BIN LIKE UPPER('%$ptSearchList%'))";
+        }
+        
+        if ($tSessAgn != '') {
+            $tSQL   .= " AND (RTE.FTAgnCode = '' OR RTE.FTAgnCode = '$tSessAgn')";
         }
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
@@ -409,11 +424,17 @@ class Rate_model extends CI_Model
     //Last Modified : -
     //Return : data
     //Return Type : Array
-    public function FSnMRTECheckDuplicate($ptRteCode)
+    public function FSnMRTECheckDuplicate($ptRteCode,$ptAgnCode = '')
     {
         $tSQL = "SELECT COUNT(FTRteCode)AS counts
                  FROM TFNMRate
                  WHERE FTRteCode = '$ptRteCode' ";
+
+        //เพิ่มเงื่อนไข ตรวจเช็ค Agency
+        if($ptAgnCode != '' || $ptAgnCode != null){
+            $tSQL .= " AND FTAgnCode = '$ptAgnCode' ";
+        }
+	
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
             return $oQuery->result();
@@ -434,15 +455,17 @@ class Rate_model extends CI_Model
     public function FSnMRTEDel($paData)
     {
         $this->db->where_in('FTRteCode', $paData['FTRteCode']);
+        $this->db->where_in('FTAgnCode', $paData['FTAgnCode']);
         $this->db->delete('TFNMRate');
 
-
         $this->db->where_in('FTRteCode', $paData['FTRteCode']);
+        $this->db->where_in('FTAgnCode', $paData['FTAgnCode']);
         $this->db->delete('TFNMRate_L');
 
-
         $this->db->where_in('FTRteCode', $paData['FTRteCode']);
+        $this->db->where_in('FTAgnCode', $paData['FTAgnCode']);
         $this->db->delete('TFNMRateUnit');
+
         if ($this->db->affected_rows() > 0) {
             //Success
             $aStatus = array(

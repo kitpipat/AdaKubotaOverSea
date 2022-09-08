@@ -2,6 +2,7 @@
 //Agency
 $tSessAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
 $tSessAgnName 	= $this->session->userdata("tSesUsrAgnName");
+$nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
 if($aResult['rtCode'] == "1"){
 	$tRteCode       	= $aResult['raItems']['rtRteCode'];
 	$cRteRate       	= number_format($aResult['raItems']['rcRteRate'],$nOptDecimalShow);
@@ -158,7 +159,7 @@ if($aResult['rtCode'] == "1"){
 				<div class="form-group">
 					<label class="xCNLabelFrm"><?= language('payment/rate/rate','tRTEAgency')?></label>	
 					<div class="input-group">
-						<input type="text" class="form-control xCNHide" id="oetRteAgnCode" name="oetRteAgnCode" maxlength="5" value="<?= $tRteAgnCode?>">
+						<input type="text" class="form-control xCNHide" id="ohdRteAgnCode" name="ohdRteAgnCode" maxlength="5" value="<?= $tRteAgnCode?>">
 						<input type="text" class="form-control xWPointerEventNone" id="oetRteAgnName" name="oetRteAgnName" maxlength="100" placeholder="<?= language('payment/rate/rate','tRTEAgency')?>" value="<?= $tRteAgnName?>" readonly="">
 						<span class="input-group-btn">
 							<button id="obtRtcBrowseAgn" type="button" class="btn xCNBtnBrowseAddOn " ><img class="xCNIconFind"></button>
@@ -184,11 +185,11 @@ if($aResult['rtCode'] == "1"){
 					<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETBRate')?></label> 
 					<input class="form-control xCNInputNumericWithDecimal text-right " 
 					type="text" id="oetRteRate" name="oetRteRate" 
-					placeholder="0.00"
-					maxlength="14"
+					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
+					maxlength="<?= 18 - $nDecimalCurrentcySave;?>"
 					value="<?php echo @$cRteRate?>">
 				</div>
-
+				
 				<!-- ISO Code -->
 				<div class="form-group  ">
 					<label class="xCNLabelFrm"><?= language('payment/rate/rate','tRteIsoName');?></label>	
@@ -217,8 +218,8 @@ if($aResult['rtCode'] == "1"){
 					<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETBFraction')?></label> 
 					<input class="form-control xCNInputNumericWithDecimal text-right " type="text" 
 					id="oetRteFraction" name="oetRteFraction" 
-					placeholder="0.00"
-					maxlength="18" value="<?php echo @$cRteFraction?>">
+					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
+					maxlength="<?= 18 - $nDecimalCurrentcySave;?>" value="<?php echo @$cRteFraction?>">
 				</div>
 
 				<div class="form-group">
@@ -299,6 +300,7 @@ if($aResult['rtCode'] == "1"){
 <script src="<?php echo  base_url('application/modules/common/assets/src/jFormValidate.js')?>"></script>
 
 <script type="text/javascript">
+	
 $(document).ready(function(){
 	$('.selectpicker').selectpicker();
 

@@ -37,7 +37,7 @@ class Common_controller extends MX_Controller {
         $tTableName     = $this->input->post('tTableName');
         $ptFieldName    = $this->input->post('tFieldName');
         $tCode          = $this->input->post('tCode');
-        $tAgnCode = $this->input->post('tAgnCode');
+        $tAgnCode       = $this->input->post('tAgnCode');
         //supawat 13-04-2020 เพิ่มไว้ เพราะมันต้องเช็คที่สาขาด้วย
         $tFiledBch      = $this->input->post('tFiledBch');
         if($tFiledBch == '' || $tFiledBch == null){
@@ -47,14 +47,13 @@ class Common_controller extends MX_Controller {
         }
         
         if($tAgnCode){
-           
             $tCheck = FCNaHCheckInputGenCode($tTableName, $ptFieldName, $tCode , $tFiledBch, $tAgnCode);
 
         }else{
             $tCheck = FCNaHCheckInputGenCode($tTableName, $ptFieldName, $tCode , $tFiledBch);
         }
         $nNum = $tCheck[0]->nNum;
-
+        
         if ($nNum != '0') {
             $nStatus = '1';
             $tDesc = 'มี id นี้แล้วในระบบ';
