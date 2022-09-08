@@ -42,7 +42,7 @@ class Rate_model extends CI_Model
                         RATEL.FTRteIsoName
                     FROM [TFNMRate] RTE WITH(NOLOCK)
                     LEFT JOIN [TFNMRate_L] RTEL WITH(NOLOCK) ON RTE.FTRteCode = RTEL.FTRteCode AND RTEL.FNLngID = $nLngID  AND RTE.FTAgnCode = RTEL.FTAgnCode
-                    LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RTE.FTRteCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FNImgSeq = 1
+                    LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RTE.FTRteCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FTCreateBy = RTE.FTCreateBy AND IMGO.FNImgSeq = 1
                     LEFT JOIN [TCNMAgency_L] AGNL WITH(NOLOCK) ON AGNL.FTAgnCode = RTE.FTAgnCode
                     LEFT JOIN [TCNSRate_L] RATEL WITH(NOLOCK) ON RATEL.FTRteIsoCode = RTE.FTRteIsoCode
                     WHERE 1=1 
@@ -108,7 +108,7 @@ class Rate_model extends CI_Model
                                     AGNL.FTAgnName
                             FROM [TFNMRate] RTE
                             LEFT JOIN [TFNMRate_L] RTEL ON RTE.FTRteCode = RTEL.FTRteCode   AND RTEL.FNLngID    = $nLngID AND RTE.FTAgnCode = RTEL.FTAgnCode
-                            LEFT JOIN [TCNMImgObj] IMGO ON RTE.FTRteCode = IMGO.FTImgRefID  AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FNImgSeq  = 1
+                            LEFT JOIN [TCNMImgObj] IMGO ON RTE.FTRteCode = IMGO.FTImgRefID  AND IMGO.FTImgTable = 'TFNMRate' AND IMGO.FTCreateBy = RTE.FTCreateBy AND IMGO.FNImgSeq  = 1
                             LEFT JOIN [TCNMAgency_L] AGNL WITH(NOLOCK) ON AGNL.FTAgnCode = RTE.FTAgnCode
                             WHERE 1=1
                     ";
