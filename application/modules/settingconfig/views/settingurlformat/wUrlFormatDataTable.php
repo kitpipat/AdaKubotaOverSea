@@ -57,7 +57,7 @@
                             </tr>
                         <?php endforeach;?>
                     <?php else:?>
-                        <tr><td class='text-center xCNTextDetail2' colspan='5'><?php echo  language('product/pdtunit/pdtunit','tPUNTBNoData')?></td></tr>
+                        <tr><td class='text-center xCNTextDetail2' colspan='8'><?php echo  language('settingconfig/settingurlformat/settingurlformat','tNotFound')?></td></tr>
                     <?php endif;?>
                 </tbody>
             </table>

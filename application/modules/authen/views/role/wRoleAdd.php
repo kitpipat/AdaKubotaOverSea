@@ -23,11 +23,15 @@
         @$tRoleUsrSpc   = $aDataUsrRoleSpc['raItems']['FTRolCode'];   // Role มาจากตาราง TCNMUsrRoleSpc
         @$tUsrActRole   = $aDataUsrRoleSpc['raItems']['rtUsrActRole']; // Role มาจากตาราง TCNMUsrActRole
 
-        if(@$tRoleUsrSpc == @$tUsrActRole){
-            $tDisabled    = 'disabled';  // Browse ตัวแทนขาย กับ ฺBrowse สาขา ปิด ก็ต่อเมื่อ สิทธิการใช้งานไปผูกกับผู้ใช้
-        }else{
-            $tDisabled    = '';
-        }
+        // if(@$tRoleUsrSpc == @$tUsrActRole){
+        //     $tDisabled    = 'disabled';  
+        //     // Browse ตัวแทนขาย กับ ฺBrowse สาขา ปิด ก็ต่อเมื่อ สิทธิการใช้งานไปผูกกับผู้ใช้
+        // }else{
+        //     $tDisabled    = '';
+        // }
+
+        // print_r($tRoleUsrSpc);
+        // print_r($tUsrActRole);
 
         $tRoute = "roleEventEdit";
     }

@@ -206,13 +206,17 @@ var oBchBrowseAgency = {
                                 }
                             },
                             "dublicateCode" :{}
-                        },
+                        },              
+                        oetUrlFormatName:  { "required": {} },
                     },
                     messages: {
                         oetUrlCode : {
                             "required"      : $('#oetUrlCode').attr('data-validate-required'),
                             "dublicateCode" : $('#oetUrlCode').attr('data-validate-dublicateCode')
                         },
+                        oetUrlFormatName: {
+                            "required" : $('#oetUrlFormatName').attr('data-validate-required'),                 
+                         },
                     },
                     errorElement: "em",
                     errorPlacement: function (error, element ) {

@@ -215,9 +215,9 @@ function FCNaHCheckInputGenCode($ptTable = '',$ptField = '',$ptCode = '', $ptFil
 	}
 	
 	//เพิ่มเงื่อนไข ตรวจเช็ค Agency
-	// if($ptAgnCode != '' || $ptAgnCode != null){
+	if($ptAgnCode != '' || $ptAgnCode != null){
 		$tSQL .= " AND FTAgnCode = '$ptAgnCode' ";
-	// }
+	}
 	
 	// echo $tSQL;
 	$oQuery = $ci->db->query($tSQL);

@@ -49,7 +49,7 @@ class Settingurlformat_model extends CI_Model {
             $oQuery = $this->db->query($tSQL);
             if($oQuery->num_rows() > 0){
                 $aList = $oQuery->result_array();
-                $oFoundRow = $this->FSoMURLGetPageAll($tSearchList,$nLngID);
+                $oFoundRow = $this->FSoMURLGetPageAll($tSearchList,$nLngID,$tAngCode);
                 $nFoundRow = $oFoundRow[0]->counts;
                 $nPageAll = ceil($nFoundRow/$paData['nRow']); //หา Page All จำนวน Rec หาร จำนวนต่อหน้า
                 $aResult = array(
@@ -76,19 +76,50 @@ class Settingurlformat_model extends CI_Model {
         }
     }
 
+
+    public function FSoMURLCheckStaUse($ptAngCode){
+        try{   
+            $tSQL = "SELECT FMT.FTFspCode,
+                            FMC.FTFmtName
+                    FROM [TCNMFmtRteSpc] FMT
+                    LEFT JOIN TFNSFmtURL_L FMC ON FMT.FTFmtCode = FMC.FTFmtCode
+                    WHERE 1=1 AND FTFspStaUse ='1' AND FTAgnCode = '$ptAngCode' AND FMC.FTFmtType = '1'";           
+            $oQuery = $this->db->query($tSQL);
+            if($oQuery->num_rows() > 0){
+                $aResult = array(
+                    'rnAllRow' => $oQuery->result_array(),
+                    'rtCode' => '1',
+                    'rtDesc' => 'found 1',
+                );
+                
+            }else{
+                $aResult = array(
+                    'rtCode' => '0',
+                    'rtDesc' => 'data not found',
+                );  
+            }
+            return $aResult; 
+        }catch(Exception $Error){
+            echo $Error;
+        }
+    }
+
     //Functionality : All Page Of Product Unit
     //Parameters : function parameters
     //Creator :  13/09/2018 Wasin
     //Return : object Count All Product Unit
     //Return Type : Object 
-    public function FSoMURLGetPageAll($ptSearchList,$ptLngID){
+    public function FSoMURLGetPageAll($ptSearchList,$ptLngID,$ptAgnCode){
         try{
             $tSQL = "SELECT COUNT (FMT.FTFspCode) AS counts
                      FROM [TCNMFmtRteSpc] FMT
                      LEFT JOIN [TCNMAgency_L]  AGN_L ON FMT.FTAgnCode = AGN_L.FTAgnCode AND AGN_L.FNLngID = $ptLngID
                     LEFT JOIN [TCNMBranch_L]  BCH_L ON FMT.FTBchCode = BCH_L.FTBchCode AND BCH_L.FNLngID = $ptLngID
                     LEFT JOIN [TFNSFmtURL_L]  FMT_L ON FMT.FTFmtCode = FMT_L.FTFmtCode AND FMT_L.FNLngID = $ptLngID AND FTFmtType = 1
-                     WHERE 1=1 ";
+                     WHERE 1=1";
+            if(!empty($ptAgnCode)){
+                $tSQL .= " AND FMT.FTAgnCode = '$ptAgnCode'";
+            }
             if(isset($ptSearchList) && !empty($ptSearchList)){
                 $tSQL .= " AND (FMT.FTFspCode COLLATE THAI_BIN LIKE '%$ptSearchList%'";
                 $tSQL .= " OR AGN_L.FTAgnName COLLATE THAI_BIN LIKE '%$ptSearchList%' ";
@@ -176,6 +207,12 @@ class Settingurlformat_model extends CI_Model {
     //Return Type : Array
     public function FSaMCTYAddUpdateMaster($paUrlData){
         try{
+            if($paUrlData['FTFspStaUse'] == '1'){
+                $this->db->where('FTAgnCode',$paUrlData['FTAgnCode']);
+                $this->db->update('TCNMFmtRteSpc',array(
+                   'FTFspStaUse'    =>  '2',
+                ));
+            }
             $this->db->where('FTFspCode', $paUrlData['FTFspCode']);
             $this->db->update('TCNMFmtRteSpc',array(
                     'FTFspCode'     => $paUrlData['FTFspCode'],
@@ -194,6 +231,12 @@ class Settingurlformat_model extends CI_Model {
                     'rtDesc' => 'Update ProductUnit Success',
                 );
             }else{
+                if($paUrlData['FTFspStaUse'] == '1'){
+                    $this->db->where('FTAgnCode',$paUrlData['FTAgnCode']);
+                    $this->db->update('TCNMFmtRteSpc',array(
+                       'FTFspStaUse'    =>  '2',
+                    ));
+                }
                 $this->db->insert('TCNMFmtRteSpc', array(
                     'FTFspCode'     => $paUrlData['FTFspCode'],
                     'FTFmtCode'    => $paUrlData['FTFmtCode'],
@@ -260,8 +303,8 @@ class Settingurlformat_model extends CI_Model {
     //Creator : 1/04/2019 Pap
     //Return : array result from db
     //Return Type : array
-    public function FSnMPUNGetAllNumRow(){
-        $tSQL = "SELECT COUNT(*) AS FNAllNumRow FROM TCNMFmtRteSpc";
+    public function FSnMPUNGetAllNumRow($patAngCodeHide){
+        $tSQL = "SELECT COUNT(*) AS FNAllNumRow FROM TCNMFmtRteSpc WHERE TCNMFmtRteSpc.FTAgnCode = '$patAngCodeHide' ";
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0){
             $aResult = $oQuery->row_array()["FNAllNumRow"];
