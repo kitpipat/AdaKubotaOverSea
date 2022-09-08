@@ -161,15 +161,22 @@ function JSxEventClickCheckboxCurrentcy(elem) {
     var tCheckseq       = $(elem).data("seq");
     var nRctRate        = $(elem).data("rterate");
     var nRctLastRate    = $(elem).data("rtelastrate");
+    var nDecimal        = $("#oetDecimal").val();
+    if(nRctLastRate > 0 ){
+        var nConvertLastRate = 1/nRctLastRate;
+    }else{
+        var nConvertLastRate = 0;
+    }
 
     if ($(elem).is(':checked')) {
-        $('#oetUseCurrency'+tCheckseq).val(nRctLastRate);
+        $('#oetUseCurrency'+tCheckseq).val(parseFloat(nConvertLastRate).toFixed(nDecimal));
         $('#oetUseCurrency'+tCheckseq).attr('readonly',true);
     }else{
-        $('#oetUseCurrency'+tCheckseq).val(nRctRate);
+        $('#oetUseCurrency'+tCheckseq).val(parseFloat(nRctRate).toFixed(nDecimal));
         $('#oetUseCurrency'+tCheckseq).attr('readonly',false);
     }
 }
+
 
 //Event Save - บันทึก
 function JSxCurrentcySave() {
@@ -183,16 +190,19 @@ function JSxCurrentcySave() {
                 var tCheckseq       = $(this).data("seq");
                 var nAgnCode        = $(this).data("agncode");
                 var nRteCode        = $(this).data("rtecode");
+                var nRteOldval      = $(this).data("oldval");
                 var nChangeValue    = $(this).val();
                 if(nChangeValue == ''){
                     nflag = '1';
                     return false;
                 }
+                if(nChangeValue != nRteOldval){
                 aGetItem.push({
                     FCRteRate: nChangeValue,
                     FTRteCode: nRteCode,
                     FTAgnCode: nAgnCode,
                 });
+                }
             });
 
             if(nflag == '0'){

@@ -94,6 +94,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
 ?>
 
 <!-- TABLE สำหรับ checkbox -->
+<input type="text" class='xCNHide' value="<?php echo $nDecimalCurrentcyShow ?>" id="oetDecimal">
 
 <div class="row">
     <div class="col-md-12">
@@ -141,10 +142,10 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                                 
                                 <td style="text-align:right; <?php echo $tColor ?>" ><?php echo number_format($aValue['FCRteRate'],$nDecimalCurrentcyShow) ?></td>
                                 <td style="text-align:right; <?php echo $tColor ?>"><?php echo number_format($aValue['FCRteLastRate'],$nDecimalCurrentcyShow) ?></td>
-                                <?php if($aValue['FCRteRate'] > 0) {?>
-                                    <td style="text-align:right;"><?php echo number_format((1/$aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
+                                <?php if($aValue['FCRteLastRate'] > 0) {?>
+                                    <td style="text-align:right;" id='oetCalCurrency'><?php echo number_format((1/$aValue['FCRteLastRate']),$nDecimalCurrentcyShow) ?></td>
                                 <?php }else{ ?>
-                                    <td style="text-align:right;"><?php echo number_format(($aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
+                                    <td style="text-align:right;" id='oetCalCurrency'><?php echo number_format(($aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
                                 <?php }?>
 
 
@@ -156,7 +157,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
 
 
                                 <td>
-                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy xCNInputNumericWithDecimal" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' id='oetUseCurrency<?= $key ?>' value='<?php echo number_format( $aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>'>
+                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy xCNInputNumericWithDecimal" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' data-oldval='<?php echo number_format( $aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>' id='oetUseCurrency<?= $key ?>' value='<?php echo number_format( $aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>'>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -527,4 +528,14 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
             }
         });
     }
+
+    $('.oetCurrentCurentcy').change(function() {
+    var ncurrentRate = parseFloat($(this).val());
+    var ncallastrate = parseFloat($(this).parent().parent().find("td#oetCalCurrency").text());
+    var nresult      = parseFloat(1/ncurrentRate);
+    var nDecimal     = $("#oetDecimal").val();
+    $(this).parent().parent().find("td#oetCalCurrency").text(nresult.toFixed(nDecimal));
+
+
+    });
 </script>

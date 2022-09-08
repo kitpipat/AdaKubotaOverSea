@@ -34,6 +34,7 @@ class Common_controller extends MX_Controller {
 
     public function FCNtCCMMCheckInputGenCode() {
 
+        // print_r($this->input->post());
         $tTableName     = $this->input->post('tTableName');
         $ptFieldName    = $this->input->post('tFieldName');
         $tCode          = $this->input->post('tCode');
@@ -47,7 +48,8 @@ class Common_controller extends MX_Controller {
         }
         
         if($tAgnCode){
-            $tCheck = FCNaHCheckInputGenCode($tTableName, $ptFieldName, $tCode , $tFiledBch, $tAgnCode);
+            // $tCheck = FCNaHCheckInputGenCode($tTableName, $ptFieldName, $tCode , $tFiledBch, $tAgnCode);
+            $tCheck = FCNaHCheckInputGenCode($tTableName, $ptFieldName, $tCode , $tFiledBch);
 
         }else{
             $tCheck = FCNaHCheckInputGenCode($tTableName, $ptFieldName, $tCode , $tFiledBch);
