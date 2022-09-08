@@ -22,6 +22,7 @@ class Rate_model extends CI_Model
                         RTE.FTRteCode       AS rtRteCode,
                         RTE.FCRteRate       AS rcRteRate,
                         RTE.FCRteFraction   AS rcRteFraction,
+                        RTE.FCRteMaxUnit    AS rcRteMaxUnit,
                         RTE.FTRteType       AS rtRteType,
                         RTE.FTRteTypeChg    AS rcRteTypeChg,
                         RTE.FTRteSign       AS rcRteSign,
@@ -203,8 +204,9 @@ class Rate_model extends CI_Model
         $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
         $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
         $this->db->set('FTRteIsoCode', $paData['FTRteIsoCode']);
+        $this->db->set('FCRteMaxUnit', $paData['FCRteMaxUnit']);
 
-
+        
         $this->db->where('FTRteCode', $paData['FTRteCode']);
         $this->db->where('FTAgnCode', $paData['FTAgnCode']);
         $this->db->update('TFNMRate');
@@ -226,6 +228,7 @@ class Rate_model extends CI_Model
                 'FTRteSign' => $paData['FTRteSign'],
                 'FTRteStaUse' => $paData['FTRteStaUse'],
                 'FTRteIsoCode' => $paData['FTRteIsoCode'],
+                'FCRteMaxUnit' => $paData['FCRteMaxUnit'],
                 'FTRteStaLocal' => $paData['FTRteStaLocal'],
                 // เวลาอัปเดทล่าสุด
                 'FDLastUpdOn' => $paData['FDLastUpdOn'],

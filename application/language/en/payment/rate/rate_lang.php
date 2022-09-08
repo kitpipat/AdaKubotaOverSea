@@ -55,3 +55,5 @@ $lang['tBrowseAgnName']     = "Representative Name";
 $lang['tRteIsoName']    = "Refer ISO Code";
 $lang['tBrowseIsoCode']     = "Code";
 $lang['tBrowseIsoName']     = "Currency Name";
+
+$lang['tRTETMaxChange'] = "Maximum Change";

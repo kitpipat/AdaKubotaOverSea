@@ -56,3 +56,5 @@ $lang['tBrowseAgnName']     = "ชื่อตัวแทน";
 $lang['tRteIsoName']    = "อ้างอิงสกุลเงินสากล";
 $lang['tBrowseIsoCode']     = "รหัสสกุลเงิน";
 $lang['tBrowseIsoName']     = "ชื่อสกุลเงิน";
+
+$lang['tRTETMaxChange'] = "จำนวนเงินทอนสูงสุด";

@@ -33,6 +33,17 @@
         JSxCheckRateCodeDupInDB();
     });
 
+    $('#oetRteRate').on(('keyup change'),function(){
+        $('#oetRteRateDef').val($('#oetRteRate').val());
+    });
+    
+    $('#oetRteFraction').on(('keyup change'),function(){
+        $('#oetRteFractionDef').val($('#oetRteFraction').val());
+    });
+
+    $('#oetRteMaxChg').on(('keyup change'),function(){
+        $('#oetRteMaxChgDef').val($('#oetRteMaxChg').val());
+    });
     
 });
 

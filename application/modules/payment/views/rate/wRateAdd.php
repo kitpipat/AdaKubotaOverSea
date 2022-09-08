@@ -5,8 +5,10 @@ $tSessAgnName 	= $this->session->userdata("tSesUsrAgnName");
 $nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
 if($aResult['rtCode'] == "1"){
 	$tRteCode       	= $aResult['raItems']['rtRteCode'];
-	$cRteRate       	= number_format($aResult['raItems']['rcRteRate'],$nOptDecimalShow);
-	$cRteFraction      	= number_format($aResult['raItems']['rcRteFraction'],$nOptDecimalShow);
+	$cRteRate       	= $aResult['raItems']['rcRteRate'];
+	$cRteRateShow       = number_format($aResult['raItems']['rcRteRate'],$nOptDecimalShow);
+	$cRteFraction      	= $aResult['raItems']['rcRteFraction'];
+	$cRteFractionShow	= number_format($aResult['raItems']['rcRteFraction'],$nOptDecimalShow);
 	$tRteType       	= $aResult['raItems']['rtRteType'];
 	$cRteTypeChg       	= $aResult['raItems']['rcRteTypeChg'];
 	$cRteSign     		= $aResult['raItems']['rcRteSign'];
@@ -21,6 +23,10 @@ if($aResult['rtCode'] == "1"){
 	$cRteStaAlwChange   = $aResult['raItems']['rtRteStaAlwChange'];
 	$tRteIsoCode		= $aResult['raItems']['FTRteIsoCode'];
 	$tRteIsoName		= $aResult['raItems']['FTRteIsoName'];
+
+	$cRteMaxChg       	= $aResult['raItems']['rcRteMaxUnit'];
+	$cRteMaxChgShow       = number_format($aResult['raItems']['rcRteMaxUnit'],$nOptDecimalShow);
+
 	//Agency
 	$tRteAgnCode 	= $aResult['raItems']['FTAgnCode'];
 	$tRteAgnName 	= $aResult['raItems']['FTAgnName'];
@@ -85,6 +91,7 @@ if($aResult['rtCode'] == "1"){
     padding: 20px;
 	border-radius: 10px;
 }
+.currency:after{ content: '.00'; }
 </style>
 <input type="hidden" id="ohdRteAutStaEdit" value="<?php echo $nAutStaEdit?>">
 <input type="hidden" id="ohdRteType" value="<?php echo $tRteType?>">
@@ -183,11 +190,12 @@ if($aResult['rtCode'] == "1"){
 
 				<div class="form-group">
 					<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETBRate')?></label> 
+					<input type="hidden" id="oetRteRateDef" name="oetRteRateDef" value="<?= @$cRteRate?>">
 					<input class="form-control xCNInputNumericWithDecimal text-right " 
 					type="text" id="oetRteRate" name="oetRteRate" 
 					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
 					maxlength="18"
-					value="<?php echo @$cRteRate?>">
+					value="<?php echo @$cRteRateShow?>">
 				</div>
 				
 				<!-- ISO Code -->
@@ -216,10 +224,11 @@ if($aResult['rtCode'] == "1"){
 
 				<div class="form-group">
 					<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETBFraction')?></label> 
+					<input type="hidden" id="oetRteFractionDef" name="oetRteFractionDef" value="<?= @$cRteFraction?>">
 					<input class="form-control xCNInputNumericWithDecimal text-right " type="text" 
 					id="oetRteFraction" name="oetRteFraction" 
 					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
-					maxlength="18" value="<?php echo @$cRteFraction?>">
+					maxlength="18" value="<?php echo @$cRteFractionShow?>">
 				</div>
 
 				<div class="form-group">
@@ -232,6 +241,13 @@ if($aResult['rtCode'] == "1"){
 						<option value="5"><?php echo  language('payment/rate/rate', 'tRTETBTypeSeq5') ?></option>
 					</select>
 				</div>
+
+				<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETMaxChange')?></label> 
+					<input type="hidden" id="oetRteMaxChgDef" name="oetRteMaxChgDef" value="<?= @$cRteMaxChg?>">
+					<input class="form-control xCNInputNumericWithDecimal text-right " type="text" 
+					id="oetRteMaxChg" name="oetRteMaxChg" 
+					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
+					maxlength="18" value="<?php echo @$cRteMaxChgShow?>">
 
 				<div class="form-group xRateFacBox"  > 
 				<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteUnit')?></label> 

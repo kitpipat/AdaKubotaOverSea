@@ -223,17 +223,33 @@ class Rate_controller extends MX_Controller
             // *** Image Data
             $oetRteRate     = $this->input->post('oetRteRate');
             $oetRteFraction = $this->input->post('oetRteFraction');
+            $oetRteMaxChg = $this->input->post('oetRteMaxChg');
+
             $aRtuFac        = $this->input->post('oetRtuFac');
             $nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
             if (isset($oetRteRate) && !empty($oetRteRate)) {
                 $cRateRate    = $oetRteRate;
+                if($this->input->post('oetRteRateDef')){
+                    $cRateRate  = $this->input->post('oetRteRateDef');
+                }
             } else {
                 $cRateRate    = 0;
             }
             if (isset($oetRteFraction) && !empty($oetRteFraction)) {
                 $cRteFraction    = $oetRteFraction;
+                if($this->input->post('oetRteFractionDef')){
+                    $cRteFraction  = $this->input->post('oetRteFractionDef');
+                }
             } else {
                 $cRteFraction    = 0;
+            }
+            if (isset($oetRteMaxChg) && !empty($oetRteMaxChg)) {
+                $cRteMaxChg    = $oetRteMaxChg;
+                if($this->input->post('oetRteMaxChgDef')){
+                    $cRteMaxChg  = $this->input->post('oetRteMaxChgDef');
+                }
+            } else {
+                $cRteMaxChg    = 0;
             }
 
             if (!empty($this->input->post('ocmRteStaUse'))) {
@@ -266,6 +282,7 @@ class Rate_controller extends MX_Controller
                 'FTAgnCode'     => $tRteAgnCode,
                 'FCRteRate'     => floatval(number_format($cRateRate,$nDecimalCurrentcySave)),
                 'FCRteFraction' => floatval(number_format($cRteFraction,$nDecimalCurrentcySave)),
+                'FCRteMaxUnit'  => floatval(number_format($cRteMaxChg,$nDecimalCurrentcySave)),
                 'FTRteType'     => $this->input->post('ocmRteType'),
                 'FTRteSign'     => $this->input->post('oetRteSign'),
                 'FTRteName'     => $this->input->post('oetRteName'),
