@@ -49,7 +49,7 @@ class Product_model extends CI_Model
         /* | */
         if ($tSesUsrLevel == 'BCH') {                                                     // | */
              /* | */
-             $tWHEREPermission_BCH   .= " AND PDT.FTCtyCode = '$tCtyCode'  ";       // | */ 
+             $tWHEREPermission_BCH   .= " AND ( PDT.FTCtyCode = '$tCtyCode' OR (PDT.FTCtyCode = '') )  ";       // | */ 
             /* | */
             $tWHEREPermission_BCH   .= " AND ( ISNULL(PDLSPC.FTPdtCode,'') = ''  ";       // | */ 
             /* | */
