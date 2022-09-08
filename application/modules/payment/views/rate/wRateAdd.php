@@ -186,7 +186,7 @@ if($aResult['rtCode'] == "1"){
 					<input class="form-control xCNInputNumericWithDecimal text-right " 
 					type="text" id="oetRteRate" name="oetRteRate" 
 					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
-					maxlength="<?= 18 - $nDecimalCurrentcySave;?>"
+					maxlength="18"
 					value="<?php echo @$cRteRate?>">
 				</div>
 				
@@ -219,7 +219,7 @@ if($aResult['rtCode'] == "1"){
 					<input class="form-control xCNInputNumericWithDecimal text-right " type="text" 
 					id="oetRteFraction" name="oetRteFraction" 
 					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
-					maxlength="<?= 18 - $nDecimalCurrentcySave;?>" value="<?php echo @$cRteFraction?>">
+					maxlength="18" value="<?php echo @$cRteFraction?>">
 				</div>
 
 				<div class="form-group">
