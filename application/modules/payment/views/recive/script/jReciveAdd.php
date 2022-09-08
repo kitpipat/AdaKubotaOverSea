@@ -236,12 +236,12 @@
     $('#ocbRcvMultiCur').click(function() {
         if ($('#ocbRcvMultiCur').prop('checked')) {
             $("#obtRcvCurrencyBrowse").attr("disabled", true);
-            $("#oetRcvCurrencyName").prop('required',false);
+            // $("#oetRcvCurrencyName").prop('required',false);
             $('#oetRcvCurrencyCode').val('');
             $('#oetRcvCurrencyName').val('');
         } else {
             $("#obtRcvCurrencyBrowse").attr("disabled", false);
-            $("#oetRcvCurrencyName").prop('required',true);
+            // $("#oetRcvCurrencyName").prop('required',true);
         }
     });
 
@@ -341,12 +341,12 @@
     function JSxRcvCheckCurrency(){
         if ($('#ocbRcvMultiCur').prop('checked')) {
             $("#obtRcvCurrencyBrowse").attr("disabled", true);
-            $("#oetRcvCurrencyName").prop('required',false);
+            // $("#oetRcvCurrencyName").prop('required',false);
             $('#oetRcvCurrencyCode').val('');
             $('#oetRcvCurrencyName').val('');
         } else {
             $("#obtRcvCurrencyBrowse").attr("disabled", false);
-            $("#oetRcvCurrencyName").prop('required',true);
+            // $("#oetRcvCurrencyName").prop('required',true);
         }
         $("#odvRcvCurrencyName").hide();
         var tFmtCode = $('#oetRcvFormatCode').val();
