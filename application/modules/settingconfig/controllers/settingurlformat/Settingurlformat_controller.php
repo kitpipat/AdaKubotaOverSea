@@ -55,7 +55,7 @@ class Settingurlformat_controller extends MX_Controller {
                 'nPage'         => $nPage,
                 'nRow'          => 15,
                 'FNLngID'       => $nLangResort,
-                'tSearchAll'    => $tSearchAll
+                'tSearchAll'    => $tSearchAll,
             );
             $aUrlDataList           = $this->Settingurlformat_model->FSaMURLList($aData);
             $aAlwEventUrl	    = FCNaHCheckAlwFunc('SettingURLFormat/0/0');
@@ -66,6 +66,16 @@ class Settingurlformat_controller extends MX_Controller {
                 'aAlwEventUrl'      => $aAlwEventUrl
             );
             $this->load->view('settingconfig/settingurlformat/wUrlFormatDataTable',$aGenTable);
+        }catch(Exception $Error){
+            echo $Error;
+        }
+    }
+
+    public function FSvCURLCheckStaUse(){
+        try{
+            $tAngCode = $this->input->post('oetBchAgnCode');
+            $aUrlDataList  = $this->Settingurlformat_model->FSoMURLCheckStaUse($tAngCode);
+            echo json_encode($aUrlDataList);
         }catch(Exception $Error){
             echo $Error;
         }
@@ -236,12 +246,13 @@ class Settingurlformat_controller extends MX_Controller {
     //Return : Status Delete Event
     //Return Type : String
     public function FSoCURLDeleteEvent(){
+        $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
         $tIDCode = $this->input->post('tIDCode');
         $aDataMaster = array(
             'FTFspCode' => $tIDCode
         );
         $aResDel        = $this->Settingurlformat_model->FSaMPUNDelAll($aDataMaster);
-        $nNumRowUrlFmt = $this->Settingurlformat_model->FSnMPUNGetAllNumRow();
+        $nNumRowUrlFmt = $this->Settingurlformat_model->FSnMPUNGetAllNumRow($tAngCodeHide);
         if($nNumRowUrlFmt!==false){
             $aReturn    = array(
                 'nStaEvent' => $aResDel['rtCode'],

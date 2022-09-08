@@ -85,6 +85,44 @@ function JSvCallPageURLList(pnPage) {
     });
 }
 
+
+function JSnAddUrl(tRouteEvent) {
+    $('#odvModalUrlStaUse').modal('hide');
+    $(".modal-backdrop").remove();
+    JCNxOpenLoading();
+    $.ajax({
+        type: "POST",
+        url: tRouteEvent,
+        data: $("#ofmAddUrl").serialize(),
+        timeout: 0,
+        success: function(tResult) {
+            if (nStaCtyBrowseType != 1) {
+                var aReturn = JSON.parse(tResult);
+                if (aReturn['nStaEvent'] == 1) {
+                    if (aReturn['nStaCallBack'] == '1' || aReturn['nStaCallBack'] == null) {
+                        JSvURLCallPageUrlEdit(aReturn['tCodeReturn'])
+                    } else if (aReturn['nStaCallBack'] == '2') {
+                        JSvCallPageURLAdd();
+                    } else if (aReturn['nStaCallBack'] == '3') {
+                        JSvCallPageURLList();
+                    }
+                } else {
+                    alert(aReturn['tStaMessg']);
+                }
+
+                //Switch Lang
+                //JCNxInsertLangOtherByMaster(aReturn['tCodeReturn']);
+            } else {
+                JCNxBrowseData(tCallRteBackOption);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            JCNxResponseError(jqXHR, textStatus, errorThrown);
+        }
+    });
+
+}
+
 //Functionality : (event) Add/Edit Reason
 //Parameters : form
 //Creator : 27/03/2018 wasin(yoshi)
@@ -123,7 +161,7 @@ function JSnAddEditUrl(tRouteEvent) {
                     },
                     "dublicateCode": {}
                 },
-                // oetUrlFormatName: {"required": {}}
+                oetUrlFormatName: {"required": {}}
                 
             },
             messages: {
@@ -131,9 +169,9 @@ function JSnAddEditUrl(tRouteEvent) {
                     "required"      : $('#oetUrlCode').attr('data-validate-required'),
                     "dublicateCode" : $('#oetUrlCode').attr('data-validate-dublicateCode')
                 },      
-                // oetUrlFormatName:   {
-                //     "required"      : $('#oetUrlFormatName').attr('data-validate-required'),
-                // }, 
+                oetUrlFormatName:   {
+                    "required"      : $('#oetUrlFormatName').attr('data-validate-required'),
+                }, 
             },
             errorElement: "em",
             errorPlacement: function(error, element) {
@@ -154,39 +192,30 @@ function JSnAddEditUrl(tRouteEvent) {
                 $(element).closest('.form-group').addClass("has-success").removeClass("has-error");
             },
             submitHandler: function(form) {
-
-
-                JCNxOpenLoading();
                 $.ajax({
-                    type: "POST",
-                    url: tRouteEvent,
-                    data: $("#ofmAddUrl").serialize(),
-                    timeout: 0,
-                    success: function(tResult) {
-                        if (nStaCtyBrowseType != 1) {
-                            var aReturn = JSON.parse(tResult);
-                            if (aReturn['nStaEvent'] == 1) {
-                                if (aReturn['nStaCallBack'] == '1' || aReturn['nStaCallBack'] == null) {
-                                    JSvURLCallPageUrlEdit(aReturn['tCodeReturn'])
-                                } else if (aReturn['nStaCallBack'] == '2') {
-                                    JSvCallPageURLAdd();
-                                } else if (aReturn['nStaCallBack'] == '3') {
-                                    JSvCallPageURLList();
-                                }
-                            } else {
-                                alert(aReturn['tStaMessg']);
-                            }
+                        type: "POST",
+                        url: 'urlCheckStaUse',
+                        data: $("#ofmAddUrl").serialize(),
+                        timeout: 0,
+                        success: function(tResult) {
 
-                            //Switch Lang
-                            //JCNxInsertLangOtherByMaster(aReturn['tCodeReturn']);
-                        } else {
-                            JCNxBrowseData(tCallRteBackOption);
+                                var aReturn = JSON.parse(tResult);
+                                console.log(aReturn['rtCode'])
+                                if(aReturn['rtCode'] == '1' && $('#ocmUrlStaActive').val()=='1'){
+                                    $('#osphaha').html(aReturn['rnAllRow'][0]['FTFspCode']+' '+aReturn['rnAllRow'][0]['FTFmtName'])
+                                    $('#odvModalUrlStaUse').modal('show');
+                                    
+                                }else{
+                                    JSnAddUrl(tRouteEvent)
+                                }
+                                //Switch Lang
+                                //JCNxInsertLangOtherByMaster(aReturn['tCodeReturn']);
+                           
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            JCNxResponseError(jqXHR, textStatus, errorThrown);
                         }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        JCNxResponseError(jqXHR, textStatus, errorThrown);
-                    }
-                });
+                    });
             }
         });
     } else {

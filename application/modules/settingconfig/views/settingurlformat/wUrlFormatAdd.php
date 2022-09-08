@@ -13,11 +13,11 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tUrlStaActive		= $raResult['raItems']['rtStaUse'];	
 	}else{
 		$tRoute				= 'urlEventAdd';
-		$tBchName 			= '';
+		$tBchName 			= "";
 		$tBchCode       	= "";
-		$tUrlStaActive		= '2';
-		$tUrlFormatName		= 'URL';
-		$tUrlFormatCode		= '';
+		$tUrlStaActive		= "2";
+		$tUrlFormatName		= "";
+		$tUrlFormatCode		= "";
 		$tFspCode			= "";
 		if(!empty($tAngCodeHide) && !empty($tAngName) ){
 			$tAngCode			= $this->session->userdata('tSesUsrAgnCode');
@@ -103,7 +103,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 															<label class="xCNLabelFrm"><?php echo language('settingconfig/settingurlformat/settingurlformat','tBchName');?></label>
 															<div class="input-group">
 																<input type="text" class="form-control xCNHide" id="oetBchCode" name="oetBchCode" value="<?php echo @$tBchCode; ?>" >
-																<input type="text" class="form-control xWPointerEventNone" id="oetBchName" name="oetBchName" placeholder="เลือกสาขา" value="<?php echo @$tBchName; ?>" readonly data-validate-required="<?php echo language('settingconfig/settingurlformat/settingurlformat','tSHPValiBranchCode');?>">
+																<input type="text" class="form-control xWPointerEventNone" id="oetBchName" name="oetBchName" placeholder="เลือกสาขา" value="<?php echo @$tBchName; ?>" readonly>
 																<span class="input-group-btn">
 																	<button id="oimBchBrowseLang" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
 																</span>
@@ -118,7 +118,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 															<label class="xCNLabelFrm"><span class="text-danger">*</span><?php echo language('settingconfig/settingurlformat/settingurlformat','tFormatName');?></label>
 															<div class="input-group">
 																<input type="text" class="form-control xCNHide" id="oetUrlFormatCode" name="oetUrlFormatCode" value="<?php echo @$tUrlFormatCode; ?>">
-																<input type="text" class="form-control xWPointerEventNone" id="oetUrlFormatName" name="oetUrlFormatName" value="<?php echo @$tUrlFormatName; ?>" readonly>
+																<input type="text" class="form-control xWPointerEventNone" id="oetUrlFormatName" name="oetUrlFormatName" placeholder="รายละเอียด" value="<?php echo @$tUrlFormatName; ?>" readonly data-validate-required="<?php echo language('settingconfig/settingurlformat/settingurlformat','tUrlApiValidate');?>">
 																<span class="input-group-btn">
 																	<button id="oimBrowseUrl" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
 																</span>
@@ -143,6 +143,28 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 													</div>	
 												</div>
 												
+													<div class="modal fade" id="odvModalUrlStaUse">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header xCNModalHead">
+															<label class="xCNTextModalHeard"><?php echo language('settingconfig/settingurlformat/settingurlformat','tCheckTitle');?></label>
+														</div>
+														<div class="modal-body">
+															<span><?php echo language('settingconfig/settingurlformat/settingurlformat','tCheckSta');?> </span>
+															<span id="osphaha">  </span>
+															<span><?php echo language('settingconfig/settingurlformat/settingurlformat','tCheckNext');?></span>
+															<input type='hidden' id="ohdConfirmIDDelete">
+														</div>
+														<div class="modal-footer">
+															<button id="osmConfirm" type="button" class="btn xCNBTNPrimery" onClick="JSnAddUrl('<?php echo @$tRoute?>');">
+																<?=language('common/main/main', 'tModalConfirm')?>
+															</button>
+															<button type="button" class="btn xCNBTNDefult" data-dismiss="modal">
+																<?=language('common/main/main', 'tModalCancel')?>
+															</button>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</form>

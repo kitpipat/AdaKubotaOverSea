@@ -108,3 +108,4 @@ $route ['docGetCurrentDairy']                      = 'settingconfig/settingdairy
     $route ['urlEventAdd']                          = 'settingconfig/settingurlformat/Settingurlformat_controller/FSoCURLAddEvent';
     $route ['urlEventEdit']                         = 'settingconfig/settingurlformat/Settingurlformat_controller/FSoCURLEditEvent';
     $route ['urlEventDelete']                       = 'settingconfig/settingurlformat/Settingurlformat_controller/FSoCURLDeleteEvent';
+    $route ['urlCheckStaUse']                       = 'settingconfig/settingurlformat/Settingurlformat_controller/FSvCURLCheckStaUse';
