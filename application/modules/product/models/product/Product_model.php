@@ -18,7 +18,7 @@ class Product_model extends CI_Model
         $tPdtForSys     = $paData['tPdtForSys'];
 
         if (isset($tPdtForSys) && !empty($tPdtForSys)) {
-            $tPdtForSysLine1    = " AND PDT.FTPdtForSystem = " . $paData['tPdtForSys'];
+            $tPdtForSysLine1    = " AND ( PDT.FTPdtForSystem = " . $paData['tPdtForSys'];
         } else {
             $tPdtForSysLine1    = "";
         }
@@ -49,7 +49,7 @@ class Product_model extends CI_Model
         /* | */
         if ($tSesUsrLevel == 'BCH') {                                                     // | */
              /* | */
-             $tWHEREPermission_BCH   .= " AND PDT.FTCtyCode = '$tCtyCode'  ";       // | */ 
+             $tWHEREPermission_BCH   .= " OR PDT.FTCtyCode = '$tCtyCode' )  ";       // | */ 
             /* | */
             $tWHEREPermission_BCH   .= " AND ( ISNULL(PDLSPC.FTPdtCode,'') = ''  ";       // | */ 
             /* | */
