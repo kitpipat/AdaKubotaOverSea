@@ -32,6 +32,7 @@ $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 		// $tBchMerName		= $aResult['roItem']['rtMerName'];
 		$tBchAgnCode		= $aResult['roItem']['FTAgnCode'];
 		$tBchAgnName		= $aResult['roItem']['FTAgnName'];
+		$tBchLng			= $aResult['roItem']['FNBchDefLang'];
 	}else{
 		$tRoute				= 'branchEventAdd';
 		// Control Tab Menu
@@ -45,15 +46,18 @@ $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 		$dBchSaleStop   = date('Y-m-d', strtotime('+1 year'));
 		if(!empty($tAngCodeHide)){
 		$tBchType		= '4';
+		$tBchLng		= $AgnLang[0]['FNLngID'];
+		$tBchCountryName	= $AgnLang[0]['FTCtyName'];
+		$tBchCountryCode	= $AgnLang[0]['FTCtyCode'];
 		}else{
 		$tBchType		= "";
+		$tBchCountryName	= "ประเทศ";
+		$tBchCountryCode	= "";
 		}
 		$tBchCode		= "";
 		$tBchName       = "";
 		$tBchWahCode	= "00001";
 		$tBchWahName	= "คลังขาย";
-		$tBchCountryName	= "ประเทศ";
-		$tBchCountryCode	= "";
 		$tBtnWahCode    = "disabled";
 		$tBchRmk        = "";
 		$tBchPriority	= "";
@@ -93,6 +97,7 @@ $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 				</ul>
 			</div>
 			<div id="odvBchContentDataTab" class="row">
+			
 				<div class="col-xs-12 col-sm-12 col-md-12 col-xs-12">
 					<div class="tab-content">
 						<!-- Tab Info Data Branch -->
@@ -407,7 +412,7 @@ $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 												</div>
 												<div class="row">
 													<!--ภาษาของสาขา-->
-													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+													<!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
 															<label class="xCNLabelFrm"><?=language('company/branch/branch','tBCHSystemLang');?></label>
 															<select class="selectpicker form-control" id="ocmLangBchSystem" name="ocmLangBchSystem">
@@ -424,6 +429,27 @@ $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 																$('select[name=ocmLangBchSystem]').val('<?=$tSysLangBCH?>');
 																$('.selectpicker').selectpicker('refresh');
 															</script>
+														</div>
+													</div> -->
+
+													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+														<div class="form-group">
+															<label class="xCNLabelFrm"><?=language('company/branch/branch','tBCHSystemLang');?></label>
+															<select class="selectpicker form-control" id="ocmLangBchSystem" name="ocmLangBchSystem" value="<?=@$tBchLng?>">
+															<?php 
+																	foreach($aSysLangForBch as $aData){ 
+																		if($aData['FNLngID']==$tBchLng){
+																			$tSel = 'selected';
+																		}else{
+																			$tSel = '';
+																		}                    
+																?>
+																<option value="<?=$aData['FNLngID']?>"<?php echo $tSel;?>>
+																	<?php echo $aData['FTLngName'];?>
+																</option>
+															<?php } ?>
+																							</select>
+													
 														</div>
 													</div>
 

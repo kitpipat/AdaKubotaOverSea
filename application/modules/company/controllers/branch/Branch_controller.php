@@ -103,6 +103,17 @@ class Branch_controller extends MX_Controller {
 		$aCnfAddPanal 		= $this->FSvCBCHGenViewAddress();
 		$aAlwEvent 			= FCNaHCheckAlwFunc('branch/0/0'); 
 		$aCnfAddVersion  = FCNaHAddressFormat('TCNMBranch');
+		$tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
+		$aGetLang       = $this->Branch_model->FSaMSMGGetStaUse();
+
+
+		if(!empty($tAngCodeHide)){
+			$aGetLangAgn 	= $this->Branch_model->FSaMSMGGetLangAgn($tAngCodeHide);
+		}else{
+			$aGetLangAgn = 0;
+		}
+
+		// exit;
 		$nSysStaDefValue = $aCnfAddVersion;
 		$nSysStaUsrValue = $aCnfAddVersion;
 		
@@ -120,7 +131,8 @@ class Branch_controller extends MX_Controller {
 				'aCnfAddPanal' 		=> $aCnfAddPanal,
 				'nCnfAddVersion' 	=> $nCnfAddVersion,
 				'aAlwEventBranch' 	=> $aAlwEvent,
-				'aSysLangForBch'	=> $aSysLangForBch
+				'aSysLangForBch'	=> $aGetLang,
+				'AgnLang'			=> $aGetLangAgn
 		);
 		$this->load->view('company/branch/wBranchAdd',$aDataEdit);
 
@@ -388,7 +400,7 @@ class Branch_controller extends MX_Controller {
 			$tImgObjPath	= "";
 			$tImgObjName	= "";
 		}
-
+		$aGetLang       = $this->Branch_model->FSaMSMGGetStaUse();
 		//ภาษาของระบบทั้งหมด
 		$aSysLangForBch = $this->Branch_model->FSvMBCHGetSyslangSystems();
 
@@ -399,7 +411,7 @@ class Branch_controller extends MX_Controller {
 				'aAlwEventBranch' 	=> $aAlwEvent,
 				'tImgObjPath'		=> $tImgObjPath,
 				'tImgObjName'		=> $tImgObjName,
-				'aSysLangForBch'	=> $aSysLangForBch
+				'aSysLangForBch'	=> $aGetLang
 		);
 
 		$this->load->view('company/branch/wBranchAdd',$aDataEdit);

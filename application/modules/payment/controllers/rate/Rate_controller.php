@@ -43,13 +43,14 @@ class Rate_controller extends MX_Controller
 
         $nLangResort    = $this->session->userdata("tLangID");
         $nLangEdit      = $this->session->userdata("tLangEdit");
-
+        $nOptDecimalShow    = FCNxHGetOptionDecimalCurrencyShow();
         $aData  = array(
             'FNLngID'   => $nLangEdit,
         );
 
         $aDataAdd = array(
-            'aResult'   => array('rtCode' => '99')
+            'aResult'   => array('rtCode' => '99'),
+            'nOptDecimalShow'    => $nOptDecimalShow,
         );
 
         $this->load->view('payment/rate/wRateAdd', $aDataAdd);
@@ -77,6 +78,7 @@ class Rate_controller extends MX_Controller
             $oetRteFraction = $this->input->post('oetRteFraction');
             $aRtuFac        = $this->input->post('oetRtuFac');
           
+            $nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
             if (isset($oetRteRate) && !empty($oetRteRate)) {
                 $cRateRate    = $oetRteRate;
             } else {
@@ -108,9 +110,9 @@ class Rate_controller extends MX_Controller
                 $cRteStaAlwChange = 2;
             }
 
-            $tRteAgnCode = $this->input->post('oetRteAgnCode');
+            $tRteAgnCode = $this->input->post('ohdRteAgnCode');
             if(isset($tRteAgnCode) && !empty($tRteAgnCode)){
-                $tRteAgnCode = $this->input->post('oetRteAgnCode');
+                $tRteAgnCode = $this->input->post('ohdRteAgnCode');
             }else{
                 $tRteAgnCode = ' ';
             }
@@ -119,8 +121,8 @@ class Rate_controller extends MX_Controller
                 'tIsAutoGenCode' => $this->input->post('ocbRateAutoGenCode'),
                 'FTAgnCode'     => $tRteAgnCode,
                 'FTRteCode'     => $this->input->post('oetRteCode'),
-                'FCRteRate'     => $cRateRate,
-                'FCRteFraction' => $cRteFraction,
+                'FCRteRate'     => floatval(number_format($cRateRate,$nDecimalCurrentcySave)),
+                'FCRteFraction' => floatval(number_format($cRteFraction,$nDecimalCurrentcySave)),
                 'FTRteType'     => $this->input->post('ocmRteType'),
                 'FTRteSign'     => $this->input->post('oetRteSign'),
                 'FTRteName'     => $this->input->post('oetRteName'),
@@ -155,7 +157,7 @@ class Rate_controller extends MX_Controller
                 'FTRteCode' => $aDataMaster['FTRteCode'],
                 'aRtuFac' => $aRtuFac
             ];
-            $oCountDup  = $this->Rate_model->FSnMRTECheckDuplicate($aDataMaster['FTRteCode']);
+            $oCountDup  = $this->Rate_model->FSnMRTECheckDuplicate($aDataMaster['FTRteCode'],$aDataMaster['FTAgnCode']);
             $nStaDup    = $oCountDup[0]->counts;
             if ($nStaDup == 0) {
                 $this->db->trans_begin();
@@ -188,6 +190,7 @@ class Rate_controller extends MX_Controller
                     $aReturn = array(
                         'nStaCallBack'    => $this->session->userdata('tBtnSaveStaActive'),
                         'tCodeReturn'    => $aDataMaster['FTRteCode'],
+                        'tAgnCode'    => $aDataMaster['FTAgnCode'],
                         'nStaEvent'        => '1',
                         'tStaMessg'        => 'Success Add Event'
                     );
@@ -221,7 +224,7 @@ class Rate_controller extends MX_Controller
             $oetRteRate     = $this->input->post('oetRteRate');
             $oetRteFraction = $this->input->post('oetRteFraction');
             $aRtuFac        = $this->input->post('oetRtuFac');
-
+            $nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
             if (isset($oetRteRate) && !empty($oetRteRate)) {
                 $cRateRate    = $oetRteRate;
             } else {
@@ -251,9 +254,9 @@ class Rate_controller extends MX_Controller
                 $cRteStaAlwChange = 2;
             }
 
-            $tRteAgnCode = $this->input->post('oetRteAgnCode');
+            $tRteAgnCode = $this->input->post('ohdRteAgnCode');
             if(isset($tRteAgnCode) && !empty($tRteAgnCode)){
-                $tRteAgnCode = $this->input->post('oetRteAgnCode');
+                $tRteAgnCode = $this->input->post('ohdRteAgnCode');
             }else{
                 $tRteAgnCode = ' ';
             }
@@ -261,8 +264,8 @@ class Rate_controller extends MX_Controller
                 'FTRteCode'     => $this->input->post('oetRteCode'),
                 'FTImgObj'      => $this->input->post('oetImgInputrate'),
                 'FTAgnCode'     => $tRteAgnCode,
-                'FCRteRate'     => $cRateRate,
-                'FCRteFraction' => $cRteFraction,
+                'FCRteRate'     => floatval(number_format($cRateRate,$nDecimalCurrentcySave)),
+                'FCRteFraction' => floatval(number_format($cRteFraction,$nDecimalCurrentcySave)),
                 'FTRteType'     => $this->input->post('ocmRteType'),
                 'FTRteSign'     => $this->input->post('oetRteSign'),
                 'FTRteName'     => $this->input->post('oetRteName'),
@@ -314,6 +317,7 @@ class Rate_controller extends MX_Controller
                 $aReturn = array(
                     'nStaCallBack'    => $this->session->userdata('tBtnSaveStaActive'),
                     'tCodeReturn'    => $aDataMaster['FTRteCode'],
+                    'tAgnCode'    => $aDataMaster['FTAgnCode'],
                     'nStaEvent'        => '1',
                     'tStaMessg'        => 'Success Add Event'
                 );
@@ -333,11 +337,20 @@ class Rate_controller extends MX_Controller
     public function FSaCRTEDeleteEvent()
     {
         $tIDCode = $this->input->post('tIDCode');
+        $tAgnCode = $this->input->post('tAgnCode');
+        if(isset($tAgnCode) && !empty($tAgnCode)){
+            $tAgnCode = $this->input->post('tAgnCode');
+        }else{
+            $tAgnCode = ' ';
+        }
         $aDataMaster = array(
-            'FTRteCode' => $tIDCode
+            'FTRteCode' => $tIDCode,
+            'FTAgnCode' => $tAgnCode
         );
         //ลบข้อมูล
+        // print_r($aDataMaster);
         $aResDel  = $this->Rate_model->FSnMRTEDel($aDataMaster);
+        // $aResDel = '';
         //เช็คแถวข้อมูลถ้า <= 10 ให้เปลี่ยนหน้า
         $nNumRow  = $this->Rate_model->FSnMRTEGetAllNumRow();
         //ลบรูป
@@ -366,14 +379,16 @@ class Rate_controller extends MX_Controller
 
     public function FSvCRTEEditPage()
     {
-        $aAlwEventRate        = FCNaHCheckAlwFunc('rate/0/0'); //Controle Event
-        $nOptDecimalShow    = FCNxHGetOptionDecimalShow();
+        $aAlwEventRate      = FCNaHCheckAlwFunc('rate/0/0'); //Controle Event
+        $nOptDecimalShow    = FCNxHGetOptionDecimalCurrencyShow();
         $tRteCode           = $this->input->post('tRteCode');
+        $tAgnCode           = $this->input->post('tAgnCode');
         $nLangResort        = $this->session->userdata("tLangID");
         $nLangEdit          = $this->session->userdata("tLangEdit");
         $aData  = array(
             'FTRteCode' => $tRteCode,
-            'FNLngID'   => $nLangEdit
+            'FNLngID'   => $nLangEdit,
+            'FTAgnCode' => $tAgnCode
         );
         $aResult       = $this->Rate_model->FSaMRTESearchByID($aData);
         $aRateUnit     = $this->Rate_model->FSaMRTERateUnit($aData);
@@ -428,7 +443,7 @@ class Rate_controller extends MX_Controller
             'FNLngID'       => $nLangEdit,
             'tSearchAll'    => $tSearchAll
         );
-        $nOptDecimalShow    = FCNxHGetOptionDecimalShow();
+        $nOptDecimalShow    = FCNxHGetOptionDecimalCurrencyShow();
         $aResList   = $this->Rate_model->FSaMRTEList($aData);
         $aGenTable  = array(
             'nOptDecimalShow'    => $nOptDecimalShow,

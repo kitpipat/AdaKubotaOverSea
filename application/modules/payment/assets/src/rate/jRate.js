@@ -84,6 +84,7 @@ function JSnAddEditRate(ptRoute) {
             }
         }, '');
         $('#ofmAddRate').validate({
+            ignore: "",            
             rules: {
                 oetRteCode: {
                     "required": {
@@ -142,7 +143,7 @@ function JSnAddEditRate(ptRoute) {
                             var aReturn = JSON.parse(tResult);
                             if (aReturn['nStaEvent'] == 1) {
                                 if (aReturn['nStaCallBack'] == '1' || aReturn['nStaCallBack'] == null) {
-                                    JSvCallPageRateEdit(aReturn['tCodeReturn'])
+                                    JSvCallPageRateEdit(aReturn['tCodeReturn'],aReturn['tAgnCode'])
                                 } else if (aReturn['nStaCallBack'] == '2') {
                                     JSvCallPageRateAdd();
                                 } else if (aReturn['nStaCallBack'] == '3') {
@@ -266,15 +267,17 @@ function JSvCallPageRateAdd() {
 //Creator : 04/07/2018 Krit(Copter)
 //Return : View
 //Return Type : View
-function JSvCallPageRateEdit(ptRteCode) {
-
+function JSvCallPageRateEdit(ptRteCode,ptAgnCode) {
     JCNxOpenLoading();
     JStCMMGetPanalLangSystemHTML('JSvCallPageRateEdit', ptRteCode);
 
     $.ajax({
         type: "POST",
         url: "ratePageEdit",
-        data: { tRteCode: ptRteCode },
+        data: {
+            tRteCode: ptRteCode,
+            tAgnCode: ptAgnCode
+        },
         cache: false,
         timeout: 0,
         success: function(tResult) {
@@ -374,7 +377,7 @@ function JStBCHGenerateRateCode() {
 //Last Modified : 12/08/2019 Saharat(Golf)
 //Return : JSON
 //Return Type : JSON Status Number
-function JSnRateDel(pnPage, ptName, tIDCode) {
+function JSnRateDel(pnPage, ptName, tIDCode , ptAgnCode) {
     var aData = $('#ohdConfirmIDDelete').val();
     var YesOrNot = $('#oetTextComfirmDeleteYesOrNot').val();
     var aTexts = aData.substring(0, aData.length - 2);
@@ -391,7 +394,7 @@ function JSnRateDel(pnPage, ptName, tIDCode) {
                 $.ajax({
                     type: "POST",
                     url: "rateEventDelete",
-                    data: { 'tIDCode': tIDCode },
+                    data: { 'tIDCode': tIDCode , tAgnCode: ptAgnCode},
                     cache: false,
                     success: function(tResult) {
                         tResult = tResult.trim();

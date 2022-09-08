@@ -199,7 +199,7 @@ function FCNaHGencode($ptTable = ''){
 
 //Get ค่าภาษาที่มีอยู๋ในตาราง L ของเรื่องนั้นๆ โดยส่งชื่อ Table
 //10/04/2018 Krit(Copter)
-function FCNaHCheckInputGenCode($ptTable = '',$ptField = '',$ptCode = '', $ptFiledBch = ''){
+function FCNaHCheckInputGenCode($ptTable = '',$ptField = '',$ptCode = '', $ptFiledBch = '' , $ptAgnCode = ''){
 
 	$ci = &get_instance();
 	$ci->load->database();
@@ -214,6 +214,12 @@ function FCNaHCheckInputGenCode($ptTable = '',$ptField = '',$ptCode = '', $ptFil
 		$tSQL .= " AND $ptFiledBch = '$tBchCode' ";
 	}
 	
+	//เพิ่มเงื่อนไข ตรวจเช็ค Agency
+	// if($ptAgnCode != '' || $ptAgnCode != null){
+		$tSQL .= " AND FTAgnCode = '$ptAgnCode' ";
+	// }
+	
+	// echo $tSQL;
 	$oQuery = $ci->db->query($tSQL);
 	if ($oQuery->num_rows() > 0) {
 		return $oQuery->result();

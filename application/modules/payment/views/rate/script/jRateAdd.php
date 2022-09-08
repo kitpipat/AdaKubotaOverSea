@@ -14,6 +14,7 @@
                 $('#odvRteCodeForm em').remove();
             }else{
                 $("#oetRteCode").attr("disabled", false);
+                $("#oetRteCode").focus();
             }
         });
         JSxRateVisibleComponent('#odvRteAutoGenCode', true);
@@ -26,11 +27,14 @@
         $('#odvRteAutoGenCode input').attr('disabled', true);
         JSxRateVisibleComponent('#odvRteAutoGenCode', false);    
 
-        }
-    });
-    $('#oetRteCode').blur(function(){
+    }
+
+    $('#oetRteCode').on(('keyup change'),function(){
         JSxCheckRateCodeDupInDB();
     });
+
+    
+});
 
 
     //Functionality : Event Check Agency
@@ -47,77 +51,14 @@
                 data: { 
                     tTableName: "TFNMRate",
                     tFieldName: "FTRteCode",
-                    tCode: $("#oetRteCode").val()
+                    tCode: $("#oetRteCode").val(),
+                    tAgnCode: $("#ohdRteAgnCode").val()
                 },
                 cache: false,
                 timeout: 0,
                 success: function(tResult){
                     var aResult = JSON.parse(tResult);
-                    $("#ohdCheckDuplicateRteCode").val(aResult["rtCode"]);  
-                // Set Validate Dublicate Code
-                $.validator.addMethod('dublicateCode', function(value, element) {
-                    if($("#ohdCheckDuplicateRteCode").val() == 1){
-                        return false;
-                    }else{
-                        return true;
-                    }
-                },'');
-
-                // From Summit Validate
-                $('#ofmAddRate').validate({
-                    rules: {
-                        oetAgnCode : {
-                            "required" :{
-                                // ตรวจสอบเงื่อนไข validate
-                                depends: function(oElement) {
-                                if($('#ocbRateAutoGenCode').is(':checked')){
-                                    return false;
-                                }else{
-                                    return true;
-                                }
-                                }
-                            },
-                            "dublicateCode" :{}
-                        },
-                        oetAgnName:     {"required" :{}},
-                        oetAgnEmail:     {"required" :{}},
-                    },
-                    messages: {
-                        oetAgnCode : {
-                            "required"      : $('#oetAgnCode').attr('data-validate-required'),
-                            "dublicateCode" : $('#oetAgnCode').attr('data-validate-dublicateCode')
-                        },
-                        oetAgnName : {
-                            "required"      : $('#oetAgnName').attr('data-validate-required'),
-                        },
-                        oetAgnEmail : {
-                            "required"      : $('#oetAgnEmail').attr('data-validate-required'),
-                        },
-                    },
-                    errorElement: "em",
-                    errorPlacement: function (error, element ) {
-                        error.addClass( "help-block" );
-                        if ( element.prop( "type" ) === "checkbox" ) {
-                            error.appendTo( element.parent( "label" ) );
-                        } else {
-                            var tCheck = $(element.closest('.form-group')).find('.help-block').length;
-                            if(tCheck == 0){
-                                error.appendTo(element.closest('.form-group')).trigger('change');
-                            }
-                        }
-                    },
-                    highlight: function ( element, errorClass, validClass ) {
-                        $( element ).closest('.form-group').addClass( "has-error" ).removeClass( "has-success" );
-                    },
-                    unhighlight: function (element, errorClass, validClass) {
-                        $( element ).closest('.form-group').addClass( "has-success" ).removeClass( "has-error" );
-                    },
-                    submitHandler: function(form){}
-                });
-
-                // Submit From
-                $('#ofmAddRate').submit();
-
+                    $("#ohdCheckDuplicateRteCode").val(aResult.rtCode);  
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     JCNxResponseError(jqXHR, textStatus, errorThrown);
@@ -187,7 +128,7 @@
     })
 
     var tSessAgn = '<?= $this->session->userdata("tSesUsrAgnCode") ?>';
-    if($('#oetRteAgnCode').val() || $('#oetRteAgnName').val()){
+    if($('#ohdRteAgnCode').val() || $('#oetRteAgnName').val()){
         if(!tSessAgn){
             $("#obtRtcBrowseAgn").attr("disabled", false);
         }else{
@@ -227,9 +168,13 @@ var oBrowsetAgn = {
     },
     CallBack: {
         ReturnType: 'S',
-        Value: ["oetRteAgnCode", "TCNMAgency.FTAgnCode"],
+        Value: ["ohdRteAgnCode", "TCNMAgency.FTAgnCode"],
         Text: ["oetRteAgnName", "TCNMAgency_L.FTAgnName"]
     },
+    NextFunc: {
+        FuncName: 'JSxCheckRateCodeDupInDB',
+        ArgReturn: []
+    }
 };
 
 // ISO Currency

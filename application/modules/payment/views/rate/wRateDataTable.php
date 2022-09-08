@@ -7,6 +7,7 @@
     //Agency
     $tAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
     $tAgnName 	= $this->session->userdata("tSesUsrAgnName");
+
 ?>
 
 <div class="row">
@@ -70,26 +71,27 @@
                             <td><?php echo $aValue['FTRteName'];?></td>
                             <td class="text-right"><?php echo number_format($aValue['FCRteRate'],$nOptDecimalShow)?></td>
                             <td class="text-left"><?php echo ($AlwChange)?></td>
-                            <td><?= ($aValue['FTAgnCode']) ?  $aValue['FTAgnName']  :  language('payment/rate/rate','tRTEHq') ;?></td>
+                            <!-- <td><?= $aValue['FTAgnCode']?></td> -->
+                            <td><?= ($aValue['FTAgnCode']) ?  $aValue['FTAgnName']  :  language('payment/rate/rate','tRTEHq').$aValue['FTAgnName'];?></td>
                             <!-- <td>tManage</td> -->
 							<?php if(($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) && (!$tAgnCode)) : ?>
                             	<!-- <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/assets/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>')"></td> -->
-                                <td class="text-center"><img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>')"></td>
+                                <td class="text-center"><img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>','<?=$aValue['FTAgnCode']?>')"></td>
                             <?php else: ?>
                                 <?php if($aValue['FTAgnCode'] == $tAgnCode){ ?>
-                                    <td class="text-center"><img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>')"></td>
+                                    <td class="text-center"><img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnRateDel('<?=$nCurrentPage?>','<?=$aValue['FTRteName']?>','<?=$aValue['FTRteCode']?>','<?=$aValue['FTAgnCode']?>')"></td>
                                 <?php }else{?>
                                     <td class="text-center"><img class="xCNIconTable xCNIconDel xCNDocDisabled" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" title="มีการยกเลิก หรือ อนุมัติแล้ว ไม่สามารถลบรายการนี้ได้"></td>
                                 <?php }?>    
                             <?php endif; ?>
 							<?php if(($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaDelete'] == 1) && (!$tAgnCode)) : ?>
                             	<!-- <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/assets/icons/edit.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>')"></td> -->
-                                <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>')"></td>
+                                <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>','<?=$aValue['FTAgnCode']?>')"></td>
                             <?php else: ?>
                                 <?php if($aValue['FTAgnCode'] == $tAgnCode){ ?>
-                                    <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>')"></td>
+                                    <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>','<?=$aValue['FTAgnCode']?>')"></td>
                                 <?php }else{?>
-                                    <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/view2.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>')"></td>
+                                    <td class="text-center"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/view2.png'?>" onClick="JSvCallPageRateEdit('<?=$aValue['FTRteCode']?>','<?=$aValue['FTAgnCode']?>')"></td>
                                 <?php }?>    
                             <?php endif; ?>
                         </tr>

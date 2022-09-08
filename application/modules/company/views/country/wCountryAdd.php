@@ -89,16 +89,6 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 														<div class="form-group">
 															<label class="xCNLabelFrm">
-																<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryRef')?> </label>
-															<input type="text" class="form-control" maxlength="5" id="oetCtyRef" name="oetCtyRef" autocomplete="off" placeholder="<?php echo language('company/country/country','tCountryRef')?>" data-validate-required="<?php echo language('company/country/country','tCountryRefValidate')?>" value="<?php echo @$tCtyRef; ?>">
-														</div>
-													</div>
-												</div>
-
-												<div class="row">
-												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-														<div class="form-group">
-															<label class="xCNLabelFrm">
 																<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryName')?> </label>
 															<input type="text" class="form-control" maxlength="50" id="oetCtyName" name="oetCtyName" autocomplete="off" placeholder="<?php echo language('company/country/country','tCountryName')?>" data-validate-required="<?php echo language('company/country/country','tCountryNameValidate')?>" value="<?php echo @$tCtyName; ?>">
 														</div>
@@ -106,6 +96,16 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 												</div>
 
 												
+												<div class="row">
+												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+														<div class="form-group">
+															<label class="xCNLabelFrm">
+																<span class="text-danger">*</span> <?php echo language('company/country/country','tCountryRef')?> </label>
+															<input type="text" class="form-control" maxlength="5" id="oetCtyRef" name="oetCtyRef" autocomplete="off" placeholder="<?php echo language('company/country/country','tCountryRef')?>" data-validate-required="<?php echo language('company/country/country','tCountryRefValidate')?>" value="<?php echo @$tCtyRef; ?>">
+														</div>
+													</div>
+												</div>
+
 
 												<div class="row">
 												   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
