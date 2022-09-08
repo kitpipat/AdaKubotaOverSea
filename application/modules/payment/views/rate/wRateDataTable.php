@@ -97,7 +97,7 @@
                         </tr>
                     <?php } ?>
                 <?php else:?>
-                    <tr><td class='text-center xCNTextDetail2' colspan='8'><?= language('common/main/main','tCMNNotFoundData')?></td></tr>
+                    <tr><td class='text-center xCNTextDetail2' colspan='9'><?= language('common/main/main','tCMNNotFoundData')?></td></tr>
                 <?php endif;?>
                 </tbody>
             </table>
