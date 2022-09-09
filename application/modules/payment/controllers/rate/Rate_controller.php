@@ -44,6 +44,7 @@ class Rate_controller extends MX_Controller
         $nLangResort    = $this->session->userdata("tLangID");
         $nLangEdit      = $this->session->userdata("tLangEdit");
         $nOptDecimalShow    = FCNxHGetOptionDecimalCurrencyShow();
+        $nDecimalShow 		= FCNxHGetOptionDecimalShow();
         $aData  = array(
             'FNLngID'   => $nLangEdit,
         );
@@ -51,6 +52,7 @@ class Rate_controller extends MX_Controller
         $aDataAdd = array(
             'aResult'   => array('rtCode' => '99'),
             'nOptDecimalShow'    => $nOptDecimalShow,
+            'nDecimalShow'      => $nDecimalShow,
         );
 
         $this->load->view('payment/rate/wRateAdd', $aDataAdd);
@@ -127,9 +129,9 @@ class Rate_controller extends MX_Controller
                 'tIsAutoGenCode' => $this->input->post('ocbRateAutoGenCode'),
                 'FTAgnCode'     => $tRteAgnCode,
                 'FTRteCode'     => $this->input->post('oetRteCode'),
-                'FCRteRate'     => floatval(number_format($cRateRate,$nDecimalCurrentcySave)),
-                'FCRteFraction' => floatval(number_format($cRteFraction,$nDecimalCurrentcySave)),
-                'FCRteMaxUnit'  => floatval(number_format($cRteMaxChg,$nDecimalCurrentcySave)),
+                'FCRteRate'     => number_format($cRateRate,$nDecimalCurrentcySave, '.', ''),
+                'FCRteFraction' => number_format($cRteFraction,$nDecimalCurrentcySave, '.', ''),
+                'FCRteMaxUnit'  => number_format($cRteMaxChg,FCNxHGetOptionDecimalSave(), '.', ''),
                 'FTRteType'     => $this->input->post('ocmRteType'),
                 'FTRteSign'     => $this->input->post('oetRteSign'),
                 'FTRteName'     => $this->input->post('oetRteName'),
@@ -283,13 +285,20 @@ class Rate_controller extends MX_Controller
             }else{
                 $tRteAgnCode = ' ';
             }
+            // print_r($cRateRate);
+            // echo ' :: ';
+            // print_r(number_format($cRateRate,$nDecimalCurrentcySave, '.', ''));
+            // echo ' :: ';
+
+            // print_r(floatval(number_format($cRateRate,$nDecimalCurrentcySave, '.', '')));
+            
             $aDataMaster    = [
                 'FTRteCode'     => $this->input->post('oetRteCode'),
                 'FTImgObj'      => $this->input->post('oetImgInputrate'),
                 'FTAgnCode'     => $tRteAgnCode,
-                'FCRteRate'     => floatval(number_format($cRateRate,$nDecimalCurrentcySave)),
-                'FCRteFraction' => floatval(number_format($cRteFraction,$nDecimalCurrentcySave)),
-                'FCRteMaxUnit'  => floatval(number_format($cRteMaxChg,$nDecimalCurrentcySave)),
+                'FCRteRate'     => number_format($cRateRate,$nDecimalCurrentcySave, '.', ''),
+                'FCRteFraction' => number_format($cRteFraction,$nDecimalCurrentcySave, '.', ''),
+                'FCRteMaxUnit'  => number_format($cRteMaxChg,FCNxHGetOptionDecimalSave(), '.', ''),
                 'FTRteType'     => $this->input->post('ocmRteType'),
                 'FTRteSign'     => $this->input->post('oetRteSign'),
                 'FTRteName'     => $this->input->post('oetRteName'),
@@ -405,6 +414,8 @@ class Rate_controller extends MX_Controller
     {
         $aAlwEventRate      = FCNaHCheckAlwFunc('rate/0/0'); //Controle Event
         $nOptDecimalShow    = FCNxHGetOptionDecimalCurrencyShow();
+        $nDecimalShow 		= FCNxHGetOptionDecimalShow();
+
         $tRteCode           = $this->input->post('tRteCode');
         $tAgnCode           = $this->input->post('tAgnCode');
         $nLangResort        = $this->session->userdata("tLangID");
@@ -428,12 +439,13 @@ class Rate_controller extends MX_Controller
             $tImgName       = "";
         }
         $aDataEdit  = array(
-            'nOptDecimalShow'    => $nOptDecimalShow,
+            'nOptDecimalShow'   => $nOptDecimalShow,
             'aResult'           => $aResult,
             'aAlwEventRate'     => $aAlwEventRate,
             'tImgObjAll'        => $tImgObjAll,
             'tImgName'          => $tImgName,
-            'aRateUnit'         => $aRateUnit
+            'aRateUnit'         => $aRateUnit,
+            'nDecimalShow'     => $nDecimalShow
         );
         $this->load->view('payment/rate/wRateAdd', $aDataEdit);
     }

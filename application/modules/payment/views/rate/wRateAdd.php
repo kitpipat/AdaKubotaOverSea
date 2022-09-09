@@ -2,7 +2,8 @@
 //Agency
 $tSessAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
 $tSessAgnName 	= $this->session->userdata("tSesUsrAgnName");
-$nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
+$nDecimalCurrentcySave  = FCNxHGetOptionDecimalCurrencySave();
+$nDecimalSave 			= FCNxHGetOptionDecimalSave();
 if($aResult['rtCode'] == "1"){
 	$tRteCode       	= $aResult['raItems']['rtRteCode'];
 	$cRteRate       	= $aResult['raItems']['rcRteRate'];
@@ -25,7 +26,7 @@ if($aResult['rtCode'] == "1"){
 	$tRteIsoName		= $aResult['raItems']['FTRteIsoName'];
 
 	$cRteMaxChg       	= $aResult['raItems']['rcRteMaxUnit'];
-	$cRteMaxChgShow       = number_format($aResult['raItems']['rcRteMaxUnit'],$nOptDecimalShow);
+	$cRteMaxChgShow       = number_format($aResult['raItems']['rcRteMaxUnit'],$nDecimalShow);
 
 	//Agency
 	$tRteAgnCode 	= $aResult['raItems']['FTAgnCode'];
@@ -247,7 +248,7 @@ if($aResult['rtCode'] == "1"){
 					<input type="hidden" id="oetRteMaxChgDef" name="oetRteMaxChgDef" value="<?= @$cRteMaxChg?>">
 					<input class="form-control xCNInputNumericWithDecimal text-right " type="text" 
 					id="oetRteMaxChg" name="oetRteMaxChg" 
-					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
+					placeholder="<?php echo number_format('0',$nDecimalShow)?>"
 					maxlength="18" value="<?php echo @$cRteMaxChgShow?>">
 				</div>
 					
@@ -266,7 +267,7 @@ if($aResult['rtCode'] == "1"){
 										<input class="form-control  xCNInputNumericWithDecimal text-right" type="text" 
 												name="oetRtuFac[]" 
 												placeholder="0.00"
-												maxlength="18" value="<?=round($aRateUnit['FCRtuFac'],$nOptDecimalShow)?>">
+												maxlength="18" value="<?=round($aRateUnit['FCRtuFac'],$nDecimalShow)?>">
 											<span class="input-group-btn">
 												<button type="button" class="btn xCNBtnDateTime"   onclick="JSxRateUnitRemove(<?=$nSeq?>)">
 													<img src="<?=base_url('/')?>/application/modules/common/assets/images/icons/delete.png" width="15px">
