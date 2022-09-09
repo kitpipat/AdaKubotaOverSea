@@ -251,12 +251,7 @@ $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 																<option value="1"<?php echo (@$tBchType == 1)? " selected" : "";?>>
 																	<?php echo language('company/branch/branch', 'tBCHBchTypeSEL1');?>
 																</option>
-																<option value="2"<?php echo (@$tBchType == 2)? " selected" : "";?>>
-																	<?php echo language('company/branch/branch', 'tBCHBchTypeSEL2');?>
-																</option>
-																<option value="3"<?php echo (@$tBchType == 3)? " selected" : "";?>>
-																	<?php echo language('company/branch/branch', 'tBCHBchTypeSEL3');?>
-																</option>
+															
 																<option value="4"<?php echo (@$tBchType == 4)? " selected" : "";?>>
 																	<?php echo language('company/branch/branch', 'tBCHBchTypeSEL4');?>
 																</option>

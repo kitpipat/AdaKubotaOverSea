@@ -50,7 +50,7 @@ class Country_controller extends MX_Controller {
         try{
             $tSearchAll = $this->input->post('tSearchAll');
             $nPage      = ($this->input->post('nPageCurrent') == '' || null)? 1 : $this->input->post('nPageCurrent');   // Check Number Page
-            $nLangResort    = $this->session->userdata("tLangID");
+            $nLangResort    = $this->session->userdata('tLangID');
             $aLangHave      = FCNaHGetAllLangByTable('TCNMCountry_L');
             $nLangHave      = count($aLangHave);
             if($nLangHave > 1){
@@ -58,12 +58,16 @@ class Country_controller extends MX_Controller {
             }else{
                 $nLangEdit  = (@$aLangHave[0]->nLangList == '')? '1' : $aLangHave[0]->nLangList;
             }
-
+            
+            $tAgnLang = $this->Country_model->FSnMCTYGetLangAgent();
+            $tLangLocal = $this->Country_model->FSnMCTYGetLangLocal();
             $aData  = array(
                 'nPage'         => $nPage,
                 'nRow'          => 15,
                 'FNLngID'       => $nLangEdit,
-                'tSearchAll'    => $tSearchAll
+                'tSearchAll'    => $tSearchAll,
+                'tLangLocal'    => $tLangLocal,
+                'tAgnLangCode'  => $tAgnLang,
             );
             $aPunDataList           = $this->Country_model->FSaMCTYList($aData);
             $aAlwEventCty	    = FCNaHCheckAlwFunc('country/0/0');
@@ -71,7 +75,9 @@ class Country_controller extends MX_Controller {
                 'aPunDataList'          => $aPunDataList,
                 'nPage'                 => $nPage,
                 'tSearchAll'            => $tSearchAll,
-                'aAlwEventCty'      => $aAlwEventCty
+                'aAlwEventCty'          => $aAlwEventCty,
+                
+
             );
             $this->load->view('company/country/wCountryDataTable',$aGenTable);
         }catch(Exception $Error){

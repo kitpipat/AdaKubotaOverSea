@@ -13,8 +13,8 @@ class Country_model extends CI_Model {
             $aRowLen        = FCNaHCallLenData($paData['nRow'],$paData['nPage']);
             $nLngID         = $paData['FNLngID'];
             $tSearchList    = $paData['tSearchAll'];
-
-
+            $tAgnLangCode   = $paData['tAgnLangCode']['FNLngID'];
+            $tUserLang      = $this->session->userdata('tLangID');
             $tSQL       = "SELECT c.* FROM(
                                 SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC , rtCtyCode DESC) AS rtRowID,* FROM
                                     (SELECT DISTINCT
@@ -23,6 +23,8 @@ class Country_model extends CI_Model {
                                         CTY.FDCreateOn
                                     FROM [TCNMCountry] CTY
                                     LEFT JOIN [TCNMCountry_L]  CTY_L ON CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = $nLngID
+                                    OR CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = $tAgnLangCode
+									OR CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = $tUserLang
                                     WHERE 1=1 ";
 
             if(isset($tSearchList) && !empty($tSearchList)){
@@ -310,6 +312,29 @@ class Country_model extends CI_Model {
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0){
             $aResult = $oQuery->row_array()["FNAllNumRow"];
+        }else{
+            $aResult = false;
+        }
+        return $aResult;
+    }
+
+    public function FSnMCTYGetLangLocal(){
+        $tSQL = "SELECT FNLngID  FROM TSysLanguage WHERE FTLngStaLocal = '1'";
+        $oQuery = $this->db->query($tSQL);
+        if ($oQuery->num_rows() > 0){
+            $aResult = $oQuery->row_array();
+        }else{
+            $aResult = false;
+        }
+        return $aResult;
+    }
+
+    public function FSnMCTYGetLangAgent(){
+        $tAngCode       = $this->session->userdata('tSesUsrAgnCode');   
+        $tSQL = "SELECT CTY.FNLngID  FROM TCNMAgency AGN LEFT JOIN TCNMCountry CTY ON AGN.FTCtyCode = CTY.FTCtyCode WHERE AGN.FTAgnCode = '$tAngCode' ";
+        $oQuery = $this->db->query($tSQL);
+        if ($oQuery->num_rows() > 0){
+            $aResult = $oQuery->row_array();
         }else{
             $aResult = false;
         }
