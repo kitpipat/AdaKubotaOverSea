@@ -55,7 +55,7 @@ class Settingdairycurrency_controller extends MX_Controller {
         );
 
         $aListRate       = $this->Settingdairycurrency_model->FSaMSETConfigDataTableByCurrentcy($aData,'checkbox');
-
+        $aGetUpdateTime  = $this->Settingdairycurrency_model->FSaMCurentcyGetLastUpdate($aData);
         // print_r($aListRate);
 
         if($aListRate ['rtCode'] == '800'){
@@ -63,13 +63,20 @@ class Settingdairycurrency_controller extends MX_Controller {
         }else{
             $JobDate = $aListRate['raItems'][0]['FDJobDateCfm'];
         }
+
+        if($aGetUpdateTime['rtCode'] == '800'){
+            $ApiTime = '';
+        }else{
+            $ApiTime = $aGetUpdateTime['raItems'][0]['FDRteLastUpdOn'] ;
+        }
         $aGenTable  = array(
             'tTypePage'             => $this->input->post("ptTypePage"),
             'aAlwEvent'             => $aAlwEvent,
             'aListRate'             => $aListRate,
             'nDecimalShow'          => $nDecimalShow,
             'dJobDate'              => $JobDate,
-            'FTAgnCode'             => $this->session->userdata('tSesUsrAgnCode')
+            'FTAgnCode'             => $this->session->userdata('tSesUsrAgnCode'),
+            'ApiTime'               => $ApiTime,
         );
 
         $this->load->view('settingconfig/settingdairycurrency/config/wDairycurrencyDatatable',$aGenTable);

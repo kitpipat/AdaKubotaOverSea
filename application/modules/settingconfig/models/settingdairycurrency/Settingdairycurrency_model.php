@@ -94,6 +94,35 @@ class Settingdairycurrency_model extends CI_Model
         return $aResult;
     }
 
+
+    public function FSaMCurentcyGetLastUpdate($paData)
+    {
+        try{
+            $nLngID = $paData['FNLngID'];
+            $tAgnCode   = $paData['FTAgnCode'];
+            $tSQL = " SELECT FDRteLastUpdOn FROM TFNMRate ";
+            $oQuery = $this->db->query($tSQL);
+            if ($oQuery->num_rows() > 0) {
+                $oList      = $oQuery->result();
+                $aResult    = array(
+                    'raItems'       => $oList,
+                    'rtCode'        => '1',
+                    'rtDesc'        => 'success',
+                );
+            } else {
+                $aResult    = array(
+                    'rtCode'        => '800',
+                    'rtDesc'        => 'data not found',
+                );
+            }
+            $jResult = json_encode($aResult);
+            $aResult = json_decode($jResult, true);
+            return $aResult;
+        }catch (Exception $Error) {
+            return $Error;
+        }
+    }
+
     public function FSaMCurentcyUpdate($paData)
     {
         try {

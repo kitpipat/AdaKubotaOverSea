@@ -44,7 +44,7 @@ $tBchCount = $this->session->userdata('nSesUsrBchCount');
     <div class="col-xs-4 col-md-8 col-lg-8 text-right">
         <div class="col-lg-7 col-md-6 col-xs-6 no-padding padding-left-15">
         </div>
-
+        <!-- <div style='text-align: right;'>ยืนยันล่าสุดเมื่อ <?= $dJobDate; ?></div> -->
         <div class="col-lg-4 col-md-4 col-xs-12 no-padding padding-left-15">
             <div class="form-group">
                 <div class="input-group"><input type="text" class="form-control xCNHide" id="oetSpcAgncyCode" name="oetSpcAgncyCode" maxlength="5" value="<?= @$tAgnCode; ?>">
