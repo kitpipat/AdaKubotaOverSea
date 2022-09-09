@@ -77,7 +77,8 @@ class Rate_controller extends MX_Controller
             $oetRteRate     = $this->input->post('oetRteRate');
             $oetRteFraction = $this->input->post('oetRteFraction');
             $aRtuFac        = $this->input->post('oetRtuFac');
-          
+            $oetRteMaxChg = $this->input->post('oetRteMaxChg');
+            
             $nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
             if (isset($oetRteRate) && !empty($oetRteRate)) {
                 $cRateRate    = $oetRteRate;
@@ -91,6 +92,11 @@ class Rate_controller extends MX_Controller
                 $cRteFraction    = 0;
             }
 
+            if (isset($oetRteMaxChg) && !empty($oetRteMaxChg)) {
+                $cRteMaxChg    = $oetRteMaxChg;
+            } else {
+                $cRteMaxChg    = 0;
+            }
 
             if (!empty($this->input->post('ocmRteStaUse'))) {
                 $cmRteStaUse = 1;
@@ -123,6 +129,7 @@ class Rate_controller extends MX_Controller
                 'FTRteCode'     => $this->input->post('oetRteCode'),
                 'FCRteRate'     => floatval(number_format($cRateRate,$nDecimalCurrentcySave)),
                 'FCRteFraction' => floatval(number_format($cRteFraction,$nDecimalCurrentcySave)),
+                'FCRteMaxUnit'  => floatval(number_format($cRteMaxChg,$nDecimalCurrentcySave)),
                 'FTRteType'     => $this->input->post('ocmRteType'),
                 'FTRteSign'     => $this->input->post('oetRteSign'),
                 'FTRteName'     => $this->input->post('oetRteName'),
