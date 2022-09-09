@@ -242,13 +242,14 @@ if($aResult['rtCode'] == "1"){
 					</select>
 				</div>
 
-				<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETMaxChange')?></label> 
+				<div class="form-group">
+					<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRTETMaxChange')?></label> 
 					<input type="hidden" id="oetRteMaxChgDef" name="oetRteMaxChgDef" value="<?= @$cRteMaxChg?>">
 					<input class="form-control xCNInputNumericWithDecimal text-right " type="text" 
 					id="oetRteMaxChg" name="oetRteMaxChg" 
 					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
 					maxlength="18" value="<?php echo @$cRteMaxChgShow?>">
-
+				</div>
 					
 				<div class="form-group xRateFacBox"  > 
 				<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteUnit')?></label> 
