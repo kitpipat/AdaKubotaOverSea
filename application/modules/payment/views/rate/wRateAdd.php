@@ -9,7 +9,7 @@ if($aResult['rtCode'] == "1"){
 	$cRteRate       	= $aResult['raItems']['rcRteRate'];
 	$cRteRateShow       = number_format($aResult['raItems']['rcRteRate'],$nOptDecimalShow);
 	$cRteFraction      	= $aResult['raItems']['rcRteFraction'];
-	$cRteFractionShow	= number_format($aResult['raItems']['rcRteFraction'],$nOptDecimalShow);
+	$cRteFractionShow	= number_format($aResult['raItems']['rcRteFraction'],$nDecimalShow);
 	$tRteType       	= $aResult['raItems']['rtRteType'];
 	$cRteTypeChg       	= $aResult['raItems']['rcRteTypeChg'];
 	$cRteSign     		= $aResult['raItems']['rcRteSign'];
@@ -228,7 +228,7 @@ if($aResult['rtCode'] == "1"){
 					<input type="hidden" id="oetRteFractionDef" name="oetRteFractionDef" value="<?= @$cRteFraction?>">
 					<input class="form-control xCNInputNumericWithDecimal text-right " type="text" 
 					id="oetRteFraction" name="oetRteFraction" 
-					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
+					placeholder="<?php echo number_format('0',$nDecimalShow)?>"
 					maxlength="18" value="<?php echo @$cRteFractionShow?>">
 				</div>
 
