@@ -1,7 +1,6 @@
 <script type="text/javascript">
     $('.selection-2').selectpicker();
     var nLangEdits = <?php echo $this->session->userdata("tLangEdit") ?>;
-
     $(document).ready(function() {
         if (JSbRcvIsCreatePage()) {
             // Rcv Code
@@ -307,6 +306,12 @@
         JCNxBrowseData('oBrowsetRate');
     });
 
+    var tAgnCode   = '<?php echo $this->session->userdata("tSesUsrAgnCode") ?>';
+    if(tAgnCode != ""){
+        tWhereAgn = " AND TFNMRate.FTAgnCode IN ('','"+tAgnCode+"') ";
+    }else{
+        tWhereAgn = "";
+    }
     var oBrowsetRate = {
         Title: ['payment/recive/recive', 'tRCVCurrency'],
         Table: {
@@ -315,7 +320,10 @@
         },
         Join: {
             Table: ['TFNMRate_L'],
-            On: ['TFNMRate_L.FTRteCode = TFNMRate.FTRteCode  AND TFNMRate_L.FNLngID =' + nLangEdits]
+            On: ['TFNMRate_L.FTRteCode = TFNMRate.FTRteCode AND TFNMRate.FTAgnCode = TFNMRate_L.FTAgnCode AND TFNMRate_L.FNLngID =' + nLangEdits]
+        },
+        Where: {
+            Condition: [tWhereAgn]
         },
         GrideView: {
             ColumnPathLang: 'payment/recivespc/recivespc',
@@ -327,6 +335,7 @@
             Perpage: 10,
             OrderBy: ['TFNMRate.FTRteCode ASC'],
         },
+        // DebugSQL: true,
         CallBack: {
             ReturnType: 'S',
             Value: ["oetRcvCurrencyCode", "TFNMRate.FTRteCode"],

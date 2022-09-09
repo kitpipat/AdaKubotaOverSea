@@ -275,6 +275,30 @@ class Recive_model extends CI_Model
                 }
             }
 
+            if($this->session->userdata("tSesUsrLevel") != 'HQ'){
+                $tRcvSpcAggCode = $this->session->userdata("tSesUsrAgnCode");
+                $tRcvSpcBchCode = $this->session->userdata("tSesUsrBchCodeDefault");
+                if ($tRcvSpcAggCode == '' && $tRcvSpcBchCode != '') {
+                    $tBchIns = $tRcvSpcBchCode;
+                } else {
+                    $tBchIns = '';
+                }
+                
+                $aDataRcvCode = array(
+                    'FTRcvCode' => $paData['FTRcvCode'],
+                    'FTAppCode'  =>   '',
+                    'FTAggCode'  =>   $tRcvSpcAggCode,
+                    'FTBchCode'  =>   $tBchIns,
+                    'FTMerCode'  =>   '',
+                    'FTShpCode'  =>   '',
+                    'FTPosCode'  =>   '',
+                    'FTPdtRmk'  =>   '',
+                    'FNRcvSeq' => 1
+
+                );
+                $this->db->insert('TFNMRcvSpc', $aDataRcvCode);
+            } 
+
             $this->db->select('FTRcvCode');
             $this->db->from('TFNMRcvSpcConfig');
             $this->db->where('FTRcvCode', $paData['FTRcvCode']);
