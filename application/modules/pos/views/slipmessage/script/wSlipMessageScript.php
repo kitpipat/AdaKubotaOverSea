@@ -96,7 +96,7 @@ function JSnAddEditSlipMessage(ptRoute) {
                             var aReturn = JSON.parse(tResult);
                             if (aReturn['nStaEvent'] == 1) {
                                 if (aReturn['nStaCallBack'] == '1' || aReturn['nStaCallBack'] == null) {
-                                    JSvCallPageSlipMessageEdit(aReturn['tCodeReturn'])
+                                    JSvCallPageSlipMessageEdit(aReturn['tCodeReturn'],aReturn['tCodeReturn2'])
                                 } else if (aReturn['nStaCallBack'] == '2') {
                                     JSvCallPageSlipMessageAdd();
                                 } else if (aReturn['nStaCallBack'] == '3') {

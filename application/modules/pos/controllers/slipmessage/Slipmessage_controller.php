@@ -154,7 +154,6 @@ class Slipmessage_controller extends MX_Controller {
         $aGetLang       = $this->Slipmessage_model->FSaMSMGGetStaUse();
         // $aLangHave      = FCNaHGetAllLangByTable('TCNMSlipMsgHD_L');
         // $nLangHave      = count($aLangHave);
-
         // if($nLangHave > 1){
 	    //     if($nLangEdit != ''){
 	    //         $nLangEdit = $nLangEdit;
@@ -173,7 +172,7 @@ class Slipmessage_controller extends MX_Controller {
             'FTSmgCode' => $tSmgCode,
             'FNLngID'   => $tSmgLang,
         );
-
+        
         $tAPIReq        = "";
         $tMethodReq     = "GET";
         $aSmgData       = $this->Slipmessage_model->FSaMSMGSearchByID($tAPIReq, $tMethodReq, $aData);
@@ -295,6 +294,7 @@ class Slipmessage_controller extends MX_Controller {
                     $aReturn = array(
                         'nStaCallBack'	=> $this->session->userdata('tBtnSaveStaActive'),
                         'tCodeReturn'	=> $aDataMaster['FTSmgCode'],
+                        'tCodeReturn2'   => $aDataMaster['FNLngID'],
                         'nStaEvent'	    => '1',
                         'tStaMessg'		=> 'Success Add Event'
                     );
@@ -396,6 +396,7 @@ class Slipmessage_controller extends MX_Controller {
                 $aReturn = array(
                     'nStaCallBack'	=> $this->session->userdata('tBtnSaveStaActive'),
                     'tCodeReturn'	=> $aDataMaster['FTSmgCode'],
+                    'tCodeReturn2'   => $aDataMaster['FNLngID'],
                     'nStaEvent'	    => '1',
                     'tStaMessg'		=> 'Success Add Event'
                 );
