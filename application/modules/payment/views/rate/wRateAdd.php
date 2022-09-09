@@ -249,6 +249,7 @@ if($aResult['rtCode'] == "1"){
 					placeholder="<?php echo number_format('0',$nOptDecimalShow)?>"
 					maxlength="18" value="<?php echo @$cRteMaxChgShow?>">
 
+					
 				<div class="form-group xRateFacBox"  > 
 				<label class="xCNLabelFrm"><?php echo  language('payment/rate/rate','tRteUnit')?></label> 
 				<button class="xBTNPrimeryPlus " type="button" style="padding-botton:20px" onclick="JSvAddRateUnitFac()">+</button>
