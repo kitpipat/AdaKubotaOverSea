@@ -62,10 +62,10 @@ $tBchCount = $this->session->userdata('nSesUsrBchCount');
                 </div>
             </div>
         </div>
-        <div class="col-lg-1 col-md-1 col-xs-1 no-padding padding-left-15">
+        <div class="col-lg-1 col-md-1 col-xs-1 no-padding" >
 
             <div id="odvBtnAddEdit" style="display: block;padding-bottom:10px;">
-                <button onclick="JSxCurrentcyCurrentRate()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="margin-left: 5px;" style="display: block;"><?= language('common/main/main', 'Refresh'); ?></button>
+                <button onclick="JSxCurrentcyCurrentRate()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="padding: left 10px;" style="display: block;"><?= language('common/main/main', 'Refresh'); ?></button>
             </div>
         </div>
     </div>
