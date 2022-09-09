@@ -162,6 +162,19 @@ ol.breadcrumb li.active a {
     font-weight: 400;
 }
 
+/* .xCNColumnPdtName{
+    color: #232C3D !important;
+    font-size: 16px !important;
+    font-weight: 400;
+} */
+
+.table>tbody>tr>.xCNColumnPdtNameLaos{
+    font-family: Phetsarath_OT;
+    font-size: 12px !important;
+    font-weight: 400;
+    color: #232C3D !important;
+}
+
 .xCNTDTextStatus {
     font-size: 17px !important;
     font-weight: 500;

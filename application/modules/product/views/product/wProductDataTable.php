@@ -34,7 +34,7 @@
     //Decimal Show ลง 2 ตำแหน่ง
     $nDecShow =  FCNxHGetOptionDecimalShow();
     // echo '<pre>';
-    // print_r($aPdtDataList['raItems']);
+    // print_r($_SESSION);
     // echo '</pre>';
 ?>
 
@@ -64,6 +64,7 @@
                 </thead>
                 <tbody id="odvPdtDataList">
                     <?php $tProductCode = '';?>
+                    <!-- <?php echo'<pre>'; print_r($aPdtDataList); echo'</pre>';?> -->
                     <?php if(is_array($aPdtDataList) && $aPdtDataList['rtCode'] == 1) : ?>
                         <?php foreach($aPdtDataList['raItems'] AS $nKeys => $aDataPdtVal):?>
                             <?php if($tProductCode != $aDataPdtVal['FTPdtCode']):?>
@@ -121,10 +122,10 @@
                                             $tDataCol       = number_format($aDataPdtVal[$tColumnName],0);
                                         }else{
                                             $tAlignFormat = 'text-left';
-                                            if($aDataPdtVal['FTCtyCode']){
+                                            if($aDataPdtVal['FTCtyName']){
                                                 $tDataCol = $aDataPdtVal[$tColumnName];
                                             }else{
-                                                // $aDataPdtVal['FTCtyCode'] = 'Thailand';
+                                                // $aDataPdtVal['FTCtyName'] = 'Thailand';
                                                 $tDataCol = $aDataPdtVal[$tColumnName];
                                             }
                                         }
@@ -133,6 +134,11 @@
                                             switch($tColumnName){
                                                 case 'FTPdtName':
                                                     $tClassMerge    = 'xWPdtMerge';
+                                                    if($aDataPdtVal['FTCtyCode'] == 'LAO'){
+                                                        $tClassMerge  .= ' xCNColumnPdtNameLaos';
+                                                    }else{
+                                                        $tClassMerge  .= ' xCNColumnPdtName';
+                                                    }
                                                 break;
                                                 case 'FTPdtCode':
                                                     $tClassMerge    = 'xWPdtMerge';
@@ -141,6 +147,9 @@
                                                     $tClassMerge    = 'xWPdtMerge';
                                                 break;
                                                 case 'FTPtyName':
+                                                    $tClassMerge    = 'xWPdtMerge';
+                                                break;
+                                                case 'FTCtyName':
                                                     $tClassMerge    = 'xWPdtMerge';
                                                 break;
                                                 default:
@@ -199,6 +208,8 @@
                                         <?php case 'FTPgpName': ?>
                                         <?php break;?>
                                         <?php case 'FTPtyName': ?>
+                                        <?php break;?>
+                                        <?php case 'FTCtyName': ?>
                                         <?php break;?>
                                         <?php default: ?>
                                             <td nowrap class="xCNNonBorder <?php echo $tAlignFormat?>" style="width:<?php echo $nColWidth?>%"><?php echo $tDataCol?></td>

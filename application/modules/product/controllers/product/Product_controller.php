@@ -234,6 +234,7 @@ class Product_controller extends MX_Controller
                     'tVatRate'  =>  "0.00"
                 );
             }
+            $aCtyCheck      = $this->Product_model->FSaMPDTCtyCheckByID($this->session->userdata('tSesUsrInfo')['FTUsrCode']);
             $aLangList      = FCNaGetLngListByCty();
             $aVatRate       = FCNoHCallVatlist();
             $aAlwEventPdt   = FCNaHCheckAlwFunc('product/0/0');
@@ -248,8 +249,8 @@ class Product_controller extends MX_Controller
                 'dGetDataFuture'    => $dGetDataFuture,
                 'tVatCompany'       => $aDataVatrate,
                 'aDataPdtSpcWah'    => $aDataPdtSpcWah,
-                'aLangList'         => $aLangList
-
+                'aLangList'         => $aLangList,
+                'aCtyCheck'         => $aCtyCheck
             );
             $aReturnData    =   array(
                 'vPdtPageAdd'   => $this->load->view('product/product/wProductAdd', $aDatProduct, true),
@@ -334,7 +335,7 @@ class Product_controller extends MX_Controller
                 'nUsrBchCode'       => $nUsrBchCode,
                 'nUsrShpCode'       => $nUsrShpCode,
                 'aChkChainPdtSet'   => $aChkChainPdtSet,
-                'aLangList'         => $aLangList
+                'aLangList'         => $aLangList,
             ), true);
             $aReturnData    = array(
                 'vPdtPageAdd'       => $tViewPagePdtAdd,
@@ -810,7 +811,8 @@ class Product_controller extends MX_Controller
             $aLangList = FCNaGetLngListByCty();
             $aPdtList  = array();
             parse_str($this->input->post('aPdtInputTab'), $aPdtListForm);
-            $tCtyCode     = $this->Product_model->FSaMPDTGetCtyByID($aPdtListForm['ohdCreateCode']);
+            // $tCtyCode     = $this->Product_model->FSaMPDTGetCtyByID($aPdtListForm['ohdCreateCode']);
+            $tCtyCode = ($aPdtDataInfo2['tPdtCyCode']) ? $aPdtDataInfo2['tPdtCyCode'] : 'THA';
             $aPdtNameList = $this->Product_model->FSaMPDTGetListByID($aPdtDataInfo1['tPdtCode'],$tCtyCode);
             foreach($aPdtNameList AS $Lng){
                 $aPdtList[$Lng['FTLngShortName']] = array(
@@ -821,7 +823,9 @@ class Product_controller extends MX_Controller
                     'FTPdtRmk'       => $aPdtDataInfo2['tPdtRmk']
                 );
             }
-
+            // print_r($tCtyCode);
+            // print_r($aPdtNameList);
+            // print_r($aPdtList);
             $this->db->trans_begin();
 
             $this->Product_model->FSaMPDTAddUpdateMaster($aDataWherePdt, $aDataAddUpdatePdt);
@@ -1467,5 +1471,27 @@ class Product_controller extends MX_Controller
         } else {
             echo "database error!";
         }
+    }
+
+    public function FSaCPDTCheckTabPdt()
+    {
+        $aData = array(
+            'tPdtCode'  => $this->input->post('ptPdtCode'),
+            'nLngCty'   => $this->input->post('pnLngCty')
+        );
+        $aResultLang  = $this->Product_model->FSaMPDTGetTabPdt($aData);
+        if ($aResultLang) {
+            $aReturn    = array(
+                'nStaEvent'  => '1',
+                'tStaMsg'    => 'success',
+                'aResult'    => $aResultLang,
+            );
+        } else {
+            $aReturn    = array(
+                'nStaEvent'  => '0',
+                'tStaMsg'    => 'error',
+            );
+        }
+        echo json_encode($aReturn);
     }
 }

@@ -548,11 +548,17 @@ function FCNaGetLngListByCty(){
     $ci = & get_instance();
     $ci->load->database();
     $tDefCty  = @$_SESSION ['tSesDefCountry'];
-    $tSQL = "SELECT * 
-            FROM TSysLanguage WITH(NOLOCK) 
-            WHERE FTLngStaUse = '1' 
-            ORDER BY CASE FTLngShortName WHEN '$tDefCty' THEN 0
-				     ELSE FNLngID END ASC";
+    $tSQLCheck = "SELECT * 
+                FROM TSysLanguage WITH(NOLOCK) 
+                WHERE FTLngStaUse = '1' AND FTLngShortName = '$tDefCty'";
+    $oQueryCheck = $ci->db->query($tSQLCheck);
+    if($oQueryCheck->num_rows() == 0){
+        $tDefCty = 'THA';
+    }
+
+    $tSQL = "SELECT
+            ROW_NUMBER () OVER (ORDER BY CASE FTLngShortName WHEN '$tDefCty' THEN 0 ELSE FNLngID END) AS FNRowID,*
+            FROM TSysLanguage WITH(NOLOCK) WHERE FTLngStaUse = '1' ";
     $oQuery = $ci->db->query($tSQL);
     $oQuery = $oQuery->result_array();
     foreach($oQuery as $nKey => $aObject){

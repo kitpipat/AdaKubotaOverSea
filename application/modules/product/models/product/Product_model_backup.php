@@ -49,7 +49,7 @@ class Product_model extends CI_Model
         /* | */
         if ($tSesUsrLevel == 'BCH') {                                                     // | */
              /* | */
-             $tWHEREPermission_BCH   .= " AND ( PDT.FTCtyCode = '$tCtyCode' OR (PDT.FTCtyCode = '') )  ";       // | */ 
+             $tWHEREPermission_BCH   .= " AND PDT.FTCtyCode = '$tCtyCode'  ";       // | */ 
             /* | */
             $tWHEREPermission_BCH   .= " AND ( ISNULL(PDLSPC.FTPdtCode,'') = ''  ";       // | */ 
             /* | */
@@ -146,8 +146,7 @@ class Product_model extends CI_Model
                         PBAR.FTBarCode,
                         PGL.FTPgpName,
                         PTL.FTPtyName,
-                        CUNL.FTCtyCode AS FTCtyCode,
-                        CUNL.FTCtyName AS FTCtyName,
+                        CUNL.FTCtyName AS FTCtyCode,
                         PIMG.FTImgObj,
                     ISNULL(PRI.FCPgdPriceRet, 0) AS FCPgdPriceRet
                     FROM
@@ -215,7 +214,7 @@ class Product_model extends CI_Model
             // หา Page All จำนวน Rec หาร จำนวนต่อหน้า
             $nPageAll       = ceil($nFoundRow / $paData['nRow']);
             $aDataReturn    = array(
-                // 'tSQL'          => $tSQL,
+                'tSQL'          => $tSQL,
                 'raItems'       => $aList,
                 'rnAllRow'      => $nFoundRow,
                 'rnCurrentPage' => $paData['nPage'],
@@ -225,7 +224,7 @@ class Product_model extends CI_Model
             );
         } else {
             $aDataReturn    = array(
-                // 'tSQL'          => $tSQL,
+                'tSQL'          => $tSQL,
                 'rnAllRow'      => 0,
                 'rnCurrentPage' => $paData['nPage'],
                 "rnAllPage"     => 0,
@@ -333,7 +332,6 @@ class Product_model extends CI_Model
             LEFT JOIN TCNMPdtBar        BAR   WITH(NOLOCK) ON PSET.FTPdtCodeSet = BAR.FTPdtCode
             LEFT JOIN VCN_ProductCost           COST  WITH(NOLOCK) ON PSET.FTPdtCodeSet = COST.FTPdtCode
             LEFT JOIN VCN_Price4PdtActive       PRI   WITH(NOLOCK) ON PSET.FTPdtCodeSet = PRI.FTPdtCode AND BAR.FTPunCode = PRI.FTPunCode AND PRI.FNRowPart = 1
-            WHERE 1=1
         ";
         if (isset($paData['FTPdtCode'])) {
             $tSQL .= " AND PSET.FTPdtCode    = '$paData[FTPdtCode]'";
@@ -342,7 +340,7 @@ class Product_model extends CI_Model
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
             $aResult = array(
-                // 'tSQL'          => $tSQL,
+                'tSQL'          => $tSQL,
                 'aItems'        => $oQuery->result_array(),
                 'tStaUsrValue'  => $aDataConfig[0]['FTSysStaUsrValue'],
                 'tCode'            => '1',
@@ -350,7 +348,7 @@ class Product_model extends CI_Model
             );
         } else {
             $aResult = array(
-                // 'tSQL'      => $tSQL,
+                'tSQL'      => $tSQL,
                 'tCode'        => '800',
                 'tDesc'        => 'data not found'
             );
@@ -722,8 +720,8 @@ class Product_model extends CI_Model
             // $this->db->where('FNLngID', $aPdt['FNLngID']);
             // $this->db->where('FTPdtCode', $paPdtWhere['FTPdtCode']);
             // $this->db->update('TCNMPdt_L', $aPdt);
-            $tSql = "UPDATE TCNMPdt_L SET FTPdtName = N'".$aPdt["FTPdtName"]."' , FNLngID = '".$aPdt['FNLngID']."' , FTPdtNameOth = N'".$aPdt["FTPdtNameOth"]."' , FTPdtNameABB = N'".$aPdt["FTPdtNameABB"]."' , FTPdtRmk = N'".$aPdt["FTPdtRmk"]."'
-                     WHERE FNLngID = '".$aPdt['FNLngID']."' AND FTPdtCode = '".$paPdtWhere['FTPdtCode']."' ";
+            $tSql = "UPDATE TCNMPdt_L SET FTPdtName = N'".$aPdt["FTPdtName"]."' , FNLngID = ".$aPdt['FNLngID']." , FTPdtNameOth = N'".$aPdt["FTPdtNameOth"]."' , FTPdtNameABB = N'".$aPdt["FTPdtNameABB"]."' , FTPdtRmk = N'".$aPdt["FTPdtRmk"]."'
+                     WHERE FNLngID = ".$aPdt['FNLngID']." AND FTPdtCode = '".$paPdtWhere['FTPdtCode']."' ";
             $this->db->query($tSql);
 
             if ($this->db->affected_rows() > 0) {
@@ -818,13 +816,13 @@ class Product_model extends CI_Model
         // exit;
         if ($oQuery > 0) {
             $aResult    =  array(
-                // 'tSQL'      => $tSQL,
+                'tSQL'      => $tSQL,
                 'rtCode'    => '1',
                 'rtDesc'    => 'success'
             );
         } else {
             $aResult =  array(
-                // 'tSQL'      => $tSQL,
+                'tSQL'      => $tSQL,
                 'rtCode'    => '800',
                 'rtDesc'    => 'data not found'
             );
@@ -914,13 +912,13 @@ class Product_model extends CI_Model
 
         if ($oQuery->num_rows() > 0) {
             $aResult = array(
-                // 'tSQL' => $tSQL,
+                'tSQL' => $tSQL,
                 'rtCode' => '1',
                 'rtDesc' => 'success'
             );
         } else {
             $aResult = array(
-                // 'tSQL' => $tSQL,
+                'tSQL' => $tSQL,
                 'rtCode' => '800',
                 'rtDesc' => 'data not found'
             );
@@ -1276,7 +1274,6 @@ class Product_model extends CI_Model
         if ($oQuery->num_rows() > 0) {
             $aDataQuery = $oQuery->row_array();
             $tCtyPdt = $this->FSaMPDTGetCtyByID($aDataQuery['FTCreateBy']);
-            $tCty = $aDataQuery['FTCtyCode'];
             $aDataQuery['FTCtyName'] = $tCtyPdt;
             $tSQLPdt    = "SELECT
                         PDT.FTPdtCode,
@@ -1291,10 +1288,12 @@ class Product_model extends CI_Model
                     FROM [TSysLanguage] LNG WITH(NOLOCK)
                     LEFT JOIN [TCNMPdt_L] PDTL WITH(NOLOCK) ON LNG.FNLngID = PDTL.FNLngID AND PDTL.FTPdtCode = '$tPdtCode'
                     LEFT JOIN [TCNMPdt] PDT WITH(NOLOCK) ON PDT.FTPdtCode = PDTL.FTPdtCode
+
                     WHERE 1=1
                 ";
+
             $tSQLPdt .= "AND LNG.FTLngStaUse = '1'";
-            $tSQLPdt .= "ORDER BY CASE LNG.FTLngShortName WHEN '$tCty' THEN 0 ELSE LNG.FNLngID END ASC";
+            $tSQLPdt .= "ORDER BY CASE LNG.FTLngShortName WHEN '$tCtyPdt' THEN 0 ELSE LNG.FNLngID END ASC";
             $oQueryPdt = $this->db->query($tSQLPdt);
             $oDetailPdtname = $oQueryPdt->result_array();
             foreach($oDetailPdtname as $nKey => $aObject){
@@ -1312,9 +1311,6 @@ class Product_model extends CI_Model
             $oDetailPdtname[$nKey]['nLang'] = $nLang;
             }
             $aResult    =  array(
-                // 'tSQL1'         => $tCtyPdt,
-                // 'tSQL2'         => $tSQL,  
-                'tSQL'          => $tSQL,
                 'raItems'       => $aDataQuery,
                 'raPdtName_L'   => $oDetailPdtname,
                 'rtCode'        => '1',
@@ -2817,30 +2813,7 @@ class Product_model extends CI_Model
             return 'THA';
         }
     }
-
-    public function FSaMPDTGetTabPdt($paCtyCode){
-        $tSQLPdt    = "SELECT
-                        PDT.FTPdtCode,
-                        PDTL.FTPdtName,
-                        PDTL.FTPdtNameOth,
-                        PDTL.FTPdtNameABB,
-                        PDTL.FTPdtRmk,
-                        LNG.FNLngID,
-                        LNG.FTLngNameEng,
-                        LNG.FTLngShortName,
-                        LNG.FTLngStaLocal
-                    FROM [TSysLanguage] LNG WITH(NOLOCK)
-                    LEFT JOIN [TCNMPdt_L] PDTL WITH(NOLOCK) ON LNG.FNLngID = PDTL.FNLngID AND PDTL.FTPdtCode = '".$paCtyCode['tPdtCode']."'
-                    LEFT JOIN [TCNMPdt] PDT WITH(NOLOCK) ON PDT.FTPdtCode = PDTL.FTPdtCode
-                    WHERE 1=1
-                ";
-            $tSQLPdt .= "AND LNG.FTLngStaUse = '1'";
-            $tSQLPdt .= "ORDER BY CASE LNG.FNLngID WHEN '".$paCtyCode['nLngCty']."' THEN 0 ELSE LNG.FNLngID END ASC";
-            $oQueryPdt = $this->db->query($tSQLPdt);
-            return $oQueryPdt->result_array();
-    }
-
-
+    
     public function FSaMPDTCtyCheckByID($pUsrCode){
         $tSQL = "SELECT 
                     USRG.FTUsrCode,

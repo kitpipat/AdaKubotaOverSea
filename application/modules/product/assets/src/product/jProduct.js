@@ -400,6 +400,9 @@ function JSoAddEditProduct(ptRoute) {
                         error.appendTo(element.closest('.form-group')).trigger('change');
                     }
                 }
+                if($('#oetPdtName').attr('data-cty') == 'LAO'){
+                    error.addClass("xCNInputLaoError");
+                }
             },
             invalidHandler: function(e, validator){
                 if(validator.errorList.length)

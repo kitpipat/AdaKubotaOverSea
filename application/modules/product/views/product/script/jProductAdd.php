@@ -2997,8 +2997,9 @@
             ColumnKeyLang: ['tPdtCyCode', 'tPdtCyName'],
             ColumnsSize: ['15%', '75%'],
             WidthModal: 50,
-            DataColumns: ['TCNMCountry.FTCtyCode', 'TCNMCountry_L.FTCtyName'],
-            DataColumnsFormat: ['', ''],
+            DataColumns: ['TCNMCountry.FTCtyCode', 'TCNMCountry_L.FTCtyName', 'TCNMCountry.FNLngID'],
+            DataColumnsFormat: ['', '', ''],
+            DisabledColumns: [2],
             Perpage: 10,
             OrderBy: ['TCNMCountry.FTCtyCode DESC'],
 
@@ -3008,5 +3009,41 @@
             Value: ["oetPdtCyCode", "TCNMCountry.FTCtyCode"],
             Text: ["oetPdtCyName", "TCNMCountry_L.FTCtyName"],
         },
+        // DebugSQL:true,
+        // NextFunc: {
+        //         FuncName: 'JSxCheckTabPdt',
+        //         ArgReturn: ['FNLngID']
+        // },
+        CheckLng : {
+            status: true,
+            Lang:'TCNMCountry_L',
+        },
     };
+
+    // function JSxCheckTabPdt(pnLngCty){
+    //     aData = JSON.parse(pnLngCty);
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "pdtEventCheckTab",
+    //         data: {
+    //             ptPdtCode: $('#oetPdtCode').val(),
+    //             pnLngCty: aData[0]
+    //         },
+    //         cache: false,
+    //         timeout: 0,
+    //         success: function(oResult) {
+    //             var aReturn = JSON.parse(oResult);
+    //             console.log(aReturn);
+    //             if(aReturn['nStaEvent'] == '1'){
+    //                 for(i=0; i<aReturn['aResult'].length; i++){
+    //                     aReturn['aResult'][i]
+    //                 }
+    //             }
+                
+    //         },
+    //         error: function(jqXHR, textStatus, errorThrown) {
+    //             JCNxResponseError(jqXHR, textStatus, errorThrown);
+    //         }
+    //     });
+    // }
 </script>
