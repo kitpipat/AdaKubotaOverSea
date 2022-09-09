@@ -22,10 +22,13 @@ class Country_model extends CI_Model {
                                         CTY_L.FTCtyName AS rtCtyName,
                                         CTY.FDCreateOn
                                     FROM [TCNMCountry] CTY
-                                    LEFT JOIN [TCNMCountry_L]  CTY_L ON CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = $nLngID
-                                    OR CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = $tAgnLangCode
-									OR CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = $tUserLang
-                                    WHERE 1=1 ";
+                                    LEFT JOIN [TCNMCountry_L]  CTY_L ON CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = '$nLngID'                  
+									OR CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = '$tUserLang' ";
+
+            if(!empty($tAgnLangCode)){
+                $tSQL .= " OR CTY.FTCtyCode = CTY_L.FTCtyCode AND CTY_L.FNLngID = '$tAgnLangCode'";
+            }
+            $tSQL .= " WHERE 1=1 ";
 
             if(isset($tSearchList) && !empty($tSearchList)){
                 $tSQL .= " AND (CTY.FTCtyCode COLLATE THAI_BIN LIKE '%$tSearchList%'";
