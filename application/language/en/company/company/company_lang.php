@@ -122,6 +122,6 @@ $lang['tCmpAddrDetailInfo'] = "Detail Address";
 $lang['tCmpAddrInfo']       = "General Information";
 $lang['tCmpAddrMap']        = "Map Information";
 
-$lang['tCMPRefCountry']     = "Refer Country";
+$lang['tCMPRefCountry']     = "Country";
 $lang['tCMPCyCode']         = "Country Code";
 $lang['tCMPCyName']         = "Country Name";
