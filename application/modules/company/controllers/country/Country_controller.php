@@ -119,10 +119,13 @@ class Country_controller extends MX_Controller {
             }else{
                 $nLangEdit  = (@$aLangHave[0]->nLangList == '')? '1' : $aLangHave[0]->nLangList;
             }
-
+            $tAgnLang = $this->Country_model->FSnMCTYGetLangAgent();
+            $tLangLocal = $this->Country_model->FSnMCTYGetLangLocal();
             $aData  = array(
                 'FTCtyCode' => $tCtyCode,
-                'FNLngID'   => $nLangEdit
+                'FNLngID'   => $nLangEdit,
+                'tLangLocal'    => $tLangLocal,
+                'tAgnLangCode'  => $tAgnLang,
             );
 
             $aCtyData       = $this->Country_model->FSaMCTYGetDataByID($aData);

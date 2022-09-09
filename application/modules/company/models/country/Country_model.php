@@ -102,6 +102,8 @@ class Country_model extends CI_Model {
     //Return Type : Array
     public function FSaMCTYGetDataByID($paData){
         try{
+            $tAgnLangCode   = $paData['tAgnLangCode']['FNLngID'];
+            $tUserLang      = $this->session->userdata('tLangID');
             $tCtyCode   = $paData['FTCtyCode'];
             $nLngID     = $paData['FNLngID'];
             $tSQL       = " SELECT CTY.FNLngID as rtCtyLangID,
@@ -121,9 +123,9 @@ class Country_model extends CI_Model {
                             LEFT JOIN TCNMCountry_L CTY_L ON CTY.FTCtyCode = CTY_L.FTCtyCode 
                             LEFT JOIN TSysLanguage STSL ON CTY.FNLngID = STSL.FNLngID
                             LEFT JOIN VCN_VatActive VVA ON CTY.FTVatCode = VVA.FTVatCode
-                            LEFT JOIN TCNSRate_L RATE_L ON CTY.FTRteIsoCode = RATE_L.FTRteIsoCode
-                            AND CTY_L.FNLngID = $nLngID
-                            WHERE 1 = 1 AND CTY.FTCtyCode = '$tCtyCode' ";
+                            LEFT JOIN TCNSRate_L RATE_L ON CTY.FTRteIsoCode = RATE_L.FTRteIsoCode";
+            $tSQL .= " WHERE 1 = 1 AND CTY.FTCtyCode = '$tCtyCode' ";
+
             $oQuery = $this->db->query($tSQL);
             if ($oQuery->num_rows() > 0){
                 $aDetail = $oQuery->row_array();
