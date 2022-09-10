@@ -85,11 +85,15 @@ class Settingdairycurrency_controller extends MX_Controller {
     //Event Save (แท็บตั้งค่าระบบ)
     public function FSxSETDailyCurrencyEventSave(){
         $aAllitems = $this->input->post('aGetItem');
+        print_r($aAllitems);
+
         if(isset($aAllitems)){
-            print_r($aAllitems);
             foreach($aAllitems as $nKey => $aVal){
                 if($aVal['FCRteRate'] > 0){
-                    $aVal['FCRteRate'] = 1/$aVal['FCRteRate'];
+                    $aVal['FCRteRate'] = 1/(str_replace(',','',$aVal['FCRteRate']));
+                    // echo '<pre>';
+                    // echo $aVal['FTRteCode']." : ".$aVal['FCRteRate']." : ". (str_replace(',','',$aVal['FCRteRate']));
+                    // echo '</pre>';
                 }
                 $this->Settingdairycurrency_model->FSaMCurentcyUpdate($aVal);
             }

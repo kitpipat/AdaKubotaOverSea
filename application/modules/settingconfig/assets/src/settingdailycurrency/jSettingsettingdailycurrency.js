@@ -168,11 +168,17 @@ function JSxEventClickCheckboxCurrentcy(elem) {
         var nConvertLastRate = 0;
     }
 
+    if(nRctRate > 0 ){
+        var nConvertRate = 1/nRctRate;
+    }else{
+        var nConvertRate = 0;
+    }
+
     if ($(elem).is(':checked')) {
         $('#oetUseCurrency'+tCheckseq).val(parseFloat(nConvertLastRate).toFixed(nDecimal));
         $('#oetUseCurrency'+tCheckseq).attr('readonly',true);
     }else{
-        $('#oetUseCurrency'+tCheckseq).val(parseFloat(nRctRate).toFixed(nDecimal));
+        $('#oetUseCurrency'+tCheckseq).val(parseFloat(nConvertRate).toFixed(nDecimal));
         $('#oetUseCurrency'+tCheckseq).attr('readonly',false);
     }
 }

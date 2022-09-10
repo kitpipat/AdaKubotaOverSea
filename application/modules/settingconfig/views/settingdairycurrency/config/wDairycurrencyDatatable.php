@@ -158,7 +158,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
 
 
                                 <td>
-                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy xCNInputNumericWithDecimal" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' data-oldval='<?php echo number_format( $aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>' id='oetUseCurrency<?= $key ?>' value='<?php echo number_format( $aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>'>
+                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy xCNInputNumericWithDecimal" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' data-oldval='<?php echo number_format(1/$aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>' id='oetUseCurrency<?= $key ?>' value='<?= ($aValue['FCRteRate'] > 0) ? number_format(1/$aValue['FCRteRate'],$nDecimalCurrentcyShow) : number_format('0',$nDecimalCurrentcyShow);?>'>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -534,7 +534,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
     $('.oetCurrentCurentcy').change(function() {
     var ncurrentRate = parseFloat($(this).val());
     var ncallastrate = parseFloat($(this).parent().parent().find("td#oetCalCurrency").text());
-    var nresult      = parseFloat(1/ncurrentRate);
+    var nresult      = parseFloat(ncurrentRate);
     var nDecimal     = $("#oetDecimal").val();
     $(this).parent().parent().find("td#oetCalCurrency").text(nresult.toFixed(nDecimal));
 
