@@ -48,4 +48,4 @@ $lang['tUrlFormatTitleCode']            = "รหัส";
 $lang['tFormatName']                    = "เลือก Format";
 $lang['tCheckSta']                      = "พบสถานะใช้งาน รหัส ";
 $lang['tCheckTitle']                      = "ยืนยันการใช้งาน";
-$lang['tCheckNext']                      = "ต้องการดำเนินการต่อหรือไม่";
+$lang['tCheckNext']                      = "ต้องการเปิดใช้งาน URL Format นี้แทน URL เดิมหรือไม่";

@@ -151,7 +151,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 														</div>
 														<div class="modal-body">
 															<span><?php echo language('settingconfig/settingurlformat/settingurlformat','tCheckSta');?> </span>
-															<span id="osphaha">  </span>
+															<span id="osphaha">  </span><br>
 															<span><?php echo language('settingconfig/settingurlformat/settingurlformat','tCheckNext');?></span>
 															<input type='hidden' id="ohdConfirmIDDelete">
 														</div>

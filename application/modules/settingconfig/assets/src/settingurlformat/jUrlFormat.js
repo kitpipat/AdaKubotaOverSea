@@ -202,7 +202,7 @@ function JSnAddEditUrl(tRouteEvent) {
                                 var aReturn = JSON.parse(tResult);
                                 console.log(aReturn['rtCode'])
                                 if(aReturn['rtCode'] == '1' && $('#ocmUrlStaActive').val()=='1'){
-                                    $('#osphaha').html(aReturn['rnAllRow'][0]['FTFspCode']+' '+aReturn['rnAllRow'][0]['FTFmtName'])
+                                    $('#osphaha').html(aReturn['rnAllRow'][0]['FTFspCode']+' '+'('+aReturn['rnAllRow'][0]['FTFmtName']+')')
                                     $('#odvModalUrlStaUse').modal('show');
                                     
                                 }else{
