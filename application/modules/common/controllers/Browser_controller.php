@@ -113,7 +113,13 @@ class Browser_controller extends CI_Controller {
                         $tOrderByDistinct = $tTextShow[1];
                     }
                 }
-                $tSQL .= "SELECT ROW_NUMBER() OVER(ORDER BY ResultSubquery.$tOrderByDistinct) AS rtRowID , $tResultShow FROM ( SELECT ";
+                if(isset($oPtions['GrideView']['DistinctFieldOrderBY'])){
+                    $aDistinctOrderBY = $oPtions['GrideView']['DistinctFieldOrderBY'];
+                }else{
+                    $aDistinctOrderBY = '';
+                }
+
+                $tSQL .= "SELECT ROW_NUMBER() OVER(ORDER BY ResultSubquery.$tOrderByDistinct $aDistinctOrderBY) AS rtRowID , $tResultShow FROM ( SELECT ";
             }else{
                 $tSQL .= "SELECT ROW_NUMBER() OVER(ORDER BY $tOrderBy) AS rtRowID , ";
             }
@@ -124,15 +130,7 @@ class Browser_controller extends CI_Controller {
                     if(empty($aDistinct)){
                         if (is_array($aColumns)){
                             $tColumns = implode(',', $aColumns);
-                            // $tSQL .= " $tColumns ";
-                            if (isset($oPtions['CheckLng'])):
-                                if ($oPtions['CheckLng']['status'] == true):
-                                    $tColumns = str_replace(end($aColumns),'ISNULL('.end($aColumns).' , (SELECT TOP 1 '.end($aColumns).' FROM '.$oPtions['CheckLng']['Lang'].' WHERE '.$oPtions['CheckLng']['Lang'].'.'.$oPtions['Table']['PK'].' = '.reset($aColumns).')) AS '.substr(strrchr(end($aColumns),"."), 1).'',$tColumns);
-                                    $tSQL .= " $tColumns ";
-                                endif;
-                            else:
-                                $tSQL .= " $tColumns ";
-                            endif;
+                            $tSQL .= " $tColumns ";
                         }else{
                             echo "Error:No column select.";
                             exit();

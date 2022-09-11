@@ -2978,7 +2978,9 @@
         JSxCheckPinMenuClose();
         JCNxBrowseData('oBrowseCountry');
     });
-
+    var nLangStaLocal = <?php echo FCNaGetLngStalocal() ?>;
+    var nDefLang      = <?php echo $this->session->userdata("tSesDefLanguage")?>
+    
     var oBrowseCountry = {
         Title: ['product/product/product', 'tPdtRefCountry'],
         Table: {
@@ -2987,7 +2989,7 @@
         },
         Join: {
             Table: ['TCNMCountry_L'],
-            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND TCNMCountry_L.FNLngID = ' + nLangEdits, ]
+            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND (TCNMCountry_L.FNLngID = ' + nDefLang + ' OR TCNMCountry_L.FNLngID= '+ nLangEdits + ' OR TCNMCountry_L.FNLngID= '+ nLangStaLocal + ')', ]
         },
         Where: {
             Condition: ['AND TCNMCountry.FTCtyStaUse = 1']
@@ -2999,6 +3001,8 @@
             WidthModal: 50,
             DataColumns: ['TCNMCountry.FTCtyCode', 'TCNMCountry_L.FTCtyName', 'TCNMCountry.FNLngID'],
             DataColumnsFormat: ['', '', ''],
+            DistinctField   : ['TCNMCountry.FTCtyCode'],
+            DistinctFieldOrderBY : 'DESC',
             DisabledColumns: [2],
             Perpage: 10,
             OrderBy: ['TCNMCountry.FTCtyCode DESC'],
@@ -3014,10 +3018,6 @@
         //         FuncName: 'JSxCheckTabPdt',
         //         ArgReturn: ['FNLngID']
         // },
-        CheckLng : {
-            status: true,
-            Lang:'TCNMCountry_L',
-        },
     };
 
     // function JSxCheckTabPdt(pnLngCty){

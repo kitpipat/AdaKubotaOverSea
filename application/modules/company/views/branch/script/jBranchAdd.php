@@ -130,13 +130,15 @@
         RouteAddNew : 'agency',
         BrowseLev : nStaBchBrowseType
     };
-
+    var nLangStaLocal = <?php echo FCNaGetLngStalocal() ?>;
+    var nDefLang      = <?php echo $this->session->userdata("tSesDefLanguage")?>
+    
     var oBchBrowseCountry = {
         Title : ['company/branch/branch', 'tBchCountryTitle'],
         Table:{Master:'TCNMCountry', PK:'FTCtyCode'},
         Join :{
             Table: ['TCNMCountry_L'],
-            On: [' TCNMCountry.FTCtyCode = TCNMCountry_L.FTCtyCode AND TCNMCountry_L.FNLngID = '+nLangEdits]
+            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND (TCNMCountry_L.FNLngID = ' + nDefLang + ' OR TCNMCountry_L.FNLngID= '+ nLangEdits + ' OR TCNMCountry_L.FNLngID= '+ nLangStaLocal + ')', ]
         },
         Where :{
             Condition : [' AND TCNMCountry.FTCtyStaUse = 1 ']
@@ -148,6 +150,8 @@
             WidthModal      : 50,
             DataColumns		: ['TCNMCountry.FTCtyCode', 'TCNMCountry_L.FTCtyName'],
             DataColumnsFormat : ['', ''],
+            DistinctField   : ['TCNMCountry.FTCtyCode'],
+            DistinctFieldOrderBY : 'DESC',
             Perpage			: 10,
             OrderBy			: ['TCNMCountry.FTCtyCode DESC'],
         },
@@ -155,10 +159,6 @@
             ReturnType      : 'S',
             Value           : ["oetBchCountryCode", "TCNMCountry.FTCtyCode"],
             Text            : ["oetBchCountryName", "TCNMCountry_L.FTCtyName"]
-        },
-        CheckLng : {
-            status: true,
-            Lang:'TCNMCountry_L',
         },
     };
     // Create By Napat(Jame) 11/06/2020

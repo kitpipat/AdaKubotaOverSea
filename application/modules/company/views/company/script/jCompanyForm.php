@@ -1,7 +1,15 @@
 <script type="text/javascript">
     var nLangEdits  = <?php echo $this->session->userdata("tLangEdit")?>;
-
     // Option Branch
+    $nCountBCH = '<?= $this->session->userdata('nSesUsrBchCount') ?>';
+    if ($nCountBCH > 0) {
+        //ถ้าสาขามากกว่า 1 
+        tBCH = "<?= $this->session->userdata('tSesUsrBchCodeMulti'); ?>";
+        tWhereBCH = " AND TCNMBranch.FTBchCode IN ( " + tBCH + " ) ";
+    } else {
+        tWhereBCH = '';
+        tBCH = "<?= $this->session->userdata('tSesUsrBchCodeMulti'); ?>";
+    }
     var oCmpBranch      = function(poDataFnc){
         var tInputReturnCode    = poDataFnc.tReturnInputCode;
         var tInputReturnName    = poDataFnc.tReturnInputName;
@@ -11,6 +19,9 @@
             Join    :{
                 Table : ['TCNMBranch_L'],
                 On : ['TCNMBranch_L.FTBchCode = TCNMBranch.FTBchCode AND TCNMBranch_L.FNLngID = '+nLangEdits,]
+            },
+            Where: {
+                Condition: [tWhereBCH]
             },
             GrideView:{
                 ColumnPathLang	: 'company/branch/branch',
@@ -22,6 +33,7 @@
                 Perpage			: 10,
                 OrderBy			: ['TCNMBranch.FDCreateOn DESC'],
             },
+            
             CallBack:{
                 ReturnType : 'S',
                 Value : [tInputReturnCode,"TCNMBranch.FTBchCode"],
@@ -204,7 +216,9 @@
         JSxCheckPinMenuClose();
         JCNxBrowseData('oBrowseCountry');
     });
-
+    var nLangStaLocal = <?php echo FCNaGetLngStalocal() ?>;
+    var nDefLang      = <?php echo $this->session->userdata("tSesDefLanguage")?>
+    
     var oBrowseCountry = {
         Title: ['company/company/company', 'tCMPRefCountry'],
         Table: {
@@ -213,10 +227,10 @@
         },
         Join: {
             Table: ['TCNMCountry_L'],
-            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND TCNMCountry_L.FNLngID = ' + nLangEdits, ]
+            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND (TCNMCountry_L.FNLngID = ' + nDefLang + ' OR TCNMCountry_L.FNLngID= '+ nLangEdits + ' OR TCNMCountry_L.FNLngID= '+ nLangStaLocal + ')', ]
         },
         Where: {
-            Condition: ['AND TCNMCountry.FTCtyStaUse = 1']
+            Condition: ['AND TCNMCountry.FTCtyStaUse = 1 ']
         },
         GrideView: {
             ColumnPathLang: 'company/company/company',
@@ -225,6 +239,8 @@
             WidthModal: 50,
             DataColumns: ['TCNMCountry.FTCtyCode', 'TCNMCountry_L.FTCtyName'],
             DataColumnsFormat: ['', ''],
+            DistinctField   : ['TCNMCountry.FTCtyCode'],
+            DistinctFieldOrderBY : 'DESC',
             Perpage: 10,
             OrderBy: ['TCNMCountry.FTCtyCode DESC'],
 
@@ -234,10 +250,7 @@
             Value: ["oetCmpCyCode", "TCNMCountry.FTCtyCode"],
             Text: ["oetCmpCyName", "TCNMCountry_L.FTCtyName"],
         },
-        CheckLng : {
-            status: true,
-            Lang:'TCNMCountry_L',
-        },
+        // DebugSQL: true,
     };
 
 

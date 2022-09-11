@@ -577,3 +577,16 @@ function FCNaGetLngListByCty(){
     }
     return $oQuery;
 }
+
+function FCNaGetLngStalocal(){
+    $ci = & get_instance();
+    $ci->load->database();
+
+    $tSQL = "SELECT *
+             FROM TSysLanguage
+             WHERE FTLngStaLocal = '1'
+            ";
+    $oQuery = $ci->db->query($tSQL);
+    $oQuery = $oQuery->row();
+    return $oQuery->FNLngID;
+}

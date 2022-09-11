@@ -341,7 +341,9 @@
         JSxCheckPinMenuClose();
         JCNxBrowseData('oBrowseCountry');
     });
-
+    var nLangStaLocal = <?php echo FCNaGetLngStalocal() ?>;
+    var nDefLang      = <?php echo $this->session->userdata("tSesDefLanguage")?>
+    
     var oBrowseCountry = {
         Title: ['ticket/agency/agency', 'tAGNRefCountry'],
         Table: {
@@ -350,7 +352,7 @@
         },
         Join: {
             Table: ['TCNMCountry_L'],
-            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND TCNMCountry_L.FNLngID = ' + nLangEdits, ]
+            On: ['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode  AND (TCNMCountry_L.FNLngID = ' + nDefLang + ' OR TCNMCountry_L.FNLngID= '+ nLangEdits + ' OR TCNMCountry_L.FNLngID= '+ nLangStaLocal + ')', ]
         },  
         Where: {
             Condition: ['AND TCNMCountry.FTCtyStaUse = 1']
@@ -362,6 +364,8 @@
             WidthModal: 50,
             DataColumns: ['TCNMCountry.FTCtyCode', 'TCNMCountry_L.FTCtyName'],
             DataColumnsFormat: ['', ''],
+            DistinctField   : ['TCNMCountry.FTCtyCode'],
+            DistinctFieldOrderBY : 'DESC',
             Perpage: 10,
             OrderBy: ['TCNMCountry.FTCtyCode DESC'],
 
@@ -372,9 +376,5 @@
             Text: ["oetAgnCyName", "TCNMCountry_L.FTCtyName"],
         },
         // DebugSQL : true,
-        CheckLng : {
-            status: true,
-            Lang:'TCNMCountry_L',
-        },
     };
 </script>
