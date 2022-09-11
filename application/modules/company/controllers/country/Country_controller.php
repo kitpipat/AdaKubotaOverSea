@@ -52,7 +52,7 @@ class Country_controller extends MX_Controller {
             $nPage      = ($this->input->post('nPageCurrent') == '' || null)? 1 : $this->input->post('nPageCurrent');   // Check Number Page
             $nLangResort    = $this->session->userdata('tLangID');
             $aLangHave      = FCNaHGetAllLangByTable('TCNMCountry_L');
-            $nLangHave      = count($aLangHave);
+            @$nLangHave      = count($aLangHave);
             if($nLangHave > 1){
                 $nLangEdit  = 1;
             }else{
@@ -113,7 +113,7 @@ class Country_controller extends MX_Controller {
             $nLangResort    = $this->session->userdata("tLangID");
             $nLangEdit      = $this->session->userdata("tLangEdit");
             $aLangHave      = FCNaHGetAllLangByTable('TCNMCountry_L');
-            $nLangHave      = count($aLangHave);
+            @$nLangHave      = count($aLangHave);
             if($nLangHave > 1){
                 $nLangEdit  = ($nLangEdit != '')? $nLangEdit : $nLangResort;
             }else{
