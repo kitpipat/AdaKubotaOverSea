@@ -195,14 +195,19 @@ class Slipmessage_model extends CI_Model {
      */
     public function FSaMSMGAddUpdateHD($paData){
         try{
+            $tSQL = " UPDATE TCNMSlipMsgHD_L";
+            $tSQL .= " SET FTSmgTitle = N'".$paData['FTSmgTitle']."', FDLastUpdOn = '".$paData['FDLastUpdOn']."', FTLastUpdBy = '".$paData['FTLastUpdBy']."', FTFonts = '".$paData['FTFonts']."', FNLngID = '".$paData['FNLngID']."'";
+            $tSQL .= " WHERE FTSmgCode = ".$paData['FTSmgCode']."";
+            $oQuery = $this->db->query($tSQL);
             // Update Header
-            $this->db->set('FTSmgTitle' , $paData['FTSmgTitle']);
-            $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
-            $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
-            $this->db->set('FTFonts', $paData['FTFonts']);
-            $this->db->set('FNLngID', $paData['FNLngID']);
-            $this->db->where('FTSmgCode', $paData['FTSmgCode']);
-            $this->db->update('TCNMSlipMsgHD_L');
+            // $this->db->set('FTSmgTitle' , $paData['FTSmgTitle']);
+            // $this->db->set('FDLastUpdOn', $paData['FDLastUpdOn']);
+            // $this->db->set('FTLastUpdBy', $paData['FTLastUpdBy']);
+            // $this->db->set('FTFonts', $paData['FTFonts']);
+            // $this->db->set('FNLngID', $paData['FNLngID']);
+            // $this->db->where('FTSmgCode', $paData['FTSmgCode']);
+            // $this->db->update('TCNMSlipMsgHD_L');
+
             if($this->db->affected_rows() > 0){
                 $aStatus = array(
                     'rtCode' => '1',
@@ -210,16 +215,19 @@ class Slipmessage_model extends CI_Model {
                 );
             }else{
                 // Add Header
-                $this->db->insert('TCNMSlipMsgHD_L',array(
-                    'FTSmgCode'     => $paData['FTSmgCode'],
-                    'FTSmgTitle'    => $paData['FTSmgTitle'],
-                    'FDCreateOn'    => $paData['FDCreateOn'],
-                    'FTCreateBy'    => $paData['FTCreateBy'],
-                    'FDLastUpdOn'   => $paData['FDLastUpdOn'],
-                    'FTLastUpdBy'   => $paData['FTLastUpdBy'],
-                    'FNLngID'       => $paData['FNLngID'],
-                    'FTFonts'       => $paData['FTFonts'],
-                ));
+                $tSQL = " INSERT INTO TCNMSlipMsgHD_L VALUES ('".$paData['FTSmgCode']."','".$paData['FNLngID']."', N'".$paData['FTSmgTitle']."','".$paData['FDCreateOn']."','".$paData['FTCreateBy']."','".$paData['FDLastUpdOn']."','".$paData['FTLastUpdBy']."','".$paData['FTFonts']."')";
+                $oQuery = $this->db->query($tSQL);
+                // $this->db->insert('TCNMSlipMsgHD_L',array(
+                //     'FTSmgCode'     => $paData['FTSmgCode'],
+                //     'FTSmgTitle'    => $paData['FTSmgTitle'],
+                //     'FDCreateOn'    => $paData['FDCreateOn'],
+                //     'FTCreateBy'    => $paData['FTCreateBy'],
+                //     'FDLastUpdOn'   => $paData['FDLastUpdOn'],
+                //     'FTLastUpdBy'   => $paData['FTLastUpdBy'],
+                //     'FNLngID'       => $paData['FNLngID'],
+                //     'FTFonts'       => $paData['FTFonts'],
+                // ));
+                
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(
                         'rtCode' => '1',
@@ -249,13 +257,8 @@ class Slipmessage_model extends CI_Model {
     public function FSaMSMGAddUpdateDT($paData){
         try{
             // Add Detail
-            $this->db->insert('TCNMSlipMsgDT_L', array(
-                'FTSmgCode' => $paData['FTSmgCode'],
-                'FTSmgType' => $paData['FTSmgType'],
-                'FNLngID'   => $paData['FNLngID'],
-                'FNSmgSeq'  => $paData['FNSmgSeq'],
-                'FTSmgName' => $paData['FTSmgName']                
-            ));
+            $tSQL = " INSERT INTO TCNMSlipMsgDT_L VALUES ('".$paData['FTSmgCode']."','".$paData['FNLngID']."', '".$paData['FTSmgType']."','".$paData['FNSmgSeq']."', N'".$paData['FTSmgName']."')";
+            $oQuery = $this->db->query($tSQL);
             
             // Set Response status
             if($this->db->affected_rows() > 0){

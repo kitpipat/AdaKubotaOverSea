@@ -205,7 +205,7 @@ class Salemachine_model extends CI_Model {
                             LEFT JOIN [TCNMWaHouse_L] POSWH_L ON  POSWH.FTWahCode = POSWH_L.FTWahCode AND POS.FTBchCode = POSWH_L.FTBchCode
                             LEFT JOIN [TCNMBranch_L] BCH_L ON  POS.FTBchCode = BCH_L.FTBchCode
                             LEFT JOIN [TCNMPos_L] POS_L  ON POS_L.FTPosCode = POS.FTPosCode AND POS.FTBchCode = POS_L.FTBchCode
-                            LEFT JOIN TCNMSlipMsgHD_L SMP_L ON POS.FTSmgCode = SMP_L.FTSmgCode AND SMP_L.FNLngID = '$tLang'
+                            LEFT JOIN TCNMSlipMsgHD_L SMP_L ON POS.FTSmgCode = SMP_L.FTSmgCode
                             LEFT JOIN TCNMChannel_L CHN_L ON POS.FTChnCode = CHN_L.FTChnCode  AND CHN_L.FNLngID = '$tLang'
                             
                             WHERE 1=1 
@@ -715,7 +715,7 @@ class Salemachine_model extends CI_Model {
                        TCNMSlipMsgHD_L.FTSmgCode   AS rtSmgCode,
                        TCNMSlipMsgHD_L.FTSmgTitle  AS rtSmgTitle
                      FROM TCNMPos
-                     LEFT JOIN TCNMSlipMsgHD_L ON TCNMPos.FTSmgCode = TCNMSlipMsgHD_L.FTSmgCode AND TCNMSlipMsgHD_L.FNLngID = '".$this->session->userdata("tLangEdit")."'
+                     LEFT JOIN TCNMSlipMsgHD_L ON TCNMPos.FTSmgCode = TCNMSlipMsgHD_L.FTSmgCode
                      WHERE TCNMPos.FTPosCode = '".$tPosCode."'";
             $oQuery = $this->db->query($tSQL);
             if($oQuery->num_rows() > 0){
