@@ -147,6 +147,7 @@ class Country_controller extends MX_Controller {
     //Return Type : String
     public function FSoCCTYAddEvent(){
         try{
+            $nLangEdit      = $this->session->userdata("tLangEdit"); 
             $tIsAutoGenCode = $this->input->post('ocbCtyAutoGenCode');
             $tCtyCode = "";
             if(isset($tIsAutoGenCode) && $tIsAutoGenCode == '1'){
@@ -182,6 +183,7 @@ class Country_controller extends MX_Controller {
                 'FTCtyLongitude' => $this->input->post('oetCtyLon'),
                 'FTCtyLatitude' => $this->input->post('oetCtyLa'),
                 'FTCtyRefID'    => $this->input->post('oetCtyRef'),
+                'langEdit'      => $nLangEdit,
             );
             $oCountDup      = $this->Country_model->FSnMCTYCheckDuplicate($aDataCty['FTCtyCode']);
             $nStaDup        = $oCountDup['counts'];
@@ -223,6 +225,7 @@ class Country_controller extends MX_Controller {
     //Return Type : String
     public function FSoCCTYEditEvent(){
         try{
+            $nLangEdit      = $this->session->userdata("tLangEdit"); 
             $aDataPdtUnit   = array(
                 'FTCtyCode'     => $this->input->post('oetCtyCode'),
                 'FTCtyName'     => $this->input->post('oetCtyName'),
@@ -238,6 +241,7 @@ class Country_controller extends MX_Controller {
                 'FTCtyLongitude' => $this->input->post('oetCtyLon'),
                 'FTCtyLatitude' => $this->input->post('oetCtyLa'),
                 'FTCtyRefID'    => $this->input->post('oetCtyRef'),
+                'langEdit'      => $nLangEdit,
             );
             $this->db->trans_begin();
             $aStaPunMaster  = $this->Country_model->FSaMCTYAddUpdateMaster($aDataPdtUnit);
