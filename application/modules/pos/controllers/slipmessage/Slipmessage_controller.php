@@ -63,7 +63,7 @@ class Slipmessage_controller extends MX_Controller {
         $nLangResort    = $this->session->userdata("tLangID");
 	    $nLangEdit      = $this->session->userdata("tLangEdit");
 	    $aLangHave      = FCNaHGetAllLangByTable('TCNMSlipMsgHD_L');
-        $nLangHave      = count($aLangHave);
+        @$nLangHave      = count($aLangHave);
         if($nLangHave > 1){
 	        if($nLangEdit != ''){
 	            $nLangEdit = $nLangEdit;

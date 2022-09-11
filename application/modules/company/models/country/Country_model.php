@@ -239,7 +239,7 @@ class Country_model extends CI_Model {
         // $this->db->query($tSQL);
         try{
             //Update Pdt Unit Lang
-            $this->db->where('FNLngID', $paDataCty['FNLngID']);
+            $this->db->where('FNLngID', $paDataCty['langEdit']);
             $this->db->where('FTCtyCode', $paDataCty['FTCtyCode']);
             $this->db->update('TCNMCountry_L',array('FTCtyName' => $paDataCty['FTCtyName']));
             if($this->db->affected_rows() > 0){
@@ -251,7 +251,7 @@ class Country_model extends CI_Model {
                 //Add Pdt Unit Lang
                 $this->db->insert('TCNMCountry_L', array(
                     'FTCtyCode' => $paDataCty['FTCtyCode'],
-                    'FNLngID'   => $paDataCty['FNLngID'],
+                    'FNLngID'   => $paDataCty['langEdit'],
                     'FTCtyName' => $paDataCty['FTCtyName']
                 ));
                 if($this->db->affected_rows() > 0){
