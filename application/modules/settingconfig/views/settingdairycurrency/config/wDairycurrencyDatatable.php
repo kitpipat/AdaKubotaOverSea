@@ -531,13 +531,11 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
         });
     }
 
-    $('.oetCurrentCurentcy').change(function() {
-    var ncurrentRate = parseFloat($(this).val());
-    var ncallastrate = parseFloat($(this).parent().parent().find("td#oetCalCurrency").text());
-    var nresult      = parseFloat(ncurrentRate);
-    var nDecimal     = $("#oetDecimal").val();
-    $(this).parent().parent().find("td#oetCalCurrency").text(nresult.toFixed(nDecimal));
-
-
-    });
+    // $('.oetCurrentCurentcy').change(function() {
+    // var ncurrentRate = parseFloat($(this).val());
+    // var ncallastrate = parseFloat($(this).parent().parent().find("td#oetCalCurrency").text());
+    // var nresult      = parseFloat(ncurrentRate);
+    // var nDecimal     = $("#oetDecimal").val();
+    // $(this).parent().parent().find("td#oetCalCurrency").text(nresult.toFixed(nDecimal));
+    // });
 </script>

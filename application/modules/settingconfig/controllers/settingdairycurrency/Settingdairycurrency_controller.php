@@ -86,14 +86,10 @@ class Settingdairycurrency_controller extends MX_Controller {
     public function FSxSETDailyCurrencyEventSave(){
         $aAllitems = $this->input->post('aGetItem');
         print_r($aAllitems);
-
         if(isset($aAllitems)){
             foreach($aAllitems as $nKey => $aVal){
                 if($aVal['FCRteRate'] > 0){
                     $aVal['FCRteRate'] = 1/(str_replace(',','',$aVal['FCRteRate']));
-                    // echo '<pre>';
-                    // echo $aVal['FTRteCode']." : ".$aVal['FCRteRate']." : ". (str_replace(',','',$aVal['FCRteRate']));
-                    // echo '</pre>';
                 }
                 $this->Settingdairycurrency_model->FSaMCurentcyUpdate($aVal);
             }

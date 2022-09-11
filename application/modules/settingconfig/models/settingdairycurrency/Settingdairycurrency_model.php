@@ -126,9 +126,14 @@ class Settingdairycurrency_model extends CI_Model
     public function FSaMCurentcyUpdate($paData)
     {
         try {
+            // $nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
+            // echo '<pre>';
+            // echo $paData['FTRteCode']." : ".number_format($paData['FCRteRate'],$nDecimalCurrentcySave,".","");
+            // echo '</pre>';
+
             $nDecimalCurrentcySave = FCNxHGetOptionDecimalCurrencySave();
             $tAgnCode = $paData['FTAgnCode'];
-                $this->db->set('FCRteRate', floatval($paData['FCRteRate']),$nDecimalCurrentcySave);
+                $this->db->set('FCRteRate', number_format($paData['FCRteRate'],$nDecimalCurrentcySave,".",""));
                 $this->db->set('FDLastUpdOn', date('Y-m-d H:i:s'));
                 $this->db->set('FTLastUpdBy', $_SESSION['tSesUsername']);
                 $this->db->where('FTAgnCode', $paData['FTAgnCode']);
