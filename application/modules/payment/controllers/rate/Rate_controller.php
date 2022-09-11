@@ -185,7 +185,7 @@ class Rate_controller extends MX_Controller
                         $aImageUplode   = array(
                             'tModuleName'       => 'payment',
                             'tImgFolder'        => 'rate',
-                            'tImgRefID'         => $aDataMaster['FTRteCode'],
+                            'tImgRefID'         => $aDataMaster['FTAgnCode'].$aDataMaster['FTRteCode'],
                             'tImgObj'           => $tRateImage,
                             'tImgTable'         => 'TFNMRate',
                             'tTableInsert'      => 'TCNMImgObj',
@@ -336,7 +336,7 @@ class Rate_controller extends MX_Controller
                     $aImageUplode   = array(
                         'tModuleName'       => 'payment',
                         'tImgFolder'        => 'rate',
-                        'tImgRefID'         => $aDataMaster['FTRteCode'],
+                        'tImgRefID'         => $aDataMaster['FTAgnCode'].$aDataMaster['FTRteCode'],
                         'tImgObj'           => $tRateImage,
                         'tImgTable'         => 'TFNMRate',
                         'tTableInsert'      => 'TCNMImgObj',
