@@ -331,6 +331,7 @@
             ColumnsSize: ['15%', '75%'],
             DataColumns: ['TFNMRate.FTRteCode', 'TFNMRate_L.FTRteName'],
             DataColumnsFormat: ['', ''],
+            DistinctField   : ['TFNMRate.FTRteCode'],
             WidthModal: 50,
             Perpage: 10,
             OrderBy: ['TFNMRate.FTRteCode ASC'],
