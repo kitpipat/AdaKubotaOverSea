@@ -61,7 +61,7 @@ var oBchBrowseLang = function(poReturnInputCty){
             ColumnsSize     : ['15%', '85%'],
             WidthModal      : 50,
             DataColumns		: ['VCN_VatActive.FTVatCode', 'VCN_VatActive.FCVatRate'],
-            DataColumnsFormat : ['', ''],
+            DataColumnsFormat : ['', 'Number:2'],
             Perpage			: 10,
             OrderBy			: ['VCN_VatActive.FTVatCode ASC'],
         },
@@ -112,7 +112,6 @@ var oBchBrowseLang = function(poReturnInputCty){
         // RouteAddNew : 'RateCode',
         //BrowseLev : nStaCtyBrowseType
     };
-
 
 
 

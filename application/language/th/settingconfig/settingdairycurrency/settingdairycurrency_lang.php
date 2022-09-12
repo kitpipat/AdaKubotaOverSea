@@ -50,6 +50,7 @@ $lang['tResetByMM']                 = "เมื่อเปลี่ยนเ�
 $lang['tResetByD']                  = "เมื่อเปลี่ยนวัน";
 $lang['tResetByBCH']                = "เมื่อเปลี่ยนสาขา";
 $lang['tResetByContinue']           = "ต่อเนื่อง";
+$lang['tResetRefresh']           = "รีเฟรช";
 
 $lang['tPageUpdateTableFormat']                 = "แก้ไข";
 $lang['tPageUpdatePanel1TableFormat']           = "เลือกข้อมูลสำหรับสร้างฟอร์แมท";
@@ -78,4 +79,4 @@ $lang['tSettingCalDailyCurrencyuSERateLast']                = "อัตรา�
 $lang['tSettingDailyCurrencyConfirm']                       = "อัตราแลกเปลี่ยนยืนยัน";
 $lang['tSettingDailyCurrencyuSERateNew']                    = "อัตราใหม่";
 $lang['tSettingDailyCurrencyuAgency']                       = "ตัวแทนขาย";
-$lang['tSettingDailyCurrencyuLastSummit']                   = "ยืนยันล่าสุดเมื่อ";
+$lang['tSettingDailyCurrencyuLastSummit']                   = "ยืนยันล่าสุดเมื่อ : ";
