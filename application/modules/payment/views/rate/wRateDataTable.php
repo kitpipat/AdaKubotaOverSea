@@ -69,7 +69,7 @@
                             <td class="text-center"><img src="<?php echo $tPatchImg?>" style='width:38px;'></td>
 							<td><?php echo $aValue['FTRteCode'];?></td>
                             <td><?php echo $aValue['FTRteName'];?></td>
-                            <td class="text-right"><?php echo number_format($aValue['FCRteRate'],$nOptDecimalShow)?></td>
+                            <td class="text-right"><?php echo number_format(($aValue['FCRteRate']>0)? 1/$aValue['FCRteRate']: '0',$nOptDecimalShow)?></td>
                             <td class="text-left"><?php echo ($AlwChange)?></td>
                             <!-- <td><?= $aValue['FTAgnCode']?></td> -->
                             <td><?= ($aValue['FTAgnCode']) ?  $aValue['FTAgnName']  :  language('payment/rate/rate','tRTEHq').$aValue['FTAgnName'];?></td>
