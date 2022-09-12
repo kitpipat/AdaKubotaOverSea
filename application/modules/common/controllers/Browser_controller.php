@@ -555,7 +555,13 @@ class Browser_controller extends CI_Controller {
                                             break;
 
                                         case 'Number':
-                                            $tDataDisPlay = number_format($val->$tColumnVal);
+                                            
+                                            if(isset($tFomatVal)){
+                                                $FormatNum = $tFomatVal;
+                                            }else{
+                                                $FormatNum = 0;
+                                            }
+                                            $tDataDisPlay = number_format($val->$tColumnVal,$FormatNum);
                                             $tTextAlign = "right!important";
                                             break;
 

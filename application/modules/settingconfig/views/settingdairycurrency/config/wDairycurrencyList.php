@@ -65,7 +65,7 @@ $tBchCount = $this->session->userdata('nSesUsrBchCount');
         <div class="col-lg-1 col-md-1 col-xs-1 no-padding" >
 
             <div id="odvBtnAddEdit" style="display: block;padding-bottom:10px;">
-                <button onclick="JSxCurrentcyCurrentRate()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="padding: left 10px;" style="display: block;"><?= language('common/main/main', 'Refresh'); ?></button>
+                <button onclick="JSxCurrentcyCurrentRate()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="padding: left 10px;" style="display: block;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tResetRefresh'); ?></button>
             </div>
         </div>
     </div>
