@@ -124,6 +124,7 @@ class Slipmessage_controller extends MX_Controller {
 	    //         $nLangEdit = $aLangHave[0]->nLangList;
 	    //     }
         // }
+        $aGetFonts       = $this->Slipmessage_model->FSaMSMGGetFonts();
 
         $aData  = array(
             'FNLngID'   => $nLangEdit,
@@ -132,7 +133,8 @@ class Slipmessage_controller extends MX_Controller {
         $tMethodReq     = "GET";
         $aDataAdd = array(
             'aResult'   => array('rtCode'=>'99'),
-            'aLang'     => $aGetLang
+            'aLang'     => $aGetLang,
+            'aFonts'    => $aGetFonts
         );
 
         $this->load->view('pos/slipmessage/wSlipMessageAdd',$aDataAdd);
@@ -152,6 +154,8 @@ class Slipmessage_controller extends MX_Controller {
         $nLangResort    = $this->session->userdata("tLangID");
         // $nLangEdit      = $this->session->("tLangEdit");
         $aGetLang       = $this->Slipmessage_model->FSaMSMGGetStaUse();
+        $aGetFonts       = $this->Slipmessage_model->FSaMSMGGetFonts();
+
         // $aLangHave      = FCNaHGetAllLangByTable('TCNMSlipMsgHD_L');
         // $nLangHave      = count($aLangHave);
         // if($nLangHave > 1){
@@ -176,7 +180,11 @@ class Slipmessage_controller extends MX_Controller {
         $tAPIReq        = "";
         $tMethodReq     = "GET";
         $aSmgData       = $this->Slipmessage_model->FSaMSMGSearchByID($tAPIReq, $tMethodReq, $aData);
-        $aDataEdit      = array('aResult' => $aSmgData,'aLang'=> $aGetLang,);
+        $aDataEdit      = array(
+            'aResult'   => $aSmgData,
+            'aLang'     => $aGetLang,
+            'aFonts'    => $aGetFonts
+        );
         $this->load->view('pos/slipmessage/wSlipMessageAdd', $aDataEdit);
     }
 

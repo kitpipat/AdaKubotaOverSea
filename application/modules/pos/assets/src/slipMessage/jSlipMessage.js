@@ -12,7 +12,7 @@ $('document').ready(function() {
     } else {
         JSvCallPageSlipMessageAdd();
     }
-    console.log('jSlip run'); 
+    // console.log('jSlip run'); 
 });
 
 /*============================= End Auto Run =================================*/

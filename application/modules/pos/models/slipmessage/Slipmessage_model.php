@@ -384,4 +384,14 @@ class Slipmessage_model extends CI_Model {
         }  
     }
 
+    public function FSaMSMGGetFonts(){
+        $tSQL = "SELECT DISTINCT * FROM TCNSFonts WHERE FTFntStause = 1";
+        $oQuery = $this->db->query($tSQL);
+        if($oQuery->num_rows() > 0 ){
+            $aResult = $oQuery->result_array();
+        }else{
+            $aResult = false;
+        }
+        return $aResult;
+    }
 }

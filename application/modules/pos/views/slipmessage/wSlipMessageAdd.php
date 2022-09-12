@@ -1,4 +1,5 @@
 <?php
+
 if($aResult['rtCode'] == "1"){
     $tSmgCode = $aResult['raHDItems']['rtSmgCode'];
     $oSmgFonts = $aResult['raHDItems']['rtSmgFonts'];
@@ -135,23 +136,24 @@ button.btn.dropdown-toggle.btn-default {
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label class="xCNLabelFrm"><?php echo language('pos/slipmessage/slipmessage','tSMGFont'); ?></label>
-                                        <select style="" class="selectpicker form-control" id="ocmSmgFonts" name="ocmSmgFonts" value="<?=@$tSmgFonts?>">
-                                            <?php  
-                                                
-                                                foreach (scandir('../AdaFonts') as $tFile) {  
-                                                    if (( $tFile != '.' ) && ( $tFile != '..' )) {  
-                                                    $tFileName = ucfirst(explode(".",$tFile)[0]);   
-                                                    if($tFileName==$tSmgFonts){
-                                                        $tSel = 'selected';
-                                                    }else{
-                                                        $tSel = '';
-                                                    }                     
+                                        <select class="selectpicker form-control" id="ocmSmgFonts" name="ocmSmgFonts" value="<?=@$tSmgFontsStyle?>">
+                                           <?php 
+                                           if(isset($aFonts) && !empty($aFonts)){
+                                                foreach($aFonts AS $aFonts){ 
+                                                if($tSmgFonts == $aFonts['FTFntName']){
+                                                    $tSel = 'selected';
+                                                }else{
+                                                    $tSel = '';
+                                                }    
                                             ?>
-                                                <option value="<?=$tFileName?>"<?php echo $tSel;?>>
-                                                    <?php echo $tFileName;?>
-                                                </option>
-                                            <? }  
-                                                }?>
+                                                <option value="<?= $aFonts['FTFntName'];?>"<?= $tSel;?>>
+                                                    <?php echo $aFonts['FTFntName'];?>
+                                                </option> 
+                                           <?php }}else{ ?>
+                                                <option>
+                                                    <?php echo 'Not Found Data';?>
+                                                </option> 
+                                            <?php } ?>
                                         </select>
                                     </div>
 
