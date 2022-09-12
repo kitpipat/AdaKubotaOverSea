@@ -70,7 +70,18 @@ var oBchBrowseLang = function(poReturnInputCty){
             Value           : ["oetVatCode", "VCN_VatActive.FTVatCode"],
             Text            : ["oetVatRate", "VCN_VatActive.FCVatRate"]
         },
+        NextFunc: {
+            FuncName: 'JSxFormatInput'
+        },
     };
+
+    function JSxFormatInput(){
+        if($('#oetVatRate').val()){
+            $('#oetVatRate').addClass('text-right');
+        }else{
+            $('#oetVatRate').removeClass('text-right');
+        }
+    }
 
     var oBchBrowseRate = {
         Title : ['company/country/country', 'tRateTitle'],

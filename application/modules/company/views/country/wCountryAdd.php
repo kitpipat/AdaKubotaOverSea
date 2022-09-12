@@ -21,7 +21,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 		$tCtyRef			= '';
 		$tCtyCode			= '';
 		$tCtyLangID 		= '1';
-		$tCtyStaActive		= '2';
+		$tCtyStaActive		= '1';
 		$tExcRte			= '2';
 		$tVatCode			= '';
 		$tVatRate 			= '';
