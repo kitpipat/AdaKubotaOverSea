@@ -46,9 +46,9 @@ $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 		$dBchSaleStop   = date('Y-m-d', strtotime('+1 year'));
 		if(!empty($tAngCodeHide)){
 		$tBchType		= '4';
-		$tBchLng		= $AgnLang[0]['FNLngID'];
-		$tBchCountryName	= $AgnLang[0]['FTCtyName'];
-		$tBchCountryCode	= $AgnLang[0]['FTCtyCode'];
+		$tBchLng			= (isset($AgnLang[0]['FNLngID'])) ? $AgnLang[0]['FNLngID'] : '';
+		$tBchCountryName	= (isset($AgnLang[0]['FTCtyName'])) ? $AgnLang[0]['FTCtyName'] : '';
+		$tBchCountryCode	= (isset($AgnLang[0]['FTCtyCode'])) ? $AgnLang[0]['FTCtyName'] : '';
 		}else{
 		$tBchType		= "";
 		$tBchCountryName	= "ประเทศ";
