@@ -70,6 +70,7 @@ var oBchBrowseLang = function(poReturnInputCty){
             Value           : ["oetVatCode", "VCN_VatActive.FTVatCode"],
             Text            : ["oetVatRate", "VCN_VatActive.FCVatRate"]
         },
+        // DebugSQL : true,
         NextFunc: {
             FuncName: 'JSxFormatInput'
         },
@@ -116,6 +117,10 @@ var oBchBrowseLang = function(poReturnInputCty){
 
 
     $(document).ready(function(){
+        if($('#oetVatCode').val()){
+            $('#oetVatRate').addClass('text-right');
+        }
+
 
         $('.selectpicker').selectpicker('refresh');
 
