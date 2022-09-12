@@ -129,7 +129,7 @@ if(isset($raResult['rtCode']) && $raResult['rtCode'] == 1){
 															<label class="xCNLabelFrm"><?php echo language('company/country/country','tCountryVat')?></label>
 															<div class="input-group">
 																<input type="text" class="form-control xCNHide" id="oetVatCode" name="oetVatCode" value="<?php echo @$tVatCode; ?>">
-																<input type="text" class="form-control xWPointerEventNone" placeholder="อัตราภาษี" id="oetVatRate" name="oetVatRate" value="<?=number_format(@$tVatRate,$nDecimalShow) ?>" readonly data-validate-required="<?php echo language('company/country/country','tCountryVatValidate')?>">
+																<input type="text" class="form-control xWPointerEventNone" placeholder="อัตราภาษี" id="oetVatRate" name="oetVatRate" value="<?=@number_format(@$tVatRate,$nDecimalShow) ?>" readonly data-validate-required="<?php echo language('company/country/country','tCountryVatValidate')?>">
 																<span class="input-group-btn">
 																	<button id="oimBchBrowseVat" type="button" class="btn xCNBtnBrowseAddOn"><img class="xCNIconFind"></button>
 																</span>

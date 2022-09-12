@@ -10,7 +10,7 @@ $lang['tCountryTitleEdit']      = "แก้ไขประเทศ";
 $lang['tCountryLang']           = "ภาษา";
 $lang['tCountryLangName']       = "ภาษา";
 $lang['tCountryLangID']         = "รหัสภาษา";
-
+$lang['tCountryNodata']         = "ไม่พบข้อมูลประเทศ";
 
 
 $lang['tVatTitle']              = "อัตราภาษี";
