@@ -116,8 +116,8 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                         <th class="xCNTextBold" style=" width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyuAgency') ?></th>
                         <th class="xCNTextBold" style=" width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyCode') ?></th>
                         <th class="xCNTextBold" style=""><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyName') ?></th>
-                        <th class="xCNTextBold" style=""><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRate') ?></th>
-                        <th class="xCNTextBold" style="width:180px;">
+                        <th class="xCNTextBold" style="display:none;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRate') ?></th>
+                        <th class="xCNTextBold" style="display:none; width:180px;">
                             <?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?>
                             <?php
                             if(!empty($ApiTime)){
@@ -126,7 +126,14 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                             ?>
                             
                         </th>
-                        <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingCalDailyCurrencyuSERateLast') ?></th>
+                        <th class="xCNTextBold" style="width:200px;">
+                            <?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingCalDailyCurrencyuSERateLast') ?>
+                            <?php
+                            if(!empty($ApiTime)){
+                                echo '<br>('.substr($ApiTime,0,-4).')';
+                            }
+                            ?>
+                        </th>
                         <th class="xCNTextBold" style="width:160px;">
                             <!-- <label class="fancy-checkbox" style = 'color: #232C3D !important;'> -->
                                 <input type="checkbox" class="ocmCENCheckUseLast" id="ocmCENCheckUseLast">
@@ -158,12 +165,12 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                                     }
                                 ?>
                                 
-                                <td style="text-align:right; <?php echo $tColor ?>" ><?php echo number_format($aValue['FCRteRate'],$nDecimalCurrentcyShow) ?></td>
-                                <td style="text-align:right; <?php echo $tColor ?>"><?php echo number_format($aValue['FCRteLastRate'],$nDecimalCurrentcyShow) ?></td>
+                                <td style="display:none; text-align:right; <?php echo $tColor ?>" ><?php echo number_format($aValue['FCRteRate'],$nDecimalCurrentcyShow) ?></td>
+                                <td style="display:none; text-align:right; <?php echo $tColor ?>"><?php echo number_format($aValue['FCRteLastRate'],$nDecimalCurrentcyShow) ?></td>
                                 <?php if($aValue['FCRteLastRate'] > 0) {?>
-                                    <td style="text-align:right;" id='oetCalCurrency'><?php echo number_format((1/$aValue['FCRteLastRate']),$nDecimalCurrentcyShow) ?></td>
+                                    <td style="text-align:right;<?php echo $tColor ?>" id='oetCalCurrency'><?php echo number_format((1/$aValue['FCRteLastRate']),$nDecimalCurrentcyShow) ?></td>
                                 <?php }else{ ?>
-                                    <td style="text-align:right;" id='oetCalCurrency'><?php echo number_format(($aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
+                                    <td style="text-align:right;<?php echo $tColor ?>" id='oetCalCurrency'><?php echo number_format(($aValue['FCRteRate']),$nDecimalCurrentcyShow) ?></td>
                                 <?php }?>
 
 
@@ -175,7 +182,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
 
 
                                 <td>
-                                    <input type="text" style="text-align:right;" autocomplete="off" class="oetCurrentCurentcy xCNInputNumericWithDecimal" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' data-oldval='<?php echo number_format(1/$aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>' id='oetUseCurrency<?= $key ?>' value='<?= ($aValue['FCRteRate'] > 0) ? number_format(1/$aValue['FCRteRate'],$nDecimalCurrentcyShow) : number_format('0',$nDecimalCurrentcyShow);?>'>
+                                    <input type="text" style="text-align:right;<?php echo $tColor ?>" autocomplete="off" class="oetCurrentCurentcy xCNInputNumericWithDecimal" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' data-oldval='<?php echo number_format(1/$aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>' id='oetUseCurrency<?= $key ?>' value='<?= ($aValue['FCRteRate'] > 0) ? number_format(1/$aValue['FCRteRate'],$nDecimalCurrentcyShow) : number_format('0',$nDecimalCurrentcyShow);?>'>
                                 </td>
                             </tr>
                         <?php } ?>
