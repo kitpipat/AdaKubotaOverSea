@@ -98,7 +98,16 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
 
 <div class="row">
     <div class="col-md-12">
-    <div style='text-align: right;'>ยืนยันล่าสุดเมื่อ <?= substr($dJobDate,0,-4); ?></div>
+    <div style='text-align: right;'>
+    <?php 
+    if(!empty($dJobDate)){
+     echo language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyuLastSummit');   
+     echo substr($dJobDate,0,-4);
+    }
+    ?>
+    <!-- <?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyuLastSummit') ?>
+    <?= substr($dJobDate,0,-4); ?> -->
+    </div>
         <!-- <div class="table-responsive xCNTableScrollY xCNTableHeightCheckbox">  ของ เดิม -->
         <div class="table-responsive">
             <table class="table table-striped" style="width:100%" id="otbTableForCheckbox">
@@ -108,7 +117,15 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                         <th class="xCNTextBold" style=" width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyCode') ?></th>
                         <th class="xCNTextBold" style=""><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyName') ?></th>
                         <th class="xCNTextBold" style=""><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRate') ?></th>
-                        <th class="xCNTextBold" style="width:180px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?><br>(UPD <?=substr($ApiTime,0,-4)?>)</th>
+                        <th class="xCNTextBold" style="width:180px;">
+                            <?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyRateLast') ?>
+                            <?php
+                            if(!empty($ApiTime)){
+                                echo '<br>('.substr($ApiTime,0,-4).')';
+                            }
+                            ?>
+                            
+                        </th>
                         <th class="xCNTextBold" style="width:160px;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingCalDailyCurrencyuSERateLast') ?></th>
                         <th class="xCNTextBold" style="width:160px;">
                             <!-- <label class="fancy-checkbox" style = 'color: #232C3D !important;'> -->
@@ -152,7 +169,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
 
                                 <td>
                                     <label class="fancy-checkbox">
-                                        <input type="checkbox" class='ocbListItem' data-seq='<?= $key ?>' data-rterate='<?= $aValue['FCRteRate'] ?>' data-rtelastrate='<?= $aValue['FCRteLastRate'] ?>' onclick="JSxEventClickCheckboxCurrentcy(this);"><span></span>
+                                        <input type="checkbox" id="ocbListItem_<?= $key ?>" class='ocbListItem' data-seq='<?= $key ?>' data-rterate='<?= $aValue['FCRteRate'] ?>' data-rtelastrate='<?= $aValue['FCRteLastRate'] ?>' onclick="JSxEventClickCheckboxCurrentcy(this);"><span></span>
                                     </label>
                                 </td>
 

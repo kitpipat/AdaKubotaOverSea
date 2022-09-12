@@ -186,6 +186,7 @@ function JSxEventClickCheckboxCurrentcy(elem) {
 
 //Event Save - บันทึก
 function JSxCurrentcySave() {
+    var nDecimal        = $("#oetDecimal").val();
     var nStaSession = JCNxFuncChkSessionExpired();
     if (typeof nStaSession !== "undefined" && nStaSession == 1) {
         try {
@@ -198,19 +199,23 @@ function JSxCurrentcySave() {
                 var nRteCode        = $(this).data("rtecode");
                 var nRteOldval      = $(this).data("oldval");
                 var nChangeValue    = $(this).val();
+                var nRteLast        = parseFloat($("#ocbListItem_"+tCheckseq).data("rtelastrate"));
+                var nRteDiff        = 1/nRteLast;
                 if(nChangeValue == ''){
                     nflag = '1';
                     return false;
                 }
+                console.log(nChangeValue)
                 if(nChangeValue != nRteOldval){
                 aGetItem.push({
                     FCRteRate: nChangeValue,
                     FTRteCode: nRteCode,
                     FTAgnCode: nAgnCode,
+                    nRteLast: parseFloat(nRteDiff).toFixed(nDecimal), 
+                    nRte: nRteLast, 
                 });
                 }
             });
-
             if(nflag == '0'){
                 $.ajax({
                     type: "POST",

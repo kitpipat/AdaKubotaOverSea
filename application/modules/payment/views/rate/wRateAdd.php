@@ -103,6 +103,11 @@ if($aResult['rtCode'] == "1"){
 	<div class="panel-body" style="padding-top:20px !important;">
 		<div class="row">
 			<div class="col-xs-12 col-md-4 col-lg-4">
+				 <!-- <?php
+				 echo '<pre>';
+				 print_r($tImgObjAll); 
+				 echo '</pre>';
+				 ?> -->
 				<div class="form-group">
 					<div id="odvCompLogo">
 						<?php

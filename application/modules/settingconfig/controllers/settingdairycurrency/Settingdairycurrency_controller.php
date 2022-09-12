@@ -89,7 +89,11 @@ class Settingdairycurrency_controller extends MX_Controller {
         if(isset($aAllitems)){
             foreach($aAllitems as $nKey => $aVal){
                 if($aVal['FCRteRate'] > 0){
-                    $aVal['FCRteRate'] = 1/(str_replace(',','',$aVal['FCRteRate']));
+                    if($aVal['FCRteRate'] == $aVal['nRteLast']){
+                        $aVal['FCRteRate'] = $aVal['nRte'];
+                    }else{
+                        $aVal['FCRteRate'] = 1/(str_replace(',','',$aVal['FCRteRate'])); // 0.23 > 420
+                    }
                 }
                 $this->Settingdairycurrency_model->FSaMCurentcyUpdate($aVal);
             }

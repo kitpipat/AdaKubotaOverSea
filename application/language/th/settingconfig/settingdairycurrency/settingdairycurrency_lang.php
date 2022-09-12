@@ -78,3 +78,4 @@ $lang['tSettingCalDailyCurrencyuSERateLast']                = "อัตรา�
 $lang['tSettingDailyCurrencyConfirm']                       = "อัตราแลกเปลี่ยนยืนยัน";
 $lang['tSettingDailyCurrencyuSERateNew']                    = "อัตราใหม่";
 $lang['tSettingDailyCurrencyuAgency']                       = "ตัวแทนขาย";
+$lang['tSettingDailyCurrencyuLastSummit']                   = "ยืนยันล่าสุดเมื่อ";
