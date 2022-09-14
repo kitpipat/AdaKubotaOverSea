@@ -51,7 +51,8 @@ class Settingdairycurrency_controller extends MX_Controller {
             'tSearchAll'    => $tSearch,
             'tAppType'      => $tAppType,
             'tTypePage'     => $this->input->post("ptTypePage"),
-            'FTAgnCode'     => $this->session->userdata('tSesUsrAgnCode')
+            'FTAgnCode'     => $this->session->userdata('tSesUsrAgnCode'),
+            'tAgnCode'      => $this->input->post("ptAgnCodeChk")
         );
 
         $aListRate       = $this->Settingdairycurrency_model->FSaMSETConfigDataTableByCurrentcy($aData,'checkbox');
@@ -85,7 +86,9 @@ class Settingdairycurrency_controller extends MX_Controller {
     //Event Save (แท็บตั้งค่าระบบ)
     public function FSxSETDailyCurrencyEventSave(){
         $aAllitems = $this->input->post('aGetItem');
+        echo '<pre>';
         print_r($aAllitems);
+        echo '</pre>';        
         if(isset($aAllitems)){
             foreach($aAllitems as $nKey => $aVal){
                 if($aVal['FCRteRate'] > 0){
@@ -96,8 +99,8 @@ class Settingdairycurrency_controller extends MX_Controller {
                     }
                 }
                 $this->Settingdairycurrency_model->FSaMCurentcyUpdate($aVal);
+                $this->Settingdairycurrency_model->FSaMCurentcyTashUpdate($aVal);
             }
-            $this->Settingdairycurrency_model->FSaMCurentcyTashUpdate($aVal);
         }
     }
 

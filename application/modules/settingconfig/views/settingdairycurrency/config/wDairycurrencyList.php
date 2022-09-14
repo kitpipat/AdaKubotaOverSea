@@ -44,8 +44,7 @@ $tBchCount = $this->session->userdata('nSesUsrBchCount');
     <div class="col-xs-4 col-md-8 col-lg-8 text-right">
         <div class="col-lg-7 col-md-6 col-xs-6 no-padding padding-left-15">
         </div>
-        <!-- <div style='text-align: right;'>ยืนยันล่าสุดเมื่อ <?= $dJobDate; ?></div> -->
-        <div class="col-lg-4 col-md-4 col-xs-12 no-padding padding-left-15">
+        <div class="col-lg-4 col-md-4 col-xs-12 no-padding padding-right-15">
             <div class="form-group">
                 <div class="input-group"><input type="text" class="form-control xCNHide" id="oetSpcAgncyCode" name="oetSpcAgncyCode" maxlength="5" value="<?= @$tAgnCode; ?>">
                     <input type="hidden" id="oetSpcAgncyCodeOld" name="oetSpcAgncyCodeOld" value="<?= @$tAgnCode; ?>">
@@ -65,7 +64,7 @@ $tBchCount = $this->session->userdata('nSesUsrBchCount');
         <div class="col-lg-1 col-md-1 col-xs-1 no-padding" >
 
             <div id="odvBtnAddEdit" style="display: block;padding-bottom:10px;">
-                <button onclick="JSxCurrentcyCurrentRate()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="padding: left 10px;" style="display: block;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tResetRefresh'); ?></button>
+                <button onclick="JSxCurrentcyCurrentRate()" type="button" class="btn xCNBTNPrimery xCNBTNPrimery2Btn" style="padding: 3px 27px !important;" style="display: block;"><?= language('settingconfig/settingdairycurrency/settingdairycurrency', 'tResetRefresh'); ?></button>
             </div>
         </div>
     </div>
@@ -177,6 +176,10 @@ $tBchCount = $this->session->userdata('nSesUsrBchCount');
                 ReturnType	: 'S',
                 Value		: [tInputReturnCode,"TCNMAgency.FTAgnCode"],
                 Text		: [tInputReturnName,"TCNMAgency_L.FTAgnName"],
+            },
+            NextFunc: {
+                FuncName: 'JSvSettingDairyCurrencyLoadTable',
+                ArgReturn: []
             },
             RouteAddNew : 'agency',
             BrowseLev : 1,

@@ -45,7 +45,7 @@ function JSvSettingDairyCurrencyLoadViewSearch() {
             $.ajax({
                 type: "POST",
                 url: "SettingDailyCurrencyLoadViewSearch",
-                data: { ptTypePage: 'Main' },
+                data: { ptTypePage: 'Main' , ptAgnCode: '00500'},
                 cache: false,
                 timeout: 5000,
                 success: function(tResult) {
@@ -74,6 +74,7 @@ function JSvSettingDairyCurrencyLoadTable() {
             var tAppType = $("#ocmAppType option:selected").val();
             var tSearch = $('#oetSearchCurrentDairy').val();
             var tTypePage = $('#ohdSETTypePage').val();
+            var tAgnCodeChk = $('#oetSpcAgncyCode').val();
             if (tTypePage == "Agency") {
                 tAgnCode = $('#oetAgnCode').val();
             } else {
@@ -87,7 +88,8 @@ function JSvSettingDairyCurrencyLoadTable() {
                     tAppType: tAppType,
                     tSearch: tSearch,
                     ptTypePage: tTypePage,
-                    ptAgnCode: tAgnCode
+                    ptAgnCode: tAgnCode,
+                    ptAgnCodeChk: tAgnCodeChk,
                 },
                 cache: false,
                 timeout: 0,
@@ -188,6 +190,7 @@ function JSxEventClickCheckboxCurrentcy(elem) {
 function JSxCurrentcySave() {
     var nDecimal        = $("#oetDecimal").val();
     var nStaSession = JCNxFuncChkSessionExpired();
+    var tAgnCode    = $('#oetSpcAgncyCode').val();
     if (typeof nStaSession !== "undefined" && nStaSession == 1) {
         try {
             var aPackDataInput = [];
@@ -205,16 +208,16 @@ function JSxCurrentcySave() {
                     nflag = '1';
                     return false;
                 }
-                console.log(nChangeValue)
-                if(nChangeValue != nRteOldval){
+                // if(nChangeValue != nRteOldval){
                 aGetItem.push({
                     FCRteRate: nChangeValue,
                     FTRteCode: nRteCode,
                     FTAgnCode: nAgnCode,
-                    nRteLast: parseFloat(nRteDiff).toFixed(nDecimal), 
-                    nRte: nRteLast, 
+                    nRteLast : parseFloat(nRteDiff).toFixed(nDecimal), 
+                    nRte     : nRteLast, 
+                    tAgnCode : tAgnCode,
                 });
-                }
+                // }
             });
             if(nflag == '0'){
                 $.ajax({

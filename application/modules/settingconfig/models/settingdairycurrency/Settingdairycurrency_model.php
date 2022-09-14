@@ -45,7 +45,7 @@ class Settingdairycurrency_model extends CI_Model
         $nLngID = $paData['FNLngID'];
         $tAgnCode   = $paData['FTAgnCode'];
         $tSearchList = $paData['tSearchAll'];
-
+        $tAgnCodeChk   = $paData['tAgnCode'];
         $tSQL   = "SELECT
                     RATE.FTAgnCode,
                     AGNL.FTAgnName,
@@ -66,6 +66,9 @@ class Settingdairycurrency_model extends CI_Model
                 ";
             if($tAgnCode != ''){
                 $tSQL .= " AND RATE.FTAgnCode = '$tAgnCode' ";
+            }
+            if($tAgnCodeChk){
+                $tSQL .= " AND RATE.FTAgnCode = '$tAgnCodeChk'";
             }
 
             if ($tSearchList != '') {
@@ -149,6 +152,7 @@ class Settingdairycurrency_model extends CI_Model
         try {
         $tAgnCode   = $paData['FTAgnCode'];
         $tCreateOn = date("Y-m-d H:i:s");
+        $tAgnCodeSelect = $paData['tAgnCode'];
 
         $tSQLGetAllAgn   = "SELECT FTAgnCode FROM TFNMRate WITH(NOLOCK) WHERE 1=1 ";
         if($tAgnCode != ''){
@@ -157,18 +161,29 @@ class Settingdairycurrency_model extends CI_Model
         $tSQLGetAllAgn  .= "GROUP BY FTAGNCode ";
         $oQueryAllAgn = $this->db->query($tSQLGetAllAgn);
         $oListAllAgn      = $oQueryAllAgn->result_array();
-        
+    
         foreach($oListAllAgn AS $nKey => $aVal){
-            $tValAgn = $aVal['FTAgnCode'];
-            $tSQL   = "SELECT FTAgnCode FROM TCNSJobTask WITH(NOLOCK)
-            WHERE FTAgnCode = '$tValAgn' ";
+            $tValAgn  = $aVal['FTAgnCode'];
+
+            $tSQL   = "SELECT FTAgnCode FROM TCNSJobTask WITH(NOLOCK)";
+            if($tAgnCodeSelect != ''){
+                $tSQL .= "WHERE FTAgnCode = '$tAgnCodeSelect' ";
+            }else{
+                $tSQL .= "WHERE FTAgnCode = '$tValAgn' ";
+            }
             $oQuery = $this->db->query($tSQL);
             $oListAgn      = $oQuery->result_array();
+            
             if (count($oListAgn) > 0) {
                 $this->db->set('FDJobDateCfm', $tCreateOn);
-                $this->db->where('FTAgnCode', $tValAgn);
+                if($tAgnCodeSelect != ''){
+                    $this->db->where('FTAgnCode', $tAgnCodeSelect);
+                }else{
+                    $this->db->where('FTAgnCode', $tValAgn);
+                }
                 $this->db->update('TCNSJobTask');
             } else {
+                $tValAgn = ($tAgnCodeSelect != '') ? $tAgnCodeSelect : $tValAgn ;
                 $tSQL = "INSERT INTO TCNSJobTask(FTAgnCode, FTJobRefTbl, FDJobDateCfm, FTJobStaUse)
                 VALUES( 
                     '$tValAgn',
