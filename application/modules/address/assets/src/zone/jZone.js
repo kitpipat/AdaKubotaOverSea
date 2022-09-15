@@ -415,7 +415,9 @@ function JSnAddEditZone(tRouteEvent) {
                                     /*บีนทึกแล้วกลับไปหน้า List*/
                                     JSvCallPageZoneList();
                                     break;
+                                    
                                 default:
+                                    JSvCallPageZoneEdit(tZneCode);
                             }
                         } else {
                             FSvCMNSetMsgErrorDialog(aDataReturn['tStaMessg']);
