@@ -20,6 +20,8 @@ $route ['zoneEventAdd']                 = 'address/zone/Zone_controller/FSaCZNEA
 $route ['zonePageEdit']                 = 'address/zone/Zone_controller/FSvCZNEEditPage';
 $route ['zoneEventEdit']                = 'address/zone/Zone_controller/FSaCZNEEditEvent';
 $route ['zoneEventDelete']              = 'address/zone/Zone_controller/FSaCZNEDeleteEvent';
+$route ['zoneSetCallPageAdd']           = 'address/zone/Zone_controller/FSaCZNESETCallPageAdd';
+$route ['zoneSetCallPageEdit']          = 'address/zone/Zone_controller/FSaCZNESETCallPageEdit';
 //Refer
 $route ['zoneEvenAddRefer']             = 'address/zone/Zone_controller/FSvCZNEAddRefer';
 $route ['zoneReferTable']               = 'address/zone/Zone_controller/FSvCZNEObjDataList';

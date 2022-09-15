@@ -46,12 +46,15 @@
                                     break;   
                                 case 'TCNMPos':
                                     $tZneTable = language('address/zone/zone','tZneSltPos');
-                                    break;       
+                                    break;      
+                                case 'TCNMCountry':
+                                    $tZneTable = language('address/zone/zone','tZneSltCountry');
+                                    break; 
                                 default:
                                     $tZneTable = language('common/main/main','tCMNBlank-NA');
                             }    
                         ?>
-                        <tr class="text-center xCNTextDetail2  xWZoneObjDataSource" id="otrZen<?=$key?>" data-key="<?=$key;?>" data-name="<?=$aValue['rtZneRefName']?>">
+                        <tr class="text-center xCNTextDetail2  xWZoneObjDataSource" id="otrZen<?=$key?>" data-key="<?=$key;?>" data-name="<?=$aValue['rtZneRefName']?>" data-znecode="<?= $aValue['rtZneID'];?>">
 							<?php if($aAlwEventZoneObj['tAutStaFull'] == 1 || $aAlwEventZoneObj['tAutStaDelete'] == 1) : ?>
 								<td class="text-center">
 									<label class="fancy-checkbox">
@@ -70,8 +73,8 @@
                                         <option value="TCNMPos"><?php echo language('address/zone/zone','tZneSltPos');?></option>
                                     </select>
                                 </div>
-                            <div class="form-group xWInpuTextLineotrZenotrZen<?=$key?>" id="odvZneReTable<?=$key?>"><?= $tZneTable; ?></div>
-                        </td>
+                                <div class="form-group xWInpuTextLineotrZenotrZen<?=$key?>" id="odvZneReTable<?=$key?>"><?= $tZneTable; ?></div>
+                            </td>
                             <td nowrap class="text-left xCNFieldZneRefCode">
                                 <div id="oetZneBchCodeotrZen<?=$key?>"><?=$aValue['rtZneRefCode']?></div>
                                     <div class="col-xs-12 col-lg-12 col-md-12 xCNZneReferEditCode" id="odvZneReferCodeotrZen<?=$key?>">
@@ -167,7 +170,7 @@
 							<?php endif; ?>
 							<?php if($aAlwEventZoneObj['tAutStaFull'] == 1 || $aAlwEventZoneObj['tAutStaRead'] == 1) : ?>
 								<td>
-                                    <img class="xCNIconTable xWIMGZoneReferEdit" id="oimGpShopRowEdit"  src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onclick="JSvCallPageZoneReferClickEdit(this,event,'<?=$aValue['rtZneRefCode']?>')"> 
+                                    <img class="xCNIconTable xWIMGZoneReferEdit" id="oimGpShopRowEdit"  src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onclick="JSvCallPageZoneReferClickEdit(this,event,'<?=$aValue['rtZneID']?>')"> 
                                     <img class="xCNIconTable xWIMGZoneReferSave hidden"id="oimZoneReferotrZen<?=$key?>" src="<?php echo  base_url(); ?>/application/modules/common/assets/images/icons/save.png" onclick="JSxZenReferDataSourceSaveOperator(this, event,'<?=$aValue['rtZneID']?>','<?=$nCurrentPage?>')">
                                     <img class="xCNIconTable xWIMGZoneReferCancel hidden" src="<?php echo  base_url(); ?>/application/modules/common/assets/images/icons/reply_new.png" onclick="JSxPageShpShopDataSourceCancelOperator(this, event,<?=$nCurrentPage?>)"> 
                                 </td>

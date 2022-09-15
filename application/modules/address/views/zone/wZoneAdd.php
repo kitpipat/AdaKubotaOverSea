@@ -189,162 +189,29 @@
 			<!-- Tab Content Detail  2 -->
 					<div id="odvZneContentSet" class="tab-pane fade">
 						<div class="panel-heading">
-						<div class="row">
-							<form class="validate-form" action="javascript:void(0)" method="post" enctype="multipart/form-data" autocorrect="off" autocapitalize="off" autocomplete="off" id="ofmAddReferzone">
-								<input type="hidden" id="oetZneChain" name="oetZneChain" value="<?php echo $tZneChain;?>">
-									<div class="col-xs-12 col-lg-2 col-md-12">
-										<div class="form-group">
-											<div class="validate-input">
-												<label class="xCNLabelFrm"><?php echo  language('address/zone/zone','tZNECode')?><?php echo  language('address/zone/zone','tZNETitle')?></label>
-												<input type="text" class="xCNInputWithoutSpc" maxlength="100" id="oetZneCodeTab2" name="oetZneCodeTab2" value="<?php echo @$tZneCode;?>">
-											</div>
-										</div>
-									</div>
+							
+						<form class="validate-form" action="javascript:void(0)" method="post" enctype="multipart/form-data" autocorrect="off" autocapitalize="off" autocomplete="off" id="ofmAddReferzone">
 
-									<div class="col-xs-12 col-lg-2 col-md-12">
-									<!-- <input type="hidden" id="oetZneCodeTab2" name="oetZneCodeTab2"  value="<?php echo @$tZneCode;?>"> -->
-									<input type="text" class="xCNHide"  id="oetZneChainOldTab2" name="oetZneChainOldTab2" value="<?php echo @$tZneChain?>" >
-										<div class="form-group">
-											<div class="validate-input">
-												<label class="xCNLabelFrm"><?php echo language("address/zone/zone","tZNEName");?></label>
-												<input type="hidden" id="oetZneNameOld" name="oetZneNameOld"  value="<?php echo @$tZneName;?>">
-												<input type="text" class="xCNInputWithoutSpc" maxlength="100" id="oetZneName" name="oetZneName" value="<?php echo @$tZneName;?>">
-											</div>
-										</div>
-									</div>
-								
-									<div class="col-xs-12 col-lg-2 col-md-2">
-										<div class="form-group">
-										<label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tTypeDetailRefer');?></label>
-											<select class="selectpicker form-control" id="ocmTypeRefer" name="ocmTypeRefer" maxlength="1"
-											data-validate-required = "<?= language('address/zone/zone','tZneValiTypeRefer')?>"
-                                   		    data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiTypeRefer')?>"
-											>
-												<!-- <option value=""><?php echo language('common/main/main','tCMNBlank-NA');?></option> -->
-												<option value="TCNMBranch"><?php echo language('address/zone/zone','tZneSltBranch');?></option>
-												<option value="TCNMUser"><?php echo language('address/zone/zone','tZneSleUSer');?></option>
-												<option value="TCNMSpn"><?php echo language('address/zone/zone','tZneSltSaleman');?></option>
-												<option value="TCNMShop"><?php echo language('address/zone/zone','tZneSltShop');?></option>
-												<option value="TCNMPos"><?php echo language('address/zone/zone','tZneSltPos');?></option>
-											</select>
-										</div>
-									</div>
-										
-									<!-- ฺBrowse Branch (สาขา) -->
-									<div class="col-xs-12 col-lg-2 col-md-2" id="odvZneBranch" >
-										<div class="form-group">
-											<label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltBranch');?></label>
-											<div class="input-group">
-												<input type="text" class="form-control xCNHide" id="oetZneBchCode" name="oetZneBchCode" value="<?php echo @$tZneBranchCode;?>">
-												<input type="text" class="form-control xCNInputWithoutSpcNotThai" id="oetZneBchName" name="oetZneBchName" placeholder="<?php echo language('address/zone/zone','tZneSltBranch');?>" value="<?php echo @$tZneBranchName;?>"
-												data-validate-required = "<?= language('address/zone/zone','tZneValiReference')?>"
-                                   				data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiReference')?>
-												" readonly>
-												<span class="input-group-btn">
-													<button id="obtBrowseBranch" type="button" class="btn xCNBtnBrowseAddOn">
-														<img src="<?php echo base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
-													</button>
-												</span>
-											</div>
-										</div>
-									</div>
-
-									<!-- Browse User (ผู้ใช้)-->
-									<div class="col-xs-12 col-lg-2 col-md-2" id="odvZneUSer">
-										<div class="form-group">
-											<label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSleUSer');?></label>
-											<div class="input-group">
-												<input type="text" class="form-control xCNHide" id="oetZneUSerCode" name="oetZneUSerCode" value="<?php echo @$tZneUSerCode;?>">
-												<input type="text" class="from-control xCNInputWithoutSpcNotThai" id="oetZneUSerName"  name="oetZneUSerName"  placeholder="<?php echo language('address/zone/zone','tZneSleUSer');?>" value="<?php echo @$tZneUserName;?>"
-												data-validate-required = "<?= language('address/zone/zone','tZneValiReference')?>"
-                                   				data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiReference')?>
-												" readonly>
-												<span class="input-group-btn">
-													<button id="obtBrowseUSer" type="button" class="btn xCNBtnBrowseAddOn">
-														<img src="<?php echo base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
-													</button>
-												</span>
-											</div>
-										</div>
-									</div>
-
-									<!-- Browse SaleMan พนักงานขาย -->
-									<div class="col-xs-12 col-lg-2 col-md-2" id="odvZneSaleMan">
-										<div class="form-group">
-										<label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltSaleman');?></label>
-											<div class="input-group">
-												<input type="text" class="form-control xCNHide" id="oetZneSpnCode" name="oetZneSpnCode" maxlength="5" value="<?php echo @$tZneSpnCode?>">
-												<input type="text" class="form-control xCNInputWithoutSpcNotThai" id="oetZneSpnName" name="oetZneSpnName" maxlength="100" placeholder="<?php echo language('address/zone/zone','tZneSltSaleman');?>" value="<?php echo @$tZneSpnName?>"
-												data-validate-required = "<?= language('address/zone/zone','tZneValiReference')?>"
-                                   				data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiReference')?>
-												" readonly>
-												<span class="input-group-btn">
-													<button id="obtBrowseSaleMan" type="button" class="btn xCNBtnBrowseAddOn">
-														<img src="<?php echo  base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
-													</button>
-												</span>
-											</div>
-										</div>
-									</div>
-
-									<!-- Browse Shop (ร้านค้า) -->
-									<div class="col-xs-12 col-lg-2 col-md-2" id="odvZneShop">
-										<div class="form-group" >
-										<label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltShop');?></label>
-											<div class="input-group">
-												<input type="text" class="form-control xCNHide" id="oetZneShopCode" name="oetZneShopCode" value="<?php echo @$tZneShpCode?>">
-												<input type="text" class="form-control xCNInputWithoutSpcNotThai" id="oetZneShopName" name="oetZneShopName"  placeholder="<?php echo language('address/zone/zone','tZneSltShop');?>" value="<?php echo @$tZneShpName?>"
-												data-validate-required = "<?= language('address/zone/zone','tZneValiReference')?>"
-                                   				data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiReference')?>
-												" readonly>
-												<span class="input-group-btn">
-													<button id="obtBrowseShop" type="button" class="btn xCNBtnBrowseAddOn">
-														<img src="<?php echo  base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
-													</button>
-												</span>
-											</div>
-										</div>
-									</div>
-										
-									<!-- Browse Pos (เครื่องจุดขาย) -->
-									<div class="col-xs-12 col-lg-2 col-md-2" id="odvZnePos">	
-										<div class="form-group" >
-										<label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltPos');?></label>
-											<div class="input-group" >
-												<input type="text" class="form-control xCNHide" id="oetZnePosCode" name="oetZnePosCode" maxlength="5" value="<?php echo @$tZnePosCode?>">
-												<input type="text" class="form-control xCNInputWithoutSpcNotThai" id="oetZnePosName" name="oetZnePosName"  placeholder="<?php echo language('address/zone/zone','tZneSltPos');?>" value="<?php echo @$tZneComName?>"
-												data-validate-required = "<?= language('address/zone/zone','tZneValiReference')?>"
-                                   				data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiReference')?>
-												" readonly>
-												<span class="input-group-btn">
-													<button id="obtBrowsePOS" type="button" class="btn xCNBtnBrowseAddOn">
-														<img src="<?php echo  base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
-													</button>
-												</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-xs-12 col-lg-2 col-md-2">
-										<div class="form-group">
-											<div class="validate-input">
-												<label class="xCNLabelFrm"><?php echo language("address/zone/zone","tZneKeyRefer");?></label>
-												<input type="text" class="xCNInputWithoutSpc" maxlength="100" id="oetKeyReferName" name="oetKeyReferName" value="<?php echo @$tKeyReferName;?>">
-											</div>
-										</div>
-									</div>
-									<br>
-									<div class="col-xs-12 col-lg-2 col-md-2">
-										<div class="form-group">
-											<div id="odvBtnZneRefer">
-												<!-- <button class="btn xCNBTNPrimery" type="button"><?php echo language('address/zone/zone','tZneAdd');?></button>	 -->
-												<button  type="submit" id="obtSubmitZneTab2" class="btn xCNBTNPrimery" onclick="JSnAddReferZone()" ><?php echo language('address/zone/zone','tZneAdd');?></button>		
-											</div>
-										</div>
-									</div>
-								</form>
+							<div class="row">
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-bottom:10px;">
+									<label id="olbZneSetInfo" class="xCNLabelFrm xCNLinkClick"><?= language('address/zone/zone', 'tZneRefer') ?></label>
+									<label id="olbZneSetAdd" class="xCNLabelFrm xCNHide"> / <?= language('common/main/main', 'tAdd') ?></label>
+									<label id="olbZneSetEdit" class="xCNLabelFrm xCNHide"> / <?= language('common/main/main', 'tEdit') ?></label>
+								</div>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right" style="margin-bottom:10px;">
+									<button id="obtZneSetAdd" class="xCNBTNPrimeryPlus" type="button">+</button>
+									<button id="obtZneSetBack" class="btn xCNHide" type="button" style="background-color: #D4D4D4; color: #000000;"><?= language('common/main/main', 'tCancel') ?></button>
+									<button id="obtZneSetSave" class="btn xCNHide" type="submit" onclick="JSnAddReferZone()" style="background-color: rgb(23, 155, 253); color: white;"><?= language('common/main/main', 'tSave') ?></button>
+								</div>
 							</div>
-						</div>
+							<div id="odvZneSetTable" class="row">
+								<!-- DataTable Product Set -->
+								<div id="odvZneSetDataTable"></div>
+								<!-- End DataTable Product Set -->
+							</div>
+
+						</form>
+
 				        <script type="text/javascript">
 							  window.onload = JSvZoneObjDataTable();
 						</script>

@@ -377,6 +377,7 @@ class Zone_controller extends MX_Controller {
 		$tZneSpnCode   = $this->input->post('oetZneSpnCode');
 		$tZneShopCode  = $this->input->post('oetZneShopCode');
 		$tZnePosCode   = $this->input->post('oetZnePosCode');
+		$tZneCtyCode   = $this->input->post('oetZneCtyCode');
 		$tZneCodeTab2  = $this->input->post('oetZneCodeTab2');
 		$tZneChainOld  = $this->input->post('oetZneChainOldTab2');
 		$tTypeRefer    = $this->input->post('ocmTypeRefer');
@@ -402,10 +403,14 @@ class Zone_controller extends MX_Controller {
 				$tZneCode = $this->input->post('oetZnePosCode');
 				$tZneName = $this->input->post('oetZnePosName');
 			}
-
+			if(isset($tZneCtyCode) && !empty($tZneCtyCode) ){
+				$tZneCode = $this->input->post('oetZneCtyCode');
+				$tZneName = $this->input->post('oetZneCtyName');
+			}
 
 		try {
 			$aDataMaster = array(
+				'FNZneID'		=> $this->input->post('oetZneID'),
 				'FTZneTable'  	=> $tTypeRefer,
 				'FTZneChain' 	=> $tZneChain,
 				'FTZneRefCode'	=> $tZneCode,
@@ -551,4 +556,72 @@ class Zone_controller extends MX_Controller {
             echo $Error;
 		}
 	}
+
+	public function FSaCZNESETCallPageAdd ($ptZneCode = '',$ptUserLevel = ''){
+		try {
+			//ส่ง BchCode มาจาก Function Check Level
+			if(@$ptZneCode){
+				$tZneCode = $ptZneCode;
+				$tUserLevel = $ptUserLevel; //เก็บ User Level เพื่อใช้ในการ โชว์ปุ่ม Back
+			}else{
+				$tZneCode = $this->input->post('tZneCode');
+				$tUserLevel = ''; //ไม่ได้เข้ามาจาก Function Check Level จะมีค่า เป็น ว่าง
+			}
+			
+			$nStaBrowse     = $this->input->post('nStaBrowse');
+			$tTypePage      = $this->input->post('tTypePage');      // สถานะ page : edit , add
+			
+		
+			if($nStaBrowse == ''){
+				$nStaBrowse = '99';
+			}
+		
+			$aData = array(
+					'FTZneCode' => $tZneCode,
+					'FNLngID'   => $this->session->userdata("tLangEdit"),
+			);
+			$aResList  = $this->Zone_model->FSaMZNESearchByID($aData);
+			// $aSltRefer = $this->Zone_model->FSaMZNEGetdataZneobj();
+			$aDataEdit  = array(
+				'nResult'       => $aResList,
+				'nStaBrowse'    => $nStaBrowse,
+				'tTypePage'     => $tTypePage,
+				'tUserLevel'	=> $tUserLevel
+				// 'aSltRefer'		=> $aSltRefer
+			);
+
+			$aDataReturn = array(
+				'tHTML' => $this->load->view('address/zone/wZoneSetAdd', $aDataEdit , true),
+				'nStaEvent' => 1,
+				'tStaMessg' => 'Success'
+			);
+		} catch (Exception $Error) {
+			$aDataReturn = array(
+				'nStaEvent' => 500,
+				'tStaMessg' => $Error->getMessage()
+			);
+		}
+		echo json_encode($aDataReturn);
+	}
+	public function FSaCZNESETCallPageEdit (){
+		try {
+			$FNZneID = $this->input->post('ptZneID');
+			$aItems = $this->Zone_model->FSaMZENGetDataZenSetByID($FNZneID);
+			$aDataEdit  = array(
+				'aItems'       => $aItems
+			);
+			$aDataReturn = array(
+				'tHTML'     => $this->load->view('address/zone/wZoneSetAdd', $aDataEdit, true),
+				'nStaEvent' => 1,
+				'tStaMessg' => 'Success'
+			);
+		} catch (Exception $Error) {
+			$aDataReturn = array(
+				'nStaEvent' => 500,
+				'tStaMessg' => $Error->getMessage()
+			);
+		}
+		echo json_encode($aDataReturn);
+	}
+
 }	

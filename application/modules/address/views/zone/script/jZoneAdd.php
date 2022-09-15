@@ -48,6 +48,29 @@
         JSxAgencyVisibleComponent('#odvZneAutoGenCode', true);
     }
     
+    
+
+    $('.xWIMGZoneReferEdit').off('click');
+    $('.xWIMGZoneReferEdit').on('click',function(){
+        var tZneCode = $(this).parent().parent().data('znecode');
+        JSxZoneSetCallPageEdit(tPdtCode);
+    });
+
+    $('#obtZneSetAdd').off('click');
+    $('#obtZneSetAdd').on('click', function() {
+        JSxZoneSetCallPageAdd();
+    });
+
+    $('#obtZneSetBack').off('click');
+    $('#obtZneSetBack').on('click', function() {
+        JSvZoneObjDataTable();
+    });
+
+    $('#olbZneSetInfo').off('click');
+    $('#olbZneSetInfo').on('click', function() {
+        JSvZoneObjDataTable();
+    });
+
     if(JSbZoneIsUpdatePage()){
         // Zone Code
         $("#oetZneCode").attr("readonly", true);
@@ -170,6 +193,7 @@
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
+                $('#odvZneCountry').hide();
             break;
 
             case 'TCNMUser':
@@ -179,6 +203,7 @@
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
+                $('#odvZneCountry').hide();
             break;
 
             case 'TCNMSpn':
@@ -188,6 +213,7 @@
                 $('#odvZneSaleMan').show();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
+                $('#odvZneCountry').hide();
             break;
        
             case 'TCNMShop':
@@ -197,6 +223,7 @@
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').show();
                 $('#odvZnePos').hide();
+                $('#odvZneCountry').hide();
             break;
 
             case 'TCNMPos':
@@ -206,6 +233,15 @@
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').show();
+                $('#odvZneCountry').hide();
+            break;
+            case 'TCNMCountry':          
+                $('#odvZneBranch').hide();
+                $('#odvZneUSer').hide();
+                $('#odvZneSaleMan').hide();
+                $('#odvZneShop').hide();
+                $('#odvZnePos').hide();
+                $('#odvZneCountry').show();
             break;
             default:
                 $('#odvZneBranch').hide();
@@ -213,6 +249,7 @@
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
+                $('#odvZneCountry').hide();
         }
     }
 
@@ -403,7 +440,7 @@
             Value		: ["oetZneShopCode","TCNMShop.FTShpCode"],
             Text		: ["oetZneShopName","TCNMShop_L.FTShpName"],
         },
-        RouteAddNew : 'shop',
+        RouteAddNew : 'country',
         BrowseLev : nStaZneBrowseType
     }
 
@@ -437,6 +474,38 @@
         RouteAddNew : 'salemachine',
         BrowseLev : nStaZneBrowseType
     }	
+
+    // Browse Country (ประเทศ) 
+    var oBrowseCountry = {
+        Title : ['company/country/country','tCountryTitle'],
+        Table:{Master:'TCNMCountry',PK:'FTCtyCode'},
+        Join :{
+            Table:	['TCNMCountry_L'],
+            On:['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode']
+        },
+        Where :{
+            Condition : ["AND TCNMCountry.FTCtyStaUse = '1' "]
+        },
+        GrideView:{
+            ColumnPathLang	: 'company/country/country',
+            ColumnKeyLang	: ['tCountryRef','tCountryName'],
+            ColumnsSize     : ['15%','75%'],
+            WidthModal      : 50,
+            DataColumns		: ['TCNMCountry.FTCtyCode','TCNMCountry_L.FTCtyName'],
+            DataColumnsFormat : ['',''],
+            Perpage			: 5,
+            OrderBy			: ['TCNMCountry.FTCtyCode'],
+            SourceOrder		: "ASC"
+        },
+        CallBack:{
+            ReturnType	: 'S',
+            Value		: ["oetZneCtyCode","TCNMCountry.FTCtyCode"],
+            Text		: ["oetZneCtyName","TCNMCountry_L.FTCtyName"],
+        },
+        RouteAddNew : 'country',
+        BrowseLev : nStaZneBrowseType
+    }	
+
 
     //Set Event Browse 
     $('#oimBrowseZneParent').click(function(){
@@ -482,6 +551,13 @@
         JCNxBrowseData('oBrowseBch');
     });
 
+    $('#obtBrowseCountry').click(function(){
+        // Update CheckPinMenu Create By Witsarut 04/10/2019
+        JSxCheckPinMenuClose();
+        JCNxBrowseData('oBrowseCountry');
+    });
+
+
 
     function JSxNextFuncZneParent(paDataReturn){
         $('#oetZneParentName').closest('.form-group').addClass( "has-success" ).removeClass( "has-error");
@@ -510,61 +586,9 @@
     });
 
     //Edit inline
-    function JSvCallPageZoneReferClickEdit(ZenElement, ZenEvent , pnZone) {
-        JCNxOpenLoading();
-            var tRecordId = $(ZenElement).parents('.xWZoneObjDataSource').attr('id');
-            var oRecord = {
-                tShp        : $(ZenElement).parents('.xWZoneObjDataSource').find('.xCNFieldZneKey input[type=hidden]').val(),
-                tShpSN      : $(ZenElement).parents('.xWZoneObjDataSource').find('.xCNFieldPosSN input[type=text]').val(),
-                tShpStatus  : $(ZenElement).parents('.xWZoneObjDataSource').find('.xCNFieldPosStatus select').val()
-            };
-            // Backup Seft Record
-                localStorage.setItem(tRecordId, JSON.stringify(oRecord));
-            
-            // Visibled icons
-            JSxZonreferDataSourceVisibledOperationIcon(ZenElement, 'edit', false);      // Itself hidden(edit)
-            JSxZonreferDataSourceVisibledOperationIcon(ZenElement, 'cancel', true);     // hidden cancel icon
-            JSxZonreferDataSourceVisibledOperationIcon(ZenElement, 'save', true);       // hidden save icon
-
-            $(ZenElement) // Active xCNFieldZneKey - success
-                    .parents('.xWZoneObjDataSource')
-                    .find('.xCNFieldZneKey input[type=text]')
-                    .removeAttr('disabled')
-                    .removeClass( "xCNHide" )
-                    .addClass('text')
-                    .attr('maxlength', 18);
-                    $('.xWInpuTextLineotrZen'+tRecordId).addClass('xCNHide');  
-
-            $(ZenElement) // Active TypeReferEdit - success
-                    .parents('.xWZoneObjDataSource')
-                    .find('#ocmTypeReferEdit'+tRecordId)
-                    .removeClass( "xCNHide" );
-                    $('.xWInpuTextLineotrZen'+tRecordId).addClass('xCNHide');                        
-
-            $(ZenElement) // Active TypeReferEdit - success
-                    .parents('.xWZoneObjDataSource')
-                    .find('.xWInpuTextLineZenReferCode input[type=text]')
-                    .removeAttr('disabled')
-                    .removeClass( "xCNHide" )
-                    .addClass('text')
-                    .attr('maxlength', 18);
-                    // $('.xWInpuTextLineotrZen'+tRecordId).addClass('xCNHide');    
-            
-            $(ZenElement) // Active TypeReferEdit - success
-                    .parents('.xWZoneObjDataSource')
-                    .find('.xCNFieldZneRefName input[type=text]')
-                    .removeAttr('disabled')
-                    .removeClass( "xCNHide" )
-                    .addClass('text')
-                    .attr('maxlength', 18);
-                    // $('.xWInpuTextLineotrZen'+tRecordId).addClass('xCNHide');
-
-
-            var tElement = ZenElement;
-            $(ZenElement).parents('.xWZoneObjDataSource').find('#ocmTypeReferEditRefer'+tRecordId).change(function(){
-                JSxHideObjZoneTypeRefer(this,tElement);
-            });
-            JCNxCloseLoading();
+    function JSvCallPageZoneReferClickEdit(ZenElement, ZenEvent , pnZoneCode) {
+        // console.log(pnZone);
+        JSxZoneSetCallPageEdit(pnZoneCode);
     }
 
     //

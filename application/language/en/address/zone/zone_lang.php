@@ -40,6 +40,7 @@ $lang['tZneSltSaleman']     = "SaleMan";
 $lang['tZneSltShop']        = "Shop";
 $lang['tZneSltPos']         = "Pos Machine";
 $lang['tZneAdd']            = "Add";
+$lang['tZneSltCountry']        = "Country";
 //Table ZoneRefer
 $lang['tZneSequence']          = "No";
 $lang['tZneTypeRefer']         = "Type Referent";

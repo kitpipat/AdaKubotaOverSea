@@ -648,30 +648,47 @@ class Zone_model extends CI_Model {
     public function FSaMZNEAddUpdateMaster($paData){
         try{
 			//Add Master
-			$this->db->insert('TCNMZoneObj',array(
-				'FTZneTable'      => $paData['FTZneTable'],
-				'FTZneKey'        => $paData['FTZneKey'],
-				'FTZneChain'      => $paData['FTZneChain'],
-				'FTZneRefCode'    => $paData['FTZneRefCode'],
-
-				'FDLastUpdOn'   => $paData['FDLastUpdOn'],
-				'FDCreateOn'    => $paData['FDCreateOn'],
-				'FTLastUpdBy'   => $paData['FTLastUpdBy'],
-				'FTCreateBy'    => $paData['FTCreateBy']
-			));
-
-			if($this->db->affected_rows() > 0){
+			
+			$this->db->set('FTZneTable', $paData['FTZneTable']);
+			$this->db->set('FTZneKey', $paData['FTZneKey']);
+			$this->db->set('FTZneChain', $paData['FTZneChain']);
+			$this->db->set('FTZneRefCode',$paData['FTZneRefCode']);
+			$this->db->set('FDLastUpdOn',$paData['FDLastUpdOn']);
+			$this->db->where('FNZneID', $paData['FNZneID']);
+			$this->db->update('TCNMZoneObj');
+		
+			if($this->db->affected_rows() > 0) {
 				$aStatus = array(
 					'rtCode' => '1',
-					'rtDesc' => 'Add Master Success',
+					'rtDesc' => 'Edit ZoneObj Success',
 				);
-			}else{
-				$aStatus = array(
-					'rtCode' => '905',
-					'rtDesc' => 'Error Cannot Add/Edit Master.',
-				);
+			} else {
+				$this->db->insert('TCNMZoneObj',array(
+					'FTZneTable'      => $paData['FTZneTable'],
+					'FTZneKey'        => $paData['FTZneKey'],
+					'FTZneChain'      => $paData['FTZneChain'],
+					'FTZneRefCode'    => $paData['FTZneRefCode'],
+	
+					'FDLastUpdOn'   => $paData['FDLastUpdOn'],
+					'FDCreateOn'    => $paData['FDCreateOn'],
+					'FTLastUpdBy'   => $paData['FTLastUpdBy'],
+					'FTCreateBy'    => $paData['FTCreateBy']
+				));
+	
+				if ($this->db->affected_rows() > 0) {
+					$aStatus    = array(
+						'rtCode' => '1',
+						'rtDesc' => 'Add ZoneObj Success',
+					);
+				} else {
+					$aStatus    = array(
+						'rtCode' => '801',
+						'rtDesc' => 'Error Cannot Add/Update ZoneObj.',
+					);
+				}
 			}
-		return $aStatus;
+			
+			return $aStatus;
         }catch(Exception $Error){
             return $Error;
         }
@@ -705,22 +722,25 @@ class Zone_model extends CI_Model {
 							ZNEO.FTZneRefCode    AS rtZneRefCode,
 							ZNEO.FNZneID         AS rtZneID,
 							CASE 
-								WHEN ZNEO.FTZneTable = 'TCNMUser'   THEN USRL.FTUsrName
-								WHEN ZNEO.FTZneTable = 'TCNMBranch' THEN BCHL.FTBchName 
-								WHEN ZNEO.FTZneTable = 'TCNMSpn'    THEN SPNL.FTSpnName 
-								WHEN ZNEO.FTZneTable = 'TCNMShop'   THEN SHPL.FTShpName 
-								WHEN ZNEO.FTZneTable = 'TCNMPos'    THEN PLN.FTPosComName 
+								WHEN ZNEO.FTZneTable = 'TCNMUser'    THEN USRL.FTUsrName
+								WHEN ZNEO.FTZneTable = 'TCNMBranch'  THEN BCHL.FTBchName 
+								WHEN ZNEO.FTZneTable = 'TCNMSpn'     THEN SPNL.FTSpnName 
+								WHEN ZNEO.FTZneTable = 'TCNMShop'    THEN SHPL.FTShpName 
+								WHEN ZNEO.FTZneTable = 'TCNMPos'     THEN PLN.FTPosComName 
+								WHEN ZNEO.FTZneTable = 'TCNMCountry' THEN TCNL.FTCtyName 
 								ELSE NULL 
 							END 
 							AS rtZneRefName    
         FROM TCNMZone ZNE
       	LEFT JOIN TCNMZone_L ZNEL ON ZNE.FTZneCode = ZNEL.FTZneCode AND ZNEL.FNLngID = $nLngID
-      	LEFT JOIN TCNMZoneObj ZNEO ON ZNEL.FTZneChain = ZNEO.FTZneChain
-   		LEFT JOIN TCNMUser_L USRL ON USRL.FTUsrCode   = CASE WHEN ZNEO.FTZneTable = 'TCNMUser'   THEN ZNEO.FTZneRefCode ELSE NULL END AND USRL.FNLngID = $nLngID
-   		LEFT JOIN TCNMBranch_L BCHL ON BCHL.FTBchCode = CASE WHEN ZNEO.FTZneTable = 'TCNMBranch' THEN ZNEO.FTZneRefCode ELSE NULL END AND BCHL.FNLngID = $nLngID
-		LEFT JOIN TCNMSpn_L SPNL ON SPNL.FTSpnCode    = CASE WHEN ZNEO.FTZneTable = 'TCNMSpn'    THEN ZNEO.FTZneRefCode ELSE NULL END AND SPNL.FNLngID = $nLngID
-		LEFT JOIN TCNMShop_L SHPL ON SHPL.FTShpCode   = CASE WHEN ZNEO.FTZneTable = 'TCNMShop'   THEN ZNEO.FTZneRefCode ELSE NULL END AND SHPL.FNLngID = $nLngID
-		LEFT JOIN TCNMPosLastNo PLN ON PLN.FTPosCode  = CASE WHEN ZNEO.FTZneTable = 'TCNMPos'    THEN ZNEO.FTZneRefCode ELSE NULL END 
+      	LEFT JOIN TCNMZoneObj ZNEO ON ZNEL.FTZneChain  = ZNEO.FTZneChain
+   		LEFT JOIN TCNMUser_L USRL ON USRL.FTUsrCode    = CASE WHEN ZNEO.FTZneTable = 'TCNMUser'    THEN ZNEO.FTZneRefCode ELSE NULL END AND USRL.FNLngID = $nLngID
+   		LEFT JOIN TCNMBranch_L BCHL ON BCHL.FTBchCode  = CASE WHEN ZNEO.FTZneTable = 'TCNMBranch'  THEN ZNEO.FTZneRefCode ELSE NULL END AND BCHL.FNLngID = $nLngID
+		LEFT JOIN TCNMSpn_L SPNL ON SPNL.FTSpnCode     = CASE WHEN ZNEO.FTZneTable = 'TCNMSpn'     THEN ZNEO.FTZneRefCode ELSE NULL END AND SPNL.FNLngID = $nLngID
+		LEFT JOIN TCNMShop_L SHPL ON SHPL.FTShpCode    = CASE WHEN ZNEO.FTZneTable = 'TCNMShop'    THEN ZNEO.FTZneRefCode ELSE NULL END AND SHPL.FNLngID = $nLngID
+		LEFT JOIN TCNMPosLastNo PLN ON PLN.FTPosCode   = CASE WHEN ZNEO.FTZneTable = 'TCNMPos'     THEN ZNEO.FTZneRefCode ELSE NULL END 
+		LEFT JOIN TCNMCountry_L TCNL ON TCNL.FTCtyCode = CASE WHEN ZNEO.FTZneTable = 'TCNMCountry' THEN ZNEO.FTZneRefCode ELSE NULL END AND TCNL.FNLngID = $nLngID
+
       	WHERE 1 = 1  AND ZNEO.FTZneChain = '$nZenCode' ";
 		
 		@$tWhereCode = $paData['nZenCode'];
@@ -927,5 +947,42 @@ class Zone_model extends CI_Model {
         }
     }
 	
+	public function FSaMZENGetDataZenSetByID($ptZneCode){
+		$tSQL = "SELECT 
+						ZNE.FTZneChain, 
+						ZNE.FTZneCode,
+						ZNEO.FNZneID,
+						ZNE.FNZneLevel,
+						ZNEO.FTZneTable,
+						ZNE.FTZneParent,
+						ZNEL.FTZneName,
+						ZNEO.FTZneRefCode,
+						ZNEO.FTZneKey,
+						TCNL.FTCtyName AS TCNMCountry,
+						TBRL.FTBchName AS TCNMBranch,
+						TUSRL.FTUsrName AS TCNMUser,
+						TSPNL.FTSpnName AS TCNMSpn,
+						TSHOP.FTShpName AS TCNMShop,
+						TPOSL.FTPosName AS TCNMPos
+					
+					FROM TCNMZone ZNE
+					LEFT JOIN TCNMZone_L ZNEL ON ZNEL.FTZneChain = ZNE.FTZneChain 
+					LEFT JOIN TCNMZoneObj ZNEO ON ZNEO.FTZneChain = ZNE.FTZneChain
+					
+					LEFT JOIN TCNMBranch_L TBRL ON TBRL.FTBchCode = ZNEO.FTZneRefCode
+					LEFT JOIN TCNMUser_L TUSRL ON TUSRL.FTUsrCode = ZNEO.FTZneRefCode
+					LEFT JOIN TCNMSpn_L TSPNL ON TSPNL.FTSpnCode = ZNEO.FTZneRefCode
+					LEFT JOIN TCNMShop_L TSHOP ON TSHOP.FTShpCode = ZNEO.FTZneRefCode
+					LEFT JOIN TCNMPos_L TPOSL ON TPOSL.FTPosCode = ZNEO.FTZneRefCode
+					LEFT JOIN TCNMCountry_L TCNL ON TCNL.FTCtyCode = ZNEO.FTZneRefCode AND TCNL.FNLngID = 1
+				 	WHERE FNZneID = '$ptZneCode'  ";
 
+		
+        $oQuery = $this->db->query($tSQL);
+        if($oQuery->num_rows() > 0){
+            return $oQuery->row_array();
+        }else{
+            return false;
+        }
+	}
 }
