@@ -257,6 +257,7 @@ function JSvCallPageZoneEdit(ptZneCode) {
             cache: false,
             timeout: 0,
             success: function(tResult) {
+
                 if (tResult != "") {
                     $('#odvContentPageZone').html(tResult);
                     $('#oliZneAdd').hide();
@@ -882,6 +883,7 @@ function JSnAddReferZone() {
                 success: function(tResult) {
                     var tData = $.parseJSON(tResult);
                     if (tData.nStaEvent == '1') {
+
                         JSvZoneObjDataTable(1);
 
                         // $('#oetZneBchName').val('');
@@ -902,6 +904,7 @@ function JSnAddReferZone() {
                         $('#odvZneSaleMan').hide();
                         $('#odvZneShop').hide();
                         $('#odvZnePos').hide();
+                        $('#odvZneCountry').hide();
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
