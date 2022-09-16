@@ -280,7 +280,7 @@ class Promotion_controller extends MX_Controller
             $this->Promotion_model->FSaMTempToPdtPmtHDBch($aTempToTBParams); // คัดลอกข้อมูลจาก Temp to PdtPmtHDBch
             $this->Promotion_model->FSaMTempToPdtPmtHDCstPri($aTempToTBParams); // คัดลอกข้อมูลจาก Temp to PdtPmtHDCstPri
             $this->Promotion_model->FSaMTempToPdtPmtHDChn($aTempToTBParams); // คัดลอกข้อมูลจาก Temp to PdtPmtHDChn
-
+            $this->Promotion_model->FSaMTempToPdtPmtHDZone($aTempToTBParams); // คัดลอกข้อมูลจาก Temp to Zone
             /*===== Begin Update FTPmhStaPdtExc in HD ==================================*/
             $aGetPmtDtStaListTypeOnExcudeTypeInTmpParams = [
                 'tDocNo' => $aDataMaster['FTPmhDocNo'],
@@ -412,6 +412,7 @@ class Promotion_controller extends MX_Controller
         $this->Promotion_model->FSaMPdtPmtCGToTemp($aDataToTempParams);
         $this->Promotion_model->FSaMPdtPmtHDCstPriToTemp($aDataToTempParams);
         $this->Promotion_model->FSaMPdtPmtHDChnToTemp($aDataToTempParams);
+        $this->Promotion_model->FSaMPdtPmtHDZoneToTemp($aDataToTempParams);
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -556,7 +557,7 @@ class Promotion_controller extends MX_Controller
                 $this->Promotion_model->FSaMTempToPdtPmtHDBch($aTempToTBParams); // คัดลอกข้อมูลจาก Temp to PdtPmtHDBch
                 $this->Promotion_model->FSaMTempToPdtPmtHDCstPri($aTempToTBParams); // คัดลอกข้อมูลจาก Temp to PdtPmtHDCstPri
                 $this->Promotion_model->FSaMTempToPdtPmtHDChn($aTempToTBParams); // คัดลอกข้อมูลจาก Temp to PdtPmtHDChn
-
+                $this->Promotion_model->FSaMTempToPdtPmtHDZone($aTempToTBParams); // คัดลอกข้อมูลจาก Temp to Zone
                 /*===== Begin Update FTPmhStaPdtExc in HD ==================================*/
                 $aGetPmtDtStaListTypeOnExcudeTypeInTmpParams = [
                     'tDocNo' => $aDataMaster['FTPmhDocNo'],

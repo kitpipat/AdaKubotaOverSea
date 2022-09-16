@@ -199,6 +199,7 @@
                     JSxPromotionStep4GetPdtPmtHDCstPriInTmp(1, false);
                     JSxPromotionStep4GetPdtPmtHDBchInTmp(1, false);
                     JSxPromotionStep4GetHDChnInTmp(1, false);
+                    JSxPromotionStep4GetHDZoneInTmp(1, false);
                     break;
                 }
                 case "odvPromotionStep5" : {

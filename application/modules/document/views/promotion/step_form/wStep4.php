@@ -99,6 +99,30 @@ if ($this->session->userdata('tSesUsrLevel') == 'SHP') {
             </div>
         </div>
     </div>
+
+    <div class="col-md-12 xCNPromotionStep4TableGroupBuyWithZoneConditionContainer">
+        <!--Section : เงื่อนไขพิเศษ - โซน-->
+        <div class="panel panel-default" style="margin-bottom: 10px;">
+            <div id="odvHeadAllow" class="panel-heading xCNPanelHeadColor" role="tab" style="padding-top:10px;padding-bottom:10px;">
+                <label class="xCNTextDetail1">เงื่อนไขพิเศษ - โซน</label>
+            </div>
+
+            <div class="panel-collapse collapse in" role="tabpanel">
+                <div class="panel-body xCNPDModlue">
+                    <?php if(!$bIsApvOrCancel) { ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="xCNBTNPrimeryPlus pull-right" id="obtPromotionStep4AddZoneConditionBtn" onclick="JSxPromotionStep4AddZoneConditionPanel()" style="margin-bottom: 10px;">+</button>
+                            </div>
+                        </div>
+                    <?php } ?>     
+                    <div class="xCNPromotionStep4TableZoneCondition"></div>
+                    <input type="hidden" id="oetPromotionStep4ZoneCode" name="oetPromotionStep4ZoneCode">
+                    <input type="hidden" id="oetPromotionStep4ZoneName" name="oetPromotionStep4ZoneName">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Begin Add เงื่อนไขพิเศษ - สาขา -->

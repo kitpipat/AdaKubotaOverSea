@@ -700,6 +700,54 @@
 
 
     }
+    
+    function JSxPromotionStep4AddZoneConditionPanel() {
+        // var tBchCode = $('#oetPromotionBchCode').val();
+        // option Brand
+        window.oPromotionBrowseChanel = {
+            Title: ['authen/user/user', 'tBrowseZoneTitle'],
+            Table: { Master: 'TCNMZone',PK: 'FTZneChain' },
+            Join: {
+                Table: ['TCNMZone_L'],
+                On: ['TCNMZone.FTZneChain = TCNMZone_L.FTZneChain AND TCNMZone_L.FNLngID = 1']
+            },
+            Where: {
+                Condition: [
+                    function() {
+                        var tSQL = " AND TCNMZone.FTZneChain NOT IN(SELECT FTZneChain FROM TCNTPdtPmtHDZne_Tmp WHERE FTSessionID = '<?php echo $this->session->userdata("tSesSessionID"); ?>') ";
+                        return tSQL;
+                    }
+                ]
+            },
+            GrideView: {
+                ColumnPathLang: 'authen/user/user',
+                ColumnKeyLang: ['tBrowseZoneCode', 'tBrowseZoneName'],
+                ColumnsSize: ['10%', '35%', '55%'],
+                DataColumns: ['TCNMZone.FTZneChain', 'TCNMZone_L.FTZneChainName','TCNMZone.FTZneCode'],
+                DataColumnsFormat: ['', '',''],
+                WidthModal: 50,
+                Perpage: 10,
+                OrderBy: ['TCNMZone.FTZneChain'],
+                SourceOrder: "ASC",
+                DisabledColumns: [2],
+            },
+            CallBack: {
+                ReturnType: 'S',
+                Value: ["oetPromotionStep4ZoneCode", "TCNMZone.FTZneChain"],
+                Text: ["oetPromotionStep4ZoneName", "TCNMZone_L.FTZneChainName"]
+            },
+            NextFunc: {
+                FuncName: 'JSxPromotionStep4CallbackZone',
+                ArgReturn: ['FTZneChain', 'FTZneChainName','FTZneCode']
+            },
+            // RouteAddNew: 'chanel',
+            // BrowseLev: 1,
+            // DebugSQL : true
+        };
+        JCNxBrowseData('oPromotionBrowseChanel');
+
+
+    }
 
 
     /**
@@ -778,6 +826,94 @@
                 timeout: 5000,
                 success: function(tResult) {
                     JSxPromotionStep4GetHDChnInTmp(1, true);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    JCNxCloseLoading();
+                    JCNxResponseError(jqXHR, textStatus, errorThrown);
+                }
+            });
+
+        } else {
+            JCNxShowMsgSessionExpired();
+        }
+    }
+
+    /**
+     * Functionality : Get Channel in Temp
+     * Parameters : -
+     * Creator : 04/01/2021 Worakorn
+     * Return : -
+     * Return Type : -
+     */
+    function JSxPromotionStep4GetHDZoneInTmp(pnPage, pbUseLoading) {
+        var nStaSession = JCNxFuncChkSessionExpired();
+        if (typeof nStaSession !== "undefined" && nStaSession == 1) {
+
+            var tBchCode = $('#oetPromotionBchCode').val();
+
+            var tSearchAll = $('#oetPromotionPdtLayoutSearchAll').val();
+
+            if (pbUseLoading) {
+                JCNxOpenLoading();
+            }
+
+            (pnPage == '' || (typeof pnPage) == 'undefined') ? pnPage = 1: pnPage = pnPage;
+
+            $.ajax({
+                type: "POST",
+                url: "promotionStep4GetZoneConditionInTmp",
+                data: {
+                    tBchCode: tBchCode,
+                    nPageCurrent: pnPage,
+                    tSearchAll: tSearchAll
+                },
+                cache: false,
+                timeout: 5000,
+                success: function(oResult) {
+                    $('.xCNPromotionStep4TableZoneCondition').html(oResult.html);
+
+                    JCNxCloseLoading();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    JCNxCloseLoading();
+                    JCNxResponseError(jqXHR, textStatus, errorThrown);
+                }
+            });
+
+        } else {
+            JCNxShowMsgSessionExpired();
+        }
+    }
+
+
+    /**
+     * Functionality : Insert PdtPmtHDChn to Temp
+     * Parameters : -
+     * Creator : 04/01/2021 Worakorn
+     * Return : -
+     * Return Type : -
+     */
+    function JSxPromotionStep4CallbackZone(ptParams) {
+        $('#oetPromotionStep4ZoneCode').val("");
+        $('#oetPromotionStep4ZoneName').val("");
+        var nStaSession = JCNxFuncChkSessionExpired();
+        if (typeof nStaSession !== "undefined" && nStaSession == 1) {
+
+            var tBchCode = $('#oetPromotionBchCode').val();
+
+            JCNxOpenLoading();
+            
+            $.ajax({
+                type: "POST",
+                url: "promotionStep4InsertZoneConditionToTmp",
+                data: {
+                    tBchCode: tBchCode,
+                    tZoneList: ptParams
+                },
+                cache: false,
+                timeout: 5000,
+                success: function(tResult) {
+                    JSxPromotionStep4GetHDZoneInTmp(1, true);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     JCNxCloseLoading();

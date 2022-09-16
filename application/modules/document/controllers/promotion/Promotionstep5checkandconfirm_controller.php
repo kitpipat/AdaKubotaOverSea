@@ -62,7 +62,11 @@ class Promotionstep5checkandconfirm_controller extends MX_Controller
             'tUserSessionID' => $tUserSessionID
         ];
         $aPdtPmtHDChnInTmp = $this->Promotionstep5checkandconfirm_model->FSaMGetPdtPmtHDChnInTmp($aGetPdtPmtHDChnInTmpParams);
-
+        $aGetPdtPmtHDZoneInTmpParams = [
+            'tUserSessionID' => $tUserSessionID
+        ];
+        $aPdtPmtHDZoneInTmp = $this->Promotionstep5checkandconfirm_model->FSaMGetPdtPmtHDZoneInTmp($aGetPdtPmtHDZoneInTmpParams);
+        
 
         $aViewParams = array(
             'aAlwEvent' => $aAlwEvent,
@@ -74,6 +78,7 @@ class Promotionstep5checkandconfirm_controller extends MX_Controller
             'aPdtPmtHDCstPriInTmp' => $aPdtPmtHDCstPriInTmp,
             'aPdtPmtHDBchInTmp' => $aPdtPmtHDBchInTmp,
             'aPdtPmtHDChnInTmp' => $aPdtPmtHDChnInTmp,
+            'aPdtPmtHDZoneInTmp' => $aPdtPmtHDZoneInTmp,
             'tPbyStaCalSum' => isset($aPmtCBInTmp[0]['FTPbyStaCalSum'])?$aPmtCBInTmp[0]['FTPbyStaCalSum']:'1',
             'tPgtStaGetEffect' => isset($aPmtCGInTmp[0]['FTPgtStaGetEffect'])?$aPmtCGInTmp[0]['FTPgtStaGetEffect']:'1',
             'tPgtStaGetType' => isset($aPmtCGInTmp[0]['FTPgtStaGetType'])?$aPmtCGInTmp[0]['FTPgtStaGetType']:'1',

@@ -339,6 +339,30 @@
                                         <?php } ?>
                                     </td>
                                 </tr>
+
+                                <tr>
+                                    <td class="text-center">โซน</td>
+                                    <td class="text-left">
+                                        <?php if (empty($aPdtPmtHDZoneInTmp)) { ?>
+                                            <label><?php echo language('document/promotion/promotion', 'tLabel23'); ?></label>
+                                        <?php } ?>
+
+                                        <?php foreach ($aPdtPmtHDZoneInTmp as $aZone) { ?>
+                                            <?php if ($aZone['FTPmhStaType'] != "1") {
+                                                continue;
+                                            } ?>
+                                            <label><?php echo $aZone['FTZneName']; ?></label><br>
+                                        <?php } ?>
+                                    </td>
+                                    <td class="text-left">
+                                        <?php foreach ($aPdtPmtHDZoneInTmp as $aZone) { ?>
+                                            <?php if ($aZone['FTPmhStaType'] != "2") {
+                                                continue;
+                                            } ?>
+                                            <label><?php echo $aZone['FTZneName']; ?></label><br>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

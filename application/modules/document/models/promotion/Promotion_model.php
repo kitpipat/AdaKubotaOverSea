@@ -1069,6 +1069,49 @@ class Promotion_model extends CI_Model
         $this->db->query($tSQL);
     }
 
+       /**
+     * Functionality : Insert Temp to PdtPmtHDChn
+     * Parameters : -
+     * Creator : 04/01/2021 Worakorn
+     * Last Modified : -
+     * Return : Status
+     * Return Type : Array
+     */
+    public function FSaMTempToPdtPmtHDZone($paParams = [])
+    {
+
+        $tDocNo = $paParams['tDocNo'];
+        $tUserSessionID = $paParams['tUserSessionID']; // User Session
+        $tBchCode = $paParams['tBchCode'];
+        // ทำการลบ ใน TCNTPdtPmtHDZne ก่อนการย้าย Temp ไป TCNTPdtPmtHDZne
+        $this->db->where('FTPmhDocNo', $tDocNo);
+        $this->db->delete('TCNTPdtPmtHDZne');
+
+        $tSQL = "
+            INSERT TCNTPdtPmtHDZne
+                (FTPmhDocNo,
+                FTPmhStaType,
+                FTZneCode,
+                FTZneChain,
+                FTBchCode
+                )
+        ";
+
+        $tSQL .= "
+            SELECT
+                TMP.FTPmhDocNo,
+                TMP.FTPmhStaType,
+                TMP.FTZneCode,
+                TMP.FTZneChain,
+                '$tBchCode' AS FTBchCode
+            FROM TCNTPdtPmtHDZne_Tmp TMP WITH(NOLOCK)
+            WHERE TMP.FTSessionID = '$tUserSessionID'
+            ORDER BY TMP.FTPmhDocNo ASC
+        ";
+
+        $this->db->query($tSQL);
+    }
+
     /**
      * Functionality : Insert PdtPmtDT to Temp
      * Parameters : -
@@ -1495,6 +1538,59 @@ class Promotion_model extends CI_Model
         $this->db->query($tSQL);
     }
 
+      /**
+     * Functionality : Insert PdtPmtHDChn to Temp
+     * Parameters : -
+     * Creator : 04/01/2021 Worakorn
+     * Last Modified : -
+     * Return : Status
+     * Return Type : Array
+     */
+    public function FSaMPdtPmtHDZoneToTemp($paParams = [])
+    {
+        $tDocNo = $paParams['tDocNo'];
+        $nLngID = $paParams['nLngID'];
+        $tUserSessionID = $paParams['tUserSessionID']; // User Session
+        $tUserSessionDate = $paParams['tUserSessionDate']; // User Session Date
+
+        // ทำการลบ ใน Temp ก่อนการย้าย TCNTPdtPmtHDZne ไป Temp
+        $this->db->where('FTSessionID', $tUserSessionID);
+        $this->db->delete('TCNTPdtPmtHDZne_Tmp');
+
+        $tSQL = "
+            INSERT TCNTPdtPmtHDZne_Tmp
+                (FTBchCode,
+                FTPmhDocNo,
+                FTZneCode,
+                FTZneName,
+                FTZneChain,
+                FTPmhStaType,
+                FDCreateOn,             
+                FTSessionID
+                )
+        ";
+
+        $tSQL .= "
+            SELECT
+            HDCSTCHN.FTBchCode,
+                'PMTDOCTEMP' AS FTPmhDocNo,
+                HDCSTCHN.FTZneCode,
+                CHNL.FTZneChainName AS FTZneName,
+                HDCSTCHN.FTZneChain,
+                HDCSTCHN.FTPmhStaType,
+                '$tUserSessionDate' AS FDCreateOn,
+                '$tUserSessionID' AS FTSessionID
+            FROM TCNTPdtPmtHDZne HDCSTCHN WITH(NOLOCK)
+            LEFT JOIN TCNMZone_L CHNL ON CHNL.FTZneChain = HDCSTCHN.FTZneChain  AND CHNL.FNLngID = $nLngID
+            WHERE HDCSTCHN.FTPmhDocNo = '$tDocNo'
+            ORDER BY CHNL.FTZneChain ASC
+        ";
+
+        // print_r($tSQL); die();
+
+        $this->db->query($tSQL);
+    }
+
     /**
      * Functionality : ล้างข้อมูลในตาราง tmp
      * Parameters : -
@@ -1522,6 +1618,9 @@ class Promotion_model extends CI_Model
 
         $this->db->where('FTSessionID', $paParams['tUserSessionID']);
         $this->db->delete('TCNTPdtPmtHDChn_Tmp');
+
+        $this->db->where('FTSessionID', $paParams['tUserSessionID']);
+        $this->db->delete('TCNTPdtPmtHDZne_Tmp');
     }
 
     /**
@@ -1820,6 +1919,11 @@ class Promotion_model extends CI_Model
         $this->db->where('FTPmhDocNo', 'PMTDOCTEMP');
         $this->db->where('FTSessionID', $paParams['tUserSessionID']);
         $this->db->update('TCNTPdtPmtHDChn_Tmp');
+
+        $this->db->set('FTPmhDocNo', $paParams['tDocNo']);
+        $this->db->where('FTPmhDocNo', 'PMTDOCTEMP');
+        $this->db->where('FTSessionID', $paParams['tUserSessionID']);
+        $this->db->update('TCNTPdtPmtHDZne_Tmp');
     }
 
     /**
@@ -1967,6 +2071,9 @@ class Promotion_model extends CI_Model
 
             $this->db->where('FTPmhDocNo', $tDocNo);
             $this->db->delete('TCNTPdtPmtHDChn');
+
+            $this->db->where('FTPmhDocNo', $tDocNo);
+            $this->db->delete('TCNTPdtPmtHDZne');
         } catch (Exception $Error) {
             return $Error;
         }

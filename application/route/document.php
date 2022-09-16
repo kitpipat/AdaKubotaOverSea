@@ -841,6 +841,11 @@ $route ['promotionStep4GetChnConditionInTmp'] = 'document/promotion/Promotionste
 $route ['promotionStep4InsertChnConditionToTmp'] = 'document/promotion/Promotionstep4chncondition_controller/FSaCPromotionInsertChnToTmp';
 $route ['promotionStepeUpdateChnConditionInTmp'] = 'document/promotion/Promotionstep4chncondition_controller/FSxCPromotionUpdateChnInTmp';
 $route ['promotionStep4DeleteChnConditionInTmp'] = 'document/promotion/Promotionstep4chncondition_controller/FSxCPromotionDeleteChnInTmp';
+// Step4 Zone Condition
+$route ['promotionStep4GetZoneConditionInTmp'] = 'document/promotion/Promotionstep4zonecondition_controller/FSxCPromotionGetHDZoneInTmp';
+$route ['promotionStep4InsertZoneConditionToTmp'] = 'document/promotion/Promotionstep4zonecondition_controller/FSaCPromotionInsertZoneToTmp';
+$route ['promotionStepeUpdateZoneConditionInTmp'] = 'document/promotion/Promotionstep4zonecondition_controller/FSxCPromotionUpdateZoneInTmp';
+$route ['promotionStep4DeleteZoneConditionInTmp'] = 'document/promotion/Promotionstep4zonecondition_controller/FSxCPromotionDeleteZoneInTmp';
 // Step4 Branch Condition
 $route ['promotionStep4GetBchConditionInTmp'] = 'document/promotion/Promotionstep4bchcondition_controller/FSxCPromotionGetBchConditionInTmp';
 $route ['promotionStep4InsertBchConditionToTmp'] = 'document/promotion/Promotionstep4bchcondition_controller/FSaCPromotionInsertBchConditionToTmp';

@@ -324,4 +324,35 @@ class Promotionstep5checkandconfirm_model extends CI_Model
 
         return $oQuery->result_array();
     }
+
+    /**
+     * Functionality : Get PdtPmtHDBch in Temp
+     * Parameters : -
+     * Creator : 04/02/2020 piya
+     * Last Modified : -
+     * Return : Data List PdtPmtHDBch
+     * Return Type : Array
+     */
+    public function FSaMGetPdtPmtHDZoneInTmp($paParams = [])
+    {
+        $tUserSessionID = $paParams['tUserSessionID'];
+
+        $tSQL = "
+            SELECT
+                    TMP.FTBchCode,
+                    TMP.FTZneCode,
+                    TMP.FTZneChain,
+                    TMP.FTZneName,
+                    TMP.FTPmhDocNo,
+                    TMP.FTPmhStaType,
+                    TMP.FTSessionID
+            FROM TCNTPdtPmtHDZne_Tmp TMP WITH(NOLOCK)
+            WHERE TMP.FTSessionID = '$tUserSessionID'
+            ORDER BY TMP.FTPmhStaType ASC, TMP.FTZneName ASC
+        ";
+
+        $oQuery = $this->db->query($tSQL);
+
+        return $oQuery->result_array();
+    }
 }
