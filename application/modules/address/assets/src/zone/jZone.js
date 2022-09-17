@@ -905,6 +905,9 @@ function JSnAddReferZone() {
                         $('#odvZneShop').hide();
                         $('#odvZnePos').hide();
                         $('#odvZneCountry').hide();
+                        $('#odvZneAgency').hide();
+                        $('#odvZneMerchant').hide();
+
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {

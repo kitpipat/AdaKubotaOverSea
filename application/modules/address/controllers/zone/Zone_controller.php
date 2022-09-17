@@ -378,6 +378,9 @@ class Zone_controller extends MX_Controller {
 		$tZneShopCode  = $this->input->post('oetZneShopCode');
 		$tZnePosCode   = $this->input->post('oetZnePosCode');
 		$tZneCtyCode   = $this->input->post('oetZneCtyCode');
+		$tZneAgnCode   = $this->input->post('oetZneAgnCode');
+		$tZneMchCode   = $this->input->post('oetZneMchCode');
+
 		$tZneCodeTab2  = $this->input->post('oetZneCodeTab2');
 		$tZneChainOld  = $this->input->post('oetZneChainOldTab2');
 		$tTypeRefer    = $this->input->post('ocmTypeRefer');
@@ -406,6 +409,14 @@ class Zone_controller extends MX_Controller {
 			if(isset($tZneCtyCode) && !empty($tZneCtyCode) ){
 				$tZneCode = $this->input->post('oetZneCtyCode');
 				$tZneName = $this->input->post('oetZneCtyName');
+			}
+			if(isset($tZneAgnCode) && !empty($tZneAgnCode) ){
+				$tZneCode = $this->input->post('oetZneAgnCode');
+				$tZneName = $this->input->post('oetZneAgnName');
+			}
+			if(isset($tZneMchCode) && !empty($tZneMchCode) ){
+				$tZneCode = $this->input->post('oetZneMchCode');
+				$tZneName = $this->input->post('oetZneMchName');
 			}
 
 		try {

@@ -11,7 +11,7 @@
         $tZneName       = $aItems['FTZneName'];
         $tKeyReferName  = $aItems['FTZneKey'];
         $tZneTable      = $aItems['FTZneTable'];
-        
+
         switch ($aItems['FTZneTable']) {
             case 'TCNMCountry':
                 $tBrowseCode = $aItems['FTZneRefCode'];
@@ -36,6 +36,14 @@
             case 'TCNMPos':
                 $tBrowseCode = $aItems['FTZneRefCode'];
                 $tBrowseName = $aItems['TCNMPos'];
+            break;
+            case 'TCNMAgency':
+                $tBrowseCode = $aItems['FTZneRefCode'];
+                $tBrowseName = $aItems['TCNMAgency'];
+            break;
+            case 'TCNMMerchant':
+                $tBrowseCode = $aItems['FTZneRefCode'];
+                $tBrowseName = $aItems['TCNMMerchant'];
             break;
             default:
                 false;
@@ -101,12 +109,14 @@
                 data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiTypeRefer')?>"
                 >
                     <!-- <option value=""><?php echo language('common/main/main','tCMNBlank-NA');?></option> -->
+                    <option <?= ($tZneTable == 'TCNMCountry') ? 'selected' : false ?> value="TCNMCountry"><?php echo language('address/zone/zone','tZneSltCountry');?></option>
+                    <option <?= ($tZneTable == 'TCNMAgency') ? 'selected' : false ?> value="TCNMAgency"><?php echo language('address/zone/zone','tZneSltAgency');?></option>
                     <option <?= ($tZneTable == 'TCNMBranch') ? 'selected' : false ?> value="TCNMBranch"><?php echo language('address/zone/zone','tZneSltBranch');?></option>
-                    <option <?= ($tZneTable == 'TCNMUser') ? 'selected' : false ?> value="TCNMUser"><?php echo language('address/zone/zone','tZneSleUSer');?></option>
-                    <option <?= ($tZneTable == 'TCNMSpn') ? 'selected' : false ?> value="TCNMSpn"><?php echo language('address/zone/zone','tZneSltSaleman');?></option>
+                    <option <?= ($tZneTable == 'TCNMMerchant') ? 'selected' : false ?> value="TCNMMerchant">กลุ่มธุรกิจ</option>
                     <option <?= ($tZneTable == 'TCNMShop') ? 'selected' : false ?> value="TCNMShop"><?php echo language('address/zone/zone','tZneSltShop');?></option>
                     <option <?= ($tZneTable == 'TCNMPos') ? 'selected' : false ?> value="TCNMPos"><?php echo language('address/zone/zone','tZneSltPos');?></option>
-                    <option <?= ($tZneTable == 'TCNMCountry') ? 'selected' : false ?> value="TCNMCountry"><?php echo language('address/zone/zone','tZneSltCountry');?></option>
+                    <option <?= ($tZneTable == 'TCNMUser') ? 'selected' : false ?> value="TCNMUser"><?php echo language('address/zone/zone','tZneSleUSer');?></option>
+                    <option <?= ($tZneTable == 'TCNMSpn') ? 'selected' : false ?> value="TCNMSpn"><?php echo language('address/zone/zone','tZneSltSaleman');?></option>
                 </select>
             </div>
         </div>
@@ -226,6 +236,45 @@
                 </div>
             </div>
         </div>
+
+        <!-- Browse Agency (ตัวแทนขาย) -->
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneAgency">	
+            <div class="form-group" >
+            <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltAgency');?></label>
+                <div class="input-group" >
+                    <input type="text" class="form-control xCNHide" id="oetZneAgnCode" name="oetZneAgnCode" maxlength="5" value="<?php echo @$tBrowseCode?>">
+                    <input type="text" class="form-control xCNInputWithoutSpcNotThai" id="oetZneAgnName" name="oetZneAgnName"  placeholder="<?php echo language('address/zone/zone','tZneSltAgency');?>" value="<?php echo @$tBrowseName?>"
+                    data-validate-required = "<?= language('address/zone/zone','tZneValiReference')?>"
+                    data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiReference')?>
+                    " readonly>
+                    <span class="input-group-btn">
+                        <button id="obtBrowseAgency" type="button" class="btn xCNBtnBrowseAddOn">
+                            <img src="<?php echo  base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Browse Merchant (กลุ่มธุรกิจ) -->
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneMerchant">	
+            <div class="form-group" >
+            <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltMerchant');?></label>
+                <div class="input-group" >
+                    <input type="text" class="form-control xCNHide" id="oetZneMchCode" name="oetZneMchCode" maxlength="5" value="<?php echo @$tBrowseCode?>">
+                    <input type="text" class="form-control xCNInputWithoutSpcNotThai" id="oetZneMchName" name="oetZneMchName"  placeholder="<?php echo language('address/zone/zone','tZneSltMerchant');?>" value="<?php echo @$tBrowseName?>"
+                    data-validate-required = "<?= language('address/zone/zone','tZneValiReference')?>"
+                    data-validate-dublicateCode = "<?= language('address/zone/zone','tZneValiReference')?>
+                    " readonly>
+                    <span class="input-group-btn">
+                        <button id="obtBrowseMerchant" type="button" class="btn xCNBtnBrowseAddOn">
+                            <img src="<?php echo  base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">

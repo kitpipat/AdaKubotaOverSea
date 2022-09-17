@@ -40,7 +40,10 @@ $lang['tZneSltSaleman']     = "พนักงานขาย";
 $lang['tZneSltShop']        = "ร้านค้า";
 $lang['tZneSltPos']         = "เครื่องจุดขาย";
 $lang['tZneAdd']            = "เพิ่ม";
-$lang['tZneSltCountry']        = "ประเทศ";
+$lang['tZneSltCountry']     = "ประเทศ";
+$lang['tZneSltAgency']      = "ตัวแทนขาย";
+$lang['tZneSltMerchant']    = "กลุ่มธุรกิจ";
+
 //Table ZoneRefer
 $lang['tZneSequence']          = "ลำดับ";
 $lang['tZneTypeRefer']         = "ประเภทอ้างอิง";

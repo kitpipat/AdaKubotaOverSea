@@ -144,14 +144,14 @@ class Warehouse_model extends CI_Model
 					SPNLR.FTSpnCode		AS rtSpnCodeRef,
 					SPNLR.FTSpnName  	AS rtSpnNameRef,
 					POSLR.FTPosCode		AS rtPosCodeRef,
-					POSLR.FTPosCode		AS rtPosNameRef
+					POSLR.FTPosName		AS rtPosNameRef
 				FROM [TCNMWaHouse] WAH WITH (NOLOCK)
 				LEFT JOIN TCNMWaHouse_L WAHL WITH (NOLOCK) ON WAH.FTWahCode   = WAHL.FTWahCode AND WAH.FTBchCode = WAHL.FTBchCode  AND WAHL.FNLngID = $nLngID
 				LEFT JOIN TCNMBranch_L BCHL WITH (NOLOCK) ON WAH.FTBchCode = BCHL.FTBchCode  AND BCHL.FNLngID = $nLngID
 				LEFT JOIN TCNMBranch_L BCHLR WITH (NOLOCK) ON WAH.FTWahRefCode = BCHLR.FTBchCode  AND BCHLR.FNLngID = $nLngID
 				LEFT JOIN TCNMShop_L SHPLR WITH (NOLOCK) ON WAH.FTWahRefCode = SHPLR.FTShpCode AND  WAH.FTBchCode = SHPLR.FTBchCode  AND SHPLR.FNLngID = $nLngID
 				LEFT JOIN TCNMSpn_L SPNLR WITH (NOLOCK) ON WAH.FTWahRefCode = SPNLR.FTSpnCode  AND SPNLR.FNLngID = $nLngID
-				LEFT JOIN TCNMPos POSLR WITH (NOLOCK) ON WAH.FTWahRefCode = POSLR.FTPosCode AND WAH.FTBchCode  = POSLR.FTBchCode 
+				LEFT JOIN TCNMPos_L POSLR WITH (NOLOCK) ON WAH.FTWahRefCode = POSLR.FTPosCode AND WAH.FTBchCode  = POSLR.FTBchCode 
 				WHERE WAH.FTWahCode = '$tWahCode' AND WAH.FTBchCode='$tBchCode'  
 			";
 

@@ -50,6 +50,12 @@
                                 case 'TCNMCountry':
                                     $tZneTable = language('address/zone/zone','tZneSltCountry');
                                     break; 
+                                case 'TCNMAgency':
+                                    $tZneTable = language('address/zone/zone','tZneSltAgency');
+                                    break; 
+                                case 'TCNMMerchant':
+                                    $tZneTable = language('address/zone/zone','tZneSltMerchant');
+                                    break; 
                                 default:
                                     $tZneTable = language('common/main/main','tCMNBlank-NA');
                             }    

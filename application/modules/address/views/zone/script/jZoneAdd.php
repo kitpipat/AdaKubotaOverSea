@@ -185,55 +185,146 @@
 
     function JSxHideObjZoneType(){
               tZneRefer = $('#ocmTypeRefer').val();
+        
         switch(tZneRefer){
             case 'TCNMBranch':
- 
                 $('#odvZneBranch').show();
                 $('#odvZneUSer').hide();
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
                 $('#odvZneCountry').hide();
+                $('#odvZneAgency').hide();
+                $('#odvZneMerchant').hide();
+
+                // $('#oetZneBchCode').val('');
+                // $('#oetZneBchName').val('');
+                $('#oetZneUSerCode').val('');
+                $('#oetZneUSerName').val('');
+                $('#oetZneSpnCode').val('');
+                $('#oetZneSpnName').val('');
+                $('#oetZneShopCode').val('');
+                $('#oetZneShopName').val('');
+                $('#oetZnePosCode').val('');
+                $('#oetZnePosName').val('');
+                $('#oetZneCtyCode').val('');
+                $('#oetZneCtyName').val('');
+                $('#oetZneAgnCode').val('');
+                $('#oetZneAgnName').val('');
+                $('#oetZneMchCode').val('');
+                $('#oetZneMchName').val('');
             break;
 
             case 'TCNMUser':
-
                 $('#odvZneBranch').hide();
                 $('#odvZneUSer').show();
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
                 $('#odvZneCountry').hide();
+                $('#odvZneAgency').hide();
+                $('#odvZneMerchant').hide();
+
+                $('#oetZneBchCode').val('');
+                $('#oetZneBchName').val('');
+                // $('#oetZneUSerCode').val('');
+                // $('#oetZneUSerName').val('');
+                $('#oetZneSpnCode').val('');
+                $('#oetZneSpnName').val('');
+                $('#oetZneShopCode').val('');
+                $('#oetZneShopName').val('');
+                $('#oetZnePosCode').val('');
+                $('#oetZnePosName').val('');
+                $('#oetZneCtyCode').val('');
+                $('#oetZneCtyName').val('');
+                $('#oetZneAgnCode').val('');
+                $('#oetZneAgnName').val('');
+                $('#oetZneMchCode').val('');
+                $('#oetZneMchName').val('');
             break;
 
             case 'TCNMSpn':
-
                 $('#odvZneBranch').hide();
                 $('#odvZneUSer').hide();
                 $('#odvZneSaleMan').show();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
                 $('#odvZneCountry').hide();
+                $('#odvZneAgency').hide();
+                $('#odvZneMerchant').hide();
+
+                $('#oetZneBchCode').val('');
+                $('#oetZneBchName').val('');
+                $('#oetZneUSerCode').val('');
+                $('#oetZneUSerName').val('');
+                // $('#oetZneSpnCode').val('');
+                // $('#oetZneSpnName').val('');
+                $('#oetZneShopCode').val('');
+                $('#oetZneShopName').val('');
+                $('#oetZnePosCode').val('');
+                $('#oetZnePosName').val('');
+                $('#oetZneCtyCode').val('');
+                $('#oetZneCtyName').val('');
+                $('#oetZneAgnCode').val('');
+                $('#oetZneAgnName').val('');
+                $('#oetZneMchCode').val('');
+                $('#oetZneMchName').val('');
             break;
        
             case 'TCNMShop':
-
                 $('#odvZneBranch').hide();
                 $('#odvZneUSer').hide();
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').show();
                 $('#odvZnePos').hide();
                 $('#odvZneCountry').hide();
+                $('#odvZneAgency').hide();
+                $('#odvZneMerchant').hide();
+
+                $('#oetZneBchCode').val('');
+                $('#oetZneBchName').val('');
+                $('#oetZneUSerCode').val('');
+                $('#oetZneUSerName').val('');
+                $('#oetZneSpnCode').val('');
+                $('#oetZneSpnName').val('');
+                // $('#oetZneShopCode').val('');
+                // $('#oetZneShopName').val('');
+                $('#oetZnePosCode').val('');
+                $('#oetZnePosName').val('');
+                $('#oetZneCtyCode').val('');
+                $('#oetZneCtyName').val('');
+                $('#oetZneAgnCode').val('');
+                $('#oetZneAgnName').val('');
+                $('#oetZneMchCode').val('');
+                $('#oetZneMchName').val('');
             break;
 
             case 'TCNMPos':
-      
                 $('#odvZneBranch').hide();
                 $('#odvZneUSer').hide();
                 $('#odvZneSaleMan').hide();
                 $('#odvZneShop').hide();
                 $('#odvZnePos').show();
                 $('#odvZneCountry').hide();
+                $('#odvZneAgency').hide();
+                $('#odvZneMerchant').hide();
+
+                $('#oetZneBchCode').val('');
+                $('#oetZneBchName').val('');
+                $('#oetZneUSerCode').val('');
+                $('#oetZneUSerName').val('');
+                $('#oetZneSpnCode').val('');
+                $('#oetZneSpnName').val('');
+                $('#oetZneShopCode').val('');
+                $('#oetZneShopName').val('');
+                // $('#oetZnePosCode').val('');
+                // $('#oetZnePosName').val('');
+                $('#oetZneCtyCode').val('');
+                $('#oetZneCtyName').val('');
+                $('#oetZneAgnCode').val('');
+                $('#oetZneAgnName').val('');
+                $('#oetZneMchCode').val('');
+                $('#oetZneMchName').val('');
             break;
             case 'TCNMCountry':          
                 $('#odvZneBranch').hide();
@@ -242,6 +333,79 @@
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
                 $('#odvZneCountry').show();
+                $('#odvZneAgency').hide();
+                $('#odvZneMerchant').hide();
+
+                $('#oetZneBchCode').val('');
+                $('#oetZneBchName').val('');
+                $('#oetZneUSerCode').val('');
+                $('#oetZneUSerName').val('');
+                $('#oetZneSpnCode').val('');
+                $('#oetZneSpnName').val('');
+                $('#oetZneShopCode').val('');
+                $('#oetZneShopName').val('');
+                $('#oetZnePosCode').val('');
+                $('#oetZnePosName').val('');
+                // $('#oetZneCtyCode').val('');
+                // $('#oetZneCtyName').val('');
+                $('#oetZneAgnCode').val('');
+                $('#oetZneAgnName').val('');
+                $('#oetZneMchCode').val('');
+                $('#oetZneMchName').val('');
+            break;
+            case 'TCNMAgency':          
+                $('#odvZneBranch').hide();
+                $('#odvZneUSer').hide();
+                $('#odvZneSaleMan').hide();
+                $('#odvZneShop').hide();
+                $('#odvZnePos').hide();
+                $('#odvZneCountry').hide();
+                $('#odvZneAgency').show();
+                $('#odvZneMerchant').hide();
+
+                $('#oetZneBchCode').val('');
+                $('#oetZneBchName').val('');
+                $('#oetZneUSerCode').val('');
+                $('#oetZneUSerName').val('');
+                $('#oetZneSpnCode').val('');
+                $('#oetZneSpnName').val('');
+                $('#oetZneShopCode').val('');
+                $('#oetZneShopName').val('');
+                $('#oetZnePosCode').val('');
+                $('#oetZnePosName').val('');
+                $('#oetZneCtyCode').val('');
+                $('#oetZneCtyName').val('');
+                // $('#oetZneAgnCode').val('');
+                // $('#oetZneAgnName').val('');
+                $('#oetZneMchCode').val('');
+                $('#oetZneMchName').val('');
+            break;
+            case 'TCNMMerchant':          
+                $('#odvZneBranch').hide();
+                $('#odvZneUSer').hide();
+                $('#odvZneSaleMan').hide();
+                $('#odvZneShop').hide();
+                $('#odvZnePos').hide();
+                $('#odvZneCountry').hide();
+                $('#odvZneAgency').hide();
+                $('#odvZneMerchant').show();
+
+                $('#oetZneBchCode').val('');
+                $('#oetZneBchName').val('');
+                $('#oetZneUSerCode').val('');
+                $('#oetZneUSerName').val('');
+                $('#oetZneSpnCode').val('');
+                $('#oetZneSpnName').val('');
+                $('#oetZneShopCode').val('');
+                $('#oetZneShopName').val('');
+                $('#oetZnePosCode').val('');
+                $('#oetZnePosName').val('');
+                $('#oetZneCtyCode').val('');
+                $('#oetZneCtyName').val('');
+                $('#oetZneAgnCode').val('');
+                $('#oetZneAgnName').val('');
+                // $('#oetZneMchCode').val('');
+                // $('#oetZneMchName').val('');
             break;
             default:
                 $('#odvZneBranch').hide();
@@ -250,6 +414,9 @@
                 $('#odvZneShop').hide();
                 $('#odvZnePos').hide();
                 $('#odvZneCountry').hide();
+                $('#odvZneAgency').hide();
+                $('#odvZneMerchant').hide();
+
         }
     }
 
@@ -506,6 +673,69 @@
         BrowseLev : nStaZneBrowseType
     }	
 
+    var tAgnCodeWhere = "<?= $this->session->userdata('tSesUsrAgnCode') ?>";
+
+    if (tAgnCodeWhere == '' || tAgnCodeWhere == null) {
+        tWhereAgn = '';
+    } else {
+        tWhereAgn = " AND TCNMAgency.FTAgnCode = '" + tAgnCodeWhere + "'";
+    }
+    var oBrowseAgency = {
+        Title: ['payment/rate/rate','tRTEAgency'],
+        Table: {
+            Master: 'TCNMAgency',
+            PK: 'FTAgnCode'
+        },
+        Join: {
+            Table: ['TCNMAgency_L'],
+            On: ['TCNMAgency_L.FTAgnCode = TCNMAgency.FTAgnCode']
+        },
+        Where: {
+            Condition: [tWhereAgn]
+        },
+        GrideView: {
+            ColumnPathLang: 'payment/rate/rate',
+            ColumnKeyLang: ['tBrowseAgnCode', 'tBrowseAgnName'],
+            ColumnsSize: ['15%', '75%'],
+            DataColumns: ['TCNMAgency.FTAgnCode', 'TCNMAgency_L.FTAgnName'],
+            DataColumnsFormat: ['', ''],
+            WidthModal: 50,
+            Perpage: 10,
+            OrderBy: ['TCNMAgency.FTAgnCode ASC'],
+        },
+        CallBack: {
+            ReturnType: 'S',
+            Value: ["oetZneAgnCode", "TCNMAgency.FTAgnCode"],
+            Text: ["oetZneAgnName", "TCNMAgency_L.FTAgnName"]
+        }
+    }
+
+    var oBrowseMerchant = {
+        Title: ['company/country/country','tZneSltMerchant'],
+        Table: {
+            Master: 'TCNMMerchant',
+            PK: 'FTMerCode'
+        },
+        Join: {
+            Table: ['TCNMMerchant_L'],
+            On: ['TCNMMerchant_L.FTMerCode = TCNMMerchant.FTMerCode']
+        },
+        GrideView: {
+            ColumnPathLang: 'merchant/merchant/merchant',
+            ColumnKeyLang: ['tMCNTBCode', 'tMCNTBName'],
+            ColumnsSize: ['15%', '75%'],
+            DataColumns: ['TCNMMerchant.FTMerCode', 'TCNMMerchant_L.FTMerName'],
+            DataColumnsFormat: ['', ''],
+            WidthModal: 50,
+            Perpage: 10,
+            OrderBy: ['TCNMMerchant.FTMerCode ASC'],
+        },
+        CallBack: {
+            ReturnType: 'S',
+            Value: ["oetZneMchCode", "TCNMMerchant.FTMerCode"],
+            Text: ["oetZneMchName", "TCNMMerchant_L.FTMerName"]
+        }
+    }
 
     //Set Event Browse 
     $('#oimBrowseZneParent').click(function(){
@@ -557,7 +787,18 @@
         JCNxBrowseData('oBrowseCountry');
     });
 
+    $('#obtBrowseAgency').click(function(){
+        // Update CheckPinMenu Create By Witsarut 04/10/2019
+        JSxCheckPinMenuClose();
+        JCNxBrowseData('oBrowseAgency');
+    });
 
+    $('#obtBrowseMerchant').click(function(){
+        // Update CheckPinMenu Create By Witsarut 04/10/2019
+        JSxCheckPinMenuClose();
+        JCNxBrowseData('oBrowseMerchant');
+    });
+    
 
     function JSxNextFuncZneParent(paDataReturn){
         $('#oetZneParentName').closest('.form-group').addClass( "has-success" ).removeClass( "has-error");

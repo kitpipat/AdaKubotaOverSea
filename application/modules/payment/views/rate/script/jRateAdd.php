@@ -158,7 +158,7 @@
 });
     
 var oBrowsetAgn = {
-    Title: ['payment/rate/rate','tRTETBRate'],
+    Title: ['payment/rate/rate','tRTEAgency'],
     Table: {
         Master: 'TCNMAgency',
         PK: 'FTAgnCode'
