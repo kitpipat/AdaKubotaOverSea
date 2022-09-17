@@ -153,7 +153,7 @@ class Settingdairycurrency_model extends CI_Model
         $tAgnCode   = $paData['FTAgnCode'];
         $tCreateOn = date("Y-m-d H:i:s");
         $tAgnCodeSelect = $paData['tAgnCode'];
-
+        $tUserName = $this->session->userdata('tSesUsername');
         $tSQLGetAllAgn   = "SELECT FTAgnCode FROM TFNMRate WITH(NOLOCK) WHERE 1=1 ";
         if($tAgnCode != ''){
             $tSQLGetAllAgn   .= " AND FTAgnCode = '$tAgnCode' ";
@@ -176,6 +176,8 @@ class Settingdairycurrency_model extends CI_Model
             
             if (count($oListAgn) > 0) {
                 $this->db->set('FDJobDateCfm', $tCreateOn);
+                $this->db->set('FDLastUpdOn', $tCreateOn);
+                $this->db->set('FTLastUpdBy', $tUserName);
                 if($tAgnCodeSelect != ''){
                     $this->db->where('FTAgnCode', $tAgnCodeSelect);
                 }else{
@@ -184,12 +186,16 @@ class Settingdairycurrency_model extends CI_Model
                 $this->db->update('TCNSJobTask');
             } else {
                 $tValAgn = ($tAgnCodeSelect != '') ? $tAgnCodeSelect : $tValAgn ;
-                $tSQL = "INSERT INTO TCNSJobTask(FTAgnCode, FTJobRefTbl, FDJobDateCfm, FTJobStaUse)
+                $tSQL = "INSERT INTO TCNSJobTask(FTAgnCode, FTJobRefTbl, FDJobDateCfm, FTJobStaUse, FDLastUpdOn, FTLastUpdBy, FDCreateOn, FTCreateBy)
                 VALUES( 
                     '$tValAgn',
                     'TFNMRate',
                     '$tCreateOn',
-                    '1'
+                    '1',
+                    '$tCreateOn',
+                    '$tUserName',
+                    '$tCreateOn',
+                    '$tUserName'
                     ) ";   
                 $oQuery = $this->db->query($tSQL);
             }
