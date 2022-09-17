@@ -48,7 +48,7 @@ $tAngCodeHide = $this->session->userdata('tSesUsrAgnCode');
 		$tBchType		= '4';
 		$tBchLng			= (isset($AgnLang[0]['FNLngID'])) ? $AgnLang[0]['FNLngID'] : '';
 		$tBchCountryName	= (isset($AgnLang[0]['FTCtyName'])) ? $AgnLang[0]['FTCtyName'] : '';
-		$tBchCountryCode	= (isset($AgnLang[0]['FTCtyCode'])) ? $AgnLang[0]['FTCtyName'] : '';
+		$tBchCountryCode	= (isset($AgnLang[0]['FTCtyCode'])) ? $AgnLang[0]['FTCtyCode'] : '';
 		}else{
 		$tBchType		= "";
 		$tBchCountryName	= "ประเทศ";

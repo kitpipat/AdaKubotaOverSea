@@ -93,7 +93,7 @@
     var tUsrLevSession = '<?php echo $this->session->userdata("tSesUsrLevel"); ?>';
     var tWhereAgn = "";
 
-    if(tUsrLevSession != "HQ"){
+    if(tAgnCodeSession != ''){
         tWhereAgn = " AND TCNMAgency.FTAgnCode = '"+tAgnCodeSession+"' ";
         $('#obtBchBrowseAgency').attr('disabled',true);
         $('#oetBchAgnCode').val(tAgnCodeSession);

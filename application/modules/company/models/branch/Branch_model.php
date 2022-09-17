@@ -216,10 +216,16 @@ class Branch_model extends CI_Model {
         // if($tBchCode != '') {
         //     $tSQL   .= " AND BCH.FTBchCode = '$tBchCode' ";
         // }
-
-        if($this->session->userdata("tSesUsrLevel") != "HQ"){
+        
+        if($this->session->userdata("tSesUsrAgnCode") != ""){
             $tBchCode    = $this->session->userdata("tSesUsrBchCodeMulti");
-            $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
+            $tAgnCode    = $this->session->userdata("tSesUsrAgnCode");
+            if($tBchCode){
+                $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
+            }
+            if($tAgnCode){
+                $tSQL       .= " AND BCH.FTAgnCode IN ($tAgnCode , '')";
+            }
         }
 
         if ($tSearchList != '') {
@@ -279,9 +285,20 @@ class Branch_model extends CI_Model {
         // if ($ptBchCode != '') {
         //     $tSQL .= " AND BCH.FTBchCode = '$ptBchCode' ";
         // }
-        if($this->session->userdata("tSesUsrLevel") != "HQ"){
+        // if($this->session->userdata("tSesUsrLevel") != "HQ"){
+        //     $tBchCode    = $this->session->userdata("tSesUsrBchCodeMulti");
+        //     $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
+        // }
+           
+        if($this->session->userdata("tSesUsrAgnCode") != ""){
             $tBchCode    = $this->session->userdata("tSesUsrBchCodeMulti");
-            $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
+            $tAgnCode    = $this->session->userdata("tSesUsrAgnCode");
+            if($tBchCode){
+                $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
+            }
+            if($tAgnCode){
+                $tSQL       .= " AND BCH.FTAgnCode IN ($tAgnCode, '')";
+            }
         }
 
         if ($ptSearchList != '') {
