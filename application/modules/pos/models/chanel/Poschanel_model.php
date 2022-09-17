@@ -416,6 +416,9 @@ class Poschanel_model extends CI_Model
      */
     public function FSnMCHNDelHD($paData)
     {
+        try {
+
+        $this->db->trans_begin();
         // $this->db->where_in('FTBchCode', $paData['FTBchCode']);
         $this->db->where_in('FTChnCode', $paData['FTChnCode']);
         $this->db->delete('TCNMChannel');
@@ -427,27 +430,34 @@ class Poschanel_model extends CI_Model
         $this->db->where_in('FTChnCode', $paData['FTChnCode']);
         $this->db->delete('TCNMChannelSpc');
 
-        if ($this->db->affected_rows() > 0) {
-            // Success
-            $aStatus = array(
-                'rtCode' => '1',
-                'rtDesc' => 'success',
-            );
-        } else {
-            // Ploblem
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
             $aStatus = array(
                 'rtCode' => '905',
-                'rtDesc' => 'cannot Delete Item.',
+                'rtDesc' => 'Error Cannot Delete Item.',
+            );
+        } else {
+            $this->db->trans_commit();
+            $aStatus = array(
+                'rtCode' => '1',
+                'rtDesc' => 'Success.',
             );
         }
+
         $jStatus = json_encode($aStatus);
         $aStatus = json_decode($jStatus, true);
-        return $aStatus;
-
+    } catch (Exception $Error) {
+        $aStatus = array(
+            'rtCode' => '500',
+            'rtDesc' => $Error->getMessage()
+        );
+    }
         // return $aStatus = array(
         //     'rtCode' => '1',
         //     'rtDesc' => 'success',
         // );
+        return $aStatus;
+
     }
 
     /**
