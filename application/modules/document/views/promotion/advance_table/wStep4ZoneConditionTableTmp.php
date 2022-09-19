@@ -4,8 +4,8 @@
             <tr>
                 <th width="5%" class="text-center"><?php echo language('document/promotion/promotion', 'tTBNo'); ?></th>
                 <th width="10%" class="text-left"><?php echo language('document/promotion/promotion', 'tGroup'); ?></th>
-                <th width="30%" class="text-left">รหัสเชนโซน</th>
-                <th width="40%" class="text-left">ชื่อโซน</th>
+                <th width="30%" class="text-left"><?php echo language('document/promotion/promotion', 'tZoneC'); ?></th>
+                <th width="40%" class="text-left"><?php echo language('document/promotion/promotion', 'tZonenm'); ?></th>
                 <th width="5%" class="text-center"><?php echo language('document/promotion/promotion', 'tTBDelete'); ?></th>
             </tr>
         </thead>

@@ -709,12 +709,13 @@
             Table: { Master: 'TCNMZone',PK: 'FTZneChain' },
             Join: {
                 Table: ['TCNMZone_L'],
-                On: ['TCNMZone.FTZneChain = TCNMZone_L.FTZneChain AND TCNMZone_L.FNLngID = 1']
+                On: ["TCNMZone.FTAgnCode = TCNMZone_L.FTAgnCode AND TCNMZone_L.FNLngID = 1 AND ISNULL(TCNMZone.FTZneCode,'') = ISNULL(TCNMZone_L.FTZneCode,'') AND ISNULL(TCNMZone.FTZneChain,'') = ISNULL(TCNMZone_L.FTZneChain,'') "]
             },
             Where: {
                 Condition: [
                     function() {
                         var tSQL = " AND TCNMZone.FTZneChain NOT IN(SELECT FTZneChain FROM TCNTPdtPmtHDZne_Tmp WHERE FTSessionID = '<?php echo $this->session->userdata("tSesSessionID"); ?>') ";
+                            tSQL += " AND ISNULL(TCNMZone.FTAgnCode,'') = ''  OR ISNULL(TCNMZone.FTAgnCode,'') = '<?=$this->session->userdata('tSesUsrAgnCode') ?>'"
                         return tSQL;
                     }
                 ]

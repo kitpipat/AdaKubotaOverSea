@@ -646,10 +646,10 @@
                     JSxPromotionStep1GetPmtPdtDtInTmp(1, false);
                     $('#oetPromotionGroupNameTmp').val("");
 
-                    if(tPmtGroupNameTmp != '' && (tPmtGroupNameTmp != tPmtGroupNameTmpOld)){
-                        $("#odvPromotionLineCont .xCNPromotionStep2").trigger('click');
-                        $("#odvPromotionLineCont .xCNPromotionStep1").trigger('click');
-                    }
+                    // if(tPmtGroupNameTmp != '' && (tPmtGroupNameTmp != tPmtGroupNameTmpOld)){
+                    //     $("#odvPromotionLineCont .xCNPromotionStep2").trigger('click');
+                    //     $("#odvPromotionLineCont .xCNPromotionStep1").trigger('click');
+                    // }
 
                     $('#odvPromotionAddPmtGroupModal').modal('hide');
                 },

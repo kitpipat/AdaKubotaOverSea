@@ -320,7 +320,7 @@
                                     <td class="text-center"><?php echo language('document/promotion/promotion', 'tChn'); ?></td>
                                     <td class="text-left">
                                         <?php if (empty($aPdtPmtHDChnInTmp)) { ?>
-                                            <label><?php echo language('document/promotion/promotion', 'tLabel23'); ?></label>
+                                            <label><?php echo language('document/promotion/promotion', 'tLabel233'); ?></label>
                                         <?php } ?>
 
                                         <?php foreach ($aPdtPmtHDChnInTmp as $aChn) { ?>
@@ -344,7 +344,7 @@
                                     <td class="text-center">โซน</td>
                                     <td class="text-left">
                                         <?php if (empty($aPdtPmtHDZoneInTmp)) { ?>
-                                            <label><?php echo language('document/promotion/promotion', 'tLabel23'); ?></label>
+                                            <label><?php echo language('document/promotion/promotion', 'tLabel234'); ?></label>
                                         <?php } ?>
 
                                         <?php foreach ($aPdtPmtHDZoneInTmp as $aZone) { ?>
