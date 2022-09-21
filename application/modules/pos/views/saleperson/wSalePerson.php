@@ -5,18 +5,18 @@
 <div id="odvSpnMainMenu" class="main-menu">
 	<div class="xCNMrgNavMenu">
 		<div class="row xCNavRow" style="width:inherit;">
-			<div class="xCNSpnVMaster">
-				<div class="col-xs-12 col-md-8">
-					<ol id="oliMenuNav" class="breadcrumb xCNBCMenu">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+					<ol id="oliMenuNav" class="breadcrumb">
+						<?php FCNxHADDfavorite('saleperson/0/0');?> 
 						<li id="oliSpnTitle" class="xCNLinkClick" onclick="JSvCallPageSalePerson('')"><?php echo language('pos/saleperson/saleperson','tSPNTitle'); ?></li>
 						<li id="oliSpnTitleAdd" class="active"><a><?php echo language('pos/saleperson/saleperson','tSPNTitleAdd'); ?></a></li>
 						<li id="oliSpnTitleEdit" class="active"><a><?php echo language('pos/saleperson/saleperson','tSPNTitleEdit'); ?></a></li>
 					</ol>
 				</div>
-				<div class="col-xs-12 col-md-4 text-right">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-right p-r-0">
 					<div class="demo-button xCNBtngroup" style="width:100%;">
-                        <div id="odvBtnSpnInfo">
-                            <button id="obtCstGrpAdd" class="xCNBTNPrimeryPlus" type="button" onclick="JSvCallPageSalePersonAdd()" title="<?php echo language('common/main/main', 'tAdd'); ?>">+</button>
+						<div id="odvBtnSpnInfo">
+							<button id="obtCstGrpAdd" class="xCNBTNPrimeryPlus" type="button" onclick="JSvCallPageSalePersonAdd()" title="<?php echo language('common/main/main', 'tAdd'); ?>">+</button>
 						</div>
 						<div id="odvBtnAddEdit">
 							<button onclick="JSvCallPageSalePerson()" class="btn xCNBTNDefult xCNBTNDefult2Btn" type="button"> <?php echo language('common/main/main', 'tBack'); ?></button>
@@ -27,9 +27,11 @@
 						</div>
 					</div>
 				</div>
-			</div>			
 		</div>
 	</div>
+</div>
+<div class="main-content">
+	<div id="odvContentPageSalePerson" class="panel panel-headline"></div>
 </div>
 <?php else:?>
 <div class="modal-header xCNModalHead">
@@ -52,7 +54,7 @@
     </div>
 
 <?php endif;?>
-<div id="odvContentPageSalePerson"  class="modal-bodody"></div>
+<!-- <div id="odvContentPageSalePerson"  class="modal-body xCNModalBodyAdd"></div> -->
 
 <script src="<?php echo base_url('application/modules/pos/assets/src/saleperson/jSalePerson.js'); ?>"></script>
 

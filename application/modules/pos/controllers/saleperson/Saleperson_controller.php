@@ -64,7 +64,7 @@ class Saleperson_controller extends MX_Controller {
         $nLangResort    = $this->session->userdata("tLangID");
 	    $nLangEdit      = $this->session->userdata("tLangEdit");
 	    $aLangHave      = FCNaHGetAllLangByTable('TCNMSpn_L');
-        $nLangHave      = count($aLangHave);
+        $nLangHave      = count(array($aLangHave));
         if($nLangHave > 1){
 	        if($nLangEdit != ''){
 	            $nLangEdit = $nLangEdit;
@@ -109,7 +109,7 @@ class Saleperson_controller extends MX_Controller {
         $nLangResort    = $this->session->userdata("tLangID");
         $nLangEdit      = $this->session->userdata("tLangEdit");
         $aLangHave = FCNaHGetAllLangByTable('TCNMSpn_L');
-        $nLangHave = count($aLangHave);
+        $nLangHave = count(array($aLangHave));
         if($nLangHave > 1){
 	        if($nLangEdit != ''){
 	            $nLangEdit = $nLangEdit;
@@ -148,7 +148,7 @@ class Saleperson_controller extends MX_Controller {
         $nLangResort    = $this->session->userdata("tLangID");
         $nLangEdit      = $this->session->userdata("tLangEdit");
         $aLangHave      = FCNaHGetAllLangByTable('TCNMSpn_L');
-        $nLangHave      = count($aLangHave);
+        $nLangHave      = count(array($aLangHave));
         if($nLangHave > 1){
 	        if($nLangEdit != ''){
 	            $nLangEdit = $nLangEdit;

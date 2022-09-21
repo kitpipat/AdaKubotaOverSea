@@ -71,7 +71,7 @@ class Saleperson_model extends CI_Model {
         $aRowLen    = FCNaHCallLenData($paData['nRow'], $paData['nPage']);
         $nLngID     = $paData['FNLngID'];
         $tSQL       = "SELECT c.* FROM(
-                        SELECT  ROW_NUMBER() OVER(ORDER BY rtSpnCode ASC) AS rtRowID,* FROM(
+                        SELECT  ROW_NUMBER() OVER(ORDER BY rtSpnCode DESC) AS rtRowID,* FROM(
                             SELECT DISTINCT
                                 SPN.FTSpnCode   AS rtSpnCode,
                                 SPN.FTSpnEmail  AS rtSpnEmail,

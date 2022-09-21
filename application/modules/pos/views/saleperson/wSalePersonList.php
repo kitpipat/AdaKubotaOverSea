@@ -5,7 +5,7 @@
 				<div class="form-group"> <!-- เปลี่ยน From Imput Class -->
 					<label class="xCNLabelFrm"><?= language('common/main/main','tSearch')?></label>
 					<div class="input-group">
-						<input type="text" class="form-control xCNInputWithoutSingleQuote" id="oetSearchAll" name="oetSearchAll" onkeypress="Javascript:if(event.keyCode==13) JSvSalePersonDataTable()" autocomplete="off">
+						<input type="text" class="form-control xCNInputWithoutSingleQuote" id="oetSearchAll" name="oetSearchAll" onkeypress="Javascript:if(event.keyCode==13) JSvSalePersonDataTable()" autocomplete="off" placeholder="<?php echo language('common/main/main','tPlaceholder')?>">
 						<span class="input-group-btn">
 							<button id="oimSearchSalePerson" class="btn xCNBtnSearch" type="button" onclick="JSvSalePersonDataTable()">
 								<img class="xCNIconAddOn" src="<?php echo base_url().'/application/modules/common/assets/images/icons/search-24.png'?>">
