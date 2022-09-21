@@ -218,13 +218,13 @@ class Branch_model extends CI_Model {
         // }
         
         if($this->session->userdata("tSesUsrAgnCode") != ""){
-            // $tBchCode    = $this->session->userdata("tSesUsrBchCodeMulti");
+            $tBchCode    = $this->session->userdata("tSesUsrBchCodeMulti");
             $tAgnCode    = $this->session->userdata("tSesUsrAgnCode");
-            // if($tBchCode){
-            //     $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
-            // }
+            if($tBchCode){
+                $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
+            }
             if($tAgnCode){
-                $tSQL       .= " AND BCH.FTAgnCode IN ($tAgnCode , '')";
+                $tSQL       .= " OR BCH.FTAgnCode IN ($tAgnCode , '')";
             }
         }
 
