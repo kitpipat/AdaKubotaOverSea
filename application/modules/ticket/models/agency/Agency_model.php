@@ -91,6 +91,7 @@ class Agency_model extends CI_Model
         // print_r($paData['tStaUsrLevel']);
 
         if (!empty($paData['tStaUsrLevel']) && $paData['tStaUsrLevel'] != "HQ") {
+        // if ($tUsrAgnCode && $paData['tStaUsrLevel'] != "HQ") {
             $tWhere .=  " AND ((AGN.FTAgnCode = '$tUsrAgnCode') 
             -- OR ( AGN.FTCreateBy ='$tSesUserCode' )
             ) ";
@@ -179,7 +180,7 @@ class Agency_model extends CI_Model
 
         $tWhere = "";
 
-        $tUsrLevel = $this->session->userdata("tSesUsrLevel");
+        $tUsrLevel = $this->session->userdata("tSesUsrLoginLevel");
 
 
         if (!empty($tUsrLevel) && $tUsrLevel != "HQ") {

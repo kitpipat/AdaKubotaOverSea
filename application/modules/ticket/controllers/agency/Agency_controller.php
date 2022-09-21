@@ -51,7 +51,7 @@ class Agency_controller extends MX_Controller {
         $nLangEdit      = $this->session->userdata("tLangEdit");
         
 
-        $tStaUsrLevel    = $this->session->userdata("tSesUsrLevel");
+        $tStaUsrLevel    = $this->session->userdata("tSesUsrLoginLevel");
         $tUsrBchCode     = $this->session->userdata("tSesUsrBchCodeMulti"); 
 
         $aData  = array(
