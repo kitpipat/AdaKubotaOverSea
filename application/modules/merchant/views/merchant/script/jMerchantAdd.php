@@ -265,44 +265,47 @@
         });
     }
 
-    //Functionality: Function Chack And Show Button Delete All
-    //Parameters: LocalStorage Data
-    //Creator: 30/07/2019 Saharat(Golf)
-    //Return: - 
-    //Return Type: -
-    function JSxShowButtonChoose() {
-        var aArrayConvert = [JSON.parse(localStorage.getItem("LocalItemData"))];
-        if (aArrayConvert[0] == null || aArrayConvert[0] == '') {
-            $('#odvMngTableList #oliBtnDeleteAll').addClass('disabled');
-        } else {
-            nNumOfArr = aArrayConvert[0].length;
-            if (nNumOfArr > 1) {
-                $('#odvMngTableList #oliBtnDeleteAll').removeClass('disabled');
-                $('.xCNIconDel').addClass('xCNDisabled');
-            } else {
-                $('#odvMngTableList #oliBtnDeleteAll').addClass('disabled');
-                $('.xCNIconDel').removeClass('xCNDisabled');
-            }
-        }
-    }
+    // //Functionality: Function Chack And Show Button Delete All
+    // //Parameters: LocalStorage Data
+    // //Creator: 30/07/2019 Saharat(Golf)
+    // //Return: - 
+    // //Return Type: -
+    // function JSxShowButtonChoose() {
+    //     console.log('m1b');
 
-    //Functionality: Insert Text In Modal Delete
-    //Parameters: LocalStorage Data
-    //Creator: 30/07/2019 Saharat(Golf)
-    //Return: -
-    //Return Type: -
-    function JSxPaseCodeDelInModal() {
-        var aArrayConvert = [JSON.parse(localStorage.getItem("LocalItemData"))];
-        if (aArrayConvert[0] == null || aArrayConvert[0] == '') {} else {
-            var tTextCode = '';
-            for ($i = 0; $i < aArrayConvert[0].length; $i++) {
-                tTextCode += aArrayConvert[0][$i].nCode;
-                tTextCode += ' , ';
-            }
-            $('#odvModalDeleteMutirecord #ospConfirmDelete').text($('#oetTextComfirmDeleteMulti').val());
-            $('#odvModalDeleteMutirecord #ohdConfirmIDDelete').val(tTextCode);
-        }
-    }
+    //     var aArrayConvert = [JSON.parse(localStorage.getItem("LocalItemData"))];
+    //     if (aArrayConvert[0] == null || aArrayConvert[0] == '') {
+    //         $('#odvMngTableList #oliBtnDeleteAll').addClass('disabled');
+    //     } else {
+    //         nNumOfArr = aArrayConvert[0].length;
+    //         if (nNumOfArr > 1) {
+    //             $('#odvMngTableList #oliBtnDeleteAll').removeClass('disabled');
+    //             $('.xCNIconDel').addClass('xCNDisabled');
+    //         } else {
+    //             $('#odvMngTableList #oliBtnDeleteAll').addClass('disabled');
+    //             $('.xCNIconDel').removeClass('xCNDisabled');
+    //         }
+    //     }
+    // }
+
+    // //Functionality: Insert Text In Modal Delete
+    // //Parameters: LocalStorage Data
+    // //Creator: 30/07/2019 Saharat(Golf)
+    // //Return: -
+    // //Return Type: -
+    // function JSxPaseCodeDelInModal() {
+    //     console.log('m2b');
+    //     var aArrayConvert = [JSON.parse(localStorage.getItem("LocalItemData"))];
+    //     if (aArrayConvert[0] == null || aArrayConvert[0] == '') {} else {
+    //         var tTextCode = '';
+    //         for ($i = 0; $i < aArrayConvert[0].length; $i++) {
+    //             tTextCode += aArrayConvert[0][$i].nCode;
+    //             tTextCode += ' , ';
+    //         }
+    //         $('#odvModalDeleteMutirecord #ospConfirmDelete').text($('#oetTextComfirmDeleteMulti').val());
+    //         $('#odvModalDeleteMutirecord #ohdConfirmIDDelete').val(tTextCode);
+    //     }
+    // }
 
     //Functionality: Function Chack Value LocalStorage
     //Parameters: Event Select List Branch

@@ -43,8 +43,9 @@
                                 <?php if($aAlwEventMerchant['tAutStaFull'] == 1 || ($aAlwEventMerchant['tAutStaAdd'] == 1 || $aAlwEventMerchant['tAutStaEdit'] == 1)) : ?>
 									<td class="text-center">
 										<label class="fancy-checkbox">
-											<input id="ocbListItem<?=$key?>" type="checkbox" class="ocbListItem" name="ocbListItem[]" onchange="JSxMerchantVisibledDelAllBtn(this, event)">
-											<span>&nbsp;</span>
+											<!-- <input id="ocbListItem<?=$key?>" type="checkbox" class="ocbListItem" name="ocbListItem[]" onchange="JSxMerchantVisibledDelAllBtn(this, event)"> -->
+                                            <input id="ocbListItem<?=$key?>" type="checkbox" class="ocbListItem" name="ocbListItem[]" >
+                                            <span>&nbsp;</span>
 										</label>
 									</td>
                             <?php endif;?>
@@ -122,6 +123,7 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="odvModalDelMerchant">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -144,9 +146,11 @@
 	</div>
 </div>
 
-<script type="text/Javascript">
-$('ducument').ready(function() {
-	$('.ocbListItem').click(function(){
+<script type="text/javascript">
+$(function(){
+
+    localStorage.removeItem("LocalItemData");
+    $('.ocbListItem').click(function(){
         var nCode = $(this).parent().parent().parent().data('code');  //code
         var tName = $(this).parent().parent().parent().data('name');  //code
         $(this).prop('checked', true);
@@ -186,6 +190,7 @@ $('ducument').ready(function() {
             }
         }
         JSxShowButtonChoose();
-	})
+    });
+
 });
 </script>

@@ -493,13 +493,18 @@ function JSnMerchantDelChoose(tCurrentPage) {
 function JSxShowButtonChoose() {
     var aArrayConvert = [JSON.parse(localStorage.getItem("LocalItemData"))];
     if (aArrayConvert[0] == null || aArrayConvert[0] == '') {
-        $('.obtChoose').hide();
+        $('#odvMngTableList #oliBtnDeleteAll').addClass('disabled');
     } else {
         nNumOfArr = aArrayConvert[0].length;
         if (nNumOfArr > 1) {
-            $('.obtChoose').fadeIn(300);
+            $('#odvMngTableList #oliBtnDeleteAll').removeClass('disabled');
         } else {
-            $('.obtChoose').fadeOut(300);
+            $('#odvMngTableList #oliBtnDeleteAll').addClass('disabled');
+        }
+        if (nNumOfArr > 1) {
+            $('.xCNIconDel').addClass('xCNDisabled');
+        } else {
+            $('.xCNIconDel').removeClass('xCNDisabled');
         }
     }
 }
@@ -511,7 +516,6 @@ function JSxShowButtonChoose() {
 //Return Type: -
 function JSxTextinModal() {
     var aArrayConvert = [JSON.parse(localStorage.getItem("LocalItemData"))];
-
     if (aArrayConvert[0] == null || aArrayConvert[0] == '') {} else {
         var tText = '';
         var tTextCode = '';
