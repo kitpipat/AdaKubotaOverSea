@@ -4,6 +4,10 @@
     }else{
         $nCurrentPage = '1';
     }
+    $tAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
+    // echo '<pre>';
+    // print_r($_SESSION);
+    // echo '</pre>';
 ?>
 
 <div class="row">
@@ -19,11 +23,12 @@
                         <th nowrap class="xCNTextBold" style="width:10%;text-align:center;"><?php echo language('address/zone/zone','tZNECode')?></th>
 						<th nowrap class="xCNTextBold" style="width:20%;text-align:center;"><?php echo language('address/zone/zone','tZNEName')?></th>
 						<th nowrap class="xCNTextBold" style="width:20%;text-align:center;"><?php echo language('address/zone/zone','tZNEChainName')?></th>
+                        <th nowrap class="xCNTextBold" style="width:10%;text-align:center;"><?php echo language('address/zone/zone','tZneSltAgency')?></th>
                         <?php if($aAlwEventZone['tAutStaFull'] == 1 || $aAlwEventZone['tAutStaDelete'] == 1) : ?>
-                        <th nowrap class="xCNTextBold" style="width:10%;text-align:center;"><?php echo language('common/main/main','tCMNActionDelete')?></th>
+                        <th nowrap class="xCNTextBold" style="width:5%;text-align:center;"><?php echo language('common/main/main','tCMNActionDelete')?></th>
 						<?php endif; ?>
                         <?php if($aAlwEventZone['tAutStaFull'] == 1 || ($aAlwEventZone['tAutStaEdit'] == 1 || $aAlwEventZone['tAutStaRead'] == 1))  : ?>
-                        <th nowrap class="xCNTextBold" style="width:10%;text-align:center;"><?php echo language('common/main/main','tCMNActionEdit')?></th>
+                        <th nowrap class="xCNTextBold" style="width:5%;text-align:center;"><?php echo language('common/main/main','tCMNActionEdit')?></th>
                         <?php endif; ?>
                     </tr>
 				</thead>
@@ -31,25 +36,40 @@
                 <?php if($aDataList['rtCode'] == 1 ):?>
                     <?php if(!empty($aDataList['raItems'])) { ?>
                     <?php foreach($aDataList['raItems'] AS $key=>$aValue){ ?>
-						<tr class="xCNTextDetail2 otrZone" id="otrZone<?php echo $key?>" data-code="<?php echo $aValue['rtZneCode']?>" data-name="<?php echo $aValue['rtZneName']?>">
+						<tr class="xCNTextDetail2 otrZone" id="otrZone<?php echo $key?>" data-code="<?php echo $aValue['rtZneChain']?>" data-name="<?php echo $aValue['rtZneName']?>">
                         <?php if($aAlwEventZone['tAutStaFull'] == 1 || $aAlwEventZone['tAutStaDelete'] == 1) : ?>
                         <td nowrap class="text-center">
                             <label class="fancy-checkbox">
-                                <input id="ocbListItem<?php echo $key?>" class="ocbListItem" name="ocbListItem[]" type="checkbox">
-                                <span>&nbsp;</span>
+                                <input id="ocbListItem<?php echo $key?>" class="ocbListItem" name="ocbListItem[]" type="checkbox" <?= (!$tAgnCode) ? false : (($aValue['rtAgnCode']) ? false : 'disabled') ;?>>
+                                <span <?= (!$tAgnCode) ? false : (($aValue['rtAgnCode']) ? false : 'class="xCNDocDisabled"') ;?>>&nbsp;</span>
                             </label>
                         </td>
                         <?php endif; ?>
                         <td nowrap class="text-left"><?php echo $aValue['rtZneChain']?></td>
                         <td nowrap class="text-left"><?php echo $aValue['rtZneName']?></td>
                         <td nowrap class="text-left"><?php echo $aValue['rtZneChainName']?></td>
-                        <?php if($aAlwEventZone['tAutStaFull'] == 1 || $aAlwEventZone['tAutStaDelete'] == 1) : ?>
+                        <td nowrap class="text-left"><?php echo $aValue['rtAgnName']?></td>
+                        <?php if($aAlwEventZone['tAutStaFull'] == 1 || $aAlwEventZone['tAutStaDelete'] == 1 && (!$tAgnCode)) : ?>
                         <td nowrap style="text-align: center;">
-                            <img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnZoneDel('<?php echo $nCurrentPage?>','<?php echo $aValue['rtZneName']?>','<?php echo $aValue['rtZneCode']?>','<?php echo language('common/main/main','tBCHYesOnNo')?>')">
+                            <img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnZoneDel('<?php echo $nCurrentPage?>','<?php echo $aValue['rtZneName']?>','<?php echo $aValue['rtZneChain']?>','<?php echo language('common/main/main','tBCHYesOnNo')?>')">
                         </td>
+                        <?php else: ?>
+                            <?php if($aValue['rtAgnCode'] == $tAgnCode){ ?>
+                                <td nowrap style="text-align: center;">
+                                    <img class="xCNIconTable xCNIconDel" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSnZoneDel('<?php echo $nCurrentPage?>','<?php echo $aValue['rtZneName']?>','<?php echo $aValue['rtZneChain']?>','<?php echo language('common/main/main','tBCHYesOnNo')?>')">
+                                </td>                            
+                            <?php }else{?>
+                                <td class="text-center"><img class="xCNIconTable xCNIconDel xCNDocDisabled" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" title="ไม่สามารถลบรายการนี้ได้"></td>
+                            <?php }?>    
                         <?php endif; ?>
-                        <?php if($aAlwEventZone['tAutStaFull'] == 1 || ($aAlwEventZone['tAutStaEdit'] == 1 || $aAlwEventZone['tAutStaRead'] == 1)) : ?>
-                        <td nowrap style="text-align: center;"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageZoneEdit('<?php echo $aValue['rtZneCode']?>')"></td>
+                        <?php if($aAlwEventZone['tAutStaFull'] == 1 || ($aAlwEventZone['tAutStaEdit'] == 1 || $aAlwEventZone['tAutStaRead'] == 1) && (!$tAgnCode)) : ?>
+                                <td nowrap style="text-align: center;"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageZoneEdit('<?php echo $aValue['rtZneCode']?>')"></td>
+                        <?php else: ?>
+                            <?php if($aValue['rtAgnCode'] == $tAgnCode){ ?>
+                                <td nowrap style="text-align: center;"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageZoneEdit('<?php echo $aValue['rtZneCode']?>')"></td>
+                            <?php }else{?>
+                                <td nowrap style="text-align: center;"><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/view2.png'?>"onClick="JSvCallPageZoneEdit('<?php echo $aValue['rtZneCode']?>')"></td>
+                            <?php }?>    
                         <?php endif; ?>
                         </tr>
                     <?php } ?>

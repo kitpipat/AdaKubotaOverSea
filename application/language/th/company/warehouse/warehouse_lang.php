@@ -20,7 +20,7 @@ $lang ['tWahSearch']        = 'ค้นหา';
 //InClude 
 $lang['tSalemachinePOS']    = "เครื่องจุดขาย";
 $lang['tWahBranch']         = "คลังสาขา";
-$lang['tSalePerson']        = "คลังหน่วยรถ";
+$lang['tSalePerson']        = "พนักงานขาย";
 $lang['tBrowseSHPCode']     = "รหัสพนักงาน";
 $lang['tBrowseSHPName']     = "ชื่อพนักงาน";
 $lang['tBrowseBCHName']     = "สาขา";

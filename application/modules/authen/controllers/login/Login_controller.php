@@ -104,6 +104,9 @@ class Login_controller extends MX_Controller {
 					$this->session->set_userdata("tSesUsrAgnCode", $tUsrAgnCodeDefult);
 					$this->session->set_userdata("tSesUsrAgnName", $tUsrAgnNameDefult);
 
+					// PdtPriList
+					$this->session->set_userdata("tSesUsrPplCode", $aDataUsrGroup[0]['FTPplCode']);
+
 					// Default Country
 					$this->session->set_userdata("tSesDefCountry", $aDataDefCty);
 					$this->session->set_userdata("tSesDefLanguage", $aDataDefLanguage);

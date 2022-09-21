@@ -211,6 +211,7 @@ class Login_model extends CI_Model {
                         MERL.FTMerName      AS FTMerName,
                         WAHL.FTWahCode      AS FTWahCode,
                         WAHL.FTWahName      AS FTWahName,
+                        AGN.FTPplCode		AS FTPplCode,
                         CASE 
                             WHEN ISNULL(USG.FTAgnCode,'') != '' AND ISNULL(USG.FTBchCode,'')  = '' AND ISNULL(USG.FTMerCode,'')  = '' AND ISNULL(USG.FTShpCode,'')  = '' THEN 'AGN'
                             WHEN ISNULL(USG.FTBchCode,'') != '' AND ISNULL(USG.FTMerCode,'')  = '' AND ISNULL(USG.FTShpCode,'')  = '' THEN 'BCH' 
@@ -237,6 +238,7 @@ class Login_model extends CI_Model {
                             ELSE BCH.FTBchCode
                         END
                     LEFT JOIN TCNMBranch_L      BCHL WITH(NOLOCK) ON BCH.FTBchCode = BCHL.FTBchCode AND BCHL.FNLngID = $tLang
+                    LEFT JOIN TCNMAgency        AGN  WITH(NOLOCK) ON USG.FTAgnCode = AGN.FTAgnCode
                     LEFT JOIN TCNMAgency_L      AGNL WITH(NOLOCK) ON USG.FTAgnCode = AGNL.FTAgnCode AND AGNL.FNLngID = $tLang
                     LEFT JOIN TCNMShop_L        SHPL WITH(NOLOCK) ON USG.FTShpCode = SHPL.FTShpCode AND SHPL.FNLngID = $tLang
                     LEFT JOIN TCNMMerchant_L    MERL WITH(NOLOCK) ON USG.FTMerCode = MERL.FTMerCode AND MERL.FNLngID = $tLang

@@ -1,10 +1,26 @@
 <script>
+    var tUsrLevel = "<?= $this->session->userdata('tSesUsrLevel') ?>";
+    var tBchCode = "<?= $this->session->userdata('tSesUsrBchCodeMulti') ?>";
+    var tAgnName = "<?= $this->session->userdata('tSesUsrAgnName') ?>";
+
     $(document).ready(function(){
+        var tAgnCode = "<?= $this->session->userdata('tSesUsrAgnCode') ?>";
 
+        if(tAgnCode && !$('#oetZneCode').val()){
+            $('#oetZneAgnCodeFirst').val(tAgnCode);
+            $('#oetZneAgnNameFirst').val(tAgnName);
+            $("#obtBrowseAgencyFirst").attr("disabled", true); 
+        }
 
-        if($('#ocbSelectRoot').is(':checked')){
-            $('.xWPanalZneChain').hide();
-            $("#oetZneName").attr("disabled", true); 
+        if( tUsrLevel != 'HQ' && $('#oetZneCode').val() ){
+            $("#obtBrowseAgencyFirst").attr("disabled", true); 
+            $('#oetZneAgnCodeSecond').val(tAgnCode);
+            $('#oetZneAgnNameSecond').val(tAgnName);
+            $("#obtBrowseAgencySecond").attr("disabled", true); 
+        }
+
+        if($('#oetZneCode').val()){
+            $("#ocbSelectRoot").attr("disabled", true); 
         }
 
         if($('#oetZneParent').val() != ''){
@@ -379,6 +395,16 @@
                 // $('#oetZneAgnName').val('');
                 $('#oetZneMchCode').val('');
                 $('#oetZneMchName').val('');
+
+                var tAgnCode = "<?= $this->session->userdata('tSesUsrAgnCode') ?>";
+
+                if(tAgnCode){
+                    var tAgnName = "<?= $this->session->userdata('tSesUsrAgnName') ?>";
+                    $('#oetZneAgnCode').val(tAgnCode);
+                    $('#oetZneAgnName').val(tAgnName);
+                    $("#obtBrowseAgency").attr("disabled", true); 
+                }
+                
             break;
             case 'TCNMMerchant':          
                 $('#odvZneBranch').hide();
@@ -479,11 +505,16 @@
             FuncName:'JSxNextFuncZneArea',
             ArgReturn:['FTAreCode']
         },
-        RouteAddNew : 'area',
-        BrowseLev : nStaZneBrowseType
+        // RouteAddNew : 'area',
+        // BrowseLev : nStaZneBrowseType
     } 
 
-
+    
+    if ((tBchCode == '' || tBchCode == null) || tUsrLevel == "HQ") {
+        tWhereBch = '';
+    } else {
+        tWhereBch = " AND TCNMBranch.FTBchCode IN(" + tBchCode + ")";
+    }
     // OPtion ฺBranch (สาขา)
     var oBrowseBch = {
         
@@ -492,6 +523,9 @@
         Join :{
             Table:	['TCNMBranch_L'],
             On:['TCNMBranch_L.FTBchCode = TCNMBranch.FTBchCode AND TCNMBranch_L.FNLngID ='+nLangEdits,]
+        },
+        Where :{
+            Condition : [tWhereBch]
         },
         GrideView:{
             ColumnPathLang	: 'company/branch/branch',
@@ -511,18 +545,29 @@
             Text		: ["oetZneBchName","TCNMBranch_L.FTBchName"],
         },
 
-        RouteAddNew : 'branch',
-        BrowseLev : nStaZneBrowseType
+        // RouteAddNew : 'branch',
+        // BrowseLev : nStaZneBrowseType
         
     }
 
+  
     // Browse USer (ผู้ใช้ ) 
+    var tUsrCode = "<?= $this->session->userdata('tSesUserCode') ?>";
+    if ((tUsrCode == '' || tUsrCode == null) || tUsrLevel == "HQ") {
+        tWhereUser = '';
+    } else {
+        tWhereUser = " AND TCNMUser.FTUsrCode IN(" + tUsrCode + ")";
+    }
+
     var oBrowseUSer = {
         Title : ['authen/user/user','tUSRTitle'],
         Table:{Master:'TCNMUser',PK:'FTUsrCode',PKName:'FTUsrName'},
         Join : {
             Table:	['TCNMUser_L'],
             On:['TCNMUser_L.FTUsrCode = TCNMUser.FTUsrCode AND TCNMUser_L.FNLngID ='+nLangEdits,]
+        },
+        Where :{
+            Condition : [tWhereUser]
         },
         GrideView:{
             ColumnPathLang	: 'authen/user/user',
@@ -542,19 +587,28 @@
             Text		: ["oetZneUSerName","TCNMUser_L.FTUsrName"],
         },
 
-        RouteAddNew : 'user',
-        BrowseLev : nStaZneBrowseType
+        // RouteAddNew : 'user',
+        // BrowseLev : nStaZneBrowseType
     }
 
     // Browse SaleMan (พนักงานขาย) 
+    if ((tBchCode == '' || tBchCode == null) || tUsrLevel == "HQ") {
+        tWhereSale = '';
+    } else {
+        tWhereSale = " AND TCNTSpnGroup.FTBchCode IN(''," + tBchCode + ")";
+    }
     var  oBrowseSaleMan = {
         Title : ['company/warehouse/warehouse','tSalePerson'],
         Table:{Master:'TCNMSpn',PK:'FTSpnCode'},
         Join :{
-            Table:	['TCNMSpn_L'],
-            On:['TCNMSpn_L.FTSpnCode = TCNMSpn.FTSpnCode AND TCNMSpn_L.FNLngID = '+nLangEdits,]
+            Table:	['TCNMSpn_L','TCNTSpnGroup'],
+            On:['TCNMSpn_L.FTSpnCode = TCNMSpn.FTSpnCode AND TCNMSpn_L.FNLngID = '+nLangEdits,
+                'TCNTSpnGroup.FTSpnCode = TCNMSpn.FTSpnCode'
+                ]
         },
-        
+        Where :{
+            Condition : [tWhereSale]
+        },
         GrideView:{
             ColumnPathLang	: 'company/warehouse/warehouse',
             ColumnKeyLang	: ['tBrowseSHPCode','tBrowseSHPName'],
@@ -572,18 +626,26 @@
             Value		: ["oetZneSpnCode","TCNMSpn.FTSpnCode"],
             Text		: ["oetZneSpnName","TCNMSpn_L.FTSpnName"],
         },
-        RouteAddNew : 'saleperson',
-        BrowseLev : nStaZneBrowseType
+        // RouteAddNew : 'saleperson',
+        // BrowseLev : nStaZneBrowseType
     }
 
 
     //ฺBrowse Shop (ร้านค้า)
+    if ((tBchCode == '' || tBchCode == null) || tUsrLevel == "HQ") {
+        tWhereShop = '';
+    } else {
+        tWhereShop = " AND TCNMShop.FTBchCode IN(" + tBchCode + ")";
+    }
     var oBrowseShop = {
         Title : ['authen/user/user','tBrowseSHPTitle'],
         Table:{Master:'TCNMShop',PK:'FTShpCode'},
         Join :{
             Table:	['TCNMShop_L'],
             On:['TCNMShop_L.FTShpCode = TCNMShop.FTShpCode AND TCNMShop_L.FNLngID = '+nLangEdits,]
+        },
+        Where :{
+            Condition : [tWhereShop]
         },
         Filter:{
             Selector:'oetBranchCode',
@@ -607,28 +669,36 @@
             Value		: ["oetZneShopCode","TCNMShop.FTShpCode"],
             Text		: ["oetZneShopName","TCNMShop_L.FTShpName"],
         },
-        RouteAddNew : 'country',
-        BrowseLev : nStaZneBrowseType
+        // RouteAddNew : 'shop',
+        // BrowseLev : nStaZneBrowseType
     }
 
+    if ((tBchCode == '' || tBchCode == null) || tUsrLevel == "HQ") {
+        tWherePOS = '';
+    } else {
+        tWherePOS = " AND TCNMPos.FTBchCode IN(" + tBchCode + ")";
+    }
     // Browse Pos (เครื่องจุดขาย) 
     var oBrowsePOS = {
         Title : ['company/warehouse/warehouse','tSalemachinePOS'],
         Table:{Master:'TCNMPos',PK:'FTPosCode'},
         Join :{
-            Table:	['TCNMPosLastNo'],
-            On:['TCNMPosLastNo.FTPosCode = TCNMPos.FTPosCode']
+            Table:	['TCNMPos_L','TCNMBranch_L'],
+            On:[
+                'TCNMPos_L.FTPosCode = TCNMPos.FTPosCode AND  TCNMPos_L.FTBchCode = TCNMPos.FTBchCode',
+                'TCNMBranch_L.FTBchCode = TCNMPos.FTBchCode'
+               ]
         },
         Where :{
-            Condition : ["AND TCNMPos.FTPosType = '1' "]
+            Condition : ["AND TCNMPos.FTPosType = '1' " + tWherePOS]
         },
         GrideView:{
             ColumnPathLang	: 'pos/salemachine/salemachine',
-            ColumnKeyLang	: ['tPOSCode','tPOSName'],
-            ColumnsSize     : ['15%','75%'],
+            ColumnKeyLang	: ['tPOSCode','tPOSBranchRef','tPOSName'],
+            ColumnsSize     : ['15%','20%','55'],
             WidthModal      : 50,
-            DataColumns		: ['TCNMPos.FTPosCode','TCNMPosLastNo.FTPosComName'],
-            DataColumnsFormat : ['',''],
+            DataColumns		: ['TCNMPos.FTPosCode','TCNMBranch_L.FTBchName','TCNMPos_L.FTPosName'],
+            DataColumnsFormat : ['','',''],
             Perpage			: 5,
             OrderBy			: ['TCNMPos.FTPosCode'],
             SourceOrder		: "ASC"
@@ -636,12 +706,20 @@
         CallBack:{
             ReturnType	: 'S',
             Value		: ["oetZnePosCode","TCNMPos.FTPosCode"],
-            Text		: ["oetZnePosName","TCNMPosLastNo.FTPosComName"],
+            Text		: ["oetZnePosName","TCNMPos_L.FTPosName"],
         },
-        RouteAddNew : 'salemachine',
-        BrowseLev : nStaZneBrowseType
+        // RouteAddNew : 'salemachine',
+        // BrowseLev : nStaZneBrowseType,
+        // DebugSQL: true,
     }	
 
+    var tCtyCode = "<?= $this->session->userdata('tSesDefCountry') ?>";
+    
+    if ((tCtyCode == '' || tCtyCode == null) || tUsrLevel == "HQ") {
+        tWhereCty = '';
+    } else {
+        tWhereCty = " AND TCNMCountry.FTCtyCode = '" + tCtyCode + "'";
+    }
     // Browse Country (ประเทศ) 
     var oBrowseCountry = {
         Title : ['company/country/country','tCountryTitle'],
@@ -651,7 +729,7 @@
             On:['TCNMCountry_L.FTCtyCode = TCNMCountry.FTCtyCode']
         },
         Where :{
-            Condition : ["AND TCNMCountry.FTCtyStaUse = '1' "]
+            Condition : ["AND TCNMCountry.FTCtyStaUse = '1' "+ tWhereCty]
         },
         GrideView:{
             ColumnPathLang	: 'company/country/country',
@@ -669,16 +747,16 @@
             Value		: ["oetZneCtyCode","TCNMCountry.FTCtyCode"],
             Text		: ["oetZneCtyName","TCNMCountry_L.FTCtyName"],
         },
-        RouteAddNew : 'country',
-        BrowseLev : nStaZneBrowseType
+        // RouteAddNew : 'country',
+        // BrowseLev : nStaZneBrowseType
     }	
 
-    var tAgnCodeWhere = "<?= $this->session->userdata('tSesUsrAgnCode') ?>";
+    var tAgnCode = "<?= $this->session->userdata('tSesUsrAgnCode') ?>";
 
-    if (tAgnCodeWhere == '' || tAgnCodeWhere == null) {
+    if (tAgnCode == '' || tAgnCode == null) {
         tWhereAgn = '';
     } else {
-        tWhereAgn = " AND TCNMAgency.FTAgnCode = '" + tAgnCodeWhere + "'";
+        tWhereAgn = " AND TCNMAgency.FTAgnCode = '" + tAgnCode + "'";
     }
     var oBrowseAgency = {
         Title: ['payment/rate/rate','tRTEAgency'],
@@ -710,8 +788,76 @@
         }
     }
 
+    var oBrowseAgencyF = {
+        Title: ['payment/rate/rate','tRTEAgency'],
+        Table: {
+            Master: 'TCNMAgency',
+            PK: 'FTAgnCode'
+        },
+        Join: {
+            Table: ['TCNMAgency_L'],
+            On: ['TCNMAgency_L.FTAgnCode = TCNMAgency.FTAgnCode']
+        },
+        Where: {
+            Condition: [tWhereAgn]
+        },
+        GrideView: {
+            ColumnPathLang: 'payment/rate/rate',
+            ColumnKeyLang: ['tBrowseAgnCode', 'tBrowseAgnName'],
+            ColumnsSize: ['15%', '75%'],
+            DataColumns: ['TCNMAgency.FTAgnCode', 'TCNMAgency_L.FTAgnName'],
+            DataColumnsFormat: ['', ''],
+            WidthModal: 50,
+            Perpage: 10,
+            OrderBy: ['TCNMAgency.FTAgnCode ASC'],
+        },
+        CallBack: {
+            ReturnType: 'S',
+            Value: ["oetZneAgnCodeFirst", "TCNMAgency.FTAgnCode"],
+            Text: ["oetZneAgnNameFirst", "TCNMAgency_L.FTAgnName"]
+        }
+    }
+
+    var oBrowseAgencyS = {
+        Title: ['payment/rate/rate','tRTEAgency'],
+        Table: {
+            Master: 'TCNMAgency',
+            PK: 'FTAgnCode'
+        },
+        Join: {
+            Table: ['TCNMAgency_L'],
+            On: ['TCNMAgency_L.FTAgnCode = TCNMAgency.FTAgnCode']
+        },
+        Where: {
+            Condition: [tWhereAgn]
+        },
+        GrideView: {
+            ColumnPathLang: 'payment/rate/rate',
+            ColumnKeyLang: ['tBrowseAgnCode', 'tBrowseAgnName'],
+            ColumnsSize: ['15%', '75%'],
+            DataColumns: ['TCNMAgency.FTAgnCode', 'TCNMAgency_L.FTAgnName'],
+            DataColumnsFormat: ['', ''],
+            WidthModal: 50,
+            Perpage: 10,
+            OrderBy: ['TCNMAgency.FTAgnCode ASC'],
+        },
+        CallBack: {
+            ReturnType: 'S',
+            Value: ["oetZneAgnCodeSecond", "TCNMAgency.FTAgnCode"],
+            Text: ["oetZneAgnNameSecond", "TCNMAgency_L.FTAgnName"]
+        }
+    }
+
+    // Browse Merchant (กลุ่มธุรกิจ) 
+    var tMerCode = ",'<?= $this->session->userdata('tSesUsrPplCode') ?>'";
+
+    if (tUsrLevel == "HQ") {
+        tWhereMer = '';
+    } else {
+        tWhereMer = " AND TCNMMerchant.FTPplCode IN(''" + tMerCode + ")";
+    }
     var oBrowseMerchant = {
-        Title: ['company/country/country','tZneSltMerchant'],
+        Title: ['address/zone/zone','tZneSltMerchant'],
         Table: {
             Master: 'TCNMMerchant',
             PK: 'FTMerCode'
@@ -719,6 +865,9 @@
         Join: {
             Table: ['TCNMMerchant_L'],
             On: ['TCNMMerchant_L.FTMerCode = TCNMMerchant.FTMerCode']
+        },
+        Where: {
+            Condition: [tWhereMer]
         },
         GrideView: {
             ColumnPathLang: 'merchant/merchant/merchant',
@@ -791,6 +940,18 @@
         // Update CheckPinMenu Create By Witsarut 04/10/2019
         JSxCheckPinMenuClose();
         JCNxBrowseData('oBrowseAgency');
+    });
+
+    $('#obtBrowseAgencyFirst').click(function(){
+        // Update CheckPinMenu Create By Witsarut 04/10/2019
+        JSxCheckPinMenuClose();
+        JCNxBrowseData('oBrowseAgencyF');
+    });
+
+    $('#obtBrowseAgencySecond').click(function(){
+        // Update CheckPinMenu Create By Witsarut 04/10/2019
+        JSxCheckPinMenuClose();
+        JCNxBrowseData('oBrowseAgencyS');
     });
 
     $('#obtBrowseMerchant').click(function(){

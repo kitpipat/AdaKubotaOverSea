@@ -22,7 +22,7 @@
 					<div id="odvBtnZneEditInfo">
 						<button onclick="JSvCallPageZoneList()" class="btn xCNBTNDefult xCNBTNDefult2Btn" type="button"> <?php echo language('common/main/main', 'tBack')?></button>
 						<?php if($aAlwEventZone['tAutStaFull'] == 1 || ($aAlwEventZone['tAutStaAdd'] == 1 || $aAlwEventZone['tAutStaEdit'] == 1)) : ?>
-						<div class="btn-group">
+						<div class="btn-group" id="obtBarSubmitZne">
 							<button type="submit" class="btn xWBtnGrpSaveLeft" onclick="$('#obtSubmitZne').click()"> <?php echo language('common/main/main', 'tSave')?></button>
 							<?php echo $vBtnSave?>
 						</div>

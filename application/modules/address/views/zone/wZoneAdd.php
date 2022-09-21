@@ -1,6 +1,7 @@
 <?php
  if(@$nResult['rtCode'] == '1'){
   //Success
+  $tSessAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
 
   //Table Master
 	$tZneCode       	= $nResult['roItem']['rtZneCode'];
@@ -13,12 +14,25 @@
 	$tZneParentName 	= $nResult['roItem']['rtZneParentName'];
 	$tZneChainName  	= $nResult['roItem']['rtZneChainName'];
 	$tZneRmk  			= $nResult['roItem']['rtZneRemark'];
+	$tZneAgnCode  		= $nResult['roItem']['rtAgnCode'];
+	$tZneAgnName  		= $nResult['roItem']['rtAgnName'];
 	$tMenuTabDisable    = "";
 	$tMenuTabToggle     = "tab";
 	$tRoute 			= 'zoneEventEdit'; //Route ควบคุมการทำงาน Edit
-
+	//Event Control
+	if(isset($aAlwEventZone)){
+		if($aAlwEventZone['tAutStaFull'] == 1 || $aAlwEventZone['tAutStaEdit'] == 1 && !$tSessAgnCode){
+			$nAutStaEdit = 1;
+		}elseif($tZneAgnCode == $tSessAgnCode){
+			$nAutStaEdit = 1;
+		}else{
+			$nAutStaEdit = 0;
+		}
+	}else{
+		$nAutStaEdit = 0;
+	}
  }else{
-
+	$nAutStaEdit = 0;
 	$tZneCode       	= "";
 	$nZneLevel      	= "";
 	$tZneParent     	= "";
@@ -34,7 +48,7 @@
 	$tMenuTabToggle     = "false";
  }
 ?>
-
+<input type="hidden" id="ohdRteAutStaEdit" value="<?php echo $nAutStaEdit?>">
 
 <input type="text" class="xCNHide" id="ohdZneParent" value="<?php echo @$tZneParent?>">
 <div class="panel-body">	
@@ -78,6 +92,7 @@
 											</div>
 										</div>
 									</div>
+									
 									<div class="row xWPanalZneChain">
 										<div class="col-xs-12 col-md-5 col-lg-5">
 											<div class="form-group">
@@ -94,13 +109,12 @@
 													</span>
 												</div>
 											</div>
-											
 										</div>
 									</div>
 
-									<div class="row">
+									<!-- <div class="row">
 										<div class="col-xs-12 col-md-5 col-lg-5">
-											<!-- <div class="form-group">
+											<div class="form-group">
 												<label class="xCNLabelFrm"><?php echo language('address/area/area','tARETitle')?></label>
 												<div class="input-group">
 													<input type="text" class="form-control xCNHide" id="oetAreCode" name="oetAreCode" maxlength="5" value="<?php echo @$tAreCode?>">
@@ -111,9 +125,9 @@
 														</button>
 													</span>
 												</div>
-											</div> -->
+											</div>
 										</div>
-									</div>
+									</div> -->
 
 									
 									<div class="row">
@@ -153,6 +167,7 @@
 											</div>
 										</div>
 									</div>
+
 									<div class="row">
 										<div class="col-xs-12 col-md-5 col-lg-5">
 											<div class="form-group">
@@ -171,6 +186,25 @@
 											</div>
 										</div>
 									</div>
+
+									<div class="row">
+										<div class="col-xs-12 col-md-5 col-lg-5">
+											<div class="form-group" >
+											<label class="xCNLabelFrm"><?php echo language('address/zone/zone','tZneSltAgency');?></label>
+												<div class="input-group" >
+													<input type="text" class="form-control xCNHide" id="oetZneAgnCodeFirst" name="oetZneAgnCodeFirst" maxlength="5" value="<?php echo @$tZneAgnCode?>">
+													<input type="text" class="form-control xWPointerEventNone" id="oetZneAgnNameFirst" name="oetZneAgnNameFirst"  
+													placeholder="<?php echo language('address/zone/zone','tZneSltAgency');?>" value="<?php echo @$tZneAgnName?>" readonly>
+													<span class="input-group-btn">
+														<button id="obtBrowseAgencyFirst" type="button" class="btn xCNBtnBrowseAddOn">
+															<img src="<?php echo  base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									
 								<div class="row">
 									<div class="col-xs-12 col-md-5 col-lg-5">
 										<div class="form-group">

@@ -153,6 +153,18 @@ function JSxZoneSetCallPageAdd(){
                 $('#obtZneSetSave').removeClass('xCNHide');
                 $('#olbZneSetEdit').addClass('xCNHide');
                 $('#odvContentZoneObjData').addClass('xCNHide');
+                if ($('#ohdRteAutStaEdit').val() == 0) {
+                    $('.xCNIconDel').addClass('xCNDocDisabled');
+                    $('.xCNIconDel').removeAttr('onclick');
+                    $('.xWIMGZoneReferEdit').addClass('xCNDocDisabled');
+                    $('.xWIMGZoneReferEdit').removeAttr('onclick');
+                }else{
+                    $('input').attr('disabled', false);
+                    $('textarea').attr('disabled', false);
+                    $('#obtBarSubmitZne').show();
+                    $('#obtZneSetAdd').show();
+                }
+                               
                 JCNxCloseLoading();
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -222,6 +234,11 @@ function JSvCallPageZoneAdd() {
                     $('#odvBtnZneEditInfo').show();
                 }
 
+                    $('input').attr('disabled', false);
+                    $('textarea').attr('disabled', false);
+                    $('#obtBarSubmitZne').show();
+                    $('#obtZneSetAdd').show();
+
                 $('#odvContentPageZone').html(tResult);
                 JCNxLayoutControll();
                 JCNxCloseLoading();
@@ -286,6 +303,19 @@ function JSvCallPageZoneEdit(ptZneCode) {
                     $('#obtBarBack').show();
 
                     $('.xCNBtnGenCode').attr('disabled', true);
+
+                    if ($('#ohdRteAutStaEdit').val() == 0) {
+                        $('input').attr('disabled', true);
+                        $('textarea').attr('disabled', true);
+                        $('#obtBarSubmitZne').hide();
+                        $('#obtZneSetAdd').hide();
+                    }else{
+                        $('input').attr('disabled', false);
+                        $('textarea').attr('disabled', false);
+                        $('#obtBarSubmitZne').show();
+                        $('#obtZneSetAdd').show();
+                    }
+                    
                 }
                 JCNxLayoutControll();
                 JCNxCloseLoading();
@@ -987,6 +1017,18 @@ function JSvZoneObjDataTable(pnPage) {
 
 
                 }
+                if ($('#ohdRteAutStaEdit').val() == 0) {
+                    $('.xCNIconDel').addClass('xCNDocDisabled');
+                    $('.xCNIconDel').removeAttr('onclick');
+                    $('.xWIMGZoneReferEdit').addClass('xCNDocDisabled');
+                    $('.xWIMGZoneReferEdit').removeAttr('onclick');
+                }else{
+                    $('input').attr('disabled', false);
+                    $('textarea').attr('disabled', false);
+                    $('#obtBarSubmitZne').show();
+                    $('#obtZneSetAdd').show();
+                }
+
                 $('#odvZneSetSubMenuSta').hide();
                 $('#odvZneSetDataTable').html('');
                 $('#olbZneSetAdd').addClass('xCNHide');
@@ -1025,7 +1067,7 @@ function JSnZoneObjDel(tCurrentPage, ptName, tIDCode, tTable, tYesOnNo) {
         $('#ospConfirmDelete').html($('#oetTextComfirmDeleteSingle').val() + tIDCode + ' ( ' + ptName + ' ) ' + tYesOnNo);
         $('#osmConfirm').on('click', function(evt) {
 
-            if (localStorage.StaDeleteArray != '1') {
+            // if (localStorage.StaDeleteArray != '1') {
                 JCNxOpenLoading();
                 $.ajax({
                     type: "POST",
@@ -1091,7 +1133,7 @@ function JSnZoneObjDel(tCurrentPage, ptName, tIDCode, tTable, tYesOnNo) {
                         JCNxResponseError(jqXHR, textStatus, errorThrown);
                     }
                 });
-            }
+            // }
         });
     }
 }

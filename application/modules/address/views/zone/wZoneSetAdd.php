@@ -11,44 +11,48 @@
         $tZneName       = $aItems['FTZneName'];
         $tKeyReferName  = $aItems['FTZneKey'];
         $tZneTable      = $aItems['FTZneTable'];
-
-        switch ($aItems['FTZneTable']) {
-            case 'TCNMCountry':
-                $tBrowseCode = $aItems['FTZneRefCode'];
-                $tBrowseName = $aItems['TCNMCountry'];
-            break;
-            case 'TCNMBranch':
-                $tBrowseCode = $aItems['FTZneRefCode'];
-                $tBrowseName = $aItems['TCNMBranch'];
-            break;
-            case 'TCNMUser':
-                $tBrowseCode = $aItems['FTZneRefCode'];
-                $tBrowseName = $aItems['TCNMUser'];
-            break;
-            case 'TCNMSpn':
-                $tBrowseCode = $aItems['FTZneRefCode'];
-                $tBrowseName = $aItems['TCNMSpn'];
-            break;
-            case 'TCNMShop':
-                $tBrowseCode = $aItems['FTZneRefCode'];
-                $tBrowseName = $aItems['TCNMShop'];
-            break;
-            case 'TCNMPos':
-                $tBrowseCode = $aItems['FTZneRefCode'];
-                $tBrowseName = $aItems['TCNMPos'];
-            break;
-            case 'TCNMAgency':
-                $tBrowseCode = $aItems['FTZneRefCode'];
-                $tBrowseName = $aItems['TCNMAgency'];
-            break;
-            case 'TCNMMerchant':
-                $tBrowseCode = $aItems['FTZneRefCode'];
-                $tBrowseName = $aItems['TCNMMerchant'];
-            break;
-            default:
-                false;
-            break;
-        }
+        
+        $tZneAgnCode    = $aItems['FTAgnCode'];
+        $tZneAgnName    = $aItems['FTAgnName'];
+        $tBrowseCode = $aItems['FTZneRefCode'];
+        $tBrowseName = $aItems['rtZneRefName'];
+        // switch ($aItems['FTZneTable']) {
+        //     case 'TCNMCountry':
+        //         $tBrowseCode = $aItems['FTZneRefCode'];
+        //         $tBrowseName = $aItems['TCNMCountry'];
+        //     break;
+        //     case 'TCNMBranch':
+        //         $tBrowseCode = $aItems['FTZneRefCode'];
+        //         $tBrowseName = $aItems['TCNMBranch'];
+        //     break;
+        //     case 'TCNMUser':
+        //         $tBrowseCode = $aItems['FTZneRefCode'];
+        //         $tBrowseName = $aItems['TCNMUser'];
+        //     break;
+        //     case 'TCNMSpn':
+        //         $tBrowseCode = $aItems['FTZneRefCode'];
+        //         $tBrowseName = $aItems['TCNMSpn'];
+        //     break;
+        //     case 'TCNMShop':
+        //         $tBrowseCode = $aItems['FTZneRefCode'];
+        //         $tBrowseName = $aItems['TCNMShop'];
+        //     break;
+        //     case 'TCNMPos':
+        //         $tBrowseCode = $aItems['FTZneRefCode'];
+        //         $tBrowseName = $aItems['TCNMPos'];
+        //     break;
+        //     case 'TCNMAgency':
+        //         $tBrowseCode = $aItems['FTZneRefCode'];
+        //         $tBrowseName = $aItems['TCNMAgency'];
+        //     break;
+        //     case 'TCNMMerchant':
+        //         $tBrowseCode = $aItems['FTZneRefCode'];
+        //         $tBrowseName = $aItems['TCNMMerchant'];
+        //     break;
+        //     default:
+        //         false;
+        //     break;
+        // }
     }else{
         $tStaEnter      = "1"; //Add
         $tZneCode       	= $nResult['roItem']['rtZneCode'];
@@ -56,6 +60,8 @@
         $tZneParent     	= $nResult['roItem']['rtZneParent'];
         $tZneChain      	= $nResult['roItem']['rtZneChain'];
         $tZneName       	= $nResult['roItem']['rtZneName'];
+        $tZneAgnCode        = $nResult['roItem']['rtAgnCode'];
+        $tZneAgnName        = $nResult['roItem']['rtAgnName'];
         $tMenuTabDisable    = "";
         $tZneID             = "";
         $tZneTable          = "";
@@ -76,7 +82,7 @@
 
     <input type="hidden" id="oetZneChain" name="oetZneChain" value="<?php echo $tZneChain;?>">
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
             <div class="form-group">
                 <div class="validate-input">
                     <label class="xCNLabelFrm"><?php echo  language('address/zone/zone','tZNECode')?><?php echo  language('address/zone/zone','tZNETitle')?></label>
@@ -87,7 +93,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
         <!-- <input type="hidden" id="oetZneCodeTab2" name="oetZneCodeTab2"  value="<?php echo @$tZneCode;?>"> -->
         <input type="text" class="xCNHide"  id="oetZneChainOldTab2" name="oetZneChainOldTab2" value="<?php echo @$tZneChain?>" >
             <div class="form-group">
@@ -101,7 +107,25 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-md-5 col-lg-5">
+            <div class="form-group" >
+            <label class="xCNLabelFrm"><?php echo language('address/zone/zone','tZneSltAgency');?></label>
+                <div class="input-group" >
+                    <input type="text" class="form-control xCNHide" id="oetZneAgnCodeSecond" name="oetZneAgnCodeSecond" maxlength="5" value="<?php echo @$tZneAgnCode?>">
+                    <input type="text" class="form-control xWPointerEventNone" id="oetZneAgnNameSecond" name="oetZneAgnNameSecond"  
+                    placeholder="<?php echo language('address/zone/zone','tZneSltAgency');?>" value="<?php echo @$tZneAgnName?>" readonly>
+                    <span class="input-group-btn">
+                        <button id="obtBrowseAgencySecond" type="button" class="btn xCNBtnBrowseAddOn">
+                            <img src="<?php echo  base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
             <div class="form-group">
             <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tTypeDetailRefer');?></label>
                 <select class="selectpicker form-control" id="ocmTypeRefer" name="ocmTypeRefer" maxlength="1"
@@ -124,7 +148,7 @@
         
     <div class="row">
         <!-- ฺBrowse Branch (สาขา) -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneBranch" >
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" id="odvZneBranch" >
             <div class="form-group">
                 <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltBranch');?></label>
                 <div class="input-group">
@@ -143,7 +167,7 @@
         </div>
 
         <!-- Browse User (ผู้ใช้)-->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneUSer">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" id="odvZneUSer">
             <div class="form-group">
                 <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSleUSer');?></label>
                 <div class="input-group">
@@ -162,7 +186,7 @@
         </div>
 
         <!-- Browse SaleMan พนักงานขาย -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneSaleMan">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" id="odvZneSaleMan">
             <div class="form-group">
             <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltSaleman');?></label>
                 <div class="input-group">
@@ -181,7 +205,7 @@
         </div>
 
         <!-- Browse Shop (ร้านค้า) -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneShop">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" id="odvZneShop">
             <div class="form-group" >
             <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltShop');?></label>
                 <div class="input-group">
@@ -200,7 +224,7 @@
         </div>
             
         <!-- Browse Pos (เครื่องจุดขาย) -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZnePos">	
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" id="odvZnePos">	
             <div class="form-group" >
             <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltPos');?></label>
                 <div class="input-group" >
@@ -219,7 +243,7 @@
         </div>
 
         <!-- Browse Country (ประเทศ) -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneCountry">	
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" id="odvZneCountry">	
             <div class="form-group" >
             <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltCountry');?></label>
                 <div class="input-group" >
@@ -238,7 +262,7 @@
         </div>
 
         <!-- Browse Agency (ตัวแทนขาย) -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneAgency">	
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" id="odvZneAgency">	
             <div class="form-group" >
             <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltAgency');?></label>
                 <div class="input-group" >
@@ -257,7 +281,7 @@
         </div>
 
         <!-- Browse Merchant (กลุ่มธุรกิจ) -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="odvZneMerchant">	
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" id="odvZneMerchant">	
             <div class="form-group" >
             <label class="xCNLabelFrm"><span style="color:red">*</span><?php echo language('address/zone/zone','tZneSltMerchant');?></label>
                 <div class="input-group" >
@@ -277,7 +301,7 @@
 
     </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
             <div class="form-group">
                 <div class="validate-input">
                     <label class="xCNLabelFrm"><?php echo language("address/zone/zone","tZneKeyRefer");?></label>

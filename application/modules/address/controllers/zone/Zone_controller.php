@@ -47,6 +47,7 @@ class Zone_controller extends MX_Controller {
     		$tZneChainName 			= $this->input->post('oetZneNameTab1');
     	}else{
     		$tZneCodeSelet 			= $this->input->post('oetZneParent');
+
     		$aDataZoneSelect 		= $this->Zone_model->FSaMZNEGetZneLevelANDZneChain($tZneCodeSelet); /* Get Level และ ZneChain*/ 
     		$nZneLevelSelect 		= $aDataZoneSelect[0]->FNZneLevel;
     		$tZneChainSelect 		= $aDataZoneSelect[0]->FTZneChain;
@@ -69,10 +70,10 @@ class Zone_controller extends MX_Controller {
 				'oetZneParent'			=> $this->input->post('oetZneParent'),
 				'FTZneChainName'		=> $tZneChainName,
 				'FTAreCode'				=> $this->input->post('oetAreCode'),	
-				'FDLastUpdOn'   => date('Y-m-d H:i:s'),
-				'FDCreateOn'    => date('Y-m-d H:i:s'),
-				'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
-				'FTCreateBy'    => $this->session->userdata('tSesUsername'),
+				'FDLastUpdOn'   		=> date('Y-m-d H:i:s'),
+				'FDCreateOn'   		 	=> date('Y-m-d H:i:s'),
+				'FTLastUpdBy'   		=> $this->session->userdata('tSesUsername'),
+				'FTCreateBy'    		=> $this->session->userdata('tSesUsername'),
     			'FNLngID'      		 	=> $this->session->userdata("tLangEdit"),
 		);
 
@@ -128,12 +129,22 @@ class Zone_controller extends MX_Controller {
 
 		if($tZoneAutoGenCode == '1'){ // Check Auto Gen Brach Code?
 			// Auto Gen Brach Code
-			$aGenCode = FCNaHGenCodeV5('TCNMZone','0');
-			if($aGenCode['rtCode'] == '1'){
-				$tZneCode	= $aGenCode['rtZneCode'];
-			}
+			// $aGenCode = FCNaHGenCodeV5('TCNMZone','0');
+			// if($aGenCode['rtCode'] == '1'){
+			// 	$tZneCode	= $aGenCode['rtZneCode'];
+			// }
+			$aStoreParam = array(
+				"tTblName"   => 'TCNMZone',
+				"tDocType"   => 0,
+				"tBchCode"   => "",
+				"tShpCode"   => "",
+				"tPosCode"   => "",
+				"dDocDate"   => date("Y-m-d")
+			);
+			$aAutogen   = FCNaHAUTGenDocNo($aStoreParam);
+			$tZneCode   = $aAutogen[0]["FTXxhDocNo"];
 		}else{
-				$tZneCode = $this->input->post('oetZneCode');
+			$tZneCode = $this->input->post('oetZneCode');
 		}
 		
     	if($nSelectRoot == 'on'){
@@ -164,6 +175,7 @@ class Zone_controller extends MX_Controller {
 				'tIsAutoGenCode'	=> $this->input->post('ocbZoneAutoGenCode'),
     			'FTZneCode'     	=> $tZneCode,
     			'FTZneName'     	=> $this->input->post('oetZneNameTab1'),
+				'FTAgnCode'     	=> $this->input->post('oetZneAgnCodeFirst'),
     			'FNZneLevel'     	=> $nZneLevel,
     			'FTZneParent'		=> $tZneParent,
     			'FTZneChain'		=> $tZneChain,
@@ -239,13 +251,15 @@ class Zone_controller extends MX_Controller {
     	
 		$aResList  = $this->Zone_model->FSaMZNESearchByID($aData);
 		// $aSltRefer = $this->Zone_model->FSaMZNEGetdataZneobj();
+		$aAlwEventZone 	= FCNaHCheckAlwFunc('zone/0/0'); 
 
   	       	
     	$aDataEdit  = array(
     			'nResult'       => $aResList,
     			'nStaBrowse'    => $nStaBrowse,
     			'tTypePage'     => $tTypePage,
-				'tUserLevel'	=> $tUserLevel
+				'tUserLevel'	=> $tUserLevel,
+				'aAlwEventZone'=> $aAlwEventZone
 				// 'aSltRefer'		=> $aSltRefer
     	);
     	
@@ -425,6 +439,7 @@ class Zone_controller extends MX_Controller {
 				'FTZneTable'  	=> $tTypeRefer,
 				'FTZneChain' 	=> $tZneChain,
 				'FTZneRefCode'	=> $tZneCode,
+				'FTAgnCode'		=> $this->input->post('oetZneAgnCodeSecond'),
 				'FTZneKey'    	=> $this->input->post('oetKeyReferName'),
 				'FTCreateBy'    => $this->session->userdata("tSesUsername"),
 				'FDCreateOn'	=> date('Y-m-d H:i:s'),
@@ -593,18 +608,20 @@ class Zone_controller extends MX_Controller {
 			);
 			$aResList  = $this->Zone_model->FSaMZNESearchByID($aData);
 			// $aSltRefer = $this->Zone_model->FSaMZNEGetdataZneobj();
+			$aAlwEventZone 	= FCNaHCheckAlwFunc('zone/0/0'); 
+
 			$aDataEdit  = array(
 				'nResult'       => $aResList,
 				'nStaBrowse'    => $nStaBrowse,
 				'tTypePage'     => $tTypePage,
-				'tUserLevel'	=> $tUserLevel
+				'tUserLevel'	=> $tUserLevel,
+				'aAlwEventZone'		=> $aAlwEventZone
 				// 'aSltRefer'		=> $aSltRefer
 			);
-
 			$aDataReturn = array(
 				'tHTML' => $this->load->view('address/zone/wZoneSetAdd', $aDataEdit , true),
 				'nStaEvent' => 1,
-				'tStaMessg' => 'Success'
+				'tStaMessg' => 'Success',
 			);
 		} catch (Exception $Error) {
 			$aDataReturn = array(
@@ -617,7 +634,14 @@ class Zone_controller extends MX_Controller {
 	public function FSaCZNESETCallPageEdit (){
 		try {
 			$FNZneID = $this->input->post('ptZneID');
-			$aItems = $this->Zone_model->FSaMZENGetDataZenSetByID($FNZneID);
+			$nLangResort    = $this->session->userdata("tLangID");
+			$nLangEdit      = $this->session->userdata("tLangEdit");
+			$aData  = array(
+				'FNLngID'       => $nLangEdit,
+				'nZenCode'      => $FNZneID			
+			);
+
+			$aItems = $this->Zone_model->FSaMZENGetDataZenSetByID($aData);
 			$aDataEdit  = array(
 				'aItems'       => $aItems
 			);
