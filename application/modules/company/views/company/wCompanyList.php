@@ -234,10 +234,14 @@
 										<p class="xCNTextDetail">
 											<?php
 												if(isset($tCmpVatCode) && !empty($tCmpVatCode)){
-													for($i=0; $i<count($aVatRate['FTVatCode']); $i++){
-														if($aVatRate['FTVatCode'][$i] == $tCmpVatCode){
-															echo number_format($aVatRate['FCVatRate'][$i],0)." %";
+													if(isset($aVatRate['FCVatRate'])){
+														for($i=0; $i<count($aVatRate['FTVatCode']); $i++){
+															if($aVatRate['FTVatCode'][$i] == $tCmpVatCode){
+																echo number_format($aVatRate['FCVatRate'][$i],0)." %";
+															}
 														}
+													}else{
+														echo '-';
 													}
 												}else{
 													echo language('company/company/company','tCmpNotFoundData');

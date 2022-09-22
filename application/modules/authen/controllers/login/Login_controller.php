@@ -50,14 +50,24 @@ class Login_controller extends MX_Controller {
 
 						$tUsrAgnCodeDefult  = $aDataUsrGroup[0]['FTAgnCode'];
 						$tUsrAgnNameDefult  = $aDataUsrGroup[0]['FTAgnName'];
-
+						
 						$tUsrMerCodeDefult  = '';
 						$tUsrMerNameDefult  = '';
 
-						$tUsrBchCodeDefult  = $aDataComp[0]['FTBchCode'];
-						$tUsrBchNameDefult  = $aDataComp[0]['FTBchName'];
-						$tUsrBchCodeMulti	= "'".$aDataComp[0]['FTBchCode']."'";
-						$tUsrBchNameMulti	= "'".$aDataComp[0]['FTBchName']."'";
+						if($aDataUsrGroup[0]['FTLoginLevel'] != 'HQ'){
+							$tUsrBchCodeDefult  = '';
+							$tUsrBchNameDefult  = '';
+
+							$tUsrBchCodeMulti	= '';
+							$tUsrBchNameMulti	= '';
+						}else{
+							$tUsrBchCodeDefult  = $aDataComp[0]['FTBchCode'];
+							$tUsrBchNameDefult  = $aDataComp[0]['FTBchName'];
+
+							$tUsrBchCodeMulti	= "'".$aDataComp[0]['FTBchCode']."'";
+							$tUsrBchNameMulti	= "'".$aDataComp[0]['FTBchName']."'";
+						}
+
 						$nUsrBchCount		= 0;
 
 						$tUsrShpCodeDefult  = $aDataComp[0]['FTShpCode'];

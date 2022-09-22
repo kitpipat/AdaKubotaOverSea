@@ -351,7 +351,7 @@ class Login_model extends CI_Model {
        if($ptAgnCode){
             $tSQL = "SELECT FTCtyCode FROM TCNMAgency WHERE FTAgnCode = '$ptAgnCode'";
             $oQuery = $this->db->query($tSQL);
-            return ($oQuery->result_array()[0]['FTCtyCode']) ? ($oQuery->result_array()[0]['FTCtyCode']) : 'THA';
+            return ($oQuery->result_array()) ? ($oQuery->result_array()[0]['FTCtyCode']) : 'THA';
        }else{
             $tSQL = "SELECT FTCmpCode, FTCtyCode FROM TCNMComp";
             $oQuery = $this->db->query($tSQL);
@@ -362,8 +362,7 @@ class Login_model extends CI_Model {
     public function FSaMGetLanguage($ptCtyCode){
         $tSQL = "SELECT TOP 1 FNLngID FROM TCNMCountry WHERE FTCtyCode = '$ptCtyCode'";
         $oQuery = $this->db->query($tSQL);
-        return $oQuery->result_array()[0]['FNLngID'];
-        
+        return ($oQuery->result_array()) ? ($oQuery->result_array()[0]['FNLngID']) : '1';
      }
 
 }

@@ -6,10 +6,6 @@
         $nCurrentPage ='1';
     }
 
-    // echo '<pre>';
-    // echo print_r($aAlwEventBranch); 
-    // echo '</pre>';
-
 ?>
 
 <div class="row">

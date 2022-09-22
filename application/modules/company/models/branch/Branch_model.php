@@ -224,7 +224,7 @@ class Branch_model extends CI_Model {
                 $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
             }
             if($tAgnCode){
-                $tSQL       .= " OR BCH.FTAgnCode IN ($tAgnCode , '')";
+                $tSQL       .= " AND BCH.FTAgnCode IN ($tAgnCode , '')";
             }
         }
 
