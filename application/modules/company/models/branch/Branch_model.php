@@ -224,7 +224,11 @@ class Branch_model extends CI_Model {
                 $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
             }
             if($tAgnCode){
-                $tSQL       .= " AND BCH.FTAgnCode IN ($tAgnCode , '')";
+                if($tBchCode){
+                    $tSQL       .= " OR BCH.FTAgnCode IN ($tAgnCode)";
+                }else{
+                    $tSQL       .= " AND BCH.FTAgnCode IN ($tAgnCode)";
+                }
             }
         }
 
@@ -297,7 +301,11 @@ class Branch_model extends CI_Model {
                 $tSQL       .= " AND BCH.FTBchCode IN ($tBchCode) ";
             }
             if($tAgnCode){
-                $tSQL       .= " AND BCH.FTAgnCode IN ($tAgnCode, '')";
+                if($tBchCode){
+                    $tSQL       .= " OR BCH.FTAgnCode IN ($tAgnCode)";
+                }else{
+                    $tSQL       .= " AND BCH.FTAgnCode IN ($tAgnCode)";
+                }
             }
         }
 
