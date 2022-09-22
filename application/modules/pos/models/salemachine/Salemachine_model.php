@@ -58,9 +58,14 @@ class Salemachine_model extends CI_Model {
                                     WHERE 1=1 
                             ";
 
-            if($this->session->userdata("tSesUsrLevel") != "HQ"){
+            if($this->session->userdata("tSesUsrLoginLevel") != "HQ"){
                 $tBchCode = $this->session->userdata("tSesUsrBchCodeMulti");
-                $tSQL .= " AND POS.FTBchCode IN ($tBchCode) ";
+                if($tBchCode){
+                    $tSQL .= " AND POS.FTBchCode IN ($tBchCode)";
+                }else{
+                    $tBchCodeCk = $this->FSoMPOSCheckBch($this->session->userdata("tSesUsrAgnCode"));
+                    $tSQL .= " AND POS.FTBchCode IN ($tBchCodeCk)";
+                }
             }
 
             if(isset($tSearchList) && !empty($tSearchList)){
@@ -69,7 +74,7 @@ class Salemachine_model extends CI_Model {
                 $tSQL .= " OR POS_L.FTPosName  LIKE '%$tSearchList%')";
             }
 
-            $tSQL .= ") Base) AS c WHERE c.rtRowID > $aRowLen[0] AND c.rtRowID <= $aRowLen[1]";
+            $tSQL .= " ) Base) AS c WHERE c.rtRowID > $aRowLen[0] AND c.rtRowID <= $aRowLen[1]";
 
             $oQuery = $this->db->query($tSQL);
 
@@ -100,6 +105,32 @@ class Salemachine_model extends CI_Model {
             return $aResult;
         }catch(Exception $Error){
             echo $Error;
+        }
+    }
+
+    public function FSoMPOSCheckBch($ptAgnCode){
+        $tSQL = "SELECT FTBchCode FROM TCNMBranch
+                WHERE FTAgnCode = '$ptAgnCode'";
+        $oQuery = $this->db->query($tSQL);
+        if($oQuery->num_rows() > 0){
+            $aData = $oQuery->result_array();
+            $tUsrBchCode = '';
+            $nSumRowsUsrBch = count($aData);
+            $nNo = 1;
+            $tUsrBchCode.="'";
+
+            foreach($aData as $Key => $aVal){
+                $tUsrBchCode.=$aVal['FTBchCode'];
+                if($nSumRowsUsrBch!=$nNo){
+                    $tUsrBchCode.="','";  
+                }
+                $nNo++;
+            }
+            $tUsrBchCode.="'";
+            
+            return $tUsrBchCode;
+        }else{
+            return "''";
         }
     }
 
@@ -147,11 +178,15 @@ class Salemachine_model extends CI_Model {
                 WHERE 1=1
             ";
 
-            if($this->session->userdata("tSesUsrLevel") != "HQ"){
+            if($this->session->userdata("tSesUsrLoginLevel") != "HQ"){
                 $tBchCode = $this->session->userdata("tSesUsrBchCodeMulti");
-                $tSQL .= " AND POS.FTBchCode IN ($tBchCode) ";
+                if($tBchCode){
+                    $tSQL .= " AND POS.FTBchCode IN ($tBchCode)";
+                }else{
+                    $tBchCodeCk = $this->FSoMPOSCheckBch($this->session->userdata("tSesUsrAgnCode"));
+                    $tSQL .= " AND POS.FTBchCode IN ($tBchCodeCk)";
+                }
             }
-
             if(isset($ptSearchList) && !empty($ptSearchList)){
                 $tSQL .= " AND (POS.FTPosCode LIKE '%$ptSearchList%'";
                 $tSQL .= " OR BCHL.FTBchName  LIKE '%$ptSearchList%' ";

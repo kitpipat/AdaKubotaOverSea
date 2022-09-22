@@ -58,8 +58,8 @@ class Login_controller extends MX_Controller {
 							$tUsrBchCodeDefult  = '';
 							$tUsrBchNameDefult  = '';
 
-							$tUsrBchCodeMulti	= '';
-							$tUsrBchNameMulti	= '';
+							$tUsrBchCodeMulti	= "''";
+							$tUsrBchNameMulti	= "''";
 						}else{
 							$tUsrBchCodeDefult  = $aDataComp[0]['FTBchCode'];
 							$tUsrBchNameDefult  = $aDataComp[0]['FTBchName'];

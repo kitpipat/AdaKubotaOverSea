@@ -536,7 +536,7 @@ $bIsAddPage = empty($tPosCode) ? true : false;
     }
 
 
-    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
     var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
     var nCountBch = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
     var tUsrAgnCode = "<?php echo $this->session->userdata("tSesUsrAgnCode"); ?>";
@@ -546,8 +546,11 @@ $bIsAddPage = empty($tPosCode) ? true : false;
         $('#obtBrowseSaleAdjBCH').attr('disabled', true);
     }
     if (tUsrLevel != "HQ") {
+        if(tBchCodeMulti == ''){
+            tBchCodeMulti = "''";
+        }
         tWhere = " AND TCNMBranch.FTBchCode IN (" + tBchCodeMulti + ") ";
-        tWhereAgnCode = " AND TCNMChannelSpc.FTAgnCode = '" + tUsrAgnCode + "' "
+        tWhereAgnCode = " OR TCNMBranch.FTAgnCode = '" + tUsrAgnCode + "' "
     } else {
         tWhere = "";
         tWhereAgnCode = "";
@@ -567,7 +570,7 @@ $bIsAddPage = empty($tPosCode) ? true : false;
             On: ['TCNMBranch_L.FTBchCode = TCNMBranch.FTBchCode AND TCNMBranch_L.FNLngID = ' + nLangEdits, ]
         },
         Where: {
-            Condition: [tWhere]
+            Condition: [tWhere + tWhereAgnCode ]
         },
         GrideView: {
             ColumnPathLang: 'company/branch/branch',
@@ -594,7 +597,7 @@ $bIsAddPage = empty($tPosCode) ? true : false;
 
         // RouteAddNew: 'branch',
         // BrowseLev: 0
-
+        // DebugSQL:true,
         RouteFrom: 'salemachine',
         RouteAddNew: 'branch',
         BrowseLev: nStaPosBrowseType,
