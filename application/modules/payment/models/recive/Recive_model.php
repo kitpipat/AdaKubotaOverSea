@@ -90,7 +90,21 @@ class Recive_model extends CI_Model
                             LEFT JOIN [TFNMRcv_L] RCVL WITH(NOLOCK) ON RCV.FTRcvCode = RCVL.FTRcvCode AND RCVL.FNLngID = $nLngID
                             LEFT JOIN [TSysRcvFmt_L] RCVF WITH(NOLOCK) ON RCV.FTFmtCode = RCVF.FTFmtCode AND RCVF.FNLngID = $nLngID
                             LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RCV.FTRcvCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRcv' AND IMGO.FNImgSeq = 1
+                            LEFT JOIN [TFNMRcvSpc] RCVS WITH(NOLOCK) ON RCV.FTRcvCode = RCVS.FTRcvCode
                             WHERE 1=1 ";
+
+        if($this->session->userdata("tSesUsrLoginLevel") == 'AGN'){
+            $tAgnCode    = $this->session->userdata("tSesUsrAgnCode");
+            if($tAgnCode){
+                $tSQL  .= " AND RCVS.FTAggCode = '$tAgnCode' OR RCVS.FTAggCode IS Null";
+            }
+        }
+        if($this->session->userdata("tSesUsrLoginLevel") == "BCH"){
+            $tBchCode = $this->session->userdata("tSesUsrBchCodeMulti");
+            if($tBchCode){
+                $tSQL .= " AND RCVS.FTBchCode IN ('',$tBchCode) OR RCVS.FTBchCode IS Null";
+            }
+        }
 
         $tSearchList = $paData['tSearchAll'];
         if ($tSearchList != '') {
@@ -144,8 +158,22 @@ class Recive_model extends CI_Model
                         FROM TFNMRcv                RCV     WITH(NOLOCK)
                         LEFT JOIN [TFNMRcv_L]       RCVL    WITH(NOLOCK) ON RCV.FTRcvCode = RCVL.FTRcvCode   AND RCVL.FNLngID = $ptLngID
                         LEFT JOIN [TSysRcvFmt_L]    RCVF    WITH(NOLOCK) ON RCV.FTFmtCode = RCVF.FTFmtCode   AND RCVF.FNLngID = $ptLngID
+                        LEFT JOIN [TFNMRcvSpc]      RCVS WITH(NOLOCK) ON RCV.FTRcvCode = RCVS.FTRcvCode
                         WHERE 1=1
         ";
+
+        if($this->session->userdata("tSesUsrAgnCode") != ""){
+            $tAgnCode    = $this->session->userdata("tSesUsrAgnCode");
+            if($tAgnCode){
+                $tSQL  .= " AND RCVS.FTAggCode = '$tAgnCode' OR RCVS.FTAggCode IS Null";
+            }
+        }
+        if($this->session->userdata("tSesUsrLoginLevel") == "BCH"){
+            $tBchCode = $this->session->userdata("tSesUsrBchCodeMulti");
+            if($tBchCode){
+                $tSQL .= " AND RCVS.FTBchCode IN ('',$tBchCode) OR RCVS.FTBchCode IS Null";
+            }
+        }
 
         if ($ptSearchList != '') {
             $tSQL .= " AND (RCV.FTRcvCode LIKE '%$ptSearchList%'";
