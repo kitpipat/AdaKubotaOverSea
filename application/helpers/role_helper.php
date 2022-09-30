@@ -70,3 +70,27 @@
         
         return $bStatus;
     }
+    // Create By : Napat(Jame) 12/01/2022
+    // ตรวจสอบสิทธิ์การแก้ไขจำนวน
+    function FCNbGetUsrFuncRpt($paData){
+      
+        $ci = &get_instance();
+        $ci->load->database();
+
+        $tUfrGrpRef = $paData['FTUfrGrpRef'];
+        $tUfrRef    = $paData['FTUfrRef'];
+
+        $tSesUsrRoleCodeMulti = $ci->session->userdata("tSesUsrRoleCodeMulti");
+        $tSQL       = " SELECT FTUfrStaAlw
+                        FROM TCNTUsrFuncRpt WITH(NOLOCK)
+                        WHERE FTUfrGrpRef   = '$tUfrGrpRef'
+                          AND FTUfrRef      = '$tUfrRef'
+                          AND FTRolCode     IN ($tSesUsrRoleCodeMulti)
+                          AND FTUfrStaAlw   = '1' ";
+        $oQuery = $ci->db->query($tSQL);
+        if( $oQuery->num_rows() > 0 ){
+            return true;
+        }else{
+            return false;
+        }
+    }

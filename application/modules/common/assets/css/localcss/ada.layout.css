@@ -514,3 +514,11 @@ label.fancy-checkbox {
 .XCNShow {
     display: show;
 }
+
+/* Table scroll */
+.xCNtableFixHead {overflow: auto; height: 250px; width: 100%;  padding-left: 15px; padding-right: 15px;}
+/*.xCNtableFixHead thead th { position: fixed; top: 0; z-index: 1; background-color: white; }*/
+/*.xCNtableFixHead tbody tr {overflow: auto; position: sticky; left: 0; }*/
+.xRefIntTable  { border-collapse: collapse; width: 100%; }
+.xRefIntTh { white-space: nowrap; background-color: white; }
+.xRefIntTd { white-space: nowrap; }

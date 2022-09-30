@@ -285,3 +285,9 @@ $lang['tStaDocActNotMoving']  = 'Not Moving';
 $lang['tImport'] = "Import";
 
 $lang['tSomeThingHadError'] = "something had error. please contact admin.";
+
+$lang['tUPFPanelFile']              = "Reference File";
+$lang['tUPFDataTable']              = "Attachments";
+$lang['tUPFDataTableAdd']           = "Add";
+$lang['tUPFDataTableNotFound']      = "No attachments";
+$lang['tUPFDataTableRule']          = "Upload file size is not more than 100MB";

@@ -35,7 +35,9 @@ $lang['tSPNSaleAmt']            = "รวมยอดขายได้";
 $lang['tSPNRemark']             = "หมายเหตุ";
 $lang['tSPNBranceLevel']        = "พนักงานระดับสาขา";
 $lang['tSPNShopLevel']          = "พนักงานระดับร้านค้า";
-$lang['tSPNRef']                = "อ้างอิง";
+$lang['tSPNRefBch']                = "อ้างอิงสาขา";
+$lang['tSPNRefShp']             = "อ้างอิงร้านค้า";
+
 
 // Validate From
 $lang['tSPNValidateCodeDup']    = "รหัสพนักงานขายนี้มีในระบบแล้วกรุณาครวจสอบอีกครั้ง";

@@ -160,6 +160,39 @@ $lang['tPOMsg4']    = "4. ประมวลผล ปรับยอดสิ�
 $lang['tPOMsgCheckforacc']    = "ดังนั้น ควรตรวจเช็คความถูกต้อง ของเอกสารให้เรียบร้อย ก่อนการอนุมัติ"; 
 $lang['tPOMsgConfrimApv']    = "คุณต้องการยืนยัน การอนุมัติเอกสารหรือไม่?"; 
 
+$lang['tPOLabelFrmValStaDoc']       = "-";
+$lang['tPOLabelFrmValStaDoc1']      = "สมบูรณ์";
+$lang['tPOLabelFrmValStaDoc2']      = "ไม่สมบูรณ์";
+$lang['tPOLabelFrmValStaDoc3']      = "ยกเลิก";
 
+$lang['tPOLabelFrmValStaApv']       = "รอการอนุมัติ";
+$lang['tPOLabelFrmValStaApv1']      = "อนุมัติแล้ว";
+$lang['tPOLabelFrmValStaApv2']      = "กำลังประมวลผล";
 
+// Panel Other
+$lang['tPOLabelFrmInfoOth']         = "อื่นๆ";
+$lang['tPOLabelFrmInfoOthStaDocAct']    = "เคลื่อนไหว";
+$lang['tPOLabelFrmInfoOthRef']          = "สถานะอ้างอิง";
+$lang['tPOLabelFrmInfoOthRef0']         = "ไม่เคยอ้างอิง";
+$lang['tPOLabelFrmInfoOthRef1']         = "อ้างอิงบางส่วน";
+$lang['tPOLabelFrmInfoOthRef2']         = "อ้างอิงหมดแล้ว";
+$lang['tPOLabelFrmInfoOthDocPrint']     = "จำนวนครั้งที่พิมพ์";
+$lang['tPOLabelFrmInfoOthReAddPdt']     = "กรณีเพิ่มสินค้ารายการเดิม";
+$lang['tPOLabelFrmInfoOthReAddPdt1']    = "บวกจำนวนเดิมในรายการ";
+$lang['tPOLabelFrmInfoOthReAddPdt2']    = "เพิ่มเป็นรายการใหม่";
+$lang['tPOLabelFrmInfoOthRemark']       = "หมายเหตุ";
 
+//Table Tmp
+$lang['tPOTable_choose']                = "เลือก";
+$lang['tPOTable_num']                   = "ลำดับ";
+$lang['tPOTable_pdtcode']               = "รหัสสินค้า";
+$lang['tPOTable_pdtname']               = "ชื่อสินค้า";
+$lang['tPOTable_barcode']               = "รหัสบาร์โค้ด";
+$lang['tPOTable_unit']                  = "หน่วยสินค้า";
+$lang['tPOTable_qty']                   = "จำนวนที่สั่ง";
+$lang['tPOTable_qtyget']                = "จำนวนที่รับ";
+$lang['tPOTable_qtyLeft']               = "จำนวนค้างรับ";
+$lang['tPOTable_price']                 = "ราคาต่อหน่วย";
+$lang['tPOTable_discount']              = "มูลค่าลดชาร์จ";
+$lang['tPOTable_grand']                 = "จำนวนเงิน";
+$lang['tPOTable_delete']                = "ลบ";

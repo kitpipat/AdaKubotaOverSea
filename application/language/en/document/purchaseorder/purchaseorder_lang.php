@@ -160,3 +160,45 @@ $lang['tPOMsg3']    = "3. Documents can be searched And show data To check the i
 $lang['tPOMsg4']    = "4. Processing, adjusting the inventory (documents only Affecting the product stock)"; 
 $lang['tPOMsgCheckforacc']    = "Should check the accuracy of the documents before certification."; 
 $lang['tPOMsgConfrimApv']    = "You want to confirm Document approval or not?"; 
+
+$lang['tPOLabelFrmValStaDoc']   = "-";
+$lang['tPOLabelFrmValStaDoc1']  = "Complete";
+$lang['tPOLabelFrmValStaDoc2']  = "Not Complete";
+$lang['tPOLabelFrmValStaDoc3']  = "Cancel";
+
+$lang['tPOLabelFrmValStaApv']   = "Waiting Approve";
+$lang['tPOLabelFrmValStaApv1']  = "Already Approve";
+$lang['tPOLabelFrmValStaApv2']  = "Processing";
+
+// Panel Other
+$lang['tPOLabelFrmInfoOth']         = "Orther";
+$lang['tPOLabelFrmInfoOthStaDocAct']    = "Move";
+$lang['tPOLabelFrmInfoOthRef']          = "Starus Refer";
+$lang['tPOLabelFrmInfoOthRef0']         = "Never Refer";
+$lang['tPOLabelFrmInfoOthRef1']         = "Some references";
+$lang['tPOLabelFrmInfoOthRef2']         = "Reference is complete";
+$lang['tPOLabelFrmInfoOthDocPrint']     = "Number of times printed";
+$lang['tPOLabelFrmInfoOthReAddPdt']     = "In the case of adding the same item";
+$lang['tPOLabelFrmInfoOthReAddPdt1']    = "Add the same amount to the list";
+$lang['tPOLabelFrmInfoOthReAddPdt2']    = "Add as a new item";
+$lang['tPOLabelFrmInfoOthRemark']       = "Remark";
+
+$lang['tStaDoc']                    = "Not yet done";
+$lang['tStaDoc1']                   = "Complete";
+$lang['tStaDoc2']                   = "Incomplete";
+$lang['tStaDoc3']                   = "Cancel";
+
+//Table Tmp
+$lang['tPOTable_choose']                = "choose";
+$lang['tPOTable_num']                   = "No.";
+$lang['tPOTable_pdtcode']               = "Product ID";
+$lang['tPOTable_pdtname']               = "Product Name";
+$lang['tPOTable_barcode']               = "BarCode";
+$lang['tPOTable_unit']                  = "Unit";
+$lang['tPOTable_qty']                   = "Order quantity";
+$lang['tPOTable_qtyget']                = "received amount";
+$lang['tPOTable_qtyLeft']               = "Accrued amount";
+$lang['tPOTable_price']                 = "Unit price";
+$lang['tPOTable_discount']              = "Charge reduction value";
+$lang['tPOTable_grand']                 = "Amount";
+$lang['tPOTable_delete']                = "Delete";

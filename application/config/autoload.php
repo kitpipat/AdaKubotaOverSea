@@ -140,7 +140,9 @@ $autoload['helper'] = array(
     'autogendoc',
     'cookie',
     'validatedoctmp',
-    'validatemastertmp'
+    'validatemastertmp',
+    'getaddressbranch',
+    'count'
 );
 
 

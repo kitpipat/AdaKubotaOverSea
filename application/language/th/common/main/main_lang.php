@@ -307,3 +307,16 @@ $lang['tRemark'] = "หมายเหตุ";
 $lang['tImport'] = "นำเข้า";
 
 $lang['tSomeThingHadError'] = "มีบางอย่างเกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ";
+
+
+$lang['tUPFPanelFile']              = "อ้างอิงไฟล์แนบ";
+$lang['tUPFDataTable']              = "รายการไฟล์แนบ";
+$lang['tUPFDataTableAdd']           = "เพิ่มไฟล์แนบ";
+$lang['tUPFDataTableNotFound']      = "ไม่มีไฟล์แนบ";
+$lang['tUPFDataTableRule']          = "อัพโหลดขนาดไฟล์ได้ไม่เกิน 100MB";
+
+// Status Document
+$lang['tStaDoc']     = "รออนุมัติ";
+$lang['tStaDoc1']    = "อนุมัติแล้ว";
+$lang['tStaDoc2']    = "ไม่สมบูรณ์";
+$lang['tStaDoc3']    = "ยกเลิก";

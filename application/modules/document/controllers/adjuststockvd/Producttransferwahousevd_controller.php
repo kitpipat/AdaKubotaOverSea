@@ -1987,7 +1987,7 @@ class Producttransferwahousevd_controller extends MX_Controller {
         
         if($aResList['rtCode'] == '1'){
             $tBchCode       = $aResList['raItems']['rtCmpBchCode'];
-            $tCompCode       = $aResList['raItems']['rtCmpCode'];
+            $tCompCode      = $aResList['raItems']['rtCmpCode'];
             $tCmpRteCode    = $aResList['raItems']['rtCmpRteCode'];
             $tVatCode       = $aResList['raItems']['rtVatCodeUse'];
             $aVatRate = FCNoHCallVatlist($tVatCode); 
@@ -1999,7 +1999,8 @@ class Producttransferwahousevd_controller extends MX_Controller {
             
             $aDataRate  = array(
                 'FTRteCode' => $tCmpRteCode,
-                'FNLngID'   => $nLangEdit
+                'FNLngID'   => $nLangEdit,
+                'FTAgnCode' => $aResList['raItems']['rtAgnCode']
             );
     
             $aResultRte     = $this->Rate_model->FSaMRTESearchByID($aDataRate);

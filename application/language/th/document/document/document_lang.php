@@ -67,5 +67,7 @@ $lang['tDocDelete']                             = 'ลบ';
 $lang['tDocEdit']                               = 'แก้ไข';
 
 
-
-
+$lang['tDocFilter']                  = "กรอง";
+$lang['tDocDateFrm']                 = "วันที่เอกสาร";
+$lang['tDocDateTo']                  = "ถึงวันที่เอกสาร";
+$lang['tDocDateFrom']                = "จากวันที่เอกสาร";

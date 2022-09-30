@@ -1929,9 +1929,11 @@ class Producttransferwahouse_controller extends MX_Controller
                 $cVatRate       = "";
             }
 
+
             $aDataRate  = array(
                 'FTRteCode' => $tCmpRteCode,
-                'FNLngID'   => $nLangEdit
+                'FNLngID'   => $nLangEdit,
+                'FTAgnCode' => $aResList['raItems']['rtAgnCode']
             );
 
             $aResultRte     = $this->Rate_model->FSaMRTESearchByID($aDataRate);

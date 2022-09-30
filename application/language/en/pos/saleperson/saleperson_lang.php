@@ -36,3 +36,5 @@ $lang['tSPNRemark']    = "Remark";
 $lang['tSPNBranceLevel'] = "Branch Staff";
 $lang['tSPNShopLevel'] = "Shop Staff";
 $lang['tSPNRef'] = "Reference";
+$lang['tSPNRefBch']       = "Reference Branch";
+$lang['tSPNRefShp']       = "Reference Shop";

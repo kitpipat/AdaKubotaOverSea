@@ -471,6 +471,9 @@ Message Modal Confirm for login and ChangePassword -->
 <!-- Thai Bath Text -->
 <script src="<?php echo base_url('application/modules/common/assets/src/jThaiBath.js'); ?>"></script>
 
+<!-- Upload File-->
+<script src="<?php echo base_url(); ?>application/modules/common/assets/src/jUploadFile.js?v=1"></script>
+
 <!-- Modal PDT for:supawat -->
 <div class="modal fade" id="odvModalDOCPDT" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="overflow: hidden auto; z-index: 5000; display: none;">
     <div class="modal-dialog" id="modal-customsWanning" role="document" style="width: 85%; margin: 1.75rem auto;top:0%;">
