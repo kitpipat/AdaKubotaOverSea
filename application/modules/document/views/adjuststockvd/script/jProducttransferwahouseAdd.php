@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-	var tUsrLevel = '<?=$this->session->userdata('tSesUsrLevel')?>';
+	var tUsrLevel = '<?=$this->session->userdata('tSesUsrLoginLevel')?>';
 	alert(tUsrLevel);
 	if( tUsrLevel != "HQ" ){
 		var tBchCount = <?php echo $this->session->userdata("nSesUsrBchCount"); ?>;
@@ -11,9 +11,9 @@
 
 	nLangEdits = '<?php echo $this->session->userdata("tLangEdit"); ?>';
 	tUsrApv    = '<?php echo $this->session->userdata("tSesUsername"); ?>';
-	var tSesUsrLevel    = '<?php echo $this->session->userdata('tSesUsrLevel');?>';
-    var tUserBchCode    = '<?php echo $this->session->userdata("tSesUsrBchCode");?>';
-    var tUserBchName    = '<?php echo $this->session->userdata("tSesUsrBchName");?>';
+	var tSesUsrLevel    = '<?php echo $this->session->userdata('tSesUsrLoginLevel');?>';
+    var tUserBchCode    = '<?php echo $this->session->userdata("tSesUsrBchCodeDefault");?>';
+    var tUserBchName    = '<?php echo $this->session->userdata("tSesUsrBchNameDefault");?>';
     var tUserWahCode    = '<?php echo $this->session->userdata("tSesUsrWahCode");?>';
 	var tUserWahName    = '<?php echo $this->session->userdata("tSesUsrWahName");?>';
 	var tRoute          =  $('#ohdTFWRoute').val();
@@ -1439,16 +1439,16 @@
             if(typeof(nStaSession) !== 'undefined' && nStaSession == 1){
                 JSxCheckPinMenuClose(); // Hidden Pin Menu
 
-                var tShpCode = $('#oetASTShopCode').val();
-                var tPosCode = $('#oetASTPosCode').val();
+                var tShpCode = $('#oetShpCodeStart').val();
+                var tPosCode = $('#oetPosCodeStart').val();
                 if(typeof(tShpCode) != undefined && tShpCode != "" && tPosCode == ""){
                     //คล้งร้านค้า ShopWah  Where ShpCode
                     window.oASTBrowseShpWahOption = undefined;
                     oASTBrowseShpWahOption     = oASTBrowseShpWah({
-                        'tASTBchCode'        : $('#oetASTBchCode').val(),
-                        'tASTShpCode'        : $('#oetASTShopCode').val(),
-                        'tReturnInputCode'   : 'oetASTWahCode',
-                        'tReturnInputName'   : 'oetASTWahName',
+                        'tASTBchCode'        : $('#oetBchCode').val(),
+                        'tASTShpCode'        : $('#oetShpCodeStart').val(),
+                        'tReturnInputCode'   : 'ohdWahCodeStart',
+                        'tReturnInputName'   : 'oetWahNameStart',
                         'tNextFuncName'      : "JSxASTSetConditionWah",
                         'aArgReturn'         : []
                     });
@@ -1457,11 +1457,11 @@
                     //คลังสาขา Wahouse   Where RefCode
                     window.oASTBrowseWahOption  = undefined;
                     oASTBrowseWahOption         = oASTBrowseWah({
-                        'tASTBchCode'       : $('#oetASTBchCode').val(),
-                        'tASTShpCode'       : $('#oetASTShopCode').val(),
-                        'tASTPosCode'       : $('#oetASTPosCode').val(),
-                        'tReturnInputCode'  : "oetASTWahCode",
-                        'tReturnInputName'  : "oetASTWahName",
+                        'tASTBchCode'       : $('#oetBchCode').val(),
+                        'tASTShpCode'       : $('#oetShpCodeStart').val(),
+                        'tASTPosCode'       : $('#oetPosCodeStart').val(),
+                        'tReturnInputCode'  : "ohdWahCodeStart",
+                        'tReturnInputName'  : "oetWahNameStart",
                         'tNextFuncName'     : "JSxASTSetConditionWah",
                         'aArgReturn'        : []
                     });
@@ -1537,9 +1537,9 @@
 				FuncName    : tNextFuncName,
 				ArgReturn   : aArgReturn
 			},
+			DebugSQL : true,
 			RouteAddNew: 'warehouse',
-			BrowseLev : nStaTFWBrowseType,
-			// DebugSQL : true
+			BrowseLev : nStaTFWBrowseType
 		};
 		return oOptionReturn;
 	}

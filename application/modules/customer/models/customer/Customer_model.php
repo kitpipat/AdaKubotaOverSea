@@ -301,6 +301,12 @@ class Customer_model extends CI_Model {
                         WHERE 1=1";
         
         $tSQL .= "AND LNG.FTLngStaUse = '1'";
+
+        if ($this->session->userdata('tSesUsrLoginLevel') != "HQ") {
+            $tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
+            $tSQL .= " AND CST.FTCstBchCode IN($tBchCodeMulti)";
+        }
+
         $tSearchList = $paData['tSearchAll'];
         if ($tSearchList != ''){
             $tSQL .= " AND (CST.FTCstCode COLLATE THAI_BIN LIKE '%$tSearchList%'";  

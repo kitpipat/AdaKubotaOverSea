@@ -263,25 +263,25 @@ class User_model extends CI_Model {
             $tWhereCentrallize = " AND ( ";
             $nCountCon = 0;
 
-            if(!empty($paData['tUsrAgnCode'])){
+            if(!empty($paData['tUsrAgnCode']) && $paData['tUsrAgnCode'] != "''" && $paData['tUsrAgnCode']){
                 $tUsrAgnCode = $paData['tUsrAgnCode'];
                 if ( $nCountCon == 0 ){ $tStringOR = '';$nCountCon++; }else{ $tStringOR = 'OR'; }
                 $tWhereCentrallize .=  " $tStringOR USRG.FTAgnCode = '$tUsrAgnCode' ";
             }
 
-            if(!empty($paData['tUsrBchCode'])){
+            if(!empty($paData['tUsrBchCode']) && $paData['tUsrBchCode'] != "''" && $paData['tUsrBchCode']){
                 $tUsrBchCode = $paData['tUsrBchCode'];
                 if ( $nCountCon == 0 ){ $tStringOR = '';$nCountCon++; }else{ $tStringOR = 'OR'; }
                 $tWhereCentrallize .=  " $tStringOR USRG.FTBchCode IN ($tUsrBchCode) ";
             }
 
-            if(!empty($paData['tUsrShpCode'])){
+            if(!empty($paData['tUsrShpCode']) && $paData['tUsrShpCode'] != "''" && $paData['tUsrShpCode']){
                 $tUsrShpCode = $paData['tUsrShpCode'];
                 if ( $nCountCon == 0 ){ $tStringOR = '';$nCountCon++; }else{ $tStringOR = 'OR'; }
                 $tWhereCentrallize .=  " $tStringOR USRG.FTShpCode IN ($tUsrShpCode) ";
             }
 
-            if(!empty($paData['tUsrMerCode'])){
+            if(!empty($paData['tUsrMerCode']) && $paData['tUsrMerCode'] != "''" && $paData['tUsrMerCode']){
                 $tUsrMerCode = $paData['tUsrMerCode'];
                 if ( $nCountCon == 0 ){ $tStringOR = '';$nCountCon++; }else{ $tStringOR = 'OR'; }
                 $tWhereCentrallize .=  " $tStringOR USRG.FTMerCode = '$tUsrMerCode' ";
@@ -787,11 +787,16 @@ class User_model extends CI_Model {
     public function FSaMUSRAddUpdateLang($paData){
         try{
             //Update Lang
-            $this->db->set('FTUsrName',$paData['FTUsrName']);
-            $this->db->set('FTUsrRmk',$paData['FTUsrRmk']);
-            $this->db->where('FTUsrCode',$paData['FTUsrCode']);
-            $this->db->where('FNLngID',$paData['FNLngID']);
-            $this->db->update('TCNMUser_L');
+            // $this->db->set('FTUsrName',$paData['FTUsrName']);
+            // $this->db->set('FTUsrRmk',$paData['FTUsrRmk']);
+            // $this->db->where('FTUsrCode',$paData['FTUsrCode']);
+            // $this->db->where('FNLngID',$paData['FNLngID']);
+            // $this->db->update('TCNMUser_L');
+            $tSql = "UPDATE TCNMUser_L SET 
+                        FTUsrName = N'".$paData["FTUsrName"]."' , 
+                        FTUsrRmk = N'".$paData["FTUsrRmk"]."' 
+                     WHERE FNLngID = '".$paData['FNLngID']."' AND FTUsrCode = '".$paData['FTUsrCode']."' ";
+            $this->db->query($tSql);
             if($this->db->affected_rows() > 0){
                 $aStatus = array(
                     'rtCode' => '1',
@@ -799,12 +804,18 @@ class User_model extends CI_Model {
                 );
             }else{
                 //Add Lang
-                $this->db->insert('TCNMUser_L',array(
-                    'FTUsrCode' => $paData['FTUsrCode'],
-                    'FNLngID'   => $paData['FNLngID'],
-                    'FTUsrName' => $paData['FTUsrName'],
-                    'FTUsrRmk'  => $paData['FTUsrRmk'],
-                ));
+                // $this->db->insert('TCNMUser_L',array(
+                //     'FTUsrCode' => $paData['FTUsrCode'],
+                //     'FNLngID'   => $paData['FNLngID'],
+                //     'FTUsrName' => $paData['FTUsrName'],
+                //     'FTUsrRmk'  => $paData['FTUsrRmk'],
+                // ));
+                $tSql = "INSERT INTO TCNMPdt_L (FTUsrCode, FNLngID, FTUsrName, FTUsrRmk)
+                VALUES ('".$paData["FTUsrCode"]."', 
+                         ".$paData['FNLngID'].", 
+                         N'".$paData["FTUsrName"]."', 
+                         N'".$paData["FTUsrRmk"]."')";
+                $this->db->query($tSql);
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(
                         'rtCode' => '1',

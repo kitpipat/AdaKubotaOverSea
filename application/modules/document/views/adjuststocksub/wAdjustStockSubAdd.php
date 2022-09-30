@@ -91,7 +91,7 @@ if($aResult['rtCode'] == "1"){
     
 }
 
-$tUserLevel   = $this->session->userdata('tSesUsrLevel');
+$tUserLevel   = $this->session->userdata('tSesUsrLoginLevel');
  echo  $tUserShpName;  
  echo  $tUserPosCode;   
 ?>

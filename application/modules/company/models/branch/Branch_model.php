@@ -217,7 +217,7 @@ class Branch_model extends CI_Model {
         //     $tSQL   .= " AND BCH.FTBchCode = '$tBchCode' ";
         // }
         
-        if($this->session->userdata("tSesUsrAgnCode") != ""){
+        if($this->session->userdata("tSesUsrLevel") != "HQ"){
             $tBchCode    = $this->session->userdata("tSesUsrBchCodeMulti");
             $tAgnCode    = $this->session->userdata("tSesUsrAgnCode");
             if($tBchCode){
@@ -1388,6 +1388,52 @@ class Branch_model extends CI_Model {
             //No Data
             return array();
         }  
+    }
+
+    public function FSaMBCHGetDataUserBranch(){
+        $tAgnCode = $this->session->userdata("tSesUsrAgnCode");
+        $tLang = $this->session->userdata("tLangID");
+        $tSQL  = "  SELECT DISTINCT
+                        BCH.FTBchCode       AS FTBchCode,
+                        BCHL.FTBchName      AS FTBchName
+                    FROM TCNMBranch  BCH  WITH(NOLOCK) 
+                    LEFT JOIN TCNMBranch_L   BCHL WITH(NOLOCK) ON BCH.FTBchCode = BCHL.FTBchCode AND BCHL.FNLngID = $tLang
+                    WHERE BCH.FTAgnCode = '$tAgnCode'
+                    ORDER BY FTBchCode ASC
+                 ";
+
+        $oQuery = $this->db->query($tSQL);
+        return $oQuery->result_array();            
+    }
+
+    public function FStMBCHMakeArrayToString($paDataUsr,$ptField,$ptType){
+        $nCountData     = 0;
+        $tData          = '';
+        if(!empty($paDataUsr)){
+            $tData      .= "'";
+            for($i=0;$i < count($paDataUsr);$i++){
+                if(!empty($paDataUsr[$i][$ptField])){
+                    if(strpos($tData, $paDataUsr[$i][$ptField]) !== 1){
+                        if($i != 0){
+                            $tData .= "','";
+                        }
+                        $tData .= $paDataUsr[$i][$ptField];
+                        $nCountData++;
+                    }
+                }
+            }
+            $tData .= "'";
+
+            if($nCountData == 0){
+                $tData = "";   
+            }
+        }
+        
+        if($ptType == 'counts'){
+            return $nCountData;
+        }else{
+            return $tData;
+        }
     }
 
 }

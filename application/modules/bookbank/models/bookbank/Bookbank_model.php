@@ -45,12 +45,12 @@ class Bookbank_model extends CI_Model {
             $tSQL .= "      OR BBKL.FTBbkName LIKE '%$tSearchList%')";
         }
 
-        $tStaUsrLevel    = $this->session->userdata("tSesUsrLevel");
+        $tStaUsrLevel    = $this->session->userdata("tSesUsrLoginLevel");
         if($tStaUsrLevel == 'HQ'){
             $tSQL   .= "";
-        }else if($tStaUsrLevel == 'BCH'){
-            $tBCH    = $this->session->userdata("tSesUsrBchCom");
-            $tSQL   .= " AND BBK.FTBchCode = '$tBCH'";
+        }else{
+            $tBCH    = $this->session->userdata("tSesUsrBchCodeMulti");
+            $tSQL   .= " AND BBK.FTBchCode IN($tBCH)";
         }
 
         $tSQL .= ") Base) AS c WHERE c.FNRowID > $aRowLen[0] AND c.FNRowID <= $aRowLen[1]";

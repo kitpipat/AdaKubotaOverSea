@@ -1,4 +1,7 @@
 <?php
+// echo '<pre>';
+// print_r($_SESSION);
+// echo '</pre>';
 if ($aResult['rtCode'] == "1") { // Edit
 	$tBchCode = $aResult['raItems']['FTBchCode'];
 	$tBchName = $aResult['raItems']['FTBchName'];

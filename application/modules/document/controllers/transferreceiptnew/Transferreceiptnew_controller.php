@@ -93,7 +93,7 @@ class Transferreceiptnew_controller extends MX_Controller
             $tAPIReq            = "";
             $tMethodReq         = "GET";
             $aCompData          = $this->Company_model->FSaMCMPList($tAPIReq, $tMethodReq, $aDataWhere);
-            $tCmpCode           = $aCompData['raItems']['rtCmpCode'];
+            $tCmpCode           = @$aCompData['raItems']['rtCmpCode'];
 
             if ($aCompData['rtCode'] == '1') {
                 $tBchCode       = $aCompData['raItems']['rtCmpBchCode'];
@@ -103,7 +103,8 @@ class Transferreceiptnew_controller extends MX_Controller
                 $cVatRate       = $aVatRate['FCVatRate'][0];
                 $aDataRate      = array(
                     'FTRteCode' => $tCmpRteCode,
-                    'FNLngID'   => $nLangEdit
+                    'FNLngID'   => $nLangEdit,
+                    'FTAgnCode' => $aCompData['raItems']['rtAgnCode']
                 );
                 $aResultRte     = $this->Rate_model->FSaMRTESearchByID($aDataRate);
                 if ($aResultRte['rtCode'] == 1) {
@@ -264,7 +265,9 @@ class Transferreceiptnew_controller extends MX_Controller
                 $cVatRate       = $aVatRate['FCVatRate'][0];
                 $aDataRate      = array(
                     'FTRteCode' => $tCmpRteCode,
-                    'FNLngID'   => $nLangEdit
+                    'FNLngID'   => $nLangEdit,
+                    'FTAgnCode' => $aCompData['raItems']['rtAgnCode']
+
                 );
                 $aResultRte     = $this->Rate_model->FSaMRTESearchByID($aDataRate);
                 if ($aResultRte['rtCode'] == 1) {

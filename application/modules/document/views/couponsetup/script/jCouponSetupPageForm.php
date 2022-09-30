@@ -5,7 +5,7 @@
 <script type="text/javascript">
     var nLangEdits      = '<?php echo $this->session->userdata("tLangEdit");?>';
     var tUsrApvName     = '<?php echo $this->session->userdata("tSesUsername");?>';
-    var tSesUsrLevel    = '<?php echo $this->session->userdata('tSesUsrLevel');?>';
+    var tSesUsrLevel    = '<?php echo $this->session->userdata('tSesUsrLoginLevel');?>';
 
    let  CPHFrmCphDisType=  $('#ostCPHFrmCphDisType').val();
    if(CPHFrmCphDisType==3){
@@ -690,7 +690,7 @@
 
         $('#oimBrowseBch').click(function(){ JCNxBrowseData('oBrowseBch'); });
 
-        var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+        var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
         var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
         var nCountBch     = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
         var tWhere = "";

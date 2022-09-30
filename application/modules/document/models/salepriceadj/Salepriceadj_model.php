@@ -17,8 +17,7 @@ class Salepriceadj_model extends CI_Model
         $nLngID = $paData['FNLngID'];
         $aAdvanceSearch = $paData['oAdvanceSearchData'];
 
-        $tSQL = " 
-            SELECT c.* FROM(
+        $tSQL = "SELECT c.* FROM(
                 SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateON DESC) AS rtRowID,* FROM
                     (SELECT DISTINCT
                         (CASE
@@ -62,6 +61,12 @@ class Salepriceadj_model extends CI_Model
                     LEFT JOIN TCNTPdtAdjPriRT ART WITH(NOLOCK) ON ART.FTXphDocNo = PPH.FTXphDocNo
                     WHERE ART.FTXphDocNo IS NULL    
         ";
+        
+		if ($this->session->userdata('tSesUsrLoginLevel') != "HQ") { // ผู้ใช้ระดับ AD ดูได้แค่สาขาที่มีสิทธิ์
+			$tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
+			$tSQL .= " AND PPH.FTBchCode IN($tBchCodeMulti)";
+		}
+
 
         $tSearchList = $aAdvanceSearch['tSearchAll'];
         if ($tSearchList != '') {

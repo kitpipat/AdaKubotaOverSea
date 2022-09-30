@@ -55,6 +55,10 @@ $lang['tWahBchCreate']          = "สาขา";
 
 $lang['tBrowseCHNName']     = "ช่องทางขาย";
 
-
+$lang['tPosStaAlwPLFrmTBO']                = "อนุญาตใช้ใบจัดจากใบจ่ายโอน";
+$lang['tPosStaAlwPLFrmSale']               = "อนุญาตใช้ใบจัด";
+$lang['tPosStaAlwSNPL']                    = "รับ S/N ในใบจัด";
+$lang['tPosCheckCntStk']                   = "อนุญาต ตรวจสอบสต๊อกคงเหลือ(สำหรับขาย)";
+$lang['tPosCheckCostAmt']                  = "อนุญาต คำนวณมูลค่าสินค้า";
 
 

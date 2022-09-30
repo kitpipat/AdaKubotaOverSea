@@ -1,5 +1,5 @@
 <script>
-    var tUsrLevel = "<?= $this->session->userdata('tSesUsrLevel') ?>";
+    var tUsrLevel = "<?= $this->session->userdata('tSesUsrLoginLevel') ?>";
     var tBchCode = "<?= $this->session->userdata('tSesUsrBchCodeMulti') ?>";
     var tAgnName = "<?= $this->session->userdata('tSesUsrAgnName') ?>";
 

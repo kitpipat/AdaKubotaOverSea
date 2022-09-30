@@ -294,7 +294,7 @@ $('#obtAdjStkSumBrowseBch').click(function(){
     // Lang Edit In Browse
     nLangEdits = <?php echo $this->session->userdata("tLangEdit")?>;
 
-    var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+    var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
     var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";   
     var tWhere = "";
  

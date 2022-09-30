@@ -8,6 +8,10 @@
     var tTWIStaApvDoc = '<?= $tTWIStaApv; ?>';
     var tTWIStaPrcStkDoc = '<?= $tTWIStaPrcStk; ?>';
     var tTWIRoute = '<?= $tTWIRoute; ?>';
+
+    var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
+    var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
+        
     $(document).ready(function() {
 
         $('#odvTRNOut').css('display', 'block');
@@ -208,7 +212,12 @@
     // ===================================== เลือกประเภทต่างๆ =====================================
 
     ///////[เอกสารรับโอน]
-
+    var tWhere = "";
+    if(tUsrLevel != "HQ"){
+        tWhere = " AND TCNMShop.FTBchCode IN ("+tBchCodeMulti+") ";
+    }else{
+        tWhere = "";
+    }
     //เลือกร้านค้าต้นทาง 
     var oBrowseTROutFromShp = {
         Title: ['company/shop/shop', 'tSHPTitle'],
@@ -224,7 +233,7 @@
             ]
         },
         Where: {
-            Condition: []
+            Condition: [tWhere]
         },
         GrideView: {
             ColumnPathLang: 'company/shop/shop',
@@ -501,6 +510,12 @@
     //----------------------------------------------------------------------------------------//
 
     //เลือกร้านค้าปลายทาง
+    var tWhereToShp = "";
+    if(tUsrLevel != "HQ"){
+        tWhereToShp = " AND TCNMShop.FTBchCode IN ("+tBchCodeMulti+") ";
+    }else{
+        tWhereToShp = "";
+    }
     var oBrowseTROutToShp = {
         Title: ['company/shop/shop', 'tSHPTitle'],
         Table: {
@@ -515,7 +530,7 @@
             ]
         },
         Where: {
-            Condition: []
+            Condition: [tWhereToShp]
         },
         GrideView: {
             ColumnPathLang: 'company/shop/shop',
@@ -739,6 +754,12 @@
     });
 
     //อ้างอิงเอกสารจ่ายโอน
+    var tWherePdtInt = "";
+    if(tUsrLevel != "HQ"){
+        tWherePdtInt = " AND TCNTPdtIntDT.FTBchCode IN ("+tBchCodeMulti+") ";
+    }else{
+        tWherePdtInt = "";
+    }
     var oBrowseTWIBPdtInt = {
         Title: ['document/transferreceiptbranch/transferreceiptbranch', 'tTBIBrowsDocTBO'],
         Table: {
@@ -753,7 +774,7 @@
             ]
         },
         Where: {
-            Condition: []
+            Condition: [tWherePdtInt]
         },
         GrideView: {
             DistinctField: ['TCNTPdtIntDT.FTXthDocNo'],
@@ -900,6 +921,12 @@
     });
 
     //เลือกร้านค้า - จากแบบ => ประเภทผู้จำหน่าย
+    var tWhereFromShp = "";
+    if(tUsrLevel != "HQ"){
+        tWhereFromShp = " AND TCNMShop.FTBchCode IN ("+tBchCodeMulti+") ";
+    }else{
+        tWhereFromShp = "";
+    }
     var oBrowseTRINFromShp = {
         Title: ['company/shop/shop', 'tSHPTitle'],
         Table: {
@@ -914,7 +941,7 @@
             ]
         },
         Where: {
-            Condition: []
+            Condition: [tWhereFromShp]
         },
         GrideView: {
             ColumnPathLang: 'company/shop/shop',

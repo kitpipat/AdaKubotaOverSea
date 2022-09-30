@@ -419,7 +419,6 @@ class cTransferBchOut extends MX_Controller
 
             $this->mTransferBchOut->FSaMAddUpdateHD($aDataMaster);
             $this->mTransferBchOut->FSaMAddUpdateHDRef($aDataMaster);
-
             $aUpdateDocNoInTmpParams = [
                 'tDocNo' => $aDataMaster['FTXthDocNo'],
                 'tDocKey' => 'TCNTPdtTboHD',
@@ -435,7 +434,6 @@ class cTransferBchOut extends MX_Controller
                 'tUserLoginCode' => $tUserLoginCode
             ];
             $this->mTransferBchOut->FSaMTempToDT($aTempToDTParams); // คัดลอกข้อมูลจาก Temp to DT
-
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
                 $aReturn = array(

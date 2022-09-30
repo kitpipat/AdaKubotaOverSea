@@ -443,7 +443,7 @@
         /*===== End ocbPromotionPmhStaChkCst(คิดต่อสมาชิก/ทั้งหมด) Control ================*/
     });
 
-    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
     var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
     var nCountBch = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
     var tWhere = "";

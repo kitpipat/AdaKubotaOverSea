@@ -79,17 +79,18 @@ class Warehouse_controller extends MX_Controller
 			}
 
 			$aDataMaster = array(
-				'FTWahCode'     => $tWahCode,
-				'FTWahName'     => $tWahName,
-				'FTWahStaType'  => $tWahStaType,
-				'FTBchCode'     => $tBchCodeCreate,
-				'FTBchCodeOld'  => $this->input->post('oetWAHBchCodeOld'),
-				'FTWahRefCode'  => $tWahRefCode,
-				'FNLngID'       => $this->session->userdata("tLangEdit"),
-				'FDLastUpdOn'   => date('Y-m-d H:i:s'),
-				'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
-				'FTWahStaChkStk' => $tWahStaChkStk,
-				'FTWahStaPrcStk' => $tWahStaPrcStk,
+				'FTWahCode'     		=> $tWahCode,
+				'FTWahName'     		=> $tWahName,
+				'FTWahStaType'  		=> $tWahStaType,
+				'FTBchCode'     		=> $tBchCodeCreate,
+				'FTBchCodeOld'  		=> $this->input->post('oetWAHBchCodeOld'),
+				'FTWahRefCode'  		=> $tWahRefCode,
+				'FNLngID'       		=> $this->session->userdata("tLangEdit"),
+				'FDLastUpdOn'   		=> date('Y-m-d H:i:s'),
+				'FTLastUpdBy'   		=> $this->session->userdata('tSesUsername'),
+				'FTWahStaChkStk' 		=> $tWahStaChkStk,
+				'FTWahStaPrcStk' 		=> $tWahStaPrcStk,
+				'FTWahStaAlwPLFrmSale'  => (!empty($this->input->post('ocbWahStaAlwPLFrmSale'))) ? 1 : 2,
 			);
 
 			$this->db->trans_begin();
@@ -199,18 +200,19 @@ class Warehouse_controller extends MX_Controller
 			} */
 
 			$aDataMaster = array(
-				'FTWahCode' 		=> $tWahCode,
-				'FTWahStaType' 		=> $FTWahStaType,
-				'FTBchCode' 		=> $tBchCodeCreate,
-				'FTWahRefCode' 		=> $tWahRefCode,
-				'FDLastUpdOn' 		=> date('Y-m-d H:i:s'),
-				'FTLastUpdBy' 		=> $this->session->userdata('tSesUsername'),
-				'FDCreateOn' 		=> date('Y-m-d H:i:s'),
-				'FTCreateBy' 		=> $this->session->userdata('tSesUsername'),
-				'FNLngID' 			=> $this->session->userdata("tLangEdit"),
-				'FTWahName'			=> $this->input->post('oetWahName'),
-				'FTWahStaChkStk' 	=> $tWahStaChkStk,
-				'FTWahStaPrcStk' 	=> $tWahStaPrcStk,
+				'FTWahCode' 			 => $tWahCode,
+				'FTWahStaType' 			 => $FTWahStaType,
+				'FTBchCode' 			 => $tBchCodeCreate,
+				'FTWahRefCode' 			 => $tWahRefCode,
+				'FDLastUpdOn' 			 => date('Y-m-d H:i:s'),
+				'FTLastUpdBy' 			 => $this->session->userdata('tSesUsername'),
+				'FDCreateOn' 			 => date('Y-m-d H:i:s'),
+				'FTCreateBy' 			 => $this->session->userdata('tSesUsername'),
+				'FNLngID' 				 => $this->session->userdata("tLangEdit"),
+				'FTWahName'				 => $this->input->post('oetWahName'),
+				'FTWahStaChkStk' 		 => $tWahStaChkStk,
+				'FTWahStaPrcStk' 		 => $tWahStaPrcStk,
+				'FTWahStaAlwPLFrmSale'   => (!empty($this->input->post('ocbWahStaAlwPLFrmSale'))) ? 1 : 2,
 			);
 
 			$this->db->trans_begin();

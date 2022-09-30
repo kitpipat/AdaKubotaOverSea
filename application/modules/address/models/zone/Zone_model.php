@@ -307,13 +307,13 @@ class Zone_model extends CI_Model {
     					FROM TCNMZone ZNE
 						LEFT JOIN TCNMZone_L ZNEL ON ZNE.FTZneCode = ZNEL.FTZneCode AND ZNEL.FNLngID = $nLngID
 						LEFT JOIN TCNMAgency_L AGNL ON ZNE.FTAgnCode = AGNL.FTAgnCode AND AGNL.FNLngID = $nLngID
-
 						WHERE 1 = 1
 						";
 
-		if($this->session->userdata('tSesUsrLevel') != "HQ" && $this->session->userdata('tSesUsrAgnCode')){
+		if($this->session->userdata('tSesUsrLoginLevel') != "HQ" && $this->session->userdata('tSesUsrAgnCode')){
 			$tSQL .= " AND ZNE.FTAgnCode IN('".$this->session->userdata('tSesUsrAgnCode')."','')";
 		}
+		
 		@$tWhereCode = $paData['tWhereCode'];
 		if (@$tWhereCode != '') {
 			$tSQL .= " AND (ZNE.FTAreCode = '$tWhereCode')";
@@ -380,7 +380,7 @@ class Zone_model extends CI_Model {
 								LEFT JOIN TCNMZone_L ZNEL ON ZNE.FTZneCode = ZNEL.FTZneCode AND ZNEL.FNLngID = $ptLngID
 								WHERE 1 = 1";
 
-		if($this->session->userdata('tSesUsrLevel') != "HQ" && $this->session->userdata('tSesUsrAgnCode')){
+		if($this->session->userdata('tSesUsrLoginLevel') != "HQ" && $this->session->userdata('tSesUsrAgnCode')){
 			$tSQL .= " AND ZNE.FTAgnCode IN('".$this->session->userdata('tSesUsrAgnCode')."','')";
 		}
 		if(@$ptWhereCode != ''){

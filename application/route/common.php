@@ -71,3 +71,10 @@ $route['ImportFileExcel']               = "common/Home_controller/FSxImpImportFi
 
 $route['GetMassageQueue']               = "common/Common_controller/FCNtCCMMGetMassageProgress";
 $route['GetMassageQueueDailyCurrent']   = "common/Common_controller/FCNtCCMMGetMassageProgressDailyCurrent";
+
+//Upload File
+$route['UPFDataTable']                  = "common/UploadFile_Controller/FCNvCUPFCallDataTable";
+$route['UPFEventAdd']                   = "common/UploadFile_Controller/FCNaCUPFEventAdd";
+$route['UPFEventEdit']                  = "common/UploadFile_Controller/FCNvCUPFEventEdit";
+$route['UPFEventDelete']                = "common/UploadFile_Controller/FCNvCUPFEventDelete";
+$route['UPFDataTableForNew']            = "common/UploadFile_Controller/FCNvCUPFCallDataTableForNew";

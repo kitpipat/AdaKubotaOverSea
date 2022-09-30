@@ -93,7 +93,11 @@ class Saleperson_model extends CI_Model {
                             LEFT JOIN [TCNMImgPerson] IMGP WITH(NOLOCK) ON IMGP.FTImgRefID = SPN.FTSpnCode AND IMGP.FNImgSeq = 1
                             WHERE 1=1
         ";
-        
+        if ($this->session->userdata('tSesUsrLoginLevel') != "HQ") { 
+			$tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
+            $tSQL .= " AND SPNG.FTBchCode IN($tBchCodeMulti)";
+
+		}
         $tSearchList = $paData['tSearchAll'];
         if ($tSearchList != ''){
             $tSQL .= " AND (SPN.FTSpnCode LIKE '%$tSearchList%'";

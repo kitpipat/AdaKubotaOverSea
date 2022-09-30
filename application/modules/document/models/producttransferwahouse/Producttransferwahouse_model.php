@@ -43,6 +43,11 @@ class Producttransferwahouse_model extends CI_Model
                             
                             WHERE 1=1 ";
 
+        if ($this->session->userdata('tSesUsrLoginLevel') != "HQ") {
+            $tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
+            $tSQL .= " AND TFW.FTBchCode IN($tBchCodeMulti)";
+        }
+
         $oAdvanceSearch = $paData['oAdvanceSearch'];
 
         @$tSearchList = $oAdvanceSearch['tSearchAll'];

@@ -23,9 +23,15 @@ class Producttransferwahousevd_model extends CI_Model {
         }
 
         // Check User Level Branch HQ OR Bch Or Shop
-        $tUserLevel = $this->session->userdata("tSesUsrLevel");
+        $tUserLevel = $this->session->userdata("tSesUsrLoginLevel");
         $tWhereBch  = "";
         $tWhereShp  = "";
+
+        if(isset($tUserLevel) && !empty($tUserLevel) && $tUserLevel == "AGN"){
+            // Check User Level BCH
+            $tWhereBch  =   " AND TFW.FTBchCode = '".@$aDataUserInfo['FTBchCode']."'";
+        }
+
         if(isset($tUserLevel) && !empty($tUserLevel) && $tUserLevel == "BCH"){
             // Check User Level BCH
             $tWhereBch  =   " AND TFW.FTBchCode = '".$aDataUserInfo['FTBchCode']."'";
@@ -2028,7 +2034,7 @@ class Producttransferwahousevd_model extends CI_Model {
         }
 
         // Check User Level Branch HQ OR Bch Or Shop
-        $tUserLevel = $this->session->userdata("tSesUsrLevel");
+        $tUserLevel = $this->session->userdata("tSesUsrLoginLevel");
         $tWhereBch  = "";
         $tWhereShp  = "";
         if(isset($tUserLevel) && !empty($tUserLevel) && $tUserLevel == "BCH"){

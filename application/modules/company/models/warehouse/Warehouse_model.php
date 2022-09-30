@@ -136,7 +136,7 @@ class Warehouse_model extends CI_Model
 					WAH.FTWahStaChkStk 	AS rtWahStaChkStk,
 					WAH.FTWahStaPrcStk 	AS rtWahStaPrcStk,
 					WAHL.FTWahName  	AS rtWahName,
-
+					WAH.FTWahStaAlwPLFrmSale 	AS rtWahStaAlwPLFrmSale,
 					BCHLR.FTBchCode  	AS rtBchCodeRef,
 					BCHLR.FTBchName  	AS rtBchNameRef,
 					SHPLR.FTShpCode		AS rtShpCodeRef,
@@ -214,13 +214,13 @@ class Warehouse_model extends CI_Model
 		";
 
 		// User BCH Level
-		if ($this->session->userdata('tSesUsrLevel') == "BCH") { // ผู้ใช้ระดับ BCH ดูได้แค่สาขาที่มีสิทธิ์
+		if ($this->session->userdata('tSesUsrLoginLevel') == "BCH") { // ผู้ใช้ระดับ BCH ดูได้แค่สาขาที่มีสิทธิ์
 			$tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
 			$tSQL .= " AND WAH.FTBchCode IN($tBchCodeMulti) OR (WAH.FTWahRefCode IN ($tBchCodeMulti) AND WAH.FTWahStaType IN ('1','2') )";
 		}
 
 		// User SHP Level
-		if ($this->session->userdata('tSesUsrLevel') == "SHP") { // ผู้ใช้ระดับ SHP ดูได้แค่สาขาที่มีสิทธิ์
+		if ($this->session->userdata('tSesUsrLoginLevel') == "SHP" || $this->session->userdata('tSesUsrLoginLevel') == "AGN") { // ผู้ใช้ระดับ SHP ดูได้แค่สาขาที่มีสิทธิ์
 			$tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
 			$tSQL .= " AND WAH.FTBchCode IN($tBchCodeMulti)";
 		}
@@ -283,6 +283,7 @@ class Warehouse_model extends CI_Model
 			LEFT JOIN TCNMBranch_L BCHL WITH (NOLOCK) ON  WAH.FTBchCode = BCHL.FTBchCode AND BCHL.FNLngID = $ptLngID
 			WHERE 1=1";
 
+
 		// User BCH Level
 		if ($this->session->userdata('tSesUsrLevel') == "BCH") { // ผู้ใช้ระดับ BCH ดูได้แค่สาขาที่มีสิทธิ์
 			$tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
@@ -290,7 +291,7 @@ class Warehouse_model extends CI_Model
 		}
 
 		// User SHP Level
-		if ($this->session->userdata('tSesUsrLevel') == "SHP") { // ผู้ใช้ระดับ SHP ดูได้แค่สาขาที่มีสิทธิ์
+		if ($this->session->userdata('tSesUsrLevel') == "SHP" || $this->session->userdata('tSesUsrLoginLevel') == "AGN") { // ผู้ใช้ระดับ SHP ดูได้แค่สาขาที่มีสิทธิ์
 			$tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
 			$tSQL .= " AND WAH.FTBchCode IN($tBchCodeMulti)";
 		}
@@ -326,16 +327,17 @@ class Warehouse_model extends CI_Model
 
 			$this->db->insert('TCNMWaHouse', array(
 
-				'FTWahCode' 	=> $paData['FTWahCode'],
-				'FTWahStaType' 	=> $paData['FTWahStaType'],
-				'FTWahRefCode' 	=> $paData['FTWahRefCode'],
-				'FTBchCode' 	=> $paData['FTBchCode'],
-				'FTWahStaChkStk' => $paData['FTWahStaChkStk'],
-				'FTWahStaPrcStk' => $paData['FTWahStaPrcStk'],
-				'FDCreateOn' 	=> $paData['FDCreateOn'],
-				'FTCreateBy' 	=> $paData['FTCreateBy'],
-				'FDLastUpdOn'	=> $paData['FDLastUpdOn'],
-				'FTLastUpdBy'	=> $paData['FTLastUpdBy'],
+				'FTWahCode' 			=> $paData['FTWahCode'],
+				'FTWahStaType' 			=> $paData['FTWahStaType'],
+				'FTWahRefCode' 			=> $paData['FTWahRefCode'],
+				'FTBchCode' 			=> $paData['FTBchCode'],
+				'FTWahStaChkStk' 		=> $paData['FTWahStaChkStk'],
+				'FTWahStaPrcStk' 		=> $paData['FTWahStaPrcStk'],
+				'FTWahStaAlwPLFrmSale' 	=> $paData['FTWahStaAlwPLFrmSale'],
+				'FDCreateOn' 			=> $paData['FDCreateOn'],
+				'FTCreateBy' 			=> $paData['FTCreateBy'],
+				'FDLastUpdOn'			=> $paData['FDLastUpdOn'],
+				'FTLastUpdBy'			=> $paData['FTLastUpdBy'],
 
 			));
 
@@ -511,13 +513,14 @@ class Warehouse_model extends CI_Model
 			$this->db->where('FTWahCode', $paData['FTWahCode']);
 			$this->db->where('FTBchCode', $paData['FTBchCodeOld']);
 			$this->db->update('TCNMWaHouse', array(
-				'FTWahStaType' => $paData['FTWahStaType'],
-				'FTWahRefCode' => $paData['FTWahRefCode'],
+				'FTWahStaType' 			=> $paData['FTWahStaType'],
+				'FTWahRefCode' 			=> $paData['FTWahRefCode'],
 				// 'FTBchCode' => $paData['FTBchCode'],
-				'FTWahStaChkStk' => $paData['FTWahStaChkStk'],
-				'FTWahStaPrcStk' => $paData['FTWahStaPrcStk'],
-				'FDLastUpdOn' => $paData['FDLastUpdOn'],
-				'FTLastUpdBy' => $paData['FTLastUpdBy']
+				'FTWahStaAlwPLFrmSale' 	=> $paData['FTWahStaAlwPLFrmSale'],
+				'FTWahStaChkStk' 		=> $paData['FTWahStaChkStk'],
+				'FTWahStaPrcStk' 		=> $paData['FTWahStaPrcStk'],
+				'FDLastUpdOn' 			=> $paData['FDLastUpdOn'],
+				'FTLastUpdBy' 			=> $paData['FTLastUpdBy']
 			));
 
 			if ($this->db->affected_rows() > 0) {
@@ -622,6 +625,7 @@ class Warehouse_model extends CI_Model
 	public function FSnMLOCGetAllNumRow()
 	{
 		$tSQL = "SELECT COUNT(*) AS FNAllNumRow FROM TCNMWaHouse";
+		
 		$oQuery = $this->db->query($tSQL);
 		if ($oQuery->num_rows() > 0) {
 			$aResult = $oQuery->row_array()["FNAllNumRow"];

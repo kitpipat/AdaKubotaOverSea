@@ -164,6 +164,11 @@ class Poschanel_model extends CI_Model
                     $tWhereCondition
                  ";
         $tSQL3 = " ) Base) AS c WHERE c.rtRowID > $aRowLen[0] AND c.rtRowID <= $aRowLen[1] ";
+      
+        if ($this->session->userdata('tSesUsrLoginLevel') != "HQ") {
+            $tAgnCode = $this->session->userdata('tSesUsrAgnCode');
+            $tSQL2 .= " AND CHNS.FTAgnCode IS NULL OR CHNS.FTAgnCode = '$tAgnCode' ";
+        }
 
 
         $tFullQuery  = $tSQL1.$tSQL2.$tSQL3;

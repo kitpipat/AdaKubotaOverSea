@@ -39,7 +39,7 @@ class Producttransferbranch_model extends CI_Model {
                             WHERE 1=1 ";
 
         // User Branch
-        if($this->session->userdata("tSesUsrLevel") != "HQ" ){
+        if($this->session->userdata("tSesUsrLoginLevel") != "HQ" ){
             $tWhereBchCodeUsr = $this->session->userdata("tSesUsrBchCode");
             $tSQL .= " AND TBX.FTBchCode = '$tWhereBchCodeUsr' ";
         }

@@ -43,7 +43,7 @@ class Adjuststocksub_model extends CI_Model
                     AND ADJSTK.FTAjhDocType = '1'
         ";
 
-        if ($this->session->userdata("tSesUsrLevel") != "HQ") {
+        if ($this->session->userdata("tSesUsrLoginLevel") != "HQ") {
             $tBchMulti = $this->session->userdata("tSesUsrBchCodeMulti");
             $tSQL .= " AND ADJSTK.FTBchCode IN ($tBchMulti)";
         }

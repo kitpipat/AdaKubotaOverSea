@@ -397,7 +397,7 @@
                                 
                                 <script>
                                     var nLangEdits  = '<?php echo $this->session->userdata("tLangEdit");?>';
-                                    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+                                    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
                                     var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
                                     var nCountBch = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
                                     var tWhere = "";

@@ -101,13 +101,18 @@
                 $('#obtTransferBchOutBrowseWahFrom').attr('disabled', false);
             }
 
-            // คลังต้นทางต้องถูกกำหนดก่อน ถึงจะเลือกปลายทาง
-            if($('#oetTransferBchOutXthWhFrmCode').val() == ''){ // ไม่ได้กำหนดคลังต้นทาง
+           // คลังต้นทางต้องถูกกำหนดก่อน ถึงจะเลือกปลายทาง
+           if ($('#oetTransferBchOutXthWhFrmCode').val() == '') { // ไม่ได้กำหนดคลังต้นทาง
                 $('#obtTransferBchOutBrowseBchTo').attr('disabled', true);
                 $('#obtTransferBchOutBrowseWahTo').attr('disabled', true);
-            }else{// กำหนดคลังต้นทางแล้ว
-                $('#obtTransferBchOutBrowseBchTo').attr('disabled', false);
-                $('#obtTransferBchOutBrowseWahTo').attr('disabled', false);
+            } else { // กำหนดคลังต้นทางแล้ว
+                if (tUserLoginLevel == "HQ" || bIsMultiBch) {
+                    $('#obtTransferBchOutBrowseBchTo').attr('disabled', false);
+                } else {
+
+                }
+                $('#obtTransferBchOutBrowseWahTo').attr('disabled', true);
+
             }
 
             // สาขาปลายทางต้องถูกกำหนดก่อน ถึงเลือกคลังปลายทางได้
@@ -128,7 +133,7 @@
         }
 
         /*===== Begin Control สาขาที่สร้าง ================================================*/
-        if ((tUserLoginLevel == "HQ") || (!bIsAddPage) || (!bIsMultiBch)) {
+        if (tUserLoginLevel != "HQ" && !bIsMultiBch) { //|| (!bIsAddPage) || (!bIsMultiBch)
             $("#obtTransferBchOutBrowseBch").attr('disabled', true);
         }
         /*===== End Control สาขาที่สร้าง ==================================================*/
@@ -146,6 +151,10 @@
     // สาขาที่สร้าง
     $("#obtTransferBchOutBrowseBch").click(function() {
         // option 
+        let tWhereCon = "";
+        if (tUserLoginLevel != "HQ") {
+            tWhereCon = " AND TCNMBranch.FTBchCode IN(<?php echo $this->session->userdata('tSesUsrBchCodeMulti'); ?>) ";
+        }
         window.oTransferBchOutBrowseBch = {
             Title: ['authen/user/user', 'tBrowseBCHTitle'],
             Table: {
@@ -157,7 +166,7 @@
                 On: ['TCNMBranch_L.FTBchCode = TCNMBranch.FTBchCode AND TCNMBranch_L.FNLngID = ' + nLangEdits]
             },
             Where: {
-                Condition: [" AND TCNMBranch.FTBchCode IN(<?php echo $this->session->userdata('tSesUsrBchCodeMulti'); ?>)"]
+                Condition: [tWhereCon]
             },
             GrideView: {
                 ColumnPathLang: 'authen/user/user',
@@ -187,6 +196,11 @@
 
     // จากสาขา
     $("#obtTransferBchOutBrowseBchFrom").click(function() {
+        let tWhereCon = "";
+        if (tUserLoginLevel != "HQ") {
+            tWhereCon = " AND TCNMBranch.FTBchCode IN(<?php echo $this->session->userdata('tSesUsrBchCodeMulti'); ?>) ";
+        }
+
         // option 
         window.oTransferBchOutBrowseBchFrom = {
             Title: ['authen/user/user', 'tBrowseBCHTitle'],
@@ -199,7 +213,10 @@
                 On: ['TCNMBranch_L.FTBchCode = TCNMBranch.FTBchCode AND TCNMBranch_L.FNLngID = ' + nLangEdits]
             },
             Where: {
-                Condition: [" AND TCNMBranch.FTBchCode NOT IN ('" + $('#oetTransferBchOutXthBchToCode').val() + "')"]
+                Condition: [
+                    " AND TCNMBranch.FTBchCode NOT IN ('" + $('#oetTransferBchOutXthBchToCode').val() + "') ",
+                    tWhereCon
+                ]
             },
             GrideView: {
                 ColumnPathLang: 'authen/user/user',
@@ -414,6 +431,14 @@
 
     // ถึงสาขา
     $("#obtTransferBchOutBrowseBchTo").click(function() {
+        var tSesUsrAgnCode = "<?php echo $this->session->userdata("tSesUsrAgnCode"); ?>";
+        let tWhereCon = "";
+        // if(tUserLoginLevel != "HQ"){
+        //     tWhereCon = " AND TCNMBranch.FTBchCode IN(<?php echo $this->session->userdata('tSesUsrBchCodeMulti'); ?>) ";
+        // }
+        if (tSesUsrAgnCode != "") {
+            tWhereCon += " AND TCNMBranch.FTAgnCode ='" + tSesUsrAgnCode + "' ";
+        }
         // option 
         window.oTransferBchOutBrowseBchTo = {
             Title: ['authen/user/user', 'tBrowseBCHTitle'],
@@ -426,7 +451,10 @@
                 On: ['TCNMBranch_L.FTBchCode = TCNMBranch.FTBchCode AND TCNMBranch_L.FNLngID = ' + nLangEdits]
             },
             Where: {
-                Condition: [" AND TCNMBranch.FTBchCode NOT IN ('" + $('#oetTransferBchOutXthBchFrmCode').val() + "')"]
+                Condition: [
+                    " AND TCNMBranch.FTBchCode NOT IN ('" + $('#oetTransferBchOutXthBchFrmCode').val() + "')",
+                    tWhereCon
+                ]
             },
             GrideView: {
                 ColumnPathLang: 'authen/user/user',
@@ -1151,6 +1179,7 @@
         if (typeof nStaSession !== "undefined" && nStaSession == 1) {
 
             var tTransferBchOutOptionAddPdt = $('#ocmTransferBchOutOptionAddPdt').val();
+            var tBchCode = $('#oetTransferBchOutBchCode').val();
 
             JCNxOpenLoading();
 
@@ -1159,7 +1188,8 @@
                 url: "docTransferBchOutInsertPdtToTmp",
                 data: {
                     tPdtData: ptPdtData,
-                    tTransferBchOutOptionAddPdt: tTransferBchOutOptionAddPdt
+                    tTransferBchOutOptionAddPdt: tTransferBchOutOptionAddPdt,
+                    tBchCode:tBchCode
                 },
                 cache: false,
                 timeout: 5000,

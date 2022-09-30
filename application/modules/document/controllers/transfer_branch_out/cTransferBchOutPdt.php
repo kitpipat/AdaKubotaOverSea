@@ -103,8 +103,8 @@ class cTransferBchOutPdt extends MX_Controller
         $nLngID = $this->session->userdata("tLangID");
         $tUserSessionID = $this->session->userdata('tSesSessionID');
         $tUserLevel = $this->session->userdata('tSesUsrLevel');
-        $tBchCode = $tUserLevel == 'HQ' ? FCNtGetBchInComp() : $this->session->userdata("tSesUsrBchCode");
-
+        $tBchCode = $tUserLevel =  $this->input->post('tBchCode');;
+        
         $tTransferBchOutOptionAddPdt = $this->input->post('tTransferBchOutOptionAddPdt');
         $tIsByScanBarCode = $this->input->post('tIsByScanBarCode');
         $tBarCodeByScan = $this->input->post('tBarCodeByScan');

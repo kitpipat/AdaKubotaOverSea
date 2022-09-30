@@ -138,7 +138,9 @@ class Product_model extends CI_Model
             $tSQLPdtMaster .= $aSpcWhereTableMaster[$nSearchProductType];
         }
 
-
+        $nLangStaLocal =  FCNaGetLngStalocal();
+        $nDefLang      =  $this->session->userdata("tSesDefLanguage");
+        
         $tSQL = "SELECT DISTINCT
                         PDT.*, PDTL.FTPdtName,
                         PUNL.FTPunCode,
@@ -168,7 +170,7 @@ class Product_model extends CI_Model
                                 c.FNRowID > $aRowLen[0]
                             AND c.FNRowID <= $aRowLen[1]
                         ) PDT
-                    -- LEFT JOIN TCNMPdt_L PDTL WITH (NOLOCK)    ON PDT.FTPdtCode = PDTL.FTPdtCode AND PDTL.FNLngID = $nLngID
+                    -- LEFT JOIN TCNMPdt_L PDTL WITH (NOLOCK)    ON PDT.FTPdtCode = PDTL.FTPdtCode AND (PDTL.FNLngID = $nDefLang OR PDTL.FNLngID = $nLngID OR PDTL.FNLngID = $nLangStaLocal)
                     LEFT JOIN 
                         (
                         SELECT  FTPdtCode,FTPdtName,FNLngID , ROW_NUMBER()
@@ -191,13 +193,11 @@ class Product_model extends CI_Model
                     ) AS PRI ON PRI.FTPdtCode = PDT.FTPdtCode
                     AND PPCZ.FTPunCode = PRI.FTPunCode
                     WHERE 1=1 ";
-        $tSQL .= " AND LNG.FTLngStaUse = '1'";
 
         if (!empty($tSearch)) {
             $tSQL .= $aSpcWhereTableMaster[$nSearchProductType];
         }
-        $tSQL .= " ORDER BY
-                        FNRowID
+        $tSQL .= " ORDER BY FNRowID
     ";
         //  echo $tSQL;
         //     die();

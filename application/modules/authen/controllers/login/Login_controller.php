@@ -246,7 +246,7 @@ class Login_controller extends MX_Controller {
 					}
 
 					// User level
-					if(empty($aDataUsrGroup[0]['FTBchCode']) && empty($aDataUsrGroup[0]['FTShpCode'])){ // HQ level
+					if( empty($aDataUsrGroup[0]['FTAgnCode']) && empty($aDataUsrGroup[0]['FTBchCode']) && empty($aDataUsrGroup[0]['FTShpCode'])){ // HQ level
 						$this->session->set_userdata("tSesUsrLevel", "HQ");
 					}
 					if(!empty($aDataUsrGroup[0]['FTBchCode']) && empty($aDataUsrGroup[0]['FTShpCode'])){ // BCH level
@@ -255,7 +255,9 @@ class Login_controller extends MX_Controller {
 					if(!empty($aDataUsrGroup[0]['FTBchCode']) && !empty($aDataUsrGroup[0]['FTShpCode'])){ // SHP level
 						$this->session->set_userdata("tSesUsrLevel", "SHP");
 					}
-
+					if(!empty($aDataUsrGroup[0]['FTAgnCode']) && empty($aDataUsrGroup[0]['FTBchCode']) && empty($aDataUsrGroup[0]['FTShpCode']) && empty($aDataUsrGroup[0]['FTMerCode']) ){ // AGN level
+						$this->session->set_userdata("tSesUsrLevel", "AD");
+					}
 
 					//สร้าง session มาหลอกๆ ไว้เดียวมาลบ ให้มัน gencode ได้ก่อน
 					$this->session->set_userdata("tSesUsrBchCode", '99999');

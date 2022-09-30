@@ -244,6 +244,16 @@ class Branch_controller extends MX_Controller {
 			$this->session->set_userdata("nSesUsrBchCount", $nUsrBchCount);
 		}
 	
+		if($this->session->userdata('tSesUsrLoginLevel') != 'HQ'){
+		$aDataBch = $this->Branch_model->FSaMBCHGetDataUserBranch();
+		$tUsrBchCodeMulti 	= $this->Branch_model->FStMBCHMakeArrayToString($aDataBch,'FTBchCode','value');
+		$tUsrBchNameMulti 	= $this->Branch_model->FStMBCHMakeArrayToString($aDataBch,'FTBchName','value');
+		$nUsrBchCount		= $this->Branch_model->FStMBCHMakeArrayToString($aDataBch,'FTBchCode','counts');
+			$this->session->set_userdata("tSesUsrBchCodeMulti", $tUsrBchCodeMulti);
+			$this->session->set_userdata("tSesUsrBchNameMulti", $tUsrBchNameMulti);
+			$this->session->set_userdata("nSesUsrBchCount", $nUsrBchCount);
+		}
+
 		if($aResAdd['rtCode'] == '1'){
 			if($tBranchImage != $tBranchImageOld){
 				$aImageUplode = array(

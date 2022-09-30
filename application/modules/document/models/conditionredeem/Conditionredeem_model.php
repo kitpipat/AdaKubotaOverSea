@@ -25,8 +25,7 @@ class Conditionredeem_model extends CI_Model
         $tSearchStaApprove = $aAdvanceSearch['tSearchStaApprove'];
         $tSearchStaPrcStk = $aAdvanceSearch['tSearchStaPrcStk'];
 
-        $tSQL = "   
-            SELECT c.* FROM (
+        $tSQL = "SELECT c.* FROM (
                 SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC) AS FNRowID,* FROM (
                     SELECT DISTINCT
                         (CASE
@@ -90,7 +89,7 @@ class Conditionredeem_model extends CI_Model
         ";
 
         // Check User Login Branch
-        if ($this->session->userdata('tSesUsrLevel') != 'HQ') {
+        if ($this->session->userdata('tSesUsrLoginLevel') != 'HQ') {
             $tUserLoginBchCode = $this->session->userdata('tSesUsrBchCodeMulti');
             $tSQL .= " AND RDHD.FTBchCode IN($tUserLoginBchCode)";
         }

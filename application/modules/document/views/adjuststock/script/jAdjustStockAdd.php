@@ -1,7 +1,7 @@
 <script type="text/javascript">
     var nLangEdits  = '<?php echo $this->session->userdata("tLangEdit");?>';
     var tUsrApv     = '<?php echo $this->session->userdata("tSesUsername");?>';
-    var tSesUsrLevel    = '<?php echo $this->session->userdata('tSesUsrLevel');?>';
+    var tSesUsrLevel    = '<?php echo $this->session->userdata('tSesUsrLoginLevel');?>';
     var tUserBchCode    = '<?php echo $this->session->userdata("tSesUsrBchCodeDefault");?>';
     var tUserBchName    = '<?php echo $this->session->userdata("tSesUsrBchNameDefault");?>';
     var tUserWahCode    = '<?php echo $this->session->userdata("tSesUsrWahCode");?>';
@@ -12,7 +12,7 @@
     $(document).ready(function(){
 
         
-        var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+        var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
         var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
         var nCountBch     = parseInt(<?php echo $this->session->userdata("nSesUsrBchCount"); ?>);
         var tWhere = "";
@@ -176,7 +176,7 @@
         // Option Modal สาขา
         var oASTBrowseBranch    = function(poDataFnc){
 
-    var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+    var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
     var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
     var nCountBch     = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
     var tWhere = "";
@@ -1222,7 +1222,7 @@
 
      });
      
-    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
     var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
     var nCountBch = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
     var tWhere = "";

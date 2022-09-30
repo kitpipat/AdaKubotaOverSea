@@ -17,8 +17,7 @@ class Promotion_model extends CI_Model
         $aRowLen = FCNaHCallLenData($paParams['nRow'], $paParams['nPage']);
         $nLngID = $paParams['FNLngID'];
 
-        $tSQL = "
-            SELECT c.* FROM(
+        $tSQL = "SELECT c.* FROM(
                 SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC) AS FNRowID,* FROM
                     (SELECT DISTINCT
                         (CASE
@@ -63,6 +62,7 @@ class Promotion_model extends CI_Model
                     WHERE 1=1
         ";
 
+      
         $aAdvanceSearch = $paParams['aAdvanceSearch'];
         $tSearchList = $aAdvanceSearch['tSearchAll'];
         $tSQLSearchAll = '';
@@ -208,70 +208,70 @@ class Promotion_model extends CI_Model
         //     }
         // }
 
-        if ($this->session->userdata('tSesUsrLevel') == "BCH") { // ผู้ใช้ระดับ BCH ดูได้แค่สาขาที่มีสิทธิ์
-            $tBchCode = $this->session->userdata('tSesUsrBchCodeMulti');
-            $tSQL .= "
-                AND HD.FTBchCode IN ($tBchCode)
-                OR(
-                    HD.FTPmhDocNo IN (
-                        SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
-                        LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') = ''
-                        AND HD.FTPmhStaApv = '1'
-                        $tSQLSearchAll
-                        $tSQLSearchBch
-                        $tSQLSearchDocDate
-                        $tSQLSearchStaApprove
-                        $tSQLSearchUsedStatus
-                    )
-                )
-                OR(
-                    HD.FTPmhDocNo IN (
-                        SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
-                        LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
-                        AND HD.FTPmhStaApv = '1'
-                        AND BCH.FTPmhStaType = '1'
-                        AND BCH.FTPmhBchTo IN ($tBchCode)
-                        $tSQLSearchAll
-                        $tSQLSearchBch
-                        $tSQLSearchDocDate
-                        $tSQLSearchStaApprove
-                        $tSQLSearchUsedStatus
-                    )
-                )
-                OR(
-                    HD.FTPmhDocNo IN (
-                        SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
-                        LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
-                        AND HD.FTPmhStaApv = '1'
-                        AND BCH.FTPmhStaType = '2'
-                        AND BCH.FTPmhBchTo NOT IN ($tBchCode)
-                        $tSQLSearchAll
-                        $tSQLSearchBch
-                        $tSQLSearchDocDate
-                        $tSQLSearchStaApprove
-                        $tSQLSearchUsedStatus
-                    )
-                )
-                AND(
-                    HD.FTPmhDocNo NOT IN (
-                        SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
-                        LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
-                        AND HD.FTPmhStaApv = '1'
-                        AND BCH.FTPmhStaType = '2'
-                        AND BCH.FTPmhBchTo IN ($tBchCode)
-                        $tSQLSearchAll
-                        $tSQLSearchBch
-                        $tSQLSearchDocDate
-                        $tSQLSearchStaApprove
-                        $tSQLSearchUsedStatus
-                    )
-                )
-            ";
-        }
+        // if ($this->session->userdata('tSesUsrLevel') == "BCH") { // ผู้ใช้ระดับ BCH ดูได้แค่สาขาที่มีสิทธิ์
+        //     $tBchCode = $this->session->userdata('tSesUsrBchCodeMulti');
+        //     $tSQL .= "
+        //         AND HD.FTBchCode IN ($tBchCode)
+        //         OR(
+        //             HD.FTPmhDocNo IN (
+        //                 SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
+        //                 LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
+        //                 WHERE ISNULL(BCH.FTPmhDocNo,'') = ''
+        //                 AND HD.FTPmhStaApv = '1'
+        //                 $tSQLSearchAll
+        //                 $tSQLSearchBch
+        //                 $tSQLSearchDocDate
+        //                 $tSQLSearchStaApprove
+        //                 $tSQLSearchUsedStatus
+        //             )
+        //         )
+        //         OR(
+        //             HD.FTPmhDocNo IN (
+        //                 SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
+        //                 LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
+        //                 WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+        //                 AND HD.FTPmhStaApv = '1'
+        //                 AND BCH.FTPmhStaType = '1'
+        //                 AND BCH.FTPmhBchTo IN ($tBchCode)
+        //                 $tSQLSearchAll
+        //                 $tSQLSearchBch
+        //                 $tSQLSearchDocDate
+        //                 $tSQLSearchStaApprove
+        //                 $tSQLSearchUsedStatus
+        //             )
+        //         )
+        //         OR(
+        //             HD.FTPmhDocNo IN (
+        //                 SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
+        //                 LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
+        //                 WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+        //                 AND HD.FTPmhStaApv = '1'
+        //                 AND BCH.FTPmhStaType = '2'
+        //                 AND BCH.FTPmhBchTo NOT IN ($tBchCode)
+        //                 $tSQLSearchAll
+        //                 $tSQLSearchBch
+        //                 $tSQLSearchDocDate
+        //                 $tSQLSearchStaApprove
+        //                 $tSQLSearchUsedStatus
+        //             )
+        //         )
+        //         AND(
+        //             HD.FTPmhDocNo NOT IN (
+        //                 SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
+        //                 LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
+        //                 WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+        //                 AND HD.FTPmhStaApv = '1'
+        //                 AND BCH.FTPmhStaType = '2'
+        //                 AND BCH.FTPmhBchTo IN ($tBchCode)
+        //                 $tSQLSearchAll
+        //                 $tSQLSearchBch
+        //                 $tSQLSearchDocDate
+        //                 $tSQLSearchStaApprove
+        //                 $tSQLSearchUsedStatus
+        //             )
+        //         )
+        //     ";
+        // }
 
         /* if ($this->session->userdata('tSesUsrLevel') == "SHP") { // ผู้ใช้ระดับ SHP ดูได้แค่ร้านค้าที่มีสิทธิ์
             $tBchCode = $this->session->userdata('tSesUsrBchCodeMulti');
@@ -519,7 +519,7 @@ class Promotion_model extends CI_Model
         //     }
         // }
 
-        if ($this->session->userdata('tSesUsrLevel') == "BCH") { // ผู้ใช้ระดับ BCH ดูได้แค่สาขาที่มีสิทธิ์
+        if ($this->session->userdata('tSesUsrLevel') != "HQ") { // ผู้ที่ไม่ใช่ระดับ HQ ดูได้แค่สาขาที่มีสิทธิ์
             $tBchCode = $this->session->userdata('tSesUsrBchCodeMulti');
             $tSQL .= "
                 AND HD.FTBchCode IN ($tBchCode)
@@ -527,7 +527,7 @@ class Promotion_model extends CI_Model
                     HD.FTPmhDocNo IN (
                         SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
                         LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') = ''
+                        WHERE ISNULL(HD.FTPmhDocNo,'') = ''
                         AND HD.FTPmhStaApv = '1'
                         $tSQLSearchAll
                         $tSQLSearchBch
@@ -540,7 +540,7 @@ class Promotion_model extends CI_Model
                     HD.FTPmhDocNo IN (
                         SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
                         LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+                        WHERE ISNULL(HD.FTPmhDocNo,'') <> ''
                         AND HD.FTPmhStaApv = '1'
                         AND BCH.FTPmhStaType = '1'
                         AND BCH.FTPmhBchTo IN ($tBchCode)
@@ -555,7 +555,7 @@ class Promotion_model extends CI_Model
                     HD.FTPmhDocNo IN (
                         SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
                         LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+                        WHERE ISNULL(HD.FTPmhDocNo,'') <> ''
                         AND HD.FTPmhStaApv = '1'
                         AND BCH.FTPmhStaType = '2'
                         AND BCH.FTPmhBchTo NOT IN ($tBchCode)
@@ -570,7 +570,7 @@ class Promotion_model extends CI_Model
                     HD.FTPmhDocNo NOT IN (
                         SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
                         LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+                        WHERE ISNULL(HD.FTPmhDocNo,'') <> ''
                         AND HD.FTPmhStaApv = '1'
                         AND BCH.FTPmhStaType = '2'
                         AND BCH.FTPmhBchTo IN ($tBchCode)

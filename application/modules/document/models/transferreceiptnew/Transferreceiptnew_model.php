@@ -36,7 +36,7 @@ class Transferreceiptnew_model extends CI_Model
         //     $tSQL .= " AND  TWI.FTBchCode = '$tBCH' ";
         // }
         // Check User Login Branch
-        if ($this->session->userdata('tSesUsrLevel') != 'HQ') {
+        if ($this->session->userdata('tSesUsrLoginLevel') != 'HQ') {
             $tUserLoginBchCode  = $this->session->userdata('tSesUsrBchCodeMulti');
             $tSQL   .=  "   AND TWI.FTBchCode IN($tUserLoginBchCode)";
         }

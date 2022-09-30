@@ -72,6 +72,16 @@ $(document).ready(() => {
 });
 // Set Lang Edit 
 var nLangEdits = <?=$this->session->userdata("tLangEdit")?>;
+var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
+var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
+var tWhere = "";
+
+if(tUsrLevel != "HQ"){
+	tWhere = " AND TCNMBranch.FTBchCode IN ("+tBchCodeMulti+") ";
+}else{
+	tWhere = "";
+}
+
 // Option Reference
 var oBchBrowseBch = {
 	Title : ['company/branch/branch', 'tBCHTitle'],
@@ -81,7 +91,7 @@ var oBchBrowseBch = {
 		On: ['TCNMBranch_L.FTBchCode = TCNMBranch.FTBchCode AND TCNMBranch_L.FNLngID = '+nLangEdits]
 	},
 	Where :{
-        // Condition : ["AND TCNMBranch.FTWahStaType = '3' "]
+        Condition : [tWhere]
 	},
 	GrideView:{
 		ColumnPathLang	: 'company/branch/branch',

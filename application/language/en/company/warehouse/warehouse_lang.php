@@ -33,3 +33,10 @@ $lang['tWAHBwsMchNme']        = "Name";
 
 $lang['tWAHBchName'] = 'Branch';
 $lang['tWAHShpName'] = 'Shop';
+
+$lang['tPosStaAlwPLFrmTBO']                = "Allow use the arrangement from transfer document";
+$lang['tPosStaAlwPLFrmSale']               = "Allow use the arrangement from sales document";
+$lang['tPosStaAlwSNPL']                    = "Allow S/N in arrangement";
+$lang['tPosCheckCntStk']                   = "Allow to check the remaining stock (for sale).";
+$lang['tPosCheckCostAmt']                  = "Allow to calculate product value";
+

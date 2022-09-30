@@ -1,8 +1,3 @@
-<?php 
-// echo '<pre>';
-// echo print_r($aAlwEventBranch); 
-// echo '</pre>';
-?>
 
 <div class="panel-heading"> <!-- เพิ่ม -->
 	<div class="row"> <!-- เพิ่ม -->

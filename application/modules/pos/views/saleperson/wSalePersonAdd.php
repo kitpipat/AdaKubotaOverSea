@@ -131,17 +131,17 @@ if($aResult['rtCode'] == "1"){
                                 </div>
                                 <div class="form-group" id="xWBranchMode">
                                     <div class="validate-input" data-validate="Please Enter">
-                                        <label class="xCNLabelFrm"><?= language('pos/saleperson/saleperson','tSPNRef')?></label>
+                                        <label class="xCNLabelFrm"><?= language('pos/saleperson/saleperson','tSPNRefBch')?></label>
                                         <input type="text" class="form-control xCNHide" id="oetBchCode" name="oetBchCode" maxlength="5" value="<?= $tBchCode ?>">
-                                        <input class="input100 xWPointerEventNone" type="text" id="oetBchName" name="oetBchName" placeholder="###" value="<?= $tBchName ?>" readonly>
+                                        <input class="input100 xWPointerEventNone" type="text" id="oetBchName" name="oetBchName" placeholder="<?= language('pos/saleperson/saleperson','tSPNRefBch')?>" value="<?= $tBchName ?>" readonly>
                                         <img id="oimSpnBrowseBranch" class="xCNIconBrowse" src="<?= base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
                                     </div>
                                 </div>
                                 <div class="form-group" id="xWShopMode">
                                     <div class="validate-input" data-validate="Please Enter">
-                                        <label class="xCNLabelFrm"><?= language('pos/saleperson/saleperson','tSPNRef')?></label>
+                                        <label class="xCNLabelFrm"><?= language('pos/saleperson/saleperson','tSPNRefShp')?></label>
                                         <input type="text" class="form-control xCNHide" id="oetShpCode" name="oetShpCode" maxlength="5" value="<?= $tShpCode ?>">
-                                        <input class="input100 xWPointerEventNone" type="text" id="oetShpName" name="oetShpName" placeholder="###" value="<?= $tShpName ?>" readonly>
+                                        <input class="input100 xWPointerEventNone" type="text" id="oetShpName" name="oetShpName" placeholder="<?= language('pos/saleperson/saleperson','tSPNRefShp')?>" value="<?= $tShpName ?>" readonly>
                                         <img id="oimSpnBrowseShop" class="xCNIconBrowse" src="<?= base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
                                     </div>
                                 </div>

@@ -42,7 +42,7 @@ if ($aResult['rtCode'] == "1") {
     $tChnSeq = "";
 
 
-    $tSesUsrLev = $this->session->userdata("tSesUsrLevel");
+    $tSesUsrLev = $this->session->userdata("tSesUsrLoginLevel");
     $tSesUsrBchMuti =   $this->session->userdata("tSesUsrBchCodeMulti");
     $tSesUsrBchCount = $this->session->userdata("nSesUsrBchCount");
     $tSesAgnCode =  $this->session->userdata('tSesUsrAgnCode');

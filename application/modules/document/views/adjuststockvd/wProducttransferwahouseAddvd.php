@@ -367,7 +367,7 @@ if($tUserBchCode=='' && $tUserShpCode==''){
 						<!-- สาขา -->
 						<?php
 							if($tRoute  == "ADJSTKVDEventAdd"){
-								if($this->session->userdata('tSesUsrLevel') == "HQ"){
+								if($this->session->userdata('tSesUsrLoginLevel') == "HQ"){
 									$tDisabled  = '';
 									$tNameElmID = 'obtBrowseASTBCH';
 								}else{

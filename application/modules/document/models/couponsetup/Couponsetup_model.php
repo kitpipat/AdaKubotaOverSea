@@ -87,7 +87,7 @@ class Couponsetup_model extends CI_Model
         ";
 
         // Check User Login Branch
-        if ($this->session->userdata('tSesUsrLevel') != 'HQ') {
+        if ($this->session->userdata('tSesUsrLoginLevel') != 'HQ') {
             $tUserLoginBchCode = $this->session->userdata('tSesUsrBchCodeMulti');
             $tSQL .= " AND CPHD.FTBchCode IN($tUserLoginBchCode)";
         }

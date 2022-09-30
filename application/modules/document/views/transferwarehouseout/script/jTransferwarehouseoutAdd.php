@@ -1804,7 +1804,7 @@
 
     
     tSQLWhere = "";
-    tUsrLevel = "<?= $this->session->userdata('tSesUsrLevel') ?>";
+    tUsrLevel = "<?= $this->session->userdata('tSesUsrLoginLevel') ?>";
     tBchMulti = "<?= $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
     if (tUsrLevel != "HQ") {
         tSQLWhere = " AND TCNMBranch.FTBchCode IN (" + tBchMulti + ") ";

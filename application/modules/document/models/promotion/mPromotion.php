@@ -216,7 +216,7 @@ class mPromotion extends CI_Model
                     HD.FTPmhDocNo IN (
                         SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
                         LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') = ''
+                        WHERE ISNULL(HD.FTPmhDocNo,'') = ''
                         AND HD.FTPmhStaApv = '1'
                         $tSQLSearchAll
                         $tSQLSearchBch
@@ -229,7 +229,7 @@ class mPromotion extends CI_Model
                     HD.FTPmhDocNo IN (
                         SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
                         LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+                        WHERE ISNULL(HD.FTPmhDocNo,'') <> ''
                         AND HD.FTPmhStaApv = '1'
                         AND BCH.FTPmhStaType = '1'
                         AND BCH.FTPmhBchTo IN ($tBchCode)
@@ -244,7 +244,7 @@ class mPromotion extends CI_Model
                     HD.FTPmhDocNo IN (
                         SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
                         LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+                        WHERE ISNULL(HD.FTPmhDocNo,'') <> ''
                         AND HD.FTPmhStaApv = '1'
                         AND BCH.FTPmhStaType = '2'
                         AND BCH.FTPmhBchTo NOT IN ($tBchCode)
@@ -259,7 +259,7 @@ class mPromotion extends CI_Model
                     HD.FTPmhDocNo NOT IN (
                         SELECT HD.FTPmhDocNo FROM TCNTPdtPmtHD HD WITH (NOLOCK)
                         LEFT JOIN TCNTPdtPmtHDBch BCH WITH (NOLOCK) ON HD.FTPmhDocNo = BCH.FTPmhDocNo
-                        WHERE ISNULL(BCH.FTPmhDocNo,'') <> ''
+                        WHERE ISNULL(HD.FTPmhDocNo,'') <> ''
                         AND HD.FTPmhStaApv = '1'
                         AND BCH.FTPmhStaType = '2'
                         AND BCH.FTPmhBchTo IN ($tBchCode)

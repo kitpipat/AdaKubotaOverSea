@@ -14,7 +14,7 @@ class Company_model extends CI_Model{
             $nLngID     = $paData['FNLngID'];
             $nLevelUser = $this->session->tSesUserLevel;
         
-            $tSQL = "SELECT
+            $tSQL = "SELECT DISTINCT
                         CIMG.FTImgObj       AS rtCmpImage,
                         RIMG.FTImgObj       AS rtCmpRteImage,
                         CMP.FTCmpCode       AS rtCmpCode,
@@ -30,6 +30,7 @@ class Company_model extends CI_Model{
                         CMP.FTVatCode       AS rtVatCodeUse,
                         CMP.FTCmpRetInOrEx  AS rtCmpRetInOrEx,
                         CMP.FTCmpWhsInOrEx  AS rtCmpWhsInOrEx,
+                        RTE.FTAgnCode		AS rtAgnCode,
                         RTEL.FTRteCode      AS rtCmpRteCode,
                         RTEL.FTRteName      AS rtCmpRteName,
                         CYL.FTCtyCode       AS rtCmpCyCode,
@@ -38,11 +39,23 @@ class Company_model extends CI_Model{
                     LEFT JOIN [TCNMComp_L]     CMPL ON CMP.FTCmpCode = CMPL.FTCmpCode  AND CMPL.FNLngID = $nLngID
                     LEFT JOIN [TCNMBranch_L]   BCHL ON CMP.FTBchCode = BCHL.FTBchCode  AND BCHL.FNLngID = $nLngID
                     LEFT JOIN [TCNMBranch]     BCH  ON CMP.FTBchCode = BCH.FTBchCode
+                    LEFT JOIN [TFNMRate]       RTE  ON CMP.FTRteCode = RTE.FTRteCode
                     LEFT JOIN [TFNMRate_L]     RTEL ON CMP.FTRteCode = RTEL.FTRteCode  AND RTEL.FNLngID = $nLngID
                     LEFT JOIN [TCNMImgObj]     CIMG ON CMP.FTCmpCode = CIMG.FTImgRefID AND CIMG.FTImgTable = 'TCNMComp'
                     LEFT JOIN [TCNMImgObj]     RIMG ON CMP.FTRteCode = CIMG.FTImgRefID AND CIMG.FTImgTable = 'TFNMRate'
                     LEFT JOIN [TCNMCountry_L]  CYL  ON CMP.FTCtyCode = CYL.FTCtyCode
+                    WHERE 1=1
             ";
+
+            if ($this->session->userdata('tSesUsrLoginLevel') != "HQ") { // ผู้ใช้ระดับ AD ดูได้แค่สาขาที่มีสิทธิ์
+                $tBchCodeMulti = $this->session->userdata('tSesUsrBchCodeMulti');
+                $tAgnCode = $this->session->userdata('tSesUsrAgnCode');
+                // $tSQL .= " AND CMP.FTBchCode IN($tBchCodeMulti)";
+                if($tAgnCode){
+                    $tSQL .= " AND RTE.FTAgnCode = '$tAgnCode'";
+                }
+            }
+
             $oQuery = $this->db->query($tSQL);
             if($oQuery->num_rows() > 0) {
                 $oList = $oQuery->result();

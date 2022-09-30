@@ -49,6 +49,15 @@
     //Set Lang Edit 
     var nLangEdits = <?=$this->session->userdata("tLangEdit")?>;
     //Option Reference
+    var tUsrLevel = "<?= $this->session->userdata('tSesUsrLoginLevel') ?>";
+    var tBchCode = "<?= $this->session->userdata('tSesUsrBchCodeMulti') ?>";
+
+    if ((tBchCode == '' || tBchCode == null) || tUsrLevel == "HQ") {
+        tWhereShop = '';
+    } else {
+        tWhereShop = " AND TCNMBranch.FTBchCode IN(" + tBchCode + ")";
+    }
+
     var oBchBrowseBranch = {
         Title : ['company/branch/branch', 'tBCHTitle'],
         Table:{Master:'TCNMBranch', PK:'FTBchCode'},
@@ -57,7 +66,7 @@
             On: ['TCNMBranch_L.FTBchCode = TCNMBranch.FTBchCode AND TCNMBranch_L.FNLngID = '+nLangEdits]
         },
         Where :{
-            // Condition : ["AND TCNMBranch.FTWahStaType = '3' "]
+            Condition : [tWhereShop]
         },
         GrideView:{
             ColumnPathLang	: 'company/branch/branch',
@@ -75,6 +84,7 @@
             Value		: ["oetBchCode", "TCNMBranch.FTBchCode"],
             Text		: ["oetBchName", "TCNMBranch_L.FTBchName"]
         },
+        // DebugSQL:true,
         RouteFrom : 'saleperson',
         RouteAddNew : 'branch',
         BrowseLev : nStaSpnBrowseType

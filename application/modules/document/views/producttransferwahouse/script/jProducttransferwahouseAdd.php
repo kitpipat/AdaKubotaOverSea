@@ -4,7 +4,7 @@
 
 	nLangEdits			= '<?php echo $this->session->userdata("tLangEdit");?>';
 	tUsrApv				= '<?php echo $this->session->userdata("tSesUsername");?>';
-	tSesUsrLevel		= '<?php echo $this->session->userdata("tSesUsrLevel");?>';
+	tSesUsrLevel		= '<?php echo $this->session->userdata("tSesUsrLoginLevel");?>';
 
 	tSesUsrWahCode		= '<?php echo $this->session->userdata("tSesUsrWahCode");?>';
 	tSesUsrWahName		= '<?php echo $this->session->userdata("tSesUsrWahName");?>';
@@ -60,7 +60,7 @@
 		var tQName = tPrefix + '_' + tDocNo + '_' + tUsrApv;
 	$(document).ready(function() {
 
-		var tUsrLevel = '<?=$this->session->userdata('tSesUsrLevel')?>';
+		var tUsrLevel = '<?=$this->session->userdata('tSesUsrLoginLevel')?>';
 		if( tUsrLevel != "HQ" ){
 			var tBchCount = <?php echo $this->session->userdata("nSesUsrBchCount"); ?>;
 			if(tBchCount < 2){
@@ -574,7 +574,7 @@
 	});
 
 
-	var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+	var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
     var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
     var nCountBch = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
 
@@ -1500,7 +1500,7 @@
 		}
 	});
 
-    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+    var tUsrLevel = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
     var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
     var nCountBch = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
     var tWhere = "";

@@ -73,7 +73,10 @@ $lang['tDoc'] = '';
 $lang['tDoc'] = '';
 
 
-
+$lang['tDocFilter']      = "Filter";
+$lang['tDocDateFrm']     = "FromDate";
+$lang['tDocDateTo']      = "ToDate";
+$lang['tDocDateFrom']    = "From date document";
 
 
 

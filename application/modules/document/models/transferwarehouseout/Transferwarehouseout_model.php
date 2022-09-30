@@ -39,9 +39,15 @@ class Transferwarehouseout_model extends CI_Model
         if (@$tSearchList != '') {
             $tSQL .= " AND ((TWO.FTXthDocNo LIKE '%$tSearchList%') OR (BCHL.FTBchName LIKE '%$tSearchList%') OR (CONVERT(CHAR(10),TWO.FDXthDocDate,103) LIKE '%$tSearchList%'))";
         }
-        if ($this->session->userdata("tSesUsrLevel") == 'BCH' || $this->session->userdata("tSesUsrLevel") == 'SHP') {
-            $tBCH = $this->session->userdata("tSesUsrBchCodeMulti");
-            $tSQL .= " AND  TWO.FTBchCode IN ($tBCH) ";
+
+        // if ($this->session->userdata("tSesUsrLevel") == 'BCH' || $this->session->userdata("tSesUsrLevel") == 'SHP') {
+        //     $tBCH = $this->session->userdata("tSesUsrBchCodeMulti");
+        //     $tSQL .= " AND  TWO.FTBchCode IN ($tBCH) ";
+        // }
+
+        if ($this->session->userdata('tSesUsrLoginLevel') != 'HQ') {
+            $tUserLoginBchCode  = $this->session->userdata('tSesUsrBchCodeMulti');
+            $tSQL   .=  "   AND TWO.FTBchCode IN($tUserLoginBchCode)";
         }
 
         /*จากสาขา - ถึงสาขา*/

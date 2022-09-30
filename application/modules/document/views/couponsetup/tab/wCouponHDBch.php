@@ -357,7 +357,7 @@ $('#obtCPHBrowseBchTo').unbind().click(function(){
         let tCPHInputReturnNameBch = poCPHReturnInputBch.tReturnInputName;
 
               
-      var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLevel"); ?>";
+      var tUsrLevel     = "<?php echo $this->session->userdata("tSesUsrLoginLevel"); ?>";
         var tBchCodeMulti = "<?php echo $this->session->userdata("tSesUsrBchCodeMulti"); ?>";
         var nCountBch     = "<?php echo $this->session->userdata("nSesUsrBchCount"); ?>";
         var tMerCode = $('#oetCPHMerCodeTo').val();
