@@ -430,11 +430,11 @@
             tWhere = " AND TCNMBranch.FTBchCode IN ("+tBchCodeMulti+")";
         }
         else{
-            tWhere = " AND TCNMBranch.FTAgnCode = "+tAgnCode+" ";
+            tWhere = " AND TCNMBranch.FTAgnCode = '"+tAgnCode+"' ";
         }
 
         if(tBchCode1){
-            tWhere += "AND TCNMBranch.FTBchCode != "+tBchCode1+" ";
+            tWhere += "AND TCNMBranch.FTBchCode != '"+tBchCode1+"' ";
         }
 
         var oOptionReturn       = {
