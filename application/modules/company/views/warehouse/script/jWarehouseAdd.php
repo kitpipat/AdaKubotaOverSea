@@ -297,18 +297,26 @@
         var tWAHBchCodeParam = poDataFnc.tWAHBchCodeParam;
 
         var tWahStaType = $('#ocmWahStaType').val();
+        var tWahCode    = $('#oetWahCode').val();
 
         if(tWahStaType == 2){
             
-          var tWherePosType = "AND TCNMPos.FTPosType = '1' AND TCNMPos.FTBchCode='" + tWAHBchCodeParam + "' AND (TCNMWaHouse.FTWahRefCode = '' OR TCNMWaHouse.FTWahRefCode IS NULL) ";
-        
+            if(!tWahCode){
+                var tWherePosType = "AND TCNMPos.FTPosType = '1' AND TCNMPos.FTBchCode='" + tWAHBchCodeParam + "' AND (TCNMWaHouse.FTWahRefCode = '' OR TCNMWaHouse.FTWahRefCode IS NULL) ";
+            }else{
+                var tWherePosType = "AND TCNMPos.FTPosType = '1' AND TCNMPos.FTBchCode='" + tWAHBchCodeParam + "' AND (TCNMWaHouse.FTWahStaType = '"+ tWahStaType +"' AND TCNMWaHouse.FTWahCode = '"+ tWahCode+"'  OR TCNMWaHouse.FTWahRefCode IS NULL )";
+            }
         }else{
-           var tWherePosType = "AND TCNMPos.FTPosType = '4' AND TCNMPos.FTBchCode='" + tWAHBchCodeParam + "' AND (TCNMWaHouse.FTWahRefCode = '' OR TCNMWaHouse.FTWahRefCode IS NULL) ";
+            if(!tWahCode){
+                var tWherePosType = "AND TCNMPos.FTPosType = '4' AND TCNMPos.FTBchCode='" + tWAHBchCodeParam + "' AND (TCNMWaHouse.FTWahRefCode = '' OR TCNMWaHouse.FTWahRefCode IS NULL) ";
+            }else{
+                var tWherePosType = "AND TCNMPos.FTPosType = '4' AND TCNMPos.FTBchCode='" + tWAHBchCodeParam + "' AND (TCNMWaHouse.FTWahStaType = '"+ tWahStaType +"' AND TCNMWaHouse.FTWahCode = '"+ tWahCode+"'  OR TCNMWaHouse.FTWahRefCode IS NULL )";
+            }
         }
 
         var oOptionReturn = {
             Title: ['company/warehouse/warehouse', 'tSalemachinePOS'],
-            Table: {
+            Table: { 
                 Master: 'TCNMPos',
                 PK: 'FTPosCode'
             },
@@ -339,7 +347,7 @@
                 Text: ["oetWahPosName", "TCNMPos_L.FTPosName"],
             },
             RouteAddNew: 'salemachine',
-            BrowseLev: nStaWahBrowseType
+            BrowseLev: nStaWahBrowseType,
             // DebugSQL: true,
         }
         return oOptionReturn;
@@ -393,6 +401,7 @@
     }
 
     function JSxWahBrowsPos() {
+        console.log('123');
         var tWAHBchCode = $('#oetWahBchCodeCreated').val();
         if (tWAHBchCode == '') {
             $('#oimBrowsePOS').attr('disabled', true);
@@ -633,10 +642,13 @@
             BrowseLev: 1
         };
         JCNxBrowseData('oWahBrowseBchCreated');
+
+        
     });
     /*===== End Browse =================================================================*/
 
     function JSxWahCallClearData(ptData){
+        JSxWahBrowsPos();
         if(ptData != '' || ptData != 'null'){
             $('#oetWahPosName').val('');
             $('#oetWahPosCode').val('');

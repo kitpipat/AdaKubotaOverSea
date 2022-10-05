@@ -42,7 +42,8 @@
                 <?php if($aDataList['rtCode'] == 1 ):?>
                     <?php foreach($aDataList['raItems'] AS $key=>$aValue){ ?>
                         <?php
-                            if($aValue['rtWahStaType'] == '1' || $aValue['rtWahRefCode'] != '' ){
+                            // if($aValue['rtWahStaType'] == '1' || $aValue['rtWahRefCode'] != '' && $aValue['rtWahStaType'] != '2'){
+                            if($aValue['rtWahStaType'] == '1' || $aValue['rtWahRefCode'] != ''){
                                 $tDisableTD     = "xWTdDisable";
                                 $tDisableImg    = "xWImgDisable";
                                 $tDisabledItem  = "disabled ";
@@ -66,7 +67,7 @@
                             <td nowrap class="text-left"><?php echo $aValue['rtWahName']?></td>
                             <td nowrap class="text-left"><?php echo  language('company/warehouse/warehouse','tWahStaTypeSEL'.$aValue['rtWahStaType'])?></td>
                             <td class="text-left"><?php echo $aValue['rtBchName']?></td>
-                            <td nowrap class="text-left"><?php echo  $aValue['rtWahRefCode']?></td>
+                            <td nowrap class="text-left"><?php echo  $aValue['rtPosName']?></td>
                             <?php if($aAlwEventWarehouse['tAutStaFull'] == 1 || $aAlwEventWarehouse['tAutStaDelete'] == 1) : ?>
                                 <td nowrap class="text-center <?php echo $tDisableTD;?>">
                                     <img class="xCNIconTable xCNIconDelete <?php echo $tDisableImg;?>" onClick="JSnWarehouseDel('<?php echo $nCurrentPage?>','<?php echo $aValue['rtWahCode']?>','<?php echo $aValue['rtBchCode']?>','<?php echo $aValue['rtWahName']?>','<?= language('common/main/main','tModalConfirmDeleteItemsYN')?>')">

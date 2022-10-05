@@ -14,7 +14,8 @@ $lang['tWahStaTypeSEL3']    = "คลังสาขา";
 $lang['tWahStaTypeSEL4']    = "คลังฝากขาย/ร้านค้า";
 $lang['tWahStaTypeSEL5']    = "คลังหน่วยรถ";
 $lang['tWahStaTypeSEL6']    = "คลัง ตู้ขายสินค้า";
-$lang['tWahRefCode']        = "อ้างอิงประเภท";
+// $lang['tWahRefCode']        = "อ้างอิงประเภท";
+$lang['tWahRefCode']        = "อ้างอิงเครื่องจุดขาย";
 $lang ['tWahSearch']        = 'ค้นหา';
 
 //InClude 

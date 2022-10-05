@@ -206,10 +206,12 @@ class Warehouse_model extends CI_Model
 						WAH.FTWahRefCode AS rtWahRefCode,
 						WAHL.FTWahName   AS rtWahName,
 						BCHL.FTBchName   AS rtBchName,
-						WAH.FDCreateOn   AS rtCreateOn
+						WAH.FDCreateOn   AS rtCreateOn,
+						POSL.FTPosName	 AS rtPosName
 					FROM TCNMWaHouse WAH WITH (NOLOCK)
 					LEFT JOIN TCNMBranch_L BCHL WITH (NOLOCK) ON WAH.FTBchCode = BCHL.FTBchCode AND BCHL.FNLngID = $nLngID
 					LEFT JOIN TCNMWaHouse_L WAHL WITH (NOLOCK) ON WAH.FTWahCode = WAHL.FTWahCode AND WAH.FTBchCode = WAHL.FTBchCode AND WAHL.FNLngID = $nLngID	
+					LEFT JOIN TCNMPos_L POSL WITH (NOLOCK) ON WAH.FTWahRefCode = POSL.FTPosCode AND POSL.FNLngID = $nLngID
 					WHERE 1 = 1
 		";
 

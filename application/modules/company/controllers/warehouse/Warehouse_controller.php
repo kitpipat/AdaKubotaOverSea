@@ -58,7 +58,7 @@ class Warehouse_controller extends MX_Controller
 					$tWahRefCode = $tBchCodeRef;
 					break;
 				case '2':
-					// $tWahRefCode = $tBchCodeRef;
+					// $tWahRefCode = $tBchCodeCreate;
 					$tWahRefCode = $tPosCodeRef;
 					break;
 					/* case '3':
@@ -171,10 +171,10 @@ class Warehouse_controller extends MX_Controller
 					$tWahRefCode = $tBchCodeRef;
 					break;
 				case '2':
-					// $tWahRefCode = $tBchCodeRef;
+					// $tWahRefCode = $tBchCodeCreate;
 					$tWahRefCode = $tPosCodeRef;
 					break;
-					/* case '3':
+				/* case '3':
 					$tWahRefCode = $this->input->post('oetWAHBchCode');
 				break; */
 				case '4':
@@ -188,7 +188,7 @@ class Warehouse_controller extends MX_Controller
 					break;
 
 				default:
-					$tWahRefCode = $this->input->post('oetWahRefCode');
+					// $tWahRefCode = $this->input->post('oetWahRefCode');
 			}
 
 			/* if($FTWahStaType =='2'){

@@ -32,8 +32,8 @@ if (@$nResult['rtCode'] == '1') { // Edit Page
 				// $tWahRefCode = $tBchCodeRef;
 				// $tWahRefCodeName = $tBchNameRef;
 
-				$tWahRefCode = $tPosCodeRef;
-				$tWahRefCodeName = $tPosNameRef;
+				// $tWahRefCode = $tPosCodeRef;
+				// $tWahRefCodeName = $tPosNameRef;
 				break;
 			}
 		case "4": { // 4:คลังฝากขาย/ร้านค้า
