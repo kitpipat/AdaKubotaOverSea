@@ -138,7 +138,7 @@
         JSxPAMCountPdtItems();
 
         //control ปุ่ม [อนุมัติแล้ว หรือยกเลิก]
-        if(tPAMStaApv == 1 || tPAMStaDoc == 3){
+        if(tPAMStaApv == 1 || tPAMStaDoc == 3 || bIsReadOnly == 1){
             // checkbox ทั้งหมด
             $('.xCNHideWhenCancelOrApprove').hide();
 

@@ -101,7 +101,9 @@ class arrangementproduct_controller extends MX_Controller {
                 'nOptDecimalShow'           => $nOptDecimalShow,
                 'nOptDocSave'               => $nOptDocSave,
                 'aDataDocHD'                => array('rtCode' => '800'),
-                'bAlwQtyPickNotEqQtyOrd'    => $bAlwQtyPickNotEqQtyOrd
+                'bAlwQtyPickNotEqQtyOrd'    => $bAlwQtyPickNotEqQtyOrd,
+                'aAlwEvent'         => FCNaHCheckAlwFunc($this->tRouteMenu),
+
             );
 
             $tPAMViewPageAdd = $this->load->view('document/arrangementproduct/wArrangementProductPageAdd', $aDataConfigViewAdd, true);
@@ -694,7 +696,9 @@ class arrangementproduct_controller extends MX_Controller {
                     'nOptDecimalShow'           => $nOptDecimalShow,
                     'nOptDocSave'               => $nOptDecimalShow,
                     'aDataDocHD'                => $aDataDocHD,
-                    'bAlwQtyPickNotEqQtyOrd'    => $bAlwQtyPickNotEqQtyOrd
+                    'bAlwQtyPickNotEqQtyOrd'    => $bAlwQtyPickNotEqQtyOrd,
+                    'aAlwEvent'         => FCNaHCheckAlwFunc($this->tRouteMenu),
+
                 );
                 $tViewPageEdit           = $this->load->view('document/arrangementproduct/wArrangementProductPageAdd',$aDataConfigViewEdit,true);
                 $aReturnData = array(

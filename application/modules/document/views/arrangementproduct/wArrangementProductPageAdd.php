@@ -95,7 +95,9 @@
     $tUserLoginLevel= $this->session->userdata("tSesUsrLevel");
     $bIsApv         = empty($tPAMStaApv) ? false : true;
     $bIsCancel      = ($tPAMStaDoc == "3") ? true : false;
-    $bIsApvOrCancel = ($bIsApv || $bIsCancel);
+    $bIsReadOnly    = ($aAlwEvent['tAutStaRead'] == 1 && $aAlwEvent['tAutStaEdit'] == 0)? true : false;
+    $bIsApvOrCancel = ($bIsApv || $bIsCancel || $bIsReadOnly);
+
     $bIsMultiBch    = $this->session->userdata("nSesUsrBchCount") > 1;
 ?>
 
@@ -107,6 +109,7 @@
 	var bIsCancel           = <?=($bIsCancel) ? 'true' : 'false'; ?>;
 	var bIsApvOrCancel      = <?=($bIsApvOrCancel) ? 'true' : 'false'; ?>;
     var tPAMStaDoc          = '<?=$tPAMStaDoc; ?>';
+    var bIsReadOnly         = '<?=$bIsReadOnly; ?>';
 	var tPAMStaApv          = '<?=$tPAMStaApv; ?>';
 	var bIsMultiBch         = <?=($bIsMultiBch) ? 'true' : 'false'; ?>;
 </script>

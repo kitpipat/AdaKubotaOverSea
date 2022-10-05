@@ -144,7 +144,8 @@
                     type="text" 
                     id="oetApiUsrName" 
                     name="oetApiUsrName" 
-                    value="<?=$tSpaUsrName;?>">
+                    value="<?=$tSpaUsrName;?>"
+                    autocomplete="off">
             </div>
 
 
@@ -157,7 +158,8 @@
                     id="oetApiPassword" 
                     name="oetApiPassword" 
                     data-oldpws="<?=$tSpaUsrPwd;?>"
-                    value="<?=$tSpaUsrPwd;?>">
+                    value="<?=$tSpaUsrPwd;?>"
+                    autocomplete="off">
             </div>
 
             <!-- API Key -->

@@ -60,8 +60,9 @@
         });
 
         //control ปุ่ม [อนุมัติแล้ว หรือยกเลิก]
-        if('<?=$tPAMStaApv;?>' == 1 || '<?=$tPAMStaDoc?>' == 3){
+        if('<?=$tPAMStaApv;?>' == 1 || '<?=$tPAMStaDoc?>' == 3 || '<?=$bIsReadOnly?>' == 1){
             // ปุ่มอนุมัติ
+            console.log('awd');
             $('#obtPAMApproveDoc').hide();
 
             // ปุ่มยกเลิก
@@ -894,6 +895,7 @@
             {"DocCode"      : '<?=@$tPAMDocNo; ?>'},
             {"DocBchCode"   : '<?=@$tPAMBchCode;?>'}
         ];
+        // console.log(aInfor);
         window.open("<?=base_url(); ?>formreport/Frm_SQL_ALLMPdtBillPick?infor=" + JCNtEnCodeUrlParameter(aInfor), '_blank');
     }
 

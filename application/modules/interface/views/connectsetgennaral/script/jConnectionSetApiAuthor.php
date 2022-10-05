@@ -1,8 +1,36 @@
 <script type="text/javascript">
 
-    var nLangEdits  = <?php echo $this->session->userdata("tLangEdit")?>;
+    var nLangEdits         = <?php echo $this->session->userdata("tLangEdit")?>;
+    var tUserAgnCode       = '<?=$this->session->userdata("tSesUsrAgnCode");?>';
+    var tSesUsrLoginLevel  = '<?=$this->session->userdata("tSesUsrLoginLevel");?>';
 
-    
+    $(document).ready(function(){
+        if(tSesUsrLoginLevel != "HQ" && tUserAgnCode){
+            $('#oetSetAgnCode').val('<?=$this->session->userdata('tSesUsrAgnCode');?>');
+            $('#oetSetAgnName').val('<?=$this->session->userdata('tSesUsrAgnName');?>');
+            $('#oimBrowseAgn').attr('disabled', true);
+        }else{
+            $('#oimBrowseAgn').attr('disabled', false);
+            $('#oimBrowseBch').attr('disabled', false);
+        }
+        FSvSetNextFuncCheckBchTo();
+    });
+
+    function FSvSetNextFuncCheckBchTo(){
+        //ตัวแทนขาย
+        var tSesUsrAgnCode = '<?= $this->session->userdata('tSesUsrAgnCode');?>';
+        
+        // ตัวแทนขายต้องถูกกำหนดก่อน ถึงจะเลือกสาขาได้
+        if ($('#oetSetAgnCode').val() == '') { // ไม่ได้กำหนดตัวแทนขาย
+            $('#oimBrowseBch').attr('disabled', true);
+            $('#oetSetBchCode').val('')
+            $('#oetSetBchName').val('')
+        } else { // กำหนดตัวแทนขายแล้ว
+            $('#oimBrowseBch').attr('disabled', false);
+        }
+
+    }
+
     //BrowseAgn 
     $('#oimBrowseAgn').click(function(e){
         e.preventDefault();
@@ -96,6 +124,7 @@
 
     function JSxClearBrowseConditionAgn(ptData){
         // aData = JSON.parse(ptData);
+        FSvSetNextFuncCheckBchTo();
         if(ptData != '' || ptData != 'null'){
             $('#oetSetBchCode').val(''); 
             $('#oetSetBchName').val(''); 

@@ -69,7 +69,7 @@
                                     }
                                 }
 
-                                $bIsApvOrCancel = ($aValue['FTXthStaApv'] == 1 || $aValue['FTXthStaApv'] == 2) || ($aValue['FTXthStaDoc'] == 3 );
+                                $bIsApvOrCancel = ($aValue['FTXthStaApv'] == 1 || $aValue['FTXthStaApv'] == 2) || ($aValue['FTXthStaDoc'] == 3 || $aAlwEvent['tAutStaRead'] == 1);
                             ?>
                             <tr class="text-center xCNTextDetail2 xWPIDocItems" id="otrPurchaseInvoice<?php echo $nKey?>" data-code="<?php echo $aValue['FTXthDocNo']?>" data-name="<?php echo $aValue['FTXthDocNo']?>">
                                 <?php  
@@ -124,7 +124,7 @@
                                     <?php endif; ?>
                                     <?php if($aAlwEvent['tAutStaFull'] == 1 || $aAlwEvent['tAutStaRead'] == 1) : ?>
                                         <td nowrap <?=$nRowspan?>>
-                                            <?php if($bIsApvOrCancel) { ?>
+                                            <?php if($bIsApvOrCancel && $aAlwEvent['tAutStaEdit'] == 0) { ?>
                                                 <img class="xCNIconTable" style="width: 17px;" src="<?= base_url('application/modules/common/assets/images/icons/view2.png'); ?>" onClick="JSvPAMCallPageEdit('<?= $aValue['FTXthDocNo'] ?>')">
                                             <?php }else{ ?>
                                                 <img class="xCNIconTable xCNIconEdit" onClick="JSvPAMCallPageEdit('<?php echo $aValue['FTXthDocNo']?>')">
