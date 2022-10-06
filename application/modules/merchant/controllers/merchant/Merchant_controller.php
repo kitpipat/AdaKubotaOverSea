@@ -22,7 +22,7 @@ class Merchant_controller extends MX_Controller
         ));
     }
 
-    //Functionality : Function Call Merchant Page List
+    //Functionality : Function Call merchant Page List
     //Parameters : Ajax and Function Parameter
     //Creator : 10/06/2019 Sarun
     //Return : String View
@@ -115,7 +115,7 @@ class Merchant_controller extends MX_Controller
         }
     }
 
-    //Functionality : Event Add Merchant
+    //Functionality : Event Add merchant
     //Parameters : Ajax Event
     //Creator : 11/06/2019 Sarun
     //Update : 17/03/2020 Saharat(Golf)
@@ -269,7 +269,7 @@ class Merchant_controller extends MX_Controller
         echo json_encode($aReturn);
     }
 
-    //Functionality : Function Call Edit Page Merchant
+    //Functionality : Function Call Edit Page merchant
     //Parameters : Ajax jReason()
     //Creator : 11/06/2019 Sarun
     //update : 17/03/2020 Saharat(Golf)
@@ -304,10 +304,10 @@ class Merchant_controller extends MX_Controller
             'tImgObjAll'    => $tImgObjAll,
             'nStaAddOrEdit' => 1
         );
-        $this->load->view('Merchant/Merchant/wMerchantAdd', $aDataEdit);
+        $this->load->view('merchant/merchant/wMerchantAdd', $aDataEdit);
     }
 
-    //Functionality : Event Edit Merchant
+    //Functionality : Event Edit merchant
     //Parameters : Ajax jMerchant()
     //Creator : 12/06/2019 Sarun
     //update : 17/03/2020 Saharat(Golf)
@@ -375,7 +375,7 @@ class Merchant_controller extends MX_Controller
         }
     }
 
-    //Functionality : Event Delete Merchant
+    //Functionality : Event Delete merchant
     //Parameters : Ajax jMerchant()
     //Creator : 12/06/2019 Sarun -
     //update  : 17/03/2020 Saharat(Golf)
@@ -387,7 +387,7 @@ class Merchant_controller extends MX_Controller
         $aDataMaster = array(
             'FTMcnCode' => $tIDCode
         );
-        $tAPIReq        = 'API/Merchant/Delete';
+        $tAPIReq        = 'API/merchant/Delete';
         $tMethodReq     = 'POST';
         $aMcnDel        = $this->Merchant_model->FSnMMCNDel($tAPIReq, $tMethodReq, $aDataMaster);
         $nNumRowMcnLoc  = $this->Merchant_model->FSnMLOCGetAllNumRow();
@@ -422,7 +422,7 @@ class Merchant_controller extends MX_Controller
 
 
 
-    //Functionality : Function CallPage Merchant Address DataTable
+    //Functionality : Function CallPage merchant Address DataTable
     //Parameters : Ajax Call View Add
     //Creator : 09/07/2019 Sarun
     //Return : String View
@@ -434,10 +434,10 @@ class Merchant_controller extends MX_Controller
         $aMerchantAddress       = array(
             'aMerchantAddress' => $aMerchantDataAddress
         );
-        $this->load->view('Merchant/Merchant/wMerchantAddressTable', $aMerchantAddress);
+        $this->load->view('merchant/merchant/wMerchantAddressTable', $aMerchantAddress);
     }
 
-    // Functionality : Function CallPage Merchant Add Address
+    // Functionality : Function CallPage merchant Add Address
     // Parameters : Ajax Call View Add
     // Creator : 09/07/2019 Sarun
     // LastUpdate : 09/06/2019 Wasin(Yoshi)
@@ -452,10 +452,10 @@ class Merchant_controller extends MX_Controller
             'tMerchantcode'         => $tMerchantcode,
             'aDataAddressConfig'    => $aMerchantData
         );
-        $this->load->view('Merchant/Merchant/wMerchantAddAddress', $aDataMerchant);
+        $this->load->view('merchant/merchant/wMerchantAddAddress', $aDataMerchant);
     }
 
-    // Functionality : Function Call Page Merchant Edit Address
+    // Functionality : Function Call Page merchant Edit Address
     // Parameters : Ajax Call View Add
     // Creator : 09/07/2019 Sarun
     // LastUpdate : 09/06/2019 Wasin(Yoshi)
@@ -477,10 +477,10 @@ class Merchant_controller extends MX_Controller
             'aDataAddressConfig'    => $aMerchantData,
             'aDataAddress'          => $aDataAddress
         );
-        $this->load->view('Merchant/Merchant/wMerchantAddAddress', $aDataMerchant);
+        $this->load->view('merchant/merchant/wMerchantAddAddress', $aDataMerchant);
     }
 
-    // Functionality : Event Add Merchant Address
+    // Functionality : Event Add merchant Address
     // Parameters : Ajax Event
     // Creator : 09/07/2019 Sarun
     // LastUpdate : 09/09/2019 Wasin(Yoshi)
@@ -541,13 +541,13 @@ class Merchant_controller extends MX_Controller
                 $this->db->trans_rollback();
                 $aReturnData = array(
                     'nStaEvent' => 500,
-                    'tStaMessg' => "Error Unsucess Add Merchant Address."
+                    'tStaMessg' => "Error Unsucess Add merchant Address."
                 );
             } else {
                 $this->db->trans_commit();
                 $aReturnData = array(
                     'nStaReturn'        => 1,
-                    'tStaMessg'         => 'Success Add Merchant Address.',
+                    'tStaMessg'         => 'Success Add merchant Address.',
                     'tDataCodeReturn'   => $aMerchantDataAddress['FTAddRefCode']
                 );
             }
@@ -560,7 +560,7 @@ class Merchant_controller extends MX_Controller
         echo json_encode($aReturnData);
     }
 
-    // Functionality : Event Edit Merchant Address
+    // Functionality : Event Edit merchant Address
     // Parameters : Ajax Event
     // Creator : 09/07/2019 Sarun
     // LastUpdate : 09/09/2019 Wasin(Yoshi)
@@ -621,13 +621,13 @@ class Merchant_controller extends MX_Controller
                 $this->db->trans_rollback();
                 $aReturnData = array(
                     'nStaEvent' => 500,
-                    'tStaMessg' => "Error Unsucess Add Merchant Address."
+                    'tStaMessg' => "Error Unsucess Add merchant Address."
                 );
             } else {
                 $this->db->trans_commit();
                 $aReturnData = array(
                     'nStaReturn'        => 1,
-                    'tStaMessg'         => 'Success Add Merchant Address.',
+                    'tStaMessg'         => 'Success Add merchant Address.',
                     'tDataCodeReturn'   => $aMerchantDataAddress['FTAddRefCode']
                 );
             }
@@ -640,7 +640,7 @@ class Merchant_controller extends MX_Controller
         echo json_encode($aReturnData);
     }
 
-    // Functionality : Function Delete Merchant Address Delete
+    // Functionality : Function Delete merchant Address Delete
     // Parameters : Ajax Call View Add
     // Creator : 09/07/2019 Sarun
     // LastUpdate : 09/09/2019 Wasin(Yoshi) 
@@ -665,13 +665,13 @@ class Merchant_controller extends MX_Controller
                 $this->db->trans_rollback();
                 $aReturnData = array(
                     'nStaEvent' => 500,
-                    'tStaMessg' => "Error Unsucess Delete Merchant Address."
+                    'tStaMessg' => "Error Unsucess Delete merchant Address."
                 );
             } else {
                 $this->db->trans_commit();
                 $aReturnData = array(
                     'nStaReturn'        => 1,
-                    'tStaMessg'         => 'Success Delete Merchant Address.',
+                    'tStaMessg'         => 'Success Delete merchant Address.',
                     'tDataCodeReturn'   => $aDataWhereDelete['FTAddRefCode']
                 );
             }

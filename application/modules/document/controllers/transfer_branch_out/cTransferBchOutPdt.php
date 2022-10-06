@@ -6,8 +6,8 @@ class cTransferBchOutPdt extends MX_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('document/transfer_branch_out/mTransferBchOutPdt');
-        $this->load->model('document/transfer_branch_out/mTransferBchOut');
+        $this->load->model('document/transfer_branch_out/Transferbchoutpdt_model');
+        $this->load->model('document/transfer_branch_out/Transferbchout_model');
     }
 
     /**
@@ -68,7 +68,7 @@ class cTransferBchOutPdt extends MX_Controller
             'tUserSessionID' => $tUserSessionID,
             'tDocKey' => $tDocKey
         );
-        $aResList = $this->mTransferBchOutPdt->FSaMGetPdtInTmp($aGetPdtInTmpParams);
+        $aResList = $this->Transferbchoutpdt_model->FSaMGetPdtInTmp($aGetPdtInTmpParams);
 
         $aGenTable = array(
             'aAlwEvent' => $aAlwEvent,
@@ -129,7 +129,7 @@ class cTransferBchOutPdt extends MX_Controller
                     'tDocKey' => $tDocKey,
                     'tUserSessionID' => $tUserSessionID
                 );
-                $nMaxSeqNo = $this->mTransferBchOutPdt->FSnMGetMaxSeqDTTemp($aGetMaxSeqDTTempParams);
+                $nMaxSeqNo = $this->Transferbchoutpdt_model->FSnMGetMaxSeqDTTemp($aGetMaxSeqDTTempParams);
 
                 $aDataPdtParams = array(
                     'tDocNo' => $tDocNo,
@@ -146,10 +146,10 @@ class cTransferBchOutPdt extends MX_Controller
                     'tOptionAddPdt' => $tTransferBchOutOptionAddPdt
                 );
 
-                $aDataPdtMaster = $this->mTransferBchOutPdt->FSaMGetDataPdt($aDataPdtParams); // Data Master Pdt ข้อมูลรายการสินค้าที่เพิ่มเข้ามา
+                $aDataPdtMaster = $this->Transferbchoutpdt_model->FSaMGetDataPdt($aDataPdtParams); // Data Master Pdt ข้อมูลรายการสินค้าที่เพิ่มเข้ามา
 
                 if ($aDataPdtMaster['rtCode'] == '1') {
-                    $this->mTransferBchOutPdt->FSaMInsertPDTToTemp($aDataPdtMaster, $aDataPdtParams); // นำรายการสินค้าเข้า DT Temp
+                    $this->Transferbchoutpdt_model->FSaMInsertPDTToTemp($aDataPdtMaster, $aDataPdtParams); // นำรายการสินค้าเข้า DT Temp
                 }
             }
         }
@@ -160,7 +160,7 @@ class cTransferBchOutPdt extends MX_Controller
                 'tBarCode' => $tBarCodeByScan,
                 'tSplCode' => $tSplCode
             ];
-            $aPdtData = $this->mTransferBchOutPdt->FSaMCreditNoteGetPunCodeByBarCode($aGetPunCodeByBarCodeParams);
+            $aPdtData = $this->Transferbchoutpdt_model->FSaMCreditNoteGetPunCodeByBarCode($aGetPunCodeByBarCodeParams);
 
             if ($aPdtData['rtCode'] == '1') {
 
@@ -168,7 +168,7 @@ class cTransferBchOutPdt extends MX_Controller
                     'tDocNo'    => $tDocNo,
                     'tDocKey'   => 'TAPTPcHD',
                 );
-                $nMaxSeqNo = $this->mTransferBchOutPdt->FSaMCreditNoteGetMaxSeqDTTemp($aDataWhere);
+                $nMaxSeqNo = $this->Transferbchoutpdt_model->FSaMCreditNoteGetMaxSeqDTTemp($aDataWhere);
 
                 $aPdtItems = $aPdtData['raItem'];
                 // Loop
@@ -188,9 +188,9 @@ class cTransferBchOutPdt extends MX_Controller
                     'nCreditNoteOptionAddPdt' => $nCreditNoteOptionAddPdt
                 );
 
-                $aDataPdtMaster = $this->mTransferBchOutPdt->FSaMCreditNoteGetDataPdt($aDataPdtParams); // Data Master Pdt ข้อมูลรายการสินค้าที่เพิ่มเข้ามา
+                $aDataPdtMaster = $this->Transferbchoutpdt_model->FSaMCreditNoteGetDataPdt($aDataPdtParams); // Data Master Pdt ข้อมูลรายการสินค้าที่เพิ่มเข้ามา
                 if ($aDataPdtMaster['rtCode'] == '1') {
-                    $nStaInsPdtToTmp = $this->mTransferBchOutPdt->FSaMCreditNoteInsertPDTToTemp($aDataPdtMaster, $aDataPdtParams); // นำรายการสินค้าเข้า DT Temp
+                    $nStaInsPdtToTmp = $this->Transferbchoutpdt_model->FSaMCreditNoteInsertPDTToTemp($aDataPdtMaster, $aDataPdtParams); // นำรายการสินค้าเข้า DT Temp
                 }
                 // Loop
             } else {
@@ -248,7 +248,7 @@ class cTransferBchOutPdt extends MX_Controller
             'tDocKey' => $tDocKey,
             'nSeqNo' => $nSeqNo,
         ];
-        $this->mTransferBchOutPdt->FSbUpdatePdtInTmpBySeq($aUpdatePdtInTmpBySeqParams);
+        $this->Transferbchoutpdt_model->FSbUpdatePdtInTmpBySeq($aUpdatePdtInTmpBySeqParams);
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -288,7 +288,7 @@ class cTransferBchOutPdt extends MX_Controller
             'tDocKey' => 'TCNTPdtTboHD',
             'nSeqNo' => $nSeqNo,
         ];
-        $this->mTransferBchOutPdt->FSbDeletePdtInTmpBySeq($aDeleteInTmpBySeqParams);
+        $this->Transferbchoutpdt_model->FSbDeletePdtInTmpBySeq($aDeleteInTmpBySeqParams);
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -328,7 +328,7 @@ class cTransferBchOutPdt extends MX_Controller
             'tDocKey' => 'TCNTPdtTboHD',
             'aSeqNo' => json_decode(FCNtAddSingleQuote($tSeqNo)),
         ];
-        $this->mTransferBchOutPdt->FSbDeleteMorePdtInTmpBySeq($aDeleteInTmpBySeqParams);
+        $this->Transferbchoutpdt_model->FSbDeleteMorePdtInTmpBySeq($aDeleteInTmpBySeqParams);
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -362,7 +362,7 @@ class cTransferBchOutPdt extends MX_Controller
         $aClearPdtInTmpParams = [
             'tUserSessionID' => $tUserSessionID
         ];
-        $this->mTransferBchOutPdt->FSbClearPdtInTmp($aClearPdtInTmpParams);
+        $this->Transferbchoutpdt_model->FSbClearPdtInTmp($aClearPdtInTmpParams);
     }
 
     /**

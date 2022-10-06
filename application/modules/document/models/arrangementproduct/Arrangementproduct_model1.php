@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class arrangementproduct_model extends CI_Model {
+class Arrangementproduct_model extends CI_Model {
 
     // ดึงข้อมูลมาแสดงบนตาราางหน้า List
     public function FSaMPAMGetDataTableList($paDataCondition){

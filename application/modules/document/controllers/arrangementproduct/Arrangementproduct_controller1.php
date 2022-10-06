@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class arrangementproduct_controller extends MX_Controller {
+class Arrangementproduct_controller extends MX_Controller {
 
     public $tRouteMenu  = 'docPAM/0/0';
 

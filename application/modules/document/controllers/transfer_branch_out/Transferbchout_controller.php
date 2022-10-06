@@ -11,7 +11,7 @@ class Transferbchout_controller extends MX_Controller
         $this->load->model('document/transfer_branch_out/Transferbchout_model');
         $this->load->model('document/transfer_branch_out/Transferbchoutpdt_model');
         $this->load->model('payment/rate/Rate_model');
-        $this->load->model('company/vatrate/Vatrate_model');
+        $this->load->model('company/vatrate/VatRate_model');
         $this->load->model('company/branch/Branch_model');
         $this->load->model('company/shop/Shop_model');
         $this->load->model('authen/login/Login_model');
@@ -419,7 +419,6 @@ class Transferbchout_controller extends MX_Controller
 
             $this->Transferbchout_model->FSaMAddUpdateHD($aDataMaster);
             $this->Transferbchout_model->FSaMAddUpdateHDRef($aDataMaster);
-
             $aUpdateDocNoInTmpParams = [
                 'tDocNo' => $aDataMaster['FTXthDocNo'],
                 'tDocKey' => 'TCNTPdtTboHD',
@@ -435,7 +434,6 @@ class Transferbchout_controller extends MX_Controller
                 'tUserLoginCode' => $tUserLoginCode
             ];
             $this->Transferbchout_model->FSaMTempToDT($aTempToDTParams); // คัดลอกข้อมูลจาก Temp to DT
-
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
                 $aReturn = array(

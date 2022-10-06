@@ -861,7 +861,7 @@ function FCNConvert($num){
 function FCNaDOCEndOfBillCalVat($paParams){
 
     $ci = &get_instance();
-    $ci->load->model('document/document/mDocEndOfBill');
+    $ci->load->model('document/document/Docendofbill_model');
 
     $aParams = [
         'FTXthDocNo' => $paParams['tDocNo'],
@@ -871,7 +871,7 @@ function FCNaDOCEndOfBillCalVat($paParams){
         'FTBchCode' => $paParams['tBchCode'],
     ];
 
-    $aDTTemp = $ci->mDocEndOfBill->FSaMDOCEndOfBillGetDTSumVat($aParams);
+    $aDTTemp = $ci->Docendofbill_model->FSaMDOCEndOfBillGetDTSumVat($aParams);
 
     if (!empty($aDTTemp)) {
         $cVatSum = 0;
@@ -896,7 +896,7 @@ function FCNaDOCEndOfBillCalVat($paParams){
 function FCNaDOCEndOfBillCal($paParams){
 
     $ci = &get_instance();
-    $ci->load->model('document/document/mDocEndOfBill');
+    $ci->load->model('document/document/Docendofbill_model');
 
     $tSplVatType = $paParams['tSplVatType'];
 
@@ -908,8 +908,8 @@ function FCNaDOCEndOfBillCal($paParams){
         'FTBchCode' => $paParams['tBchCode'],
     ];
 
-    $aHDDisTemp = @$ci->mDocEndOfBill->FSaMDOCEndOfBillGetHDDisTmp($aParams)[0];
-    $aDTTemp = @$ci->mDocEndOfBill->FSaMDOCEndOfBillGetDTTmp($aParams)[0];
+    $aHDDisTemp = @$ci->Docendofbill_model->FSaMDOCEndOfBillGetHDDisTmp($aParams)[0];
+    $aDTTemp = @$ci->Docendofbill_model->FSaMDOCEndOfBillGetDTTmp($aParams)[0];
 
     $aResult['cSumFCXtdNet'] = number_format($aDTTemp['FCXtdNet'], 2); // จำนวนเงินรวม
 

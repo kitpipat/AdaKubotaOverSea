@@ -78,7 +78,7 @@ class Transferbchoutpdt_controller extends MX_Controller
             'nPage' => $nPage,
             'nOptDecimalShow' => $nOptDecimalShow
         );
-        $tHtml = $this->load->view('document/transfer_branch_out/advance_table/wTransferBchOutPdtDatatable', $aGenTable, true);
+        $tHtml = $this->load->view('document/transfer_branch_out/advance_table/wTransferBchOutPdtDataTable', $aGenTable, true);
 
         $aResponse = [
             'aEndOfBill' => $aEndOfBill,
@@ -103,8 +103,8 @@ class Transferbchoutpdt_controller extends MX_Controller
         $nLngID = $this->session->userdata("tLangID");
         $tUserSessionID = $this->session->userdata('tSesSessionID');
         $tUserLevel = $this->session->userdata('tSesUsrLevel');
-        $tBchCode = $tUserLevel == 'HQ' ? FCNtGetBchInComp() : $this->session->userdata("tSesUsrBchCode");
-
+        $tBchCode = $tUserLevel =  $this->input->post('tBchCode');;
+        
         $tTransferBchOutOptionAddPdt = $this->input->post('tTransferBchOutOptionAddPdt');
         $tIsByScanBarCode = $this->input->post('tIsByScanBarCode');
         $tBarCodeByScan = $this->input->post('tBarCodeByScan');
