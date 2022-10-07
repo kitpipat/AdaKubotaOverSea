@@ -57,7 +57,7 @@ class Settingdairycurrency_controller extends MX_Controller {
 
         $aListRate       = $this->Settingdairycurrency_model->FSaMSETConfigDataTableByCurrentcy($aData,'checkbox');
         $aGetUpdateTime  = $this->Settingdairycurrency_model->FSaMCurentcyGetLastUpdate($aData);
-        // print_r($aListRate);
+        // print_r($aGetUpdateTime);
 
         if($aListRate ['rtCode'] == '800'){
             $JobDate = '';

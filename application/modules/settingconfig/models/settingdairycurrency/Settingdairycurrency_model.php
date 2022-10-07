@@ -102,8 +102,11 @@ class Settingdairycurrency_model extends CI_Model
     {
         try{
             $nLngID = $paData['FNLngID'];
-            $tAgnCode   = $paData['FTAgnCode'];
+            $tAgnCode   = $paData['tAgnCode'];
             $tSQL = " SELECT FDRteLastUpdOn FROM TFNMRate ";
+            if($tAgnCode){
+                $tSQL .= " WHERE FTAgnCode = '$tAgnCode'";
+            }
             $oQuery = $this->db->query($tSQL);
             if ($oQuery->num_rows() > 0) {
                 $oList      = $oQuery->result();
