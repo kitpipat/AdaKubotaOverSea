@@ -33,6 +33,9 @@
 <?php
     //Decimal Show ลง 2 ตำแหน่ง
     $nDecShow =  FCNxHGetOptionDecimalShow();
+    // echo '<pre>';
+    // print_r($_SESSION);
+    // echo '</pre>';
 ?>
 
 <div class="row">

@@ -71,9 +71,3 @@ $lang['tDocFilter']                  = "กรอง";
 $lang['tDocDateFrm']                 = "วันที่เอกสาร";
 $lang['tDocDateTo']                  = "ถึงวันที่เอกสาร";
 $lang['tDocDateFrom']                = "จากวันที่เอกสาร";
-
-
-$lang['tDocRefType']                       = 'N/A';
-$lang['tDocRefType1']                      = 'อ้างอิงภายใน';
-$lang['tDocRefType2']                      = 'ถูกอ้างอิงภายใน';
-$lang['tDocRefType3']                      = 'อ้างอิงภายนอก';

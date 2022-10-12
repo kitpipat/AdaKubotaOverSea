@@ -79,10 +79,6 @@ $lang['tDocDateTo']      = "ToDate";
 $lang['tDocDateFrom']    = "From date document";
 
 
-$lang['tDocRefType']                       = 'N/A';
-$lang['tDocRefType1']                      = 'Internal Reference';
-$lang['tDocRefType2']                      = 'Internally Referenced';
-$lang['tDocRefType3']                      = 'External Reference';
 
 
 

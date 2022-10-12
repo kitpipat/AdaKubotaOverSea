@@ -810,7 +810,7 @@ class User_model extends CI_Model {
                 //     'FTUsrName' => $paData['FTUsrName'],
                 //     'FTUsrRmk'  => $paData['FTUsrRmk'],
                 // ));
-                $tSql = "INSERT INTO TCNMUser_L (FTUsrCode, FNLngID, FTUsrName, FTUsrRmk)
+                $tSql = "INSERT INTO TCNMPdt_L (FTUsrCode, FNLngID, FTUsrName, FTUsrRmk)
                 VALUES ('".$paData["FTUsrCode"]."', 
                          ".$paData['FNLngID'].", 
                          N'".$paData["FTUsrName"]."', 

@@ -97,7 +97,7 @@ class Product_model extends CI_Model
 
         $aSpcJoinTableMaster =  array(
             1 => '', //รหัสสินค้า
-            2 => 'LEFT JOIN TCNMPdt_L PDTL WITH (NOLOCK)       ON PDT.FTPdtCode = PDTL.FTPdtCode ' .(($nSearchProductType == 2 && $tSearch) ? '' : 'AND PDTL.FNLngID ='.$nLngID ),  //หาชื่อสินค้า
+            2 => 'LEFT JOIN TCNMPdt_L PDTL WITH (NOLOCK)       ON PDT.FTPdtCode = PDTL.FTPdtCode  AND PDTL.FNLngID    =' . $nLngID,  //หาชื่อสินค้า
             3 => 'LEFT JOIN TCNMPdtPackSize PPCZ WITH (NOLOCK) ON PDT.FTPdtCode = PPCZ.FTPdtCode LEFT JOIN TCNMPdtBar PBAR WITH (NOLOCK)      ON PDT.FTPdtCode = PBAR.FTPdtCode  AND PPCZ.FTPunCode = PBAR.FTPunCode',  //หาบาร์โค๊ด
             4 => 'LEFT JOIN TCNMPdtPackSize PPCZ WITH (NOLOCK) ON PDT.FTPdtCode = PPCZ.FTPdtCode LEFT JOIN TCNMPdtUnit_L PUNL WITH (NOLOCK)   ON PPCZ.FTPunCode = PUNL.FTPunCode AND PUNL.FNLngID =' . $nLngID, //หาหน่วย
             5 => 'LEFT JOIN TCNMPdtGrp_L PGL WITH (NOLOCK)     ON PGL.FTPgpChain = PDT.FTPgpChain', //หากลุ่มสินค้า
@@ -106,7 +106,7 @@ class Product_model extends CI_Model
 
         $aSpcWhereTableMaster =  array(
             1 => " AND ( UPPER(PDT.FTPdtCode) COLLATE THAI_BIN LIKE UPPER('%$tSearch%') ) ", //รหัสสินค้า
-            2 => " AND ( UPPER(PDTL.FTPdtName) COLLATE THAI_BIN LIKE UPPER('%".trim($tSearch)."%') ) ",  //หาชื่อสินค้า
+            2 => " AND ( UPPER(PDTL.FTPdtName) COLLATE THAI_BIN LIKE UPPER('%$tSearch%') ) ",  //หาชื่อสินค้า
             3 => " AND ( UPPER(PBAR.FTBarCode) COLLATE THAI_BIN LIKE UPPER('%$tSearch%') ) ",  //หาบาร์โค๊ด
             4 => " AND ( UPPER(PUNL.FTPunName) COLLATE THAI_BIN LIKE UPPER('%$tSearch%') OR UPPER(PUNL.FTPunCode) COLLATE THAI_BIN LIKE UPPER('%$tSearch%') ) ", //หาหน่วย
             5 => " AND ( UPPER(PGL.FTPgpName) COLLATE THAI_BIN LIKE UPPER('%$tSearch%') OR UPPER(PGL.FTPgpChainName) COLLATE THAI_BIN LIKE UPPER('%$tSearch%') ) ", //หากลุ่มสินค้า
@@ -141,7 +141,6 @@ class Product_model extends CI_Model
         $nLangStaLocal =  FCNaGetLngStalocal();
         $nDefLang      =  $this->session->userdata("tSesDefLanguage");
         
-
         $tSQL = "SELECT DISTINCT
                         PDT.*, PDTL.FTPdtName,
                         PUNL.FTPunCode,
@@ -177,7 +176,7 @@ class Product_model extends CI_Model
                         SELECT  FTPdtCode,FTPdtName,FNLngID , ROW_NUMBER()
                                 OVER (PARTITION BY FTPdtCode ORDER BY FTPdtCode) AS RowNum
                         FROM    TCNMPdt_L WITH (NOLOCK)   
-                        ) PDTL ON PDTL.FTPdtCode = PDT.FTPdtCode ".(($nSearchProductType == 2 && $tSearch) ? '' : ' AND RowNum = 1')."
+                        ) PDTL ON PDTL.FTPdtCode = PDT.FTPdtCode And RowNum = 1
                     LEFT JOIN TCNMPdtPackSize PPCZ WITH (NOLOCK) ON PDT.FTPdtCode = PPCZ.FTPdtCode
                     LEFT JOIN TCNMPdtBar PBAR WITH (NOLOCK)      ON PDT.FTPdtCode = PBAR.FTPdtCode  AND PPCZ.FTPunCode = PBAR.FTPunCode
                     LEFT JOIN TCNMImgPdt PIMG WITH (NOLOCK)      ON PDT.FTPdtCode = PIMG.FTImgRefID AND PIMG.FTImgTable = 'TCNMPdt' AND PIMG.FNImgSeq = 1
