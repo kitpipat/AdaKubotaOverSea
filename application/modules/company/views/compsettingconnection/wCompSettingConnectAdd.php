@@ -1,6 +1,5 @@
 <?php
     if($aResult['rtCode'] == 1){
-        
         $tImgObjAll =  $aResult['raItems'][0]['FTUrlLogo'];
 
 
@@ -140,7 +139,7 @@
 
     // Type 3 URL+MQ
     for($nI=0;$nI<count($aResult['raItems']);$nI++){
-        if($aResult['raItems'][$nI]["FTUolKey"]=="MQMain"){
+        if($aResult['raItems'][$nI]["FTUolKey"]=="MQMember"){
 
             // TCNTUrlObject
             $tUrlID       	    = $aResult['raItems'][$nI]['FNUrlID'];

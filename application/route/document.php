@@ -1025,3 +1025,27 @@ $route['docSMEventCancel']                  = 'document/adjuststocksum/Adjuststo
 // $route ['docPOEventEdit']                               = '';
 // $route ['docPOEventAdd']                                = '';
 // $route ['docPOLoadPDTTmp']                              = 'document/purchaseorderNew/Purchaseorder_controller/FSxCDPODocumentLoadPDTTmp';
+
+//========================================== ใบจัด ======================================//
+$route['docPAM/(:any)/(:any)']                          = 'document/arrangementproduct/Arrangementproduct_controller/index/$1/$2';
+$route['docPAMFormSearchList']                          = 'document/arrangementproduct/Arrangementproduct_controller/FSvCPAMFormSearchList';
+$route['docPAMDataTable']                               = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMDataTable';
+$route['docPAMPageAdd']                                 = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMPageAdd';
+$route['docPAMPdtAdvanceTableLoadData']                 = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMPdtAdvTblLoadData';
+$route['docPAMAddPdtIntoDTDocTemp']                     = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMAddPdtIntoDocDTTemp';
+$route['docPAMEditPdtInDTDocTemp']                      = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMEditPdtIntoDocDTTemp';
+$route['docPAMRemovePdtInDTTmp']                        = 'document/arrangementproduct/Arrangementproduct_controller/FSvCPAMRemovePdtInDTTmp';
+$route['docPAMPageHDDocRefList']                        = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMPageHDDocRefList';
+$route['docPAMCallRefIntDoc']                           = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMCallRefIntDoc';
+$route['docPAMCallRefIntDocDataTable']                  = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMCallRefIntDocDataTable';
+$route['docPAMCallRefIntDocDetailDataTable']            = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMCallRefIntDocDetailDataTable';
+$route['docPAMCallRefIntDocInsertDTToTemp']             = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMCallRefIntDocInsertDTToTemp';
+$route['docPAMEventAddEditHDDocRef']                    = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMEventAddEditHDDocRef';
+$route['docPAMChkHavePdtForDocDTTemp']                  = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMChkHavePdtForDocDTTemp';
+$route['docPAMEventAdd']                                = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMAddEventDoc';
+$route['docPAMEventEdit']                               = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMEditEventDoc';
+$route['docPAMPageEdit']                                = 'document/arrangementproduct/Arrangementproduct_controller/FSvCPAMEditPage';
+$route['docPAMCancelDocument']                          = 'document/arrangementproduct/Arrangementproduct_controller/FSvCPAMCancelDocument';
+$route['docPAMEventDelHDDocRef']                        = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPRSEventDelHDDocRef';
+$route['docPAMEventDelete']                             = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMDeleteEventDoc';
+$route['docPAMApproveDocument']                         = 'document/arrangementproduct/Arrangementproduct_controller/FSoCPAMApproveEvent';

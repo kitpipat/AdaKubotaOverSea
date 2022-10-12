@@ -140,6 +140,7 @@ class Compsettingconnection_model extends CI_Model {
                     'raItems'   => $oDetail,
                     'rtCode'    => '1',
                     'rtDesc'    => 'success',
+                    'tSQL'      => $tSQL
                 );
             }else{
                 //if data not found

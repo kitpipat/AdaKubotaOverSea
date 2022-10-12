@@ -88,7 +88,7 @@ class Product_controller extends MX_Controller
                 'aAlwEventPdt'  => $aAlwEventPdt,
                 'aPdtDataList'  => $aPdtDataList,
                 'nPage'         => $nPage,
-                'tPdtForSys'    => $tPdtForSys
+                'tPdtForSys'    => $tPdtForSys,
             );
 
             // Return Dat View
