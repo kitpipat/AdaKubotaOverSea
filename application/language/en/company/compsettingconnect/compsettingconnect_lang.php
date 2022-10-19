@@ -16,6 +16,8 @@ $lang['tCompSettingEdit']               = "Edit";
 $lang['tCompURLAPI2CNMember']           = "API2CNMember"; // Type 9
 $lang['tCompURLAPI2RDFace']             = "API2RDFace"; // Type 10
 $lang['tCompURLAPI2RDFaceRegis']        = "API2RDFaceRegis"; // Type 11
+$lang['tCompURLAPI2CNAda']              = "API2CNAda"; //Type 16
+
 //Tab
 $lang['tCompSettingURL']                = "Setting URL";
 $lang['tCompMQDetailMain']              = "MQ Main";

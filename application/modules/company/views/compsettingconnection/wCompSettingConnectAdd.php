@@ -639,6 +639,17 @@
             $tRemark4           = $aResult['raItems'][$nI]['FTUolgRmk'];
             $tUsrStaActive4     = $aResult['raItems'][$nI]['FTUolStaActive'];
         }
+
+        // Type 16 CNAda
+        for($nI=0;$nI<count($aResult['raItems']);$nI++){
+            if($aResult['raItems'][$nI]["FNUrlType"]=="16"){
+                $tUrlID       	    = $aResult['raItems'][$nI]['FNUrlID'];
+                $tUrlAddress       	= $aResult['raItems'][$nI]['rtAddressUrlobj'];
+                $tUrlPort           = $aResult['raItems'][$nI]['FTUrlPort'];
+                $tUrlKey            = $aResult['raItems'][$nI]['FTUrlKey'];
+                $tUrlType           = $aResult['raItems'][$nI]['FNUrlType'];
+            }
+        }
     }
 
         $tEventpage  = "Edit";

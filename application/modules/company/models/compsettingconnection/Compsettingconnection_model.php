@@ -31,7 +31,7 @@ class Compsettingconnection_model extends CI_Model {
                                     FROM [TCNTUrlObject] URLObj WITH(NOLOCK)
                                     WHERE 1=1
                                     AND URLObj.FTUrlRefID = 'CENTER'
-                                    AND URLObj.FNUrlType IN ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15')
+                                    AND URLObj.FNUrlType IN ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16')
                             ";
             $tSQL .= ") Base) AS c WHERE c.rtRowID > $aRowLen[0] AND c.rtRowID <= $aRowLen[1]";
             $oQuery  = $this->db->query($tSQL);
@@ -80,7 +80,7 @@ class Compsettingconnection_model extends CI_Model {
                                 FROM [TCNTUrlObject] URLObj WITH(NOLOCK)
                                 WHERE 1=1
                                 AND URLObj.FTUrlRefID = 'CENTER'
-                                AND URLObj.FNUrlType IN ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15')
+                                AND URLObj.FNUrlType IN ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16')
             ";
               if(isset($ptSearchList) && !empty($ptSearchList)){
                 $tSQL .= " AND (URLObj.FNUrlID LIKE '%$ptSearchList%')";
@@ -132,7 +132,7 @@ class Compsettingconnection_model extends CI_Model {
                      LEFT JOIN TCNMImgObj ImgObj ON ImgObj.FTImgRefID = URLObj.FTUrlRefID AND ImgObj.FTImgTable = 'TCNTUrlObject'
                      WHERE 1=1 
                      AND URLObj.FNUrlID    = '$tUrlID' 
-                     AND URLObj.FNUrlType IN ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15')";
+                     AND URLObj.FNUrlType IN ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16')";
             $oQuery = $this->db->query($tSQL);
             if($oQuery->num_rows() > 0){
                 $oDetail    = $oQuery->result();
@@ -810,7 +810,7 @@ class Compsettingconnection_model extends CI_Model {
         try{
 
             $tUrlType  =  $paDataUrlObj['FNUrlType'];
-            
+
             if($tUrlType== '3'){
 
                 $this->db->set('FNUrlType'    , $paDataUrlObj['FNUrlType']);
@@ -1068,6 +1068,10 @@ class Compsettingconnection_model extends CI_Model {
                 $this->db->where_in('FTUrlRefID', $paData['FTUrlRefID']);
                 $this->db->where_in('FTUrlAddress',$paData['FTUrlAddress']);
                 $this->db->delete('TCNTUrlObjectLogin');
+            break;
+            case '16' : // Type 16 API2CNAda
+                $this->db->where_in('FNUrlID',$paData['FNUrlID']);
+                $this->db->delete('TCNTUrlObject');
             break;
         }
         if($this->db->affected_rows() > 0){

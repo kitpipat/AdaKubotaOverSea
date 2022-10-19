@@ -80,7 +80,7 @@
                     <label class="xCNLabelFrm"><span style="color:red">*</span><?= language('payment/banknote/banknote','tRTEFrmBntName')?></label> 
                         <input 
                             type="text"
-                            class="form-control xCNInputWithoutSpc"
+                            class="form-control"
                             maxlength="200"
                             id="oetBntName"
                             name="oetBntName"

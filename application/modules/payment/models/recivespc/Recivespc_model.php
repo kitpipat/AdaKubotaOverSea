@@ -44,7 +44,7 @@ class Recivespc_model extends CI_Model
                     $tWhereBch  =  " AND (RCVSPC.FTBchCode IN ($tUsrBchCodeMulti) ";
                     $tWhereSystex = ")";
                 } else {
-                    $tWhereBch  =  " AND (RCVSPC.FTBchCode = $tUsrBchCodeDefult ";
+                    $tWhereBch  =  " AND (RCVSPC.FTBchCode = '$tUsrBchCodeDefult' ";
                     $tWhereSystex = ")";
                 }
             }
@@ -181,7 +181,7 @@ class Recivespc_model extends CI_Model
                 $tWhereBch  =  " AND (RCVSPC.FTBchCode IN ($tUsrBchCodeMulti) ";
                 $tWhereSystex = ")";
             } else {
-                $tWhereBch  =  " AND (RCVSPC.FTBchCode = $tUsrBchCodeDefult ";
+                $tWhereBch  =  " AND (RCVSPC.FTBchCode = '$tUsrBchCodeDefult' ";
                 $tWhereSystex = ")";
             }
         }

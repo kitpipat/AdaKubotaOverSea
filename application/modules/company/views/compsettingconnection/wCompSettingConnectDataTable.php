@@ -90,7 +90,9 @@
                                     case 15: // API2FNWallet
                                         $tStaUrlType  = language('company/compsettingconnect/compsettingconnect','tCompURLAPI2RTStock');  
                                     break;
-
+                                    case 16: // API2CNAda
+                                        $tStaUrlType  = language('company/compsettingconnect/compsettingconnect','tCompURLAPI2CNAda');  
+                                    break;
                                     default: 
                                         $tStaUrlType  =  language('company/compsettingconnect/compsettingconnect','tCompURLAPI2CNMember');
                                 }                            

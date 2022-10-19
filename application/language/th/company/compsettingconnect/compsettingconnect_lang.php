@@ -20,8 +20,9 @@ $lang['tCompSettingEdit']        = "แก้ไข";
 $lang['tCompURLAPI2CNMember']      = "API2CNMember"; // Type 9
 $lang['tCompURLAPI2RDFace']        = "API2RDFace"; // Type 10
 $lang['tCompURLAPI2RDFaceRegis']   = "API2RDFaceRegis"; // Type 11
-$lang['tCompURLAPI2PSStock']        = "API2PSStock"; //Type 14
-$lang['tCompURLAPI2RTStock']        = "API2RTStock"; //Type 15
+$lang['tCompURLAPI2PSStock']       = "API2PSStock"; //Type 14
+$lang['tCompURLAPI2RTStock']       = "API2RTStock"; //Type 15
+$lang['tCompURLAPI2CNAda']         = "API2CNAda"; //Type 16
 
 
 

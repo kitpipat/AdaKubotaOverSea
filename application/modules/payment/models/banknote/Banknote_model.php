@@ -175,7 +175,9 @@ class Banknote_model extends CI_Model {
                     'FTBntStaShw'   => $paDataBnt['FTBntStaShw'],
                     'FCBntRateAmt'  => $paDataBnt['FCBntRateAmt'],
                     'FDCreateOn'    => $paDataBnt['FDCreateOn'],
-                    'FTCreateBy'    => $paDataBnt['FTCreateBy']
+                    'FTCreateBy'    => $paDataBnt['FTCreateBy'],
+                    'FDLastUpdOn'   => $paDataBnt['FDLastUpdOn'], 
+                    'FTLastUpdBy'   => $paDataBnt['FTLastUpdBy']
                 ));
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(

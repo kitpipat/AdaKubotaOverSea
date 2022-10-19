@@ -57,6 +57,9 @@
             case '15' :
                 JSxCompSettingConControlPanalShow();
             break;
+            case '16' :
+                JSxCompSettingConControlPanalHide();
+            break;
             default:
                 JSxCompSettingConControlPanalHide();
         }   
@@ -363,8 +366,8 @@
         var nStaSession = JCNxFuncChkSessionExpired();
         $('#ofmAddEditCompSettingConnect').validate().destroy();
             $.validator.addMethod('dublicateCode', function(value, element) {
-                if($("#ohdValidateDuplicate").val()==1){
-                    if($("#ocmUrlConnecttype").val()==1 || $("#ocmUrlConnecttype").val()==2 || $("#ocmUrlConnecttype").val()==3 || $("#ocmUrlConnecttype").val()==4 || $("#ocmUrlConnecttype").val()==5 || $("#ocmUrlConnecttype").val()==6 || $("#ocmUrlConnecttype").val()==7 || $("#ocmUrlConnecttype").val()==8 || $("#ocmUrlConnecttype").val()==12 || $("#ocmUrlConnecttype").val()==13 || $("#ocmUrlConnecttype").val()==9 || $("#ocmUrlConnecttype").val()==10 || $("#ocmUrlConnecttype").val()==11 || $("#ocmUrlConnecttype").val()==14 || $("#ocmUrlConnecttype").val()==15){
+                if($("#ohdValidateDuplicate").val() == 1){
+                    if($("#ocmUrlConnecttype").val()==1 || $("#ocmUrlConnecttype").val()==2 || $("#ocmUrlConnecttype").val()==3 || $("#ocmUrlConnecttype").val()==4 || $("#ocmUrlConnecttype").val()==5 || $("#ocmUrlConnecttype").val()==6 || $("#ocmUrlConnecttype").val()==7 || $("#ocmUrlConnecttype").val()==8 || $("#ocmUrlConnecttype").val()==12 || $("#ocmUrlConnecttype").val()==13 || $("#ocmUrlConnecttype").val()==9 || $("#ocmUrlConnecttype").val()==10 || $("#ocmUrlConnecttype").val()==11 || $("#ocmUrlConnecttype").val()==14 || $("#ocmUrlConnecttype").val()==15 || $("#ocmUrlConnecttype").val()==16){
                    
                         if($(element).attr("id")=="oetCompServerip"){
                             return false;
@@ -508,7 +511,6 @@
                         cache: false,
                         timeout: 0,
                         success: function (tResult){
-                            console.log(tResult);
                             var aData = JSON.parse(tResult);
                             if(aData["nStaEvent"] == 900){
                                 // $('#oetCompServerip').focus();

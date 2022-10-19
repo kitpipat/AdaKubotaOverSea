@@ -102,7 +102,9 @@ class Recive_model extends CI_Model
         if($this->session->userdata("tSesUsrLoginLevel") == "BCH"){
             $tBchCode = $this->session->userdata("tSesUsrBchCodeMulti");
             if($tBchCode){
-                $tSQL .= " AND RCVS.FTBchCode IN ('',$tBchCode) OR RCVS.FTBchCode IS Null";
+                $tSQL .= " AND RCVS.FTBchCode IN ('',$tBchCode)
+                           AND (RCVS.FTAggCode IS NULL OR RCVS.FTAggCode = '') 
+                           OR RCVS.FTBchCode IS Null";
             }
         }
 
@@ -303,29 +305,37 @@ class Recive_model extends CI_Model
                 }
             }
 
-            if($this->session->userdata("tSesUsrLevel") != 'HQ'){
-                $tRcvSpcAggCode = $this->session->userdata("tSesUsrAgnCode");
-                $tRcvSpcBchCode = $this->session->userdata("tSesUsrBchCodeDefault");
-                if ($tRcvSpcAggCode == '' && $tRcvSpcBchCode != '') {
-                    $tBchIns = $tRcvSpcBchCode;
-                } else {
-                    $tBchIns = '';
-                }
-                
-                $aDataRcvCode = array(
-                    'FTRcvCode' => $paData['FTRcvCode'],
-                    'FTAppCode'  =>   '',
-                    'FTAggCode'  =>   $tRcvSpcAggCode,
-                    'FTBchCode'  =>   $tBchIns,
-                    'FTMerCode'  =>   '',
-                    'FTShpCode'  =>   '',
-                    'FTPosCode'  =>   '',
-                    'FTPdtRmk'  =>   '',
-                    'FNRcvSeq' => 1
+            $this->db->select('FTRcvCode');
+            $this->db->from('TFNMRcvSpc');
+            $this->db->where('FTRcvCode', $paData['FTRcvCode']);
+            $this->db->limit(1);
+            $oGetRdvSpc = $this->db->get();
+            $nDataRcvSpc = $oGetRdvSpc->num_rows();
+            if ($nDataRcvSpc == 0) {
+                if($this->session->userdata("tSesUsrLevel") != 'HQ' ){
+                    $tRcvSpcAggCode = $this->session->userdata("tSesUsrAgnCode");
+                    $tRcvSpcBchCode = $this->session->userdata("tSesUsrBchCodeDefault");
+                    if ($tRcvSpcAggCode == '' && $tRcvSpcBchCode != '') {
+                        $tBchIns = $tRcvSpcBchCode;
+                    } else {
+                        $tBchIns = '';
+                    }
+                    
+                    $aDataRcvCode = array(
+                        'FTRcvCode' => $paData['FTRcvCode'],
+                        'FTAppCode'  =>   '',
+                        'FTAggCode'  =>   $tRcvSpcAggCode,
+                        'FTBchCode'  =>   $tBchIns,
+                        'FTMerCode'  =>   '',
+                        'FTShpCode'  =>   '',
+                        'FTPosCode'  =>   '',
+                        'FTPdtRmk'  =>   '',
+                        'FNRcvSeq' => 1
 
-                );
-                $this->db->insert('TFNMRcvSpc', $aDataRcvCode);
-            } 
+                    );
+                    $this->db->insert('TFNMRcvSpc', $aDataRcvCode);
+                } 
+            }
 
             $this->db->select('FTRcvCode');
             $this->db->from('TFNMRcvSpcConfig');

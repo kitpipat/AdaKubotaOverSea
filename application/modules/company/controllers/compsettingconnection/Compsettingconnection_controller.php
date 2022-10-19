@@ -597,6 +597,27 @@ class Compsettingconnection_controller extends MX_Controller {
                         'FTUolStaActive'  => (!empty($this->input->post('ocbStaUse')))? '1':'2',
                     );
                 break;
+
+                case '16': // API2CNAda
+                   // ลงตาราง TCNTUrlObject
+                   $aDataUrlObj    = array(
+                    'FNUrlID'       => $this->input->post('ohdUrlId'),
+                    'FTUrlRefID'    => 'CENTER',
+                    'FNUrlSeq'      => $nCountSeq,
+                    'FNUrlType'     => $this->input->post('ocmUrlConnecttype'),
+                    'FTUrlTable'    => 'TCNMComp',
+                    'FTUrlKey'      => $this->input->post('oetCompUrlKey'),
+                    'FTUrlAddressOld' => $this->input->post('oetCompServeripOld'),
+                    'FTUrlAddress'  => $this->input->post('oetCompServerip'),
+                    'FTUrlPort'     => $this->input->post('oetCompPortConnect'),
+                    'FTUrlLogo'     => $this->input->post('oetImgInputSetCon'),
+                    'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
+                    'FDLastUpdOn'   => date('Y-m-d H:i:s'),
+                    'FTCreateBy'    => $this->session->userdata('tSesUsername'),
+                    'FDCreateOn'    => date('Y-m-d H:i:s'),
+                    );
+                break;
+                
             default :
                 // ลงตาราง TCNTUrlObject
                 $aDataUrlObj    = array(
@@ -673,6 +694,9 @@ class Compsettingconnection_controller extends MX_Controller {
                     case '15' : // Type 2 Url + AUthor
                         $aStaMaster  = $this->Compsettingconnection_model->FSaMCompSetConAddUpdateMasterUrlAuthor($aDataUrlObj,$aDataUrlObjlogin);
                     break;
+                    case '16' : // Type 16 API2CNAda
+                        $aStaMaster  = $this->Compsettingconnection_model->FSaMCompSetConAddUpdateMasterUrl($aDataUrlObj); 
+                    break;
                 }
 
                 //อัพเดท FDLastUpdOn ใน branch ด้วย
@@ -745,7 +769,7 @@ class Compsettingconnection_controller extends MX_Controller {
 
         $nCountSeq      = $this->Compsettingconnection_model->FSnMCompCountSeq();
 
-
+        
         if($toldUrltype !=  $nUrlType){
             //วิ่งไปลบข้อมูลก่อนเพราะ เปลี่ยน type เดียวมันจะวิ่งไปที่ขา insert เอง
             $this->Compsettingconnection_model->FSaMCompRemoveDataBecauseChangeType($tOldKeyUrl); 
@@ -1164,6 +1188,26 @@ class Compsettingconnection_controller extends MX_Controller {
                     );
                 break;
 
+                case '16': // Type 2 URL + Authorized"
+                    // ลงตาราง TCNTUrlObject
+                    $aDataUrlObj    = array(
+                        'FNUrlID'       => $this->input->post('ohdUrlId'),
+                        'FTUrlRefID'    => 'CENTER',
+                        'FNUrlSeq'      => '0000'.$nCountSeq, 
+                        'FNUrlType'     => $this->input->post('ocmUrlConnecttype'),
+                        'FTUrlTable'    => 'TCNMComp',
+                        'FTUrlKey'      => $this->input->post('oetCompUrlKey'),
+                        'FTUrlAddress'  => $this->input->post('oetCompServerip'),
+                        'FTUrlAddressOld' => $this->input->post('oetCompServeripOld'),
+                        'FTUrlPort'     => $this->input->post('oetCompPortConnect'),
+                        'FTUrlLogo'     => $this->input->post('oetImgInputSetCon'),
+                        'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
+                        'FDLastUpdOn'   => date('Y-m-d H:i:s'),
+                        'FTCreateBy'    => $this->session->userdata('tSesUsername'),
+                        'FDCreateOn'    => date('Y-m-d H:i:s'),
+                    );
+                
+                break;
 
                 default :
                     // ลงตาราง TCNTUrlObject
@@ -1199,7 +1243,6 @@ class Compsettingconnection_controller extends MX_Controller {
                 // ถ้า tPass =  true มันก็จะ วิ่งไปที่ update normal  
                 $tPass  = true;
             }
-
 
             // Update data normal
             if($tPass  ==  true){
@@ -1252,7 +1295,9 @@ class Compsettingconnection_controller extends MX_Controller {
                     case '15' : // Type 8 tBchURLAPI2MQMember
                         $aStaMaster  = $this->Compsettingconnection_model->FSaMCompSetConAddUpdateMasterUrlAuthorUpdate($aDataUrlObj,$aDataUrlObjlogin,$tOldKeyUrl);
                     break;
-                    
+                    case '16' : // Type 8 tBchURLAPI2MQMember
+                        $aStaMaster  = $this->Compsettingconnection_model->FSaMCompSetConAddUpdateMasterUrl($aDataUrlObj);
+                    break;
                 }
 
                 //อัพเดท FDLastUpdOn ใน Comp ด้วย
