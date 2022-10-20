@@ -57,7 +57,9 @@ class Settingdairycurrency_controller extends MX_Controller {
 
         $aListRate       = $this->Settingdairycurrency_model->FSaMSETConfigDataTableByCurrentcy($aData,'checkbox');
         $aGetUpdateTime  = $this->Settingdairycurrency_model->FSaMCurentcyGetLastUpdate($aData);
+        // echo '<pre>';
         // print_r($aGetUpdateTime);
+        // echo '</pre>';
 
         if($aListRate ['rtCode'] == '800'){
             $JobDate = '';
@@ -86,9 +88,9 @@ class Settingdairycurrency_controller extends MX_Controller {
     //Event Save (แท็บตั้งค่าระบบ)
     public function FSxSETDailyCurrencyEventSave(){
         $aAllitems = $this->input->post('aGetItem');
-        echo '<pre>';
-        print_r($aAllitems);
-        echo '</pre>';        
+        // echo '<pre>';
+        // print_r($aAllitems);
+        // echo '</pre>';        
         if(isset($aAllitems)){
             foreach($aAllitems as $nKey => $aVal){
                 if($aVal['FCRteRate'] > 0){
@@ -98,6 +100,7 @@ class Settingdairycurrency_controller extends MX_Controller {
                         $aVal['FCRteRate'] = 1/(str_replace(',','',$aVal['FCRteRate'])); // 0.23 > 420
                     }
                 }
+                // echo $aVal['FTRteCode']." : <br>";
                 $this->Settingdairycurrency_model->FSaMCurentcyUpdate($aVal);
                 $this->Settingdairycurrency_model->FSaMCurentcyTashUpdate($aVal);
             }

@@ -103,7 +103,7 @@ class Settingdairycurrency_model extends CI_Model
         try{
             $nLngID = $paData['FNLngID'];
             $tAgnCode   = $paData['tAgnCode'];
-            $tSQL = " SELECT FDRteLastUpdOn FROM TFNMRate ";
+            $tSQL = " SELECT FDRteLastUpdOn FROM TFNMRate WHERE FDRteLastUpdOn != '' ORDER BY FDRteLastUpdOn DESC";
             if($tAgnCode){
                 $tSQL .= " WHERE FTAgnCode = '$tAgnCode'";
             }
