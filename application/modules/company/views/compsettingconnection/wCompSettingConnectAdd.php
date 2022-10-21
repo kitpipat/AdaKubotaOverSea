@@ -156,13 +156,15 @@
             $tRemark            = $aResult['raItems'][$nI]['FTUolgRmk'];
             $tUsrStaActive      = $aResult['raItems'][$nI]['FTUolStaActive'];
 
+            
+        }
+        if($aResult['raItems'][$nI]["FTUolKey"]=="MQMain"){
             $tUolVhost1          = $aResult['raItems'][$nI]['FTUolVhost'];
             $tUolUser1           = $aResult['raItems'][$nI]['FTUolUser'];
             $tUolPassword1       = $aResult['raItems'][$nI]['FTUolPassword'];
             $tUolKey1            = $aResult['raItems'][$nI]['FTUolKey'];
             $tRemark1            = $aResult['raItems'][$nI]['FTUolgRmk'];
             $tUsrStaActive1      = $aResult['raItems'][$nI]['FTUolStaActive'];
-           
         }
          if($aResult['raItems'][$nI]["FTUolKey"]=="MQDocument"){
             $tUolVhost2          = $aResult['raItems'][$nI]['FTUolVhost'];
