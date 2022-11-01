@@ -13,22 +13,35 @@ class Banknote_model extends CI_Model {
             $aRowLen        = FCNaHCallLenData($paData['nRow'],$paData['nPage']);
             $nLngID         = $paData['FNLngID'];
             $tSearchList    = $paData['tSearchAll'];
+            $tSesAgnCode    = $paData['tSesAgnCode'];
+
             $tSQL           =   "   SELECT c.* FROM(
-                                        SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC , rtBntCode ASC) AS rtRowID,* FROM (
+                                        SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC , rtBntCode DESC) AS rtRowID,* FROM (
                                             SELECT DISTINCT
                                                 IMG.FTImgObj        AS rtBntImage,
                                                 BNT.FTBntCode       AS rtBntCode,
                                                 BNT.FCBntRateAmt    AS rtBntAmt,
                                                 BNT_L.FTBntName     AS rtBntName,
                                                 BNT_L.FTBntRmk      AS rtBntRmk,
-                                                BNT.FDCreateOn
+                                                BNT.FDCreateOn,
+                                                BNT.FTAgnCode AS rtAgnCode,
+                                                CASE WHEN AGNL.FTAgnName IS NOT NULL THEN AGNL.FTAgnName ELSE 'ส่วนกลาง' END AS rtAgnName 
+                                                -- AGNL.FTAgnName   AS rtAgnName
                                             FROM [TFNMBankNote]         BNT     WITH(NOLOCK)
                                             LEFT JOIN [TFNMBankNote_L]  BNT_L   WITH(NOLOCK) ON BNT.FTBntCode   = BNT_L.FTBntCode AND BNT_L.FNLngID = $nLngID       
                                             LEFT JOIN TCNMImgObj        IMG     WITH(NOLOCK) ON IMG.FTImgRefID  = BNT.FTBntCode AND IMG.FTImgTable  = 'TFNMBankNote' AND IMG.FNImgSeq = 1
+                                            LEFT JOIN [TCNMAgency_L]  AGNL WITH(NOLOCK) ON BNT.FTAgnCode = AGNL.FTAgnCode AND AGNL.FNLngID =  ".$this->db->escape($nLngID)."
                                             WHERE 1=1
                                 ";
+
+            if($tSesAgnCode != ''){
+                $tSQL .= " AND BNT.FTAgnCode IN ('',$tSesAgnCode)";
+            }
+
             if(isset($tSearchList) && !empty($tSearchList)){
                 $tSQL   .= " AND (BNT.FTBntCode LIKE '%$tSearchList%'";
+                // $tSQL   .= " OR AGNL.FTAgnName  LIKE '%$tSearchList%'";
+                (strpos('ส่วนกลาง' , $tSearchList) !== false) ? $tSQL .= " OR AGNL.FTAgnName IS NULL" : $tSQL   .= " OR AGNL.FTAgnName  LIKE '%$tSearchList%'";
                 $tSQL   .= " OR BNT_L.FTBntName  LIKE '%$tSearchList%')";
             }
 
@@ -70,12 +83,22 @@ class Banknote_model extends CI_Model {
     //Return Type : Object
     public function FSoMBNTGetPageAll($ptSearchList,$ptLngID){
         try{
+            $tSesAgnCode    = $this->session->userdata("tSesUsrAgnCode");
+
             $tSQL = "SELECT COUNT (Bnt.FTBntCode) AS counts
                      FROM [TFNMBankNote] BNT
                      LEFT JOIN [TFNMBankNote_L]  BNT_L ON Bnt.FTBntCode = BNT_L.FTBntCode AND BNT_L.FNLngID = $ptLngID
+                     LEFT JOIN [TCNMAgency_L]  AGNL WITH(NOLOCK) ON BNT.FTAgnCode = AGNL.FTAgnCode AND AGNL.FNLngID =  $ptLngID
                      WHERE 1=1 ";
+            
+            if($tSesAgnCode != ''){
+                $tSQL .= " AND BNT.FTAgnCode IN ('',$tSesAgnCode)";
+            }
+            
             if(isset($ptSearchList) && !empty($ptSearchList)){
                 $tSQL .= " AND (Bnt.FTBntCode LIKE '%$ptSearchList%'";
+                // $tSQL   .= " OR AGNL.FTAgnName  LIKE '%$ptSearchList%'";
+                (strpos('ส่วนกลาง' , $ptSearchList) !== false) ? $tSQL .= " OR AGNL.FTAgnName IS NULL" : $tSQL   .= " OR AGNL.FTAgnName  LIKE '%$ptSearchList%'";
                 $tSQL .= " OR BNT_L.FTBntName  LIKE '%$ptSearchList%')";
             }
             $oQuery = $this->db->query($tSQL);
@@ -103,10 +126,17 @@ class Banknote_model extends CI_Model {
                                 BNT.FTBntCode   AS rtBntCode,
                                 BNT.FCBntRateAmt AS rtBntAmt,
                                 BNT_L.FTBntName AS rtBntName,
-                                BNT_L.FTBntRmk   AS rtBntRmk
+                                BNT_L.FTBntRmk   AS rtBntRmk,
+                                BNT.FTBntStaShw  AS rtBntStaShw,
+                                BNT.FTAgnCode AS rtAgnCode,
+                                AGNL.FTAgnName   AS rtAgnName,
+                                RTEL.FTRteCode AS rtRteCode,
+                                RTEL.FTRteName   AS rtRteName
                             FROM TFNMBankNote Bnt
                             LEFT JOIN TFNMBankNote_L BNT_L ON BNT.FTBntCode = BNT_L.FTBntCode AND BNT_L.FNLngID = $nLngID 
                             LEFT JOIN TCNMImgObj IMG ON IMG.FTImgRefID = BNT.FTBntCode AND IMG.FTImgTable = 'TFNMBankNote'
+                            LEFT JOIN TCNMAgency_L AGNL WITH(NOLOCK) ON BNT.FTAgnCode = AGNL.FTAgnCode AND AGNL.FNLngID = $nLngID
+                            LEFT JOIN TFNMRate_L  RTEL WITH(NOLOCK) ON BNT.FTRteCode = RTEL.FTRteCode AND RTEL.FTAgnCode = AGNL.FTAgnCode AND RTEL.FNLngID = $nLngID
                             WHERE 1=1 AND Bnt.FTBntCode = '$tBntCode' ";
             $oQuery = $this->db->query($tSQL);
             if ($oQuery->num_rows() > 0){
@@ -160,7 +190,8 @@ class Banknote_model extends CI_Model {
                 'FTBntStaShw'   => $paDataBnt['FTBntStaShw'],
                 'FCBntRateAmt'  => $paDataBnt['FCBntRateAmt'],
                 'FDLastUpdOn'   => $paDataBnt['FDLastUpdOn'], 
-                'FTLastUpdBy'   => $paDataBnt['FTLastUpdBy']
+                'FTLastUpdBy'   => $paDataBnt['FTLastUpdBy'],
+                'FTAgnCode'     => $paDataBnt['FTAgnCode'],
             ));
             if($this->db->affected_rows() > 0){
                 $aStatus = array(
@@ -177,7 +208,8 @@ class Banknote_model extends CI_Model {
                     'FDCreateOn'    => $paDataBnt['FDCreateOn'],
                     'FTCreateBy'    => $paDataBnt['FTCreateBy'],
                     'FDLastUpdOn'   => $paDataBnt['FDLastUpdOn'], 
-                    'FTLastUpdBy'   => $paDataBnt['FTLastUpdBy']
+                    'FTLastUpdBy'   => $paDataBnt['FTLastUpdBy'],
+                    'FTAgnCode'     => $paDataBnt['FTAgnCode'],
                 ));
                 if($this->db->affected_rows() > 0){
                     $aStatus = array(

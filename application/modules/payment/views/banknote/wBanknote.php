@@ -22,7 +22,7 @@
                         <div id="odvBtnAddEdit">
                             <button onclick="JSvCallPageBntList()" class="btn xCNBTNDefult xCNBTNDefult2Btn" type="button"> <?php echo language('common/main/main', 'tBack'); ?></button>
                             <?php if($aAlwEventBankNote['tAutStaFull'] == 1 || ($aAlwEventBankNote['tAutStaAdd'] == 1 || $aAlwEventBankNote['tAutStaEdit'] == 1)) : ?>
-                                <div class="btn-group">
+                                <div class="btn-group" id="obtBarSubmitBnt">
                                     <button type="submit" class="btn xWBtnGrpSaveLeft" onclick="$('#obtSubmitBnt').click()"> <?php echo language('common/main/main', 'tSave'); ?></button>
                                     <?php echo $vBtnSave?>
                                 </div>

@@ -29,6 +29,7 @@ $lang['tRCVValidCurrencyName']    = 'Please Select Currency';
 
 $lang['tRCVBillerID']  = "Biller ID";
 $lang['tRCVCurrency']  = "Refer Currency";
+$lang['tRCVCurrency1']  = "Refer Currency";
 $lang['tRCVMerchantID']  = "Merchant ID";
 $lang['tRCVMerchantRef']  = "Merchant Ref";
 $lang['tRCVMode']  = "Mode";

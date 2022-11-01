@@ -31,5 +31,9 @@ $lang['tBNTValidName']          = "กรุณาเลือกชื่อธ
 $lang['tBNTAmtValidName']       = "กรุณากรอกจำนวนเงิน";
 $lang['tBNTValidCodeDup']       = "รหัสนี้มีในระบบแล้วกรุณาครวจสอบอีกครั้ง";
 
+$lang['tBntStaShw']             = "สถานะ การแสดงรูปที่จะชำระเงิน";
+$lang['tBntStaShwLimit']        = "การแสดงรูปเกินจำนวนจำกัด 5 รายการ";
 // $lang['tCRDValidCardTypeCode']      = "ไม่พบข้อมูลรหัสประเภทบัตร";
 // $lang['tCRDValidCardStartDate']     = "กรุณาเพิ่มวันที่เริ่มใช้บัตรได้";
+
+$lang['tBNTAgency']     = "ตัวแทนขาย";

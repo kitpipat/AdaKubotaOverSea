@@ -1,8 +1,24 @@
 <script type="text/javascript">
     // $('.selection-2').selectpicker();
-
+    var tUsrLevel = "<?= $this->session->userdata('tSesUsrLoginLevel') ?>";
+    var tAgnCode = "<?= $this->session->userdata('tSesUsrAgnCode') ?>";
 
     $(document).ready(function () {
+
+        if( tUsrLevel != 'HQ' && tAgnCode != $('#oetBntAgnCode').val()){
+            $('.form-control').attr('disabled', true);
+            $('#ocbBntStaShw').attr('disabled', true);
+            $('#obtBarSubmitBnt').hide();
+        }
+
+        // ควบคุม เปิด-ปิด อ้าอิงประเภทสกุุลเงิน 
+        // var tAgnCodeInput = $("#oetBntAgnCode").val();
+        // if (tAgnCodeInput) {
+        //     $("#obtBntRateBrowse").attr('disabled', false);
+        // } else {
+        //     $("#obtBntRateBrowse").attr('disabled', true);
+        // }
+
         if(JSbBntIsCreatePage()){
             // Bnt Code
             $("#oetBntCode").attr("disabled", true);
@@ -128,5 +144,161 @@
             submitHandler: function(form){}
         });
     }
+
+    //BrowseAgn 
+    $('#oimBrowseAgn').click(function(e){
+        e.preventDefault();
+        var nStaSession = JCNxFuncChkSessionExpired();
+        if(typeof(nStaSession) !== 'undefined' && nStaSession == 1){
+            JSxCheckPinMenuClose();
+            window.oPdtBrowseAgencyOption = oBrowseAgn({
+                'tReturnInputCode'  : 'oetBntAgnCode',
+                'tReturnInputName'  : 'oetBntAgnName',
+                'tNextFuncName': 'JSxBntConsNextFuncBrowseAgn',
+                'aArgReturn': ['FTAgnCode', 'FTAgnName']
+            });
+            JCNxBrowseData('oPdtBrowseAgencyOption');
+        }else{
+            JCNxShowMsgSessionExpired();
+        }
+    });
+
+    var nLangEdits  = <?php echo $this->session->userdata("tLangEdit")?>;
+
+    //Option Agn
+    var oBrowseAgn =   function(poReturnInput){
+        var tInputReturnCode    = poReturnInput.tReturnInputCode;
+        var tInputReturnName    = poReturnInput.tReturnInputName;
+        var tNextFuncName = poReturnInput.tNextFuncName;
+        var aArgReturn = poReturnInput.aArgReturn;
+
+        var oOptionReturn       = {
+            Title : ['ticket/agency/agency', 'tAggTitle'],
+            Table:{Master:'TCNMAgency', PK:'FTAgnCode'},
+            Join :{
+            Table: ['TCNMAgency_L'],
+                On: ['TCNMAgency_L.FTAgnCode = TCNMAgency.FTAgnCode AND TCNMAgency_L.FNLngID = '+nLangEdits]
+            },
+            GrideView:{
+                ColumnPathLang	: 'ticket/agency/agency',
+                ColumnKeyLang	: ['tAggCode', 'tAggName'],
+                ColumnsSize     : ['15%', '85%'],
+                WidthModal      : 50,
+                DataColumns		: ['TCNMAgency.FTAgnCode', 'TCNMAgency_L.FTAgnName'],
+                DataColumnsFormat : ['', ''],
+                Perpage			: 10,
+                OrderBy			: ['TCNMAgency.FDCreateOn DESC'],
+            },
+            CallBack:{
+                ReturnType	: 'S',
+                Value		: [tInputReturnCode,"TCNMAgency.FTAgnCode"],
+                Text		: [tInputReturnName,"TCNMAgency_L.FTAgnName"],
+            },
+            NextFunc: {
+                FuncName: tNextFuncName,
+                ArgReturn: aArgReturn
+            },
+            RouteAddNew : 'agency',
+            BrowseLev : 1,
+        }
+        return oOptionReturn;
+    }
+
+    function JSxBntConsNextFuncBrowseAgn(poDataNextFunc) {
+        if (typeof(poDataNextFunc) != 'undefined' && poDataNextFunc != "NULL") {
+            var aDataNextFunc = JSON.parse(poDataNextFunc);
+            tAgnCode = aDataNextFunc[0];
+            tAgnName = aDataNextFunc[1];
+        }
+
+        if(tAgnCode){
+            $("#obtBntRateBrowse").attr('disabled', false);
+        }else{
+            $("#obtBntRateBrowse").attr('disabled', true);
+        }
+    }
+
+
+var tStaUsrLevel    = '<?php  echo $this->session->userdata("tSesUsrLevel"); ?>';
+if(tStaUsrLevel == 'BCH' || tStaUsrLevel == 'SHP'){
+    $('#oimBrowseAgn').attr("disabled", true);
+
+}
+
+
+//BrowseAgn 
+$('#obtBntRateBrowse').click(function(e){
+        e.preventDefault();
+        var nStaSession = JCNxFuncChkSessionExpired();
+        if(typeof(nStaSession) !== 'undefined' && nStaSession == 1){
+            JSxCheckPinMenuClose();
+            window.oPdtBrowseRateOption = oBrowseRte({
+                'tReturnInputCode'  : 'oetBntRateCode',
+                'tReturnInputName'  : 'oetBntRateName',
+            });
+            JCNxBrowseData('oPdtBrowseRateOption');
+        }else{
+            JCNxShowMsgSessionExpired();
+        }
+    });
+
+    var nLangEdits  = <?php echo $this->session->userdata("tLangEdit")?>;
+
+    //Option Rate
+    var oBrowseRte =   function(poReturnInput){
+        var tInputReturnCode    = poReturnInput.tReturnInputCode;
+        var tInputReturnName    = poReturnInput.tReturnInputName;
+    
+        var tWhereAgn = "";
+        var tAgnCodeWhere = $('#oetBntAgnCode').val();
+        if (tAgnCodeWhere == '' || tAgnCodeWhere == null) {
+            tWhereAgn = '';
+        } else {
+            tWhereAgn = " AND TFNMRate.FTAgnCode = '" + tAgnCodeWhere + "'";
+        }
+
+
+        var oOptionReturn  = {
+            Title: ['payment/recive/recive', 'tRCVCurrency'],
+            Table:{Master:'TFNMRate', PK:'FTRteCode'},
+            Join :{
+            Table: ['TFNMRate_L'],
+                On: ['TFNMRate_L.FTRteCode = TFNMRate.FTRteCode AND TFNMRate_L.FNLngID = '+nLangEdits]
+            },
+            Where: {
+                Condition: [" AND TFNMRate.FTRteStaLocal = 1" + tWhereAgn]
+            },
+            GrideView: {
+                ColumnPathLang: 'payment/recivespc/recivespc',
+                ColumnKeyLang: ['tBrowseAppCode', 'tBrowseAppName'],
+                ColumnsSize: ['15%', '75%'],
+                DataColumns: ['TFNMRate.FTRteCode', 'TFNMRate_L.FTRteName'],
+                DataColumnsFormat: ['', ''],
+                DistinctField   : ['TFNMRate.FTRteCode'],
+                WidthModal: 50,
+                Perpage: 10,
+                OrderBy: ['TFNMRate.FTRteCode ASC'],
+            },
+            CallBack:{
+                ReturnType	: 'S',
+                Value		: [tInputReturnCode,"TFNMRate.FTRteCode"],
+                Text		: [tInputReturnName,"TFNMRate_L.FTRteName"],
+            },
+            RouteAddNew : 'agency',
+            BrowseLev : 1,
+            // DebugSQL: true,
+        }
+        return oOptionReturn;
+    }
+
+
+    var tStaUsrLevel    = '<?php  echo $this->session->userdata("tSesUsrLevel"); ?>';
+
+
+    if(tStaUsrLevel == 'BCH' || tStaUsrLevel == 'SHP'){
+        $('#oimBrowseAgn').attr("disabled", true);
+    
+    }
+
 
 </script>

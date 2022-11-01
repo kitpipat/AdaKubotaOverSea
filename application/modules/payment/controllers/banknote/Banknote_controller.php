@@ -62,7 +62,8 @@ class Banknote_controller extends MX_Controller {
                 'nPage'         => $nPage,
                 'nRow'          => 10,
                 'FNLngID'       => $nLangEdit,
-                'tSearchAll'    => $tSearchAll
+                'tSearchAll'    => $tSearchAll,
+                'tSesAgnCode'   => $this->session->userdata("tSesUsrAgnCode"),
             );
             $aBntDataList   = $this->Banknote_model->FSaMBNTList($aData); 
             $aAlwEvent = FCNaHCheckAlwFunc('banknote/0/0'); //Controle Event
@@ -85,7 +86,9 @@ class Banknote_controller extends MX_Controller {
     //Return Type : View
     public function FSvCBNTAddPage(){
         $aDataBnt = array(
-            'nStaAddOrEdit'   => 99
+            'nStaAddOrEdit'   => 99,
+            'tSesAgnCode'   => $this->session->userdata("tSesUsrAgnCode"),
+            'tSesAgnName'   => $this->session->userdata("tSesUsrAgnName"),
         );
         $this->load->view('payment/banknote/wBanknoteAdd',$aDataBnt);
     }
@@ -141,6 +144,8 @@ class Banknote_controller extends MX_Controller {
         /** ==================== Input Image Data ==================== */
         $tImgInputBanknote      = $this->input->post('oetImgInputBanknote');
         $tImgInputBanknoteOld   = $this->input->post('oetImgInputBanknoteOld');
+        $bBntStaShw             = $this->input->post('ocbBntStaShw');
+        $tAgnCode               = $this->input->post('oetBntAgnCode');
         /** ==================== Input Image Data ==================== */
         $tIsAutoGenCode = $this->input->post('ocbBanknoteAutoGenCode');
         // Setup BackNote Code
@@ -165,18 +170,22 @@ class Banknote_controller extends MX_Controller {
         }else{
             $tBntCode = $this->input->post('oetBntCode');
         }
+
+        $tRteCode = ($this->input->post('oetBntRateCode')) ? $this->input->post('oetBntRateCode') : 'THB';
+
         $aDataBnt   = array(
-            'FTRteCode'     => "THB",
+            'FTRteCode'     => $tRteCode,
             'FTBntCode'     => $tBntCode,
             'FTBntName'     => $this->input->post('oetBntName'),
             'FCBntRateAmt'  => empty($this->input->post('oetBntAmt'))?0:str_replace(',','',$this->input->post('oetBntAmt')),
-            'FTBntStaShw'   => '1',
+            'FTBntStaShw'   => ($bBntStaShw != '')? '1' : '',
             'FTBntRmk'      => $this->input->post('otaBntRemark'),
             'FDCreateOn'    => date('Y-m-d'),
             'FDLastUpdOn'   => date('Y-m-d'),
             'FTCreateBy'    => $this->session->userdata('tSesUsername'),
             'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
-            'FNLngID'       => $this->session->userdata("tLangEdit")
+            'FNLngID'       => $this->session->userdata("tLangEdit"),
+            'FTAgnCode'     => ($tAgnCode) ? $tAgnCode : ''
         );
         $oCountDup      = $this->Banknote_model->FSnMBNTCheckDuplicate($aDataBnt['FTBntCode']);
         $nStaDup        = $oCountDup['counts'];
@@ -233,19 +242,24 @@ class Banknote_controller extends MX_Controller {
         /** ==================== Input Image Data ==================== */
         $tImgInputBanknote      = $this->input->post('oetImgInputBanknote');
         $tImgInputBanknoteOld   = $this->input->post('oetImgInputBanknoteOld');
+        $bBntStaShw             = $this->input->post('ocbBntStaShw');
+        $tAgnCode               = $this->input->post('oetBntAgnCode');
+
+        $tRteCode = ($this->input->post('oetBntRateCode')) ? $this->input->post('oetBntRateCode') : 'THB';
         /** ==================== Input Image Data ==================== */
         $aDataBnt   = [
-            'FTRteCode'     => "THB",
+            'FTRteCode'     => $tRteCode,
             'FTBntCode'     => $this->input->post('oetBntCode'),
             'FTBntName'     => $this->input->post('oetBntName'),
             'FCBntRateAmt'  => empty($this->input->post('oetBntAmt'))?0:str_replace(',','',$this->input->post('oetBntAmt')),
-            'FTBntStaShw'   => '1',
+            'FTBntStaShw'   => $bBntStaShw,
             'FTBntRmk'      => $this->input->post('otaBntRemark'),
             'FDCreateOn'    => date('Y-m-d'),
             'FDLastUpdOn'   => date('Y-m-d'),
             'FTCreateBy'    => $this->session->userdata('tSesUsername'),
             'FTLastUpdBy'   => $this->session->userdata('tSesUsername'),
-            'FNLngID'       => $this->session->userdata("tLangEdit")
+            'FNLngID'       => $this->session->userdata("tLangEdit"),
+            'FTAgnCode'     => ($tAgnCode) ? $tAgnCode : ''
         ];
 		
         $aStaBntMaster  = $this->Banknote_model->FSaMBNTAddUpdateMaster($aDataBnt);

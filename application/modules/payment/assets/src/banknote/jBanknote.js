@@ -159,6 +159,8 @@ function JSvCallPageBntEdit(ptBntCode) {
                     $('#oliBntTitleEdit').show();
                     $('#odvBtnBntInfo').hide();
                     $('#odvBtnAddEdit').show();
+                    $('#obtBarSubmitBnt').show();
+
                     $('#odvContentPageBnt').html(tResult);
                     $('#oetBntCode').addClass('xCNDisable');
                     $('#oetBntCode').attr('readonly', true);

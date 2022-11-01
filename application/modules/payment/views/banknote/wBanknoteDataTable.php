@@ -4,9 +4,10 @@
     }else{
         $nCurrentPage = '1';
     }
+    $tAgnCode 	= $this->session->userdata("tSesUsrAgnCode");
 
-        //Decimal Show
-        $tDecShow = FCNxHGetOptionDecimalShow();
+    //Decimal Show
+    $tDecShow = FCNxHGetOptionDecimalShow();
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -19,9 +20,10 @@
                             <th nowrap class="xCNTextBold text-center" width="5%"><?php echo language('payment/banknote/banknote','tBNTTBChoose'); ?></th>
                         <?php endif;?>
                             <th nowrap class="xCNTextBold text-center" width="10%"><?php echo language('payment/banknote/banknote','tBNTSelect'); ?></th>
-                            <th nowrap class="xCNTextBold text-left" width="25%"><?php echo language('payment/banknote/banknote','tBNTTBCode'); ?></th>
-                            <th nowrap class="xCNTextBold text-left" width="30%"><?php echo language('payment/banknote/banknote','tBNTName');?></th>
-                            <th nowrap class="xCNTextBold text-right" width="20%"><?php echo language('payment/banknote/banknote','tBNTValue'); ?></th>
+                            <th nowrap class="xCNTextBold text-left" width="20%"><?php echo language('payment/banknote/banknote','tBNTTBCode'); ?></th>
+                            <th nowrap class="xCNTextBold text-left" width="20%"><?php echo language('payment/banknote/banknote','tBNTName');?></th>
+                            <th nowrap class="xCNTextBold text-right" width="10%"><?php echo language('payment/banknote/banknote','tBNTValue'); ?></th>
+                            <th nowrap class="xCNTextBold text-left" width="15%"><?php echo language('payment/banknote/banknote','tBNTAgency'); ?></th>
                         <?php if($aAlwEventBankNote['tAutStaFull'] == 1 || ($aAlwEventBankNote['tAutStaAdd'] == 1 || $aAlwEventBankNote['tAutStaEdit'] == 1)) : ?> 
                             <th nowrap class="xCNTextBold text-center" width="5%"><?php echo language('payment/banknote/banknote','tBNTDelete'); ?></th>
                         <?php endif;?>
@@ -37,7 +39,9 @@
                             <?php if($aAlwEventBankNote['tAutStaFull'] == 1 || ($aAlwEventBankNote['tAutStaAdd'] == 1 || $aAlwEventBankNote['tAutStaEdit'] == 1)) : ?>
                                 <td class="text-center">
                                     <label class="fancy-checkbox">
-                                        <input id="ocbListItem<?=$nKey?>" type="checkbox" class="ocbListItem" name="ocbListItem[]">
+                                        <!-- <input id="ocbListItem<?=$nKey?>" type="checkbox" class="ocbListItem" name="ocbListItem[]"> -->
+                                        <input id="ocbListItem<?php echo $nKey?>" class="ocbListItem" name="ocbListItem[]" type="checkbox" <?= (!$tAgnCode) ? false : (($aValue['rtAgnCode']) ? false : 'disabled') ;?>>
+                                <span <?= (!$tAgnCode) ? false : (($aValue['rtAgnCode']) ? false : 'class="xCNDocDisabled"') ;?>>&nbsp;</span>
                                         <span>&nbsp;</span>
                                     </label>
                                 </td>
@@ -57,18 +61,33 @@
                                 <td nowarp class="text-left"><?=$aValue['rtBntCode']?></td>
                                 <td nowrap class="text-left"><?php echo $aValue['rtBntName']?></td>
                                 <td nowrap class="text-right"><?php echo number_format($aValue['rtBntAmt'], $tDecShow)?></td>
-                                <?php if($aAlwEventBankNote['tAutStaFull'] == 1 || ($aAlwEventBankNote['tAutStaAdd'] == 1 || $aAlwEventBankNote['tAutStaEdit'] == 1)) : ?>
+                                <td nowrap class="text-left"><?php echo $aValue['rtAgnName']?></td>
+                                <?php if($aAlwEventBankNote['tAutStaFull'] == 1 || ($aAlwEventBankNote['tAutStaAdd'] == 1 || $aAlwEventBankNote['tAutStaEdit'] == 1) && (!$tAgnCode)) : ?>
                                 <td>
                                     <!-- เปลี่ยน -->
                                     <img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSoBntDel('<?=$nCurrentPage?>','<?=$aValue['rtBntName']?>','<?php echo $aValue['rtBntCode']?>')">
                                 </td>
-                                <?php endif;?>
-                                <?php if($aAlwEventBankNote['tAutStaFull'] == 1 || ($aAlwEventBankNote['tAutStaAdd'] == 1 || $aAlwEventBankNote['tAutStaEdit'] == 1)) : ?>
-                                <td>
-                                    <!-- เปลี่ยน -->
-                                    <img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageBntEdit('<?php echo $aValue['rtBntCode']?>')">
-                                </td>
-                                <?php endif;?>
+                                <?php else: ?>
+                                    <?php if($aValue['rtAgnCode'] == $tAgnCode){ ?>
+                                        <td nowrap style="text-align: center;">
+                                            <img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" onClick="JSoBntDel('<?=$nCurrentPage?>','<?=$aValue['rtBntName']?>','<?php echo $aValue['rtBntCode']?>')">
+                                        </td>                            
+                                    <?php }else{?>
+                                        <td class="text-center"><img class="xCNIconTable xCNIconDel xCNDocDisabled" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/delete.png'?>" title="ไม่สามารถลบรายการนี้ได้"></td>
+                                    <?php }?>    
+                                <?php endif; ?>
+
+                             
+
+                                <?php if($aAlwEventBankNote['tAutStaFull'] == 1 || ($aAlwEventBankNote['tAutStaAdd'] == 1 || $aAlwEventBankNote['tAutStaEdit'] == 1) && (!$tAgnCode)) : ?>
+                                    <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageBntEdit('<?php echo $aValue['rtBntCode']?>')"></td>
+                                <?php else: ?>
+                                    <?php if($aValue['rtAgnCode'] == $tAgnCode){ ?>
+                                        <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/edit.png'?>" onClick="JSvCallPageBntEdit('<?php echo $aValue['rtBntCode']?>')"></td>
+                                    <?php }else{?>
+                                        <td><img class="xCNIconTable" src="<?php echo  base_url().'/application/modules/common/assets/images/icons/view2.png'?>" onClick="JSvCallPageBntEdit('<?php echo $aValue['rtBntCode']?>')"></td>
+                                    <?php }?>    
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach;?>
                     <?php else:?>

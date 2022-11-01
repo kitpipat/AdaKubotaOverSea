@@ -7,12 +7,26 @@
         $tBntName       = $aBntData['raItems']['rtBntName'];
         $tBnnAmt        = number_format($aBntData['raItems']['rtBntAmt'],$tDecSave);
         $tBntRmk        = $aBntData['raItems']['rtBntRmk'];
+        $tBntStaShw     = $aBntData['raItems']['rtBntStaShw'];
+
+        $tBntAgnCode       = $aBntData['raItems']['rtAgnCode'];
+        $tBntAgnName       = $aBntData['raItems']['rtAgnName'];
+
+        $tBntCurrencyCode  = $aBntData['raItems']['rtRteCode'];
+        $tBntCurrencyName  = ($aBntData['raItems']['rtRteName']) ? $aBntData['raItems']['rtRteName'] : 'Thai baht';
     }else{
         $tRoute         = "banknoteEventAdd";
         $tBntCode       = "";
         $tBntName       = "";
         $tBnnAmt        = "0.00";
         $tBntRmk        = "";
+        $tBntStaShw     = ""; 
+
+        $tBntAgnCode    = $tSesAgnCode;
+        $tBntAgnName    = $tSesAgnName;
+
+        $tBntCurrencyCode  = "";
+        $tBntCurrencyName  = "";
     }
 ?>
 <form class="validate-form" action="javascript:void(0)" method="post" enctype="multipart/form-data" id="ofmAddBnt">
@@ -75,6 +89,51 @@
                         >
                     </div>
                 </div>
+
+                <?php 
+                    if($tRoute == "banknoteEventAdd"){
+                        $tBntAgnCode   = $tSesAgnCode;
+                        $tBntAgnName   = $tSesAgnName;
+                        $tDisabled     = '';
+                        $tNameElmIDAgn = 'oimBrowseAgn';
+                    }else{
+                        $tBntAgnCode    = $tBntAgnCode;
+                        $tBntAgnName    = $tBntAgnName;
+                        $tDisabled      = '';
+                        $tNameElmIDAgn  = 'oimBrowseAgn';
+                    }
+                ?>
+
+                <!-- เพิ่ม AD Browser -->
+                <div class="form-group ">
+                    <label class="xCNLabelFrm"><?php echo language('payment/banknote/banknote','tBNTAgency')?></label>
+                    <div class="input-group"><input type="text" class="form-control xCNHide" id="oetBntAgnCode" name="oetBntAgnCode" maxlength="5" value="<?=@$tBntAgnCode;?>">
+                    <input type="text" class="form-control xWPointerEventNone" id="oetBntAgnName" name="oetBntAgnName"
+                        maxlength="100" placeholder="<?php echo language('interface/connectionsetting/connectionsetting','tTBAgency')?>" value="<?=@$tBntAgnName;?>"readonly>
+                        <span class="input-group-btn">
+                            <button id="<?=@$tNameElmIDAgn;?>" type="button" class="btn xCNBtnBrowseAddOn <?=@$tDisabled?>">
+                                <img src="<?php echo  base_url().'/application/modules/common/assets/images/icons/find-24.png'?>">
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- เพิ่ม สกุลเงิน -->
+                <div class="form-group ">
+                    <label class="xCNLabelFrm"><?= language('payment/recive/recive','tRCVCurrency1'); ?></label>
+                    <div class="input-group">
+                        <input type="text" autocomplete="off" class="form-control xCNHide" id="oetBntRateCode" name="oetBntRateCode" value="<?= $tBntCurrencyCode; ?>">
+                        <div class="validate-input">
+                            <input type="text" class="form-control xWPointerEventNone" id="oetBntRateName" name="oetBntRateName" placeholder="" 
+                            value="<?= $tBntCurrencyName; ?>" 
+                            data-validate-required="<?php echo language('payment/recive/recive', 'tRCVValidCurrencyName') ?>" readonly>
+                        </div>
+                        <span class="input-group-btn">
+                            <button id="obtBntRateBrowse" type="button" class="btn xCNBtnBrowseAddOn" ><img class="xCNIconFind"></button>
+                        </span>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="validate-input">
                     <label class="xCNLabelFrm"><span style="color:red">*</span><?= language('payment/banknote/banknote','tRTEFrmBntName')?></label> 
@@ -100,6 +159,21 @@
                         <textarea class="form-control" maxlength="100" rows="4" id="otaBntRemark" name="otaBntRemark"><?php echo $tBntRmk; ?></textarea>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="fancy-checkbox">
+                        <?php
+                            if(isset($tBntStaShw) && $tBntStaShw == 1){
+                                $tCheckedStaAlwShw  = 'checked';
+                            }else{
+                                $tCheckedStaAlwShw  = '';
+                            }
+                        ?>
+                        <input type="checkbox" id="ocbBntStaShw" name="ocbBntStaShw" value="1" <?php echo $tCheckedStaAlwShw;?>>
+                        <span> <?php echo language('payment/banknote/banknote','tBntStaShw')?></span>
+                    </label>
+                </div>
+
             </div>
         </div>
     </div>
