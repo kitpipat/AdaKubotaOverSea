@@ -230,6 +230,9 @@ function JSxBanknoteValidateForm(ptRoute) {
             },
             oetBntName: {
                 required: true
+            },
+            oetBntRateName: {
+                required: true
             }
         },
         messages: {
@@ -239,6 +242,9 @@ function JSxBanknoteValidateForm(ptRoute) {
             },
             oetBntName: {
                 required: $('#oetBntName').attr('data-validate-required')
+            },
+            oetBntRateName: {
+                required: $('#oetBntRateName').attr('data-validate-required')
             }
         },
         errorElement: "em",

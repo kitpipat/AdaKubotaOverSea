@@ -120,7 +120,7 @@
 
                 <!-- เพิ่ม สกุลเงิน -->
                 <div class="form-group ">
-                    <label class="xCNLabelFrm"><?= language('payment/recive/recive','tRCVCurrency1'); ?></label>
+                    <label class="xCNLabelFrm"><span style="color:red">*</span><?= language('payment/recive/recive','tRCVCurrency1'); ?></label>
                     <div class="input-group">
                         <input type="text" autocomplete="off" class="form-control xCNHide" id="oetBntRateCode" name="oetBntRateCode" value="<?= $tBntCurrencyCode; ?>">
                         <div class="validate-input">

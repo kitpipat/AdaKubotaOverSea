@@ -130,13 +130,14 @@ class Banknote_model extends CI_Model {
                                 BNT.FTBntStaShw  AS rtBntStaShw,
                                 BNT.FTAgnCode AS rtAgnCode,
                                 AGNL.FTAgnName   AS rtAgnName,
-                                RTEL.FTRteCode AS rtRteCode,
+                                Bnt.FTRteCode AS rtRteCode,
                                 RTEL.FTRteName   AS rtRteName
                             FROM TFNMBankNote Bnt
                             LEFT JOIN TFNMBankNote_L BNT_L ON BNT.FTBntCode = BNT_L.FTBntCode AND BNT_L.FNLngID = $nLngID 
                             LEFT JOIN TCNMImgObj IMG ON IMG.FTImgRefID = BNT.FTBntCode AND IMG.FTImgTable = 'TFNMBankNote'
                             LEFT JOIN TCNMAgency_L AGNL WITH(NOLOCK) ON BNT.FTAgnCode = AGNL.FTAgnCode AND AGNL.FNLngID = $nLngID
-                            LEFT JOIN TFNMRate_L  RTEL WITH(NOLOCK) ON BNT.FTRteCode = RTEL.FTRteCode AND RTEL.FTAgnCode = AGNL.FTAgnCode AND RTEL.FNLngID = $nLngID
+                            LEFT JOIN TFNMRate_L  RTEL WITH(NOLOCK) ON BNT.FTRteCode = RTEL.FTRteCode AND RTEL.FNLngID = $nLngID
+                            -- LEFT JOIN TFNMRate_L  RTEL WITH(NOLOCK) ON BNT.FTRteCode = RTEL.FTRteCode AND RTEL.FTAgnCode = AGNL.FTAgnCode AND RTEL.FNLngID = $nLngID
                             WHERE 1=1 AND Bnt.FTBntCode = '$tBntCode' ";
             $oQuery = $this->db->query($tSQL);
             if ($oQuery->num_rows() > 0){
