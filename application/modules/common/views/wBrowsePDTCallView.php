@@ -67,8 +67,8 @@
 ?>
 
 <!-- element name and value -->
-<input type='hidden' name="odhEleNamePDT"       id="odhEleNamePDT"      value="<?=$tElementreturn[0]?>">
-<input type='hidden' name="odhEleValuePDT"      id="odhEleValuePDT"     value="<?=$tElementreturn[1]?>">
+<input type='hidden' name="odhEleNamePDT"       id="odhEleNamePDT"      value="<?=@$tElementreturn[0]?>">
+<input type='hidden' name="odhEleValuePDT"      id="odhEleValuePDT"     value="<?=@$tElementreturn[1]?>">
 <input type='hidden' name="odhEleNameNextFunc"  id="odhEleNameNextFunc" value="<?=$tNameNextFunc?>">
 <input type='hidden' name="odhEleReturnType"    id="odhEleReturnType"   value="<?=$tReturnType?>">
 <input type='hidden' name="odhSelectTier"       id="odhEleSelectTier"   value="<?=$tSelectTier?>">

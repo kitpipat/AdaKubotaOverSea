@@ -703,19 +703,24 @@
     
     function JSxPromotionStep4AddZoneConditionPanel() {
         // var tBchCode = $('#oetPromotionBchCode').val();
+       
+
         // option Brand
         window.oPromotionBrowseChanel = {
             Title: ['authen/user/user', 'tBrowseZoneTitle'],
             Table: { Master: 'TCNMZone',PK: 'FTZneChain' },
             Join: {
                 Table: ['TCNMZone_L'],
-                On: ["TCNMZone.FTAgnCode = TCNMZone_L.FTAgnCode AND TCNMZone_L.FNLngID = 1 AND ISNULL(TCNMZone.FTZneCode,'') = ISNULL(TCNMZone_L.FTZneCode,'') AND ISNULL(TCNMZone.FTZneChain,'') = ISNULL(TCNMZone_L.FTZneChain,'') "]
+                On: ["TCNMZone.FTZneCode = TCNMZone_L.FTZneCode AND TCNMZone_L.FNLngID = 1 AND ISNULL(TCNMZone.FTZneCode,'') = ISNULL(TCNMZone_L.FTZneCode,'') AND ISNULL(TCNMZone.FTZneChain,'') = ISNULL(TCNMZone_L.FTZneChain,'') "]
             },
             Where: {
                 Condition: [
                     function() {
+                        var tAgncode = '<?=$this->session->userdata('tSesUsrAgnCode') ?>';
                         var tSQL = " AND TCNMZone.FTZneChain NOT IN(SELECT FTZneChain FROM TCNTPdtPmtHDZne_Tmp WHERE FTSessionID = '<?php echo $this->session->userdata("tSesSessionID"); ?>') ";
+                        if(tAgncode != ''){
                             tSQL += " AND ISNULL(TCNMZone.FTAgnCode,'') = ''  OR ISNULL(TCNMZone.FTAgnCode,'') = '<?=$this->session->userdata('tSesUsrAgnCode') ?>'"
+                        }
                         return tSQL;
                     }
                 ]

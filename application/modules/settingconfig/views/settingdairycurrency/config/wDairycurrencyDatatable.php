@@ -183,7 +183,7 @@ $nDecimalCurrentcyShow = FCNxHGetOptionDecimalCurrencyShow();
                                 <td>
                                     <input type="text" style="text-align:right;<?php echo $tColor ?>" autocomplete="off" class="oetCurrentCurentcy xCNInputNumericWithDecimal" data-seq='<?= $key ?>' data-agncode='<?= $aValue['FTAgnCode'] ?>' data-rtecode='<?= $aValue['FTRteCode'] ?>' data-oldval='<?php echo number_format(1/$aValue['FCRteRate'],$nDecimalCurrentcyShow) ?>' id='oetUseCurrency<?= $key ?>' value='<?= ($aValue['FCRteRate'] > 0) ? number_format(1/$aValue['FCRteRate'],$nDecimalCurrentcyShow) : number_format('0',$nDecimalCurrentcyShow);?>'>
                                 </td>
-                                <td style="color : red !important;"><?php echo ($aValue['rtRtelocal'] && $aValue['FTRteCode']) ?  $aValue['rtRtelocal'] .' : 1 '. $aValue['FTRteCode'] :  language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyLocalNotFound') ;?></td>
+                                <td><?php echo ($aValue['rtRtelocal'] && $aValue['FTRteCode']) ?  $aValue['rtRtelocal'] .' : 1 '. $aValue['FTRteCode'] :  language('settingconfig/settingdairycurrency/settingdairycurrency', 'tSettingDailyCurrencyLocalNotFound') ;?></td>
                             </tr>
                         <?php } ?>
                     <?php else : ?>
