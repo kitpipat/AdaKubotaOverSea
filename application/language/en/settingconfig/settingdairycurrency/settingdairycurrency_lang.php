@@ -77,3 +77,8 @@ $lang['tSettingCalDailyCurrencyuSERateLast']                = "Last exchange rat
 $lang['tSettingDailyCurrencyConfirm']                       = "Confirm Currentcy";
 $lang['tSettingDailyCurrencyuSERateNew']                    = "New exchange rate";
 $lang['tSettingDailyCurrencyuAgency']                       = "Agency";
+
+// 08-11-2022 new
+// เพิ่มภาษา column หน่วยยืนยัน
+$lang['tSettingDailyCurrencyconfirmation']                 = "Confirmation Unit";
+$lang['tSettingDailyCurrencyLocalNotFound']                = "Notfound Rate Local";

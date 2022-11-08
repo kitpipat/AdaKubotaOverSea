@@ -80,3 +80,8 @@ $lang['tSettingDailyCurrencyConfirm']                       = "อัตรา�
 $lang['tSettingDailyCurrencyuSERateNew']                    = "อัตราใหม่";
 $lang['tSettingDailyCurrencyuAgency']                       = "ตัวแทนขาย";
 $lang['tSettingDailyCurrencyuLastSummit']                   = "ยืนยันล่าสุดเมื่อ : ";
+
+// 08-11-2022 new
+// เพิ่มภาษา column หน่วยยืนยัน
+$lang['tSettingDailyCurrencyconfirmation']                 = "หน่วยยืนยัน";
+$lang['tSettingDailyCurrencyLocalNotFound']                = "ไม่มีสกุลเงินท้องถิ่น";

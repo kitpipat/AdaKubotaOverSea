@@ -53,7 +53,8 @@ class Settingdairycurrency_model extends CI_Model
                     RATEL.FTRteName,
                     RATE.FCRteRate,
                     RATE.FCRteLastRate,
-                    Job.FDJobDateCfm
+                    Job.FDJobDateCfm,
+                    RATE1.FTRteCode AS rtRtelocal
                 FROM
                     TFNMRate RATE WITH(NOLOCK)
                     LEFT JOIN TFNMRate_L RATEL WITH(NOLOCK) ON RATE.FTAgnCode = RATEL.FTAgnCode 
@@ -62,6 +63,7 @@ class Settingdairycurrency_model extends CI_Model
                     LEFT JOIN TCNMAgency_L AGNL WITH(NOLOCK) ON RATE.FTAgnCode = AGNL.FTAgnCode 
                     AND AGNL.FNLngID = '$nLngID'
                     LEFT JOIN TCNSJobTask Job WITH(NOLOCK) ON RATE.FTAgnCode = job.FTAgnCode
+                    LEFT JOIN (SELECT FTAgnCode,FTRteCode,FTRteStaLocal FROM TFNMRate WHERE FTRteStaLocal = 1) RATE1 ON RATE1.FTAgnCode = RATE.FTAgnCode
                     WHERE RATE.FTRteStaUse = '1'
                 ";
             if($tAgnCode != ''){
@@ -76,7 +78,7 @@ class Settingdairycurrency_model extends CI_Model
                 $tSQL .= "      OR RATE.FTRteCode LIKE '%$tSearchList%')";
             }
 
-        $tSQL   .= " ORDER BY RATE.FTRteCode DESC ";
+        $tSQL   .= " ORDER BY RATE.FTAgnCode DESC ";
         // echo $tSQL;
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
