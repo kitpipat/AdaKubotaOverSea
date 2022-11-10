@@ -173,7 +173,8 @@ class Vatrate_model extends CI_Model {
             $oList      = $oQuery->result();
             $aFoundRow  = $this->FSaMVATGetPageAll($tSearchList);
             $nFoundRow  = $aFoundRow[0]->counts;
-            $nPageAll   = ceil($nFoundRow/$paData['nRow']);
+            $nFoundRow1  = $aFoundRow[0]->counts1;
+            $nPageAll   = ceil($nFoundRow1/$paData['nRow']);
             $aResult = array(
                 'raItems'       => $oList,
                 'rnAllRow'      => $nFoundRow,
@@ -206,7 +207,7 @@ class Vatrate_model extends CI_Model {
      * Return Type : array
      */
     public function FSaMVATGetPageAll($ptSearchList){
-        $tSQL = "SELECT  COUNT(DISTINCT(VAT.FTVatCode)) AS counts
+        $tSQL = "SELECT  COUNT(DISTINCT(VAT.FTVatCode)) AS counts , COUNT(VAT.FTVatCode) AS counts1
                     FROM TCNMVatRate VAT
                     WHERE 1=1 ";
         if($ptSearchList != ''){
