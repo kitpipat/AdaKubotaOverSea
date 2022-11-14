@@ -155,16 +155,36 @@ class Recive_model extends CI_Model
     public function FSnMRCVGetPageAll($ptSearchList, $ptLngID)
     {
 
-        $tSQL   =   "   SELECT 
-                            COUNT (RCV.FTRcvCode) AS counts
-                        FROM TFNMRcv                RCV     WITH(NOLOCK)
-                        LEFT JOIN [TFNMRcv_L]       RCVL    WITH(NOLOCK) ON RCV.FTRcvCode = RCVL.FTRcvCode   AND RCVL.FNLngID = $ptLngID
-                        LEFT JOIN [TSysRcvFmt_L]    RCVF    WITH(NOLOCK) ON RCV.FTFmtCode = RCVF.FTFmtCode   AND RCVF.FNLngID = $ptLngID
-                        LEFT JOIN [TFNMRcvSpc]      RCVS WITH(NOLOCK) ON RCV.FTRcvCode = RCVS.FTRcvCode
-                        WHERE 1=1
-        ";
+        // $tSQL   =   "   SELECT
+        //         COUNT (RCV.FTRcvCode) AS counts
+        //     FROM TFNMRcv                RCV     WITH(NOLOCK)
+        //     LEFT JOIN [TFNMRcv_L]       RCVL    WITH(NOLOCK) ON RCV.FTRcvCode = RCVL.FTRcvCode   AND RCVL.FNLngID = $ptLngID
+        //     LEFT JOIN [TSysRcvFmt_L]    RCVF    WITH(NOLOCK) ON RCV.FTFmtCode = RCVF.FTFmtCode   AND RCVF.FNLngID = $ptLngID
+        //     LEFT JOIN [TFNMRcvSpc]      RCVS    WITH(NOLOCK) ON RCV.FTRcvCode = RCVS.FTRcvCode
+        //     WHERE 1=1
+        // ";
 
-        if($this->session->userdata("tSesUsrAgnCode") != ""){
+        $tSQL   = "SELECT COUNT (c.rtRcvCode) AS counts  FROM(
+                        SELECT  ROW_NUMBER() OVER(ORDER BY FDCreateOn DESC , rtRcvCode ASC) AS rtRowID,* FROM
+                            (SELECT DISTINCT
+                                RCV.FTRcvCode   AS rtRcvCode,
+                                RCV.FTRcvStaUse AS rtRcvStatus,
+                                RCVL.FTRcvName  AS rtRcvName,
+                                RCVF.FTFmtCode  AS rtRCVFmtCode,
+                                RCVF.FTFmtName  AS rtRCVFmtName,
+                                IMGO.FTImgObj   AS rtImgObj,
+                                RCV.FDCreateOn,
+                                RCV.FTAppStaAlwRet,
+                                RCV.FTAppStaAlwCancel,
+                                RCV.FTAppStaPayLast
+                            FROM [TFNMRcv] RCV WITH(NOLOCK)
+                            LEFT JOIN [TFNMRcv_L] RCVL WITH(NOLOCK) ON RCV.FTRcvCode = RCVL.FTRcvCode AND RCVL.FNLngID = $ptLngID
+                            LEFT JOIN [TSysRcvFmt_L] RCVF WITH(NOLOCK) ON RCV.FTFmtCode = RCVF.FTFmtCode AND RCVF.FNLngID = $ptLngID
+                            LEFT JOIN [TCNMImgObj] IMGO WITH(NOLOCK) ON RCV.FTRcvCode = IMGO.FTImgRefID AND IMGO.FTImgTable = 'TFNMRcv' AND IMGO.FNImgSeq = 1
+                            LEFT JOIN [TFNMRcvSpc] RCVS WITH(NOLOCK) ON RCV.FTRcvCode = RCVS.FTRcvCode
+                            WHERE 1=1 ";
+
+        if($this->session->userdata("tSesUsrLoginLevel") == 'AGN'){
             $tAgnCode    = $this->session->userdata("tSesUsrAgnCode");
             if($tAgnCode){
                 $tSQL  .= " AND RCVS.FTAggCode = '$tAgnCode' OR RCVS.FTAggCode IS Null";
@@ -173,7 +193,9 @@ class Recive_model extends CI_Model
         if($this->session->userdata("tSesUsrLoginLevel") == "BCH"){
             $tBchCode = $this->session->userdata("tSesUsrBchCodeMulti");
             if($tBchCode){
-                $tSQL .= " AND RCVS.FTBchCode IN ('',$tBchCode) OR RCVS.FTBchCode IS Null";
+                $tSQL .= " AND RCVS.FTBchCode IN ('',$tBchCode)
+                           AND (RCVS.FTAggCode IS NULL OR RCVS.FTAggCode = '') 
+                           OR RCVS.FTBchCode IS Null";
             }
         }
 
@@ -183,6 +205,9 @@ class Recive_model extends CI_Model
             $tSQL .= " OR RCVF.FTFmtName LIKE '%$ptSearchList%')";
         }
 
+        $tSQL .= ") Base) AS c";
+
+      
         $oQuery = $this->db->query($tSQL);
         if ($oQuery->num_rows() > 0) {
             return $oQuery->result();

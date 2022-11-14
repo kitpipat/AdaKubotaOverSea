@@ -211,6 +211,9 @@
             tAgnName = aDataNextFunc[1];
         }
 
+        $('#oetBntRateCode').val('');
+        $('#oetBntRateName').val('');
+
         if(tAgnCode){
             $("#obtBntRateBrowse").attr('disabled', false);
         }else{
@@ -290,6 +293,7 @@ $('#obtBntRateBrowse').click(function(e){
         }
         return oOptionReturn;
     }
+
 
 
     var tStaUsrLevel    = '<?php  echo $this->session->userdata("tSesUsrLevel"); ?>';

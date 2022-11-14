@@ -49,6 +49,7 @@ function JSxIFXCallRabbitMQ(){
                 var aResult = JSON.parse(tResult);
                 if(aResult.tHost == '' || aResult.tPort == ''  || aResult.tPassword == '' || aResult.tUser == '' || aResult.tVHost == ""){
                     alert('Connect ใน ตั้งค่า Config ไม่ครบ');
+                    JCNxCloseLoading();
                     return;
                 }else{
                     var tPassword = JCNtAES128DecryptData(aResult.tPassword,'5YpPTypXtwMML$u@','zNhQ$D%arP6U8waL');

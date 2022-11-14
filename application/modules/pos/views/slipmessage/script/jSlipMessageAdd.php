@@ -25,9 +25,9 @@
             JSxSmgVisibleComponent('#odvSlipmessageAutoGenCode', false);    
         }
 
-        $('#oetSmgCode').blur(function(){
-            JSxCheckSmgCodeDupInDB();
-        });
+        // $('#oetSmgCode').blur(function(){
+        //     JSxCheckSmgCodeDupInDB();
+        // });
 
     });
 
@@ -135,7 +135,16 @@
                     $(element).closest('.form-group').addClass( "has-success" ).removeClass( "has-error" );
                 }
             },
-            submitHandler: function(form){}
-        });
+            submitHandler: function(form) {
+                        $('#ohdCheckSubmitByButton').val(1);
+                        var tRout = $('#ohdSMGRoute').val();
+                        // Submit From
+                        if ($("#ohdCheckSubmitByButton").val() == 1) {
+                            JSnCSTAddEditCustomer(tRout);
+                        }
+
+                    }
+            });
+            $('#ofmAddSlipMessage').submit();
     }
 </script>

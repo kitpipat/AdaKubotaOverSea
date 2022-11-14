@@ -32,8 +32,19 @@ class Interfaceexport_model extends CI_Model {
              ";
 
         $oQuery     = $this->db->query($tSQL);
+        if ($oQuery->num_rows() > 0) {
+            $aObject    = $oQuery->result_array();
+            foreach($aObject AS $Value){
+                $aResult[$Value['FTCfgCode']] = $Value;
+            }
+            $aResult['rtCode'] = '1';
+        }else{
+            $aResult = array(
+                'rtCode' => '800',
+                'rtDesc' => 'data not found',
+            );
+        }
 
-        $aResult    = $oQuery->result_array();
         return $aResult;
     }
 

@@ -8,15 +8,22 @@ if($aResult['rtCode'] == "1"){
     $aSmgHeadItems = $aResult['raDTHeadItems'];
     $aSmgEndItems = $aResult['raDTEndItems'];
     $tRoute = "slipMessageEventEdit";
-    $tSmgFonts = explode(",",$oSmgFonts)[0];
-    $tSmgFontsSize = explode(",",$oSmgFonts)[1];
-    $tSmgFontsStyle = explode(",",$oSmgFonts)[2];
-    if(empty($tSmgFontsStyle)){
-        $tSmgFontsStyle = explode(",",$oSmgFonts)[3];
+    if($oSmgFonts){
+        $tSmgFonts = explode(",",$oSmgFonts)[0];
+        $tSmgFontsSize = explode(",",$oSmgFonts)[1];
+        $tSmgFontsStyle = explode(",",$oSmgFonts)[2];
         if(empty($tSmgFontsStyle)){
-            $tSmgFontsStyle = explode(",",$oSmgFonts)[4];
+            $tSmgFontsStyle = explode(",",$oSmgFonts)[3];
+            if(empty($tSmgFontsStyle)){
+                $tSmgFontsStyle = explode(",",$oSmgFonts)[4];
+            }
         }
+    }else{
+        $tSmgFonts = "";
+        $tSmgFontsStyle = "";
+        $tSmgFontsSize = "";
     }
+   
     
 }else{
     $tSmgCode = "";
@@ -77,6 +84,7 @@ button.btn.dropdown-toggle.btn-default {
     border-radius: 4px;
 }
 </style>
+<input type="hidden" id="ohdSMGRoute" value="<?= $tRoute;?>">
 <div class="panel panel-headline">
     <div class="panel-body">
         <form class="validate-form" action="javascript:void(0)" method="post" enctype="multipart/form-data" autocorrect="off" autocapitalize="off" autocomplete="off" id="ofmAddSlipMessage">

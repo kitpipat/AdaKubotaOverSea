@@ -197,7 +197,7 @@ class Slipmessage_model extends CI_Model {
         try{
             $tSQL = " UPDATE TCNMSlipMsgHD_L";
             $tSQL .= " SET FTSmgTitle = N'".$paData['FTSmgTitle']."', FDLastUpdOn = '".$paData['FDLastUpdOn']."', FTLastUpdBy = '".$paData['FTLastUpdBy']."', FTFonts = '".$paData['FTFonts']."', FNLngID = '".$paData['FNLngID']."'";
-            $tSQL .= " WHERE FTSmgCode = ".$paData['FTSmgCode']."";
+            $tSQL .= " WHERE FTSmgCode = '".$paData['FTSmgCode']."'";
             $oQuery = $this->db->query($tSQL);
             // Update Header
             // $this->db->set('FTSmgTitle' , $paData['FTSmgTitle']);

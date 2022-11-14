@@ -46,11 +46,23 @@ class Interfaceimport_model extends CI_Model {
         FROM TLKMConfig WITH(NOLOCK)
              LEFT JOIN TLKMConfig_L ON TLKMConfig.FTCfgCode = TLKMConfig_L.FTCfgCode
         WHERE TLKMConfig_L.FNLngID = '$paLang'
-              AND TLKMConfig.FTCfgKey = 'Noti'
+              AND TLKMConfig.FTCfgKey = 'a'
               AND TLKMConfig_L.FTCfgSeq = '1'
               AND TLKMConfig.FTCfgSeq = '1' ";    //Type 1 นำเข้า
             $oQuery     = $this->db->query($tSQL);
-            $aResult    = $oQuery->result_array();
+            if ($oQuery->num_rows() > 0) {
+                $aObject    = $oQuery->result_array();
+                foreach($aObject AS $Value){
+                    $aResult[$Value['FTCfgCode']] = $Value;
+                }
+                $aResult['rtCode'] = '1';
+            }else{
+                $aResult = array(
+                    'rtCode' => '800',
+                    'rtDesc' => 'data not found',
+                );
+            }
+            
             return $aResult;
     }
    

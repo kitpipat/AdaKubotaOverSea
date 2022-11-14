@@ -65,15 +65,27 @@ class Interfaceimport_controller extends MX_Controller
         $tTypeEvent = $this->input->post('ptTypeEvent');
         if ($tTypeEvent == 'getpassword') {
             $aResult = $this->Interfaceimport_model->FSaMINMGetDataConfig($tLangEdit);
-            $aConnect = array(
-                'tHost'      => $aResult[1]['FTCfgStaUsrValue'],
-                'tPort'      => $aResult[2]['FTCfgStaUsrValue'],
-                'tPassword'  => $aResult[3]['FTCfgStaUsrValue'],
-                'tUser'      => $aResult[5]['FTCfgStaUsrValue'],
-                'tVHost'     => $aResult[6]['FTCfgStaUsrValue']
-            );
+            if($aResult['rtCode'] != 1){
+                $aConnect = array(
+                    'tHost'      => '',
+                    'tPort'      => '',
+                    'tPassword'  => '',
+                    'tUser'      => '',
+                    'tVHost'     => '',
+                    
+                );
+            }else{
+                $aConnect = array(
+                    'tHost'      => $aResult['tLK_NotiHost']['FTCfgStaUsrValue'],
+                    'tPort'      => $aResult['tLK_NotiPort']['FTCfgStaUsrValue'],
+                    'tPassword'  => $aResult['tLK_NotiPwd']['FTCfgStaUsrValue'],
+                    'tUser'      => $aResult['tLK_NotiUsr']['FTCfgStaUsrValue'],
+                    'tVHost'     => $aResult['tLK_NotiVHost']['FTCfgStaUsrValue']
+                );
+            }
             echo json_encode($aConnect);
         } else {
+            print_r($_POST);
             $tPassword      = $this->input->post('tPassword');
             $aINMImport     = $this->input->post('ocmINMImport');
             for ($i=0;$i<count($aINMImport);$i++){
@@ -236,12 +248,12 @@ class Interfaceimport_controller extends MX_Controller
 
         $tLangEdit  = $this->session->userdata("tLangEdit");
         $aVal       = $this->Interfaceimport_model->FSaMINMGetDataConfig($tLangEdit);
-        $tHost      = $aVal[1]['FTCfgStaUsrValue'];
-        $tPort      = $aVal[2]['FTCfgStaUsrValue'];
-        $tPassword  = $aVal[3]['FTCfgStaUsrValue'];
+        $tHost      = $aVal['tLK_NotiHost']['FTCfgStaUsrValue'];
+        $tPort      = $aVal['tLK_NotiPort']['FTCfgStaUsrValue'];
+        $tPassword  = $aVal['tLK_NotiPwd']['FTCfgStaUsrValue'];
         // $tQueueName = $aVal[4]['FTCfgStaUsrValue'];
-        $tUser      = $aVal[5]['FTCfgStaUsrValue'];
-        $tVHost     = $aVal[6]['FTCfgStaUsrValue'];
+        $tUser      = $aVal['tLK_NotiUsr']['FTCfgStaUsrValue'];
+        $tVHost     = $aVal['tLK_NotiVHost']['FTCfgStaUsrValue'];
 
         $tQueueName = $paParams['queueName'];
         $aParams    = $paParams['params'];

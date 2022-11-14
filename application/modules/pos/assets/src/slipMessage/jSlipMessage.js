@@ -252,6 +252,7 @@ function JSvCallPageSlipMessageEdit(ptSmgCode,ptSmgLang) {
 //Return : Status Event Add/Edit  SlipMessage
 //Return Type : object
 function JSnAddEditSlipMessage(ptRoute){
+    console.log('here');
     $('#ofmAddSlipMessage').validate().destroy();
     $.validate.addMethod('dublicateCode', function(value, element){
         if(ptRoute == 'slipMessageEventAdd'){
@@ -319,35 +320,179 @@ function JSnAddEditSlipMessage(ptRoute){
             $( element ).closest('.form-group').addClass( "has-success" ).removeClass( "has-error" );
         },
         submitHandler: function(form){
-            $.ajax({
-                type: "POST",
-                url: ptRoute,
-                data: $('#ofmAddSlipMessage').serialize(),
-                cache: false,
-                timeout: 0,
-                success: function(tResult) {
-                    var aReturn = JSON.parse(tResult);
-
-                        if(aReturn['nStaEvent'] == 1) {
-                            if(aReturn['nStaCallBack'] == '1' || aReturn['nStaCallBack'] == null) {
-                                JSvCallPageSlipMessageEdit(aReturn['tCodeReturn'],aReturn['tCodeReturn2']);
-                            }else if(aReturn['nStaCallBack'] == '2') {
-                                JSvCallPageSlipMessageAdd();
-                            }else if (aReturn['nStaCallBack'] == '3') {
-                                JSvCallPageSlipMessage(pnPage);
-                            }
-                        }else{
-                                alert(aReturn['tStaMessg']);
-                            }
-                },
-                error: function(data) {
-                    console.log(data)
+            if ($('#ocbCustomerAutoGenCode').is(':checked')) {
+                $('#ohdCheckSubmitByButton').val(1);
+                if ($("#ohdCheckSubmitByButton").val() == 1) {
+                    JSnCSTAddEditSlipMSG(ptRoute);
                 }
-            });
+
+            } else {
+                JSxCheckSlipMSGCodeDupInDB();
+            }
+            // $.ajax({
+            //     type: "POST",
+            //     url: ptRoute,
+            //     data: $('#ofmAddSlipMessage').serialize(),
+            //     cache: false,
+            //     timeout: 0,
+            //     success: function(tResult) {
+            //         var aReturn = JSON.parse(tResult);
+
+            //             if(aReturn['nStaEvent'] == 1) {
+            //                 if(aReturn['nStaCallBack'] == '1' || aReturn['nStaCallBack'] == null) {
+            //                     JSvCallPageSlipMessageEdit(aReturn['tCodeReturn'],aReturn['tCodeReturn2']);
+            //                 }else if(aReturn['nStaCallBack'] == '2') {
+            //                     JSvCallPageSlipMessageAdd();
+            //                 }else if (aReturn['nStaCallBack'] == '3') {
+            //                     JSvCallPageSlipMessage(pnPage);
+            //                 }
+            //             }else{
+            //                     alert(aReturn['tStaMessg']);
+            //                 }
+            //     },
+            //     error: function(data) {
+            //         console.log(data)
+            //     }
+            // });
         },
     });
 }
 
+function JSxCheckSlipMSGCodeDupInDB() {
+    if(!$('#ocbSlipmessageAutoGenCode').is(':checked')){
+        $.ajax({
+            type: "POST",
+            url: "CheckInputGenCode",
+            data: { 
+                tTableName: "TCNMSlipMsgHD_L",
+                tFieldName: "FTSmgCode",
+                tCode: $("#oetSmgCode").val()
+            },
+            async : false,
+            cache: false,
+            timeout: 0,
+            success: function(tResult){
+                var aResult = JSON.parse(tResult);
+                $("#ohdCheckDuplicateSmgCode").val(aResult["rtCode"]);
+                $('#ofmAddSlipMessage').validate().destroy();
+
+                // Set Validate Dublicate Code
+                $.validator.addMethod('dublicateCode', function(value, element) {
+                    if($("#ohdCheckDuplicateSmgCode").val() == 1){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                },'');
+
+                // From Summit Validate
+                $('#ofmAddSlipMessage').validate({
+                    rules: {
+                        oetSmgCode : {
+                            "required" :{
+                                // ตรวจสอบเงื่อนไข validate
+                                depends: function(oElement) {
+                                    if($('#ocbSlipmessageAutoGenCode').is(':checked')){
+                                        return false;
+                                    }else{
+                                        return true;
+                                    }
+                                }
+                            },
+                            "dublicateCode" :{}
+                        },
+                        oetSmgTitle:     {"required" :{}},
+                        oetSmgFontsSize:  {"required" :{}},
+                        // ocmRcnGroup:    {"required" :{}},
+                    },
+                    messages: {
+                        oetSmgCode : {
+                            "required"      : $('#oetSmgCode').attr('data-validate-required'),
+                            "dublicateCode" : $('#oetSmgCode').attr('data-validate-dublicateCode')
+                        },
+                        oetSmgTitle : {
+                            "required"      : $('#oetSmgTitle').attr('data-validate-required'),
+                        },
+                        oetSmgFontsSize : {
+                            "required"      :  $('#oetSmgFontsSize').attr('data-validate-required'), 
+                        }
+                        // ocmRcnGroup: {
+                        //     "required"      : $('#osmSelect').attr('data-validate-required'),
+                        // }
+                    },
+                    errorElement: "em",
+                    errorPlacement: function (error, element ) {
+                        error.addClass( "help-block" );
+                        if ( element.prop( "type" ) === "checkbox" ) {
+                            error.appendTo( element.parent( "label" ) );
+                        } else {
+                            var tCheck = $(element.closest('.form-group')).find('.help-block').length;
+                            if(tCheck == 0){
+                                error.appendTo(element.closest('.form-group')).trigger('change');
+                            }
+                        }
+                    },
+                    highlight: function ( element, errorClass, validClass ) {
+                        $( element ).closest('.form-group').addClass( "has-error" ).removeClass( "has-success" );
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                        var nStaCheckValid  = $(element).parents('.form-group').find('.help-block').length
+                        if(nStaCheckValid != 0){
+                            $(element).closest('.form-group').addClass( "has-success" ).removeClass( "has-error" );
+                        }
+                    },
+                    submitHandler: function(form) {
+                                $('#ohdCheckSubmitByButton').val(1);
+                                var tRout = $('#ohdSMGRoute').val();
+                                // Submit From
+                                if ($("#ohdCheckSubmitByButton").val() == 1) {
+                                    JSnCSTAddEditCustomer(tRout);
+                                }
+                            }
+                    });
+                    $('#ofmAddSlipMessage').submit();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                JCNxResponseError(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+
+}
+
+function JSnCSTAddEditSlipMSG(ptRoute) {
+    var nStaSession = JCNxFuncChkSessionExpired();
+    $('.xWBtnGrpSaveLeft').attr('disabled', true);
+    if (typeof(nStaSession) !== 'undefined' && nStaSession == 1) {
+        JCNxOpenLoading();
+        $.ajax({
+            type: "POST",
+            url: ptRoute,
+            data: $('#ofmAddSlipMessage').serialize(),
+            cache: false,
+            timeout: 0,
+            success: function(tResult) {
+                var aReturn = JSON.parse(tResult);
+
+                    if(aReturn['nStaEvent'] == 1) {
+                        if(aReturn['nStaCallBack'] == '1' || aReturn['nStaCallBack'] == null) {
+                            JSvCallPageSlipMessageEdit(aReturn['tCodeReturn'],aReturn['tCodeReturn2']);
+                        }else if(aReturn['nStaCallBack'] == '2') {
+                            JSvCallPageSlipMessageAdd();
+                        }else if (aReturn['nStaCallBack'] == '3') {
+                            JSvCallPageSlipMessage(pnPage);
+                        }
+                    }else{
+                        alert(aReturn['tStaMessg']);
+                        JCNxCloseLoading()
+                    }
+            },
+            error: function(data) {
+                console.log(data)
+            }
+        });
+    }
+}
 
 /**
  * Functionality : Generate Code Slip Message
