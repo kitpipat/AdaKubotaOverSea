@@ -85,7 +85,6 @@ class Interfaceimport_controller extends MX_Controller
             }
             echo json_encode($aConnect);
         } else {
-            print_r($_POST);
             $tPassword      = $this->input->post('tPassword');
             $aINMImport     = $this->input->post('ocmINMImport');
             for ($i=0;$i<count($aINMImport);$i++){
