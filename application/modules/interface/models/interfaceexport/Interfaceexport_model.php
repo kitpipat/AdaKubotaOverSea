@@ -82,6 +82,16 @@ class Interfaceexport_model extends CI_Model {
           $aResult    = $oQuery->result_array();
           return $aResult;
         }
+
+        public function FSaMINMGetDataBranch($ptData){
+            $tSQL = " SELECT *
+                    FROM TCNMBranch WITH(NOLOCK)
+                    WHERE FTBchCode = '$ptData'
+                    ";
+            $oQuery     = $this->db->query($tSQL);
+            $aResult    = $oQuery->row();
+            return $aResult;
+        }
    
 }
 

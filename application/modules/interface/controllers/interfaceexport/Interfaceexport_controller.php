@@ -161,7 +161,8 @@ class Interfaceexport_controller extends MX_Controller {
     }
 
     public function FSaCIFXGetFormatParam($pnFormat,$paPackData){
-
+        $aResult = $this->Interfaceexport_model->FSaMINMGetDataBranch($paPackData['tBchCodeSale']);
+        
         if(!empty($paPackData['dDateFromSale'])){
             $aDateFromSale = explode("-", $paPackData['dDateFromSale']);
             $paPackData['dDateFromSale'] = $aDateFromSale[0].'-'.$aDateFromSale[1].'-'.$aDateFromSale[2];
@@ -189,7 +190,7 @@ class Interfaceexport_controller extends MX_Controller {
         //ถ้าไม่เลือกเลขที่เอกสารมา จะต้องส่งไปหาแบบช่วง วันที่ ทั้งหมด
         if(($paPackData['tDocNoFrom'] == '' || $paPackData['tDocNoFrom'] == null) && ($paPackData['tDocNoTo'] == '' || $paPackData['tDocNoTo'] == null)){
             $aMQParams[1] = [
-                "queueName"     => "LK_QSale2Vender",
+                "queueName"     => "LK_QSale2Vender".$aResult->FTAgnCode,
                 "exchangname"   => "",
                 "params"        => [
                     "ptFunction"    =>  "SalePos",//ชื่อ Function
@@ -213,7 +214,7 @@ class Interfaceexport_controller extends MX_Controller {
             $aGetDataDocNo = $this->Interfaceexport_model->FSaMINMGetDataDocNo($paPackData['tDocNoFrom'],$paPackData['tDocNoTo']);
             foreach($aGetDataDocNo as $aValue){
                 $aMQParams[1] = [
-                    "queueName"     => "LK_QSale2Vender",
+                    "queueName"     => "LK_QSale2Vender".$aResult->FTAgnCode,
                     "exchangname"   => "",
                     "params"        => [
                         "ptFunction"    =>  "SalePos",//ชื่อ Function
@@ -243,8 +244,10 @@ class Interfaceexport_controller extends MX_Controller {
 
         if(!empty($aDocNoPrepair)){
             foreach($aDocNoPrepair as $aValue){
+                $aResult = $this->Interfaceexport_model->FSaMINMGetDataBranch($aValue['FTBchCode']);
+
                 $aMQParams = [
-                    "queueName"     => "LK_QSale2Vender",
+                    "queueName"     => "LK_QSale2Vender".$aResult->FTAgnCode,
                     "exchangname"   => "",
                     "params"        => [
                         "ptFunction"    =>  "SalePos",//ชื่อ Function
