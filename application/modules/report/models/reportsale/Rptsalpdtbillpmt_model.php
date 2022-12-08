@@ -256,6 +256,9 @@ class Rptsalpdtbillpmt_model extends CI_Model
                                 LEFT JOIN (  
                                     SELECT '$tUsrSession' AS FTUsrSession_Footer
                                 ) T1 ON  L.FTUsrSession = T1.FTUsrSession_Footer
+                                LEFT JOIN (  
+                                    SELECT '$tUsrSession' AS FTUsrSession_Footer
+                                ) T2 ON  L.FTUsrSession = T2.FTUsrSession_Footer
             ";
         }
 
