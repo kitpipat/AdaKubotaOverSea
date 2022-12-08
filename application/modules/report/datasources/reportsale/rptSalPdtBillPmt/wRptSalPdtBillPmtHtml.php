@@ -266,7 +266,7 @@ $nDisplayPage = $aDataReport['aPagination']['nDisplayPage'];
                                     $tGroupping = $aValue["FTXshDocNo"];
                                     $nSeq = 1;
                                     $nXshDisPnt = $aValue['FCXshDisPnt'];
-                                    $nXshDis =  $aValue["FCXshDis"] + ($nXshDisPnt);
+                                    $nXshDis =  $aValue["FCXshDis"];
                                     $nXdtDisPmt = $aValue['FCXdtDisPmt'];
                                     $nXshVatable = $aValue['FCXshVatable'];
                                     $nVat = $aValue['FCXshVat'];
@@ -282,7 +282,7 @@ $nDisplayPage = $aDataReport['aPagination']['nDisplayPage'];
                                         if ( $tPdtAmtOld == "" ){
                                             $tPdtAmtOld  = ( $aValue['FCXsdAmt'] + ($aValue['FCXsdDis']) + ($aValue['FCXdtDisPmt']) );
                                         }else{
-                                            $tPdtAmtOld  = ( $tPdtAmtOld + ($aValue['FCXsdDis']) + ($aValue['FCXdtDisPmt']) );
+                                            $tPdtAmtOld  = ( $tPdtAmtOld + ($aValue['FCXshDis']) + ($aValue['FCXdtDisPmt']) );
                                         }
 
                                         $tWithVate = ($aValue['FTXsdVatType'] == "1")? ' V' : ''; 
@@ -301,8 +301,8 @@ $nDisplayPage = $aDataReport['aPagination']['nDisplayPage'];
                                         if( $tPdtCodeOld == $aValue['FTPdtCode'] ){
                                 ?>
                                             <tr>
-                                                <td colspan="8"></td>
-                                                <td class="text-right xCNRptDetail"><?php echo number_format($aValue['FCXsdDis'], $nOptDecimalShow); ?></td>
+                                                <td colspan="9"></td>
+                                                <!-- <td class="text-right xCNRptDetail"><?php echo number_format($aValue['FCXsdDis'], $nOptDecimalShow); ?></td> -->
                                                 <td class="text-right xCNRptDetail"><?php echo number_format($aValue['FCXdtDisPmt'], $nOptDecimalShow); ?></td>
                                                 <td class="text-right xCNRptDetail"><?php echo $aValue['FTPmhName']; ?></td>
                                                 <td class="text-right xCNRptDetail"><?php echo $cNetSum; ?></td>
@@ -358,7 +358,7 @@ $nDisplayPage = $aDataReport['aPagination']['nDisplayPage'];
 
                                         <td class="text-left xCNRptGrouPing"></td>
                                         <td class="text-right xCNRptGrouPing"></td>
-                                        <td class="text-right xCNRptGrouPing"><?php echo number_format(($tFCXsdNet_SubTotal + $nXshDis) - $nXshDisPnt, $nOptDecimalShow); ?></td>
+                                        <td class="text-right xCNRptGrouPing"><?php echo number_format(($tFCXsdNet_SubTotal + $nXshDis) + $nXshDisPnt, $nOptDecimalShow); ?></td>
                                     </tr>
                                     <tr style="border-bottom: dashed 1px #ccc !important;">
                                         <td class="text-left xCNRptGrouPing"></td>
@@ -406,7 +406,7 @@ $nDisplayPage = $aDataReport['aPagination']['nDisplayPage'];
                                     <td class="text-right xCNRptGrouPing"><?php echo number_format($nXshDisPnt_SumFooter, $nOptDecimalShow); ?></td>
                                     <td class="text-left xCNRptGrouPing"></td>
                                     <td class="text-right xCNRptGrouPing"></td>
-                                    <td class="text-right xCNRptGrouPing"><?php echo number_format(($tXsdNet_SumFooter + $nXshDis_SumFooter) - $nXshDisPnt_SumFooter, $nOptDecimalShow); ?></td>
+                                    <td class="text-right xCNRptGrouPing"><?php echo number_format(($tXsdNet_SumFooter + $nXshDis_SumFooter) + $nXshDisPnt_SumFooter, $nOptDecimalShow); ?></td>
                                 </tr>
                                 <tr style="border-bottom: solid 1px #111 !important;">
                                     <td class="text-left xCNRptGrouPing"></td>

@@ -149,11 +149,7 @@ class Rptsalpdtbillpmt_model extends CI_Model
             $tJoinFoooter = "   LEFT JOIN (
                                     SELECT
                                         FTUsrSession AS FTUsrSession_Footer,
-                                        SUM(
-                                            CASE
-                                                WHEN TMP.FNType = 2 THEN ISNULL(TMP.FCXsdDis, 0)
-                                            END
-                                        ) AS FCXsdDis_SumFooter,
+                                       
                                         SUM(
                                             CASE
                                                 WHEN TMP.FNType = 2 THEN ISNULL(TMP.FCXsdNet, 0)
@@ -171,7 +167,7 @@ class Rptsalpdtbillpmt_model extends CI_Model
                                         ) AS FCXshVat_SumFooter,
                                         SUM(
                                             CASE
-                                                WHEN TMP.FNType = 1 THEN ISNULL(TMP.FCXshDis+(TMP.FCXshDisPnt), 0)
+                                                WHEN TMP.FNType = 1 THEN ISNULL(TMP.FCXshDis, 0)
                                             END
                                         ) AS FCXshDis_SumFooter,
                                         SUM(
@@ -193,7 +189,12 @@ class Rptsalpdtbillpmt_model extends CI_Model
                                             CASE
                                                 WHEN TMP.FNType = 1 THEN ISNULL(TMP.FCXshDisPnt, 0)
                                             END
-                                        ) AS FCXshDisPnt_SumFooter
+                                        ) AS FCXshDisPnt_SumFooter,
+                                        SUM(
+                                            CASE
+                                                WHEN TMP.FNType = 3 THEN ISNULL(TMP.FCXrcNet, 0)
+                                            END
+                                        ) AS FCXrcNet_SumFooter
                                     FROM TRPTSalPdtBillPmtTmp TMP WITH(NOLOCK)
                                     WHERE 1=1
                                     AND FTComName = '$tComName'
@@ -225,6 +226,28 @@ class Rptsalpdtbillpmt_model extends CI_Model
                                     WHERE TMP.FTRowByPdt = '1'
                                     GROUP BY FTUsrSession
                                 ) T1 ON L.FTUsrSession = T1.FTUsrSession_Footer ";
+            $tJoinFoooter .= "  LEFT JOIN (
+                                    SELECT
+                                        FTUsrSession AS FTUsrSession_Footer,
+                                            SUM ( CASE WHEN PBPT_F.FNType = 2 THEN ISNULL( PBPT_F.FCXsdDis, 0 ) END ) AS FCXsdDis_SumFooter 
+                                        FROM
+                                        (
+                                                SELECT DISTINCT
+                                                FTXshDocNo,
+                                                FTUsrSession,
+                                                FCXsdDis,
+                                                FNType
+                                                FROM
+                                                TRPTSalPdtBillPmtTmp WITH ( NOLOCK ) 
+                                            WHERE
+                                                1 = 1 
+                                        AND FTComName = '$tComName'
+                                        AND FTRptCode = '$tRptCode'
+                                        AND FTUsrSession = '$tUsrSession'
+                                        ) AS PBPT_F
+                                    GROUP BY FTUsrSession
+                                ) T2 ON L.FTUsrSession = T2.FTUsrSession_Footer ";
+
         } else {
             // ถ้าไม่ใช่ให้ Select 0 เพื่อให้ Join ได้แต่จะไม่มีการ Sum
             $tJoinFoooter = "   LEFT JOIN (  
@@ -243,7 +266,8 @@ class Rptsalpdtbillpmt_model extends CI_Model
             SELECT
                 L.*,
                 T.*,
-                T1.*
+                T1.*,
+                T2.*
             FROM (
                 SELECT
                     ROW_NUMBER() OVER(ORDER BY FTXshDocNo ASC) AS RowID,
@@ -254,9 +278,9 @@ class Rptsalpdtbillpmt_model extends CI_Model
                     A.*,
                     S1.FNRptGroupMember,
                     S.FCXsdAmt_SubTotal,
-                    S1.FCXsdDis_SubTotal,
+                    S2.FCXsdDis_SubTotal,
                     S1.FCXdtDisPmt_SubTotal,
-                    S1.FCXsdNet_SubTotal
+                    S2.FCXsdNet_SubTotal
                 FROM TRPTSalPdtBillPmtTmp A WITH(NOLOCK)
                 /* Calculate Misures */
                 LEFT JOIN (
@@ -300,6 +324,29 @@ class Rptsalpdtbillpmt_model extends CI_Model
                     AND FTUsrSession = '$tUsrSession'
                     GROUP BY FTXshDocNo
                 ) AS S1 ON A.FTXshDocNo = S1.FTXshDocNo_SubTotal
+
+                LEFT JOIN (
+                    SELECT
+                        PBPT.FTXshDocNo AS FTXshDocNo_SubTotal,
+                        SUM ( ISNULL( PBPT.FCXsdDis, 0 ) ) AS FCXsdDis_SubTotal,
+                        SUM ( ISNULL( PBPT.FCXsdNet, 0 ) ) AS FCXsdNet_SubTotal 
+                    FROM
+                    (
+                        SELECT DISTINCT
+                            FTXshDocNo,
+                            FCXsdDis,
+                            FCXsdNet
+                        FROM
+                        TRPTSalPdtBillPmtTmp WITH ( NOLOCK ) 
+                        WHERE
+                            1 = 1 
+                        AND FTComName = '$tComName'
+                        AND FTRptCode = '$tRptCode'
+                        AND FTUsrSession = '$tUsrSession'
+                    ) AS PBPT
+                    GROUP BY FTXshDocNo
+
+                ) AS S2 ON A.FTXshDocNo = S2.FTXshDocNo_SubTotal
 
                 WHERE 1=1
                 AND A.FTComName = '$tComName'
